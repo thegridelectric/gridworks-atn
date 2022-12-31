@@ -8,14 +8,14 @@ from typing import Literal
 from typing import Optional
 
 from fastapi_utils.enums import StrEnum
-from gridworks import property_format
 from gridworks.errors import SchemaError
 from gridworks.message import as_enum
-from gridworks.property_format import predicate_validator
 from pydantic import BaseModel
 from pydantic import validator
 
+from gwatn import property_format
 from gwatn.enums import MarketPriceUnit
+from gwatn.property_format import predicate_validator
 
 
 class MarketPriceUnit000SchemaEnum:

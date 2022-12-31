@@ -6,20 +6,20 @@ from typing import Dict
 from typing import List
 from typing import Literal
 
-import gridworks.property_format as property_format
 from fastapi_utils.enums import StrEnum
 from gridworks.errors import SchemaError
 from gridworks.message import as_enum
-from gridworks.property_format import predicate_validator
 from pydantic import BaseModel
 from pydantic import validator
 
+import gwatn.property_format as property_format
 from gwatn.enums import DistributionTariff
 from gwatn.enums import EmitterPumpFeedbackModel as PumpModel
 from gwatn.enums import EnergySupplyType
 from gwatn.enums import MixingValveFeedbackModel as MixingValveModel
 from gwatn.enums import RecognizedCurrencyUnit
 from gwatn.enums import RecognizedTemperatureUnit
+from gwatn.property_format import predicate_validator
 
 
 class DistributionTariff000SchemaEnum:

@@ -8,16 +8,16 @@ from typing import Literal
 from typing import Optional
 
 from fastapi_utils.enums import StrEnum
-from gridworks import property_format
 from gridworks.errors import SchemaError
 from gridworks.message import as_enum
-from gridworks.property_format import predicate_validator
 from pydantic import BaseModel
 from pydantic import validator
 
+from gwatn import property_format
 from gwatn.data_classes.g_node_instance import GNodeInstance
 from gwatn.enums import GniStatus
 from gwatn.enums import StrategyName
+from gwatn.property_format import predicate_validator
 from gwatn.schemata.g_node_gt import GNodeGt
 from gwatn.schemata.g_node_gt import GNodeGt_Maker
 

@@ -3,22 +3,20 @@ from gwatn.enums import GNodeRole
 
 
 def test_g_node_role() -> None:
-    assert set(GNodeRole.values()) == set(
-        [
-            "GNode",
-            "TerminalAsset",
-            "Scada",
-            "PriceService",
-            "WeatherService",
-            "AtomicTNode",
-            "MarketMaker",
-            "AtomicMeteringNode",
-            "ConductorTopologyNode",
-            "InterconnectionComponent",
-            "World",
-            "TimeCoordinator",
-            "Supervisor",
-        ]
-    )
+    assert set(GNodeRole.values()) == {
+        "GNode",
+        "TerminalAsset",
+        "Scada",
+        "PriceService",
+        "WeatherService",
+        "AtomicTNode",
+        "MarketMaker",
+        "AtomicMeteringNode",
+        "ConductorTopologyNode",
+        "InterconnectionComponent",
+        "World",
+        "TimeCoordinator",
+        "Supervisor",
+    }
 
     assert GNodeRole.default() == GNodeRole.GNode

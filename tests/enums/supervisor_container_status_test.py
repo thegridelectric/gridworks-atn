@@ -3,16 +3,14 @@ from gwatn.enums import SupervisorContainerStatus
 
 
 def test_supervisor_container_status() -> None:
-    assert set(SupervisorContainerStatus.values()) == set(
-        [
-            "Unknown",
-            "Authorized",
-            "Launching",
-            "Provisioning",
-            "Running",
-            "Stopped",
-            "Deleted",
-        ]
-    )
+    assert set(SupervisorContainerStatus.values()) == {
+        "Unknown",
+        "Authorized",
+        "Launching",
+        "Provisioning",
+        "Running",
+        "Stopped",
+        "Deleted",
+    }
 
     assert SupervisorContainerStatus.default() == SupervisorContainerStatus.Unknown

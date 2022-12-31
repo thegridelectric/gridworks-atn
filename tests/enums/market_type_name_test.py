@@ -3,17 +3,15 @@ from gwatn.enums import MarketTypeName
 
 
 def test_market_type_name() -> None:
-    assert set(MarketTypeName.values()) == set(
-        [
-            "unknown",
-            "rt5gate5",
-            "rt60gate5",
-            "da60",
-            "rt60gate30",
-            "rt15gate5",
-            "rt30gate5",
-            "rt60gate30b",
-        ]
-    )
+    assert set(MarketTypeName.values()) == {
+        "unknown",
+        "rt5gate5",
+        "rt60gate5",
+        "da60",
+        "rt60gate30",
+        "rt15gate5",
+        "rt30gate5",
+        "rt60gate30b",
+    }
 
     assert MarketTypeName.default() == MarketTypeName.unknown

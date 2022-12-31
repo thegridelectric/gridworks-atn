@@ -5,11 +5,11 @@ from typing import Dict
 from typing import List
 from typing import Literal
 
-from gridworks import property_format
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import validator
 
+from gwatn import property_format
 from gwatn.schemata.g_node_instance_gt import GNodeInstanceGt
 from gwatn.schemata.g_node_instance_gt import GNodeInstanceGt_Maker
 from gwatn.schemata.supervisor_container_gt import SupervisorContainerGt

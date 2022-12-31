@@ -4,6 +4,8 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
+from gridworks.errors import DcError
+
 from gwatn.data_classes.g_node import GNode
 from gwatn.data_classes.gps_point import GpsPoint
 from gwatn.enums import AtnSpaceheatStrategyName
@@ -11,7 +13,6 @@ from gwatn.enums import GniStatus
 from gwatn.enums import GNodeRole
 from gwatn.enums import GNodeStatus
 from gwatn.enums import StrategyName
-from gwatn.errors import DcError
 
 
 LOG_FORMAT = (

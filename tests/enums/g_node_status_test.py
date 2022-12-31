@@ -3,14 +3,12 @@ from gwatn.enums import GNodeStatus
 
 
 def test_g_node_status() -> None:
-    assert set(GNodeStatus.values()) == set(
-        [
-            "Unknown",
-            "Pending",
-            "Active",
-            "PermanentlyDeactivated",
-            "Suspended",
-        ]
-    )
+    assert set(GNodeStatus.values()) == {
+        "Unknown",
+        "Pending",
+        "Active",
+        "PermanentlyDeactivated",
+        "Suspended",
+    }
 
     assert GNodeStatus.default() == GNodeStatus.Unknown
