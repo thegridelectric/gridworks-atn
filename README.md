@@ -1,4 +1,4 @@
-# Gridworks Atn Spaceheat
+# Gridworks Atn
 
 [![PyPI](https://img.shields.io/pypi/v/gridworks-atn.svg)][pypi_]
 [![Status](https://img.shields.io/pypi/status/gridworks-atn.svg)][status]
@@ -21,61 +21,20 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
-Repo for AtomicTNodes
+This is the [GridWorks](https://gridworks.readthedocs.io/) Python SDK for building Atomic Transactive Nodes, or
+[AtomicTNodes](https://gridworks.readthedocs.io/en/latest/atomic-t-node.html>).
 
-## Local Demo Setup
+An AtomicTNode is a type of [GNodes](https://gridworks.readthedocs.io/en/latest/g-node.html) ("G" for Grid) -
+perhaps the most fun and interesting to build. These cloud-based GNode actors are what make devices
+_transactive_ - each AtomicTNode is dedicated to the job of operating its very own
+[Transactive Device](https://gridworks.readthedocs.io/en/latest/transactive-device.html), and simultaneously bidding on its behalf into electricity markets.
 
-1. Set up python envirnment
-
-   ```
-   poetry install
-
-   poetry shell
-   ```
-
-2. Install [docker](https://docs.docker.com/get-docker/)
-
-3. Start docker containers
-
-- **X86 CPU**:
-
-  ```
-  docker compose -f world-rabbit-x86.yml up -d
-  ```
-
-- **arm CPU**:
-
-  ```
-  docker compose -f world-rabbit-arm.yml up -d
-  ```
-
-4. Check rabbit on its console at [http://0.0.0.0:15672/#/](http://0.0.0.0:15672/#/)
-
-   - username/password are both
-
-     ```
-     smqPublic
-     ```
-
-5. Run demo:
-
-   ```
-   python demo.py
-   ```
-
-## Usage
-
-Please see the [Command-line Reference] for details.
-
-## Contributing
-
-Contributions are very welcome.
-To learn more, see the [Contributor Guide].
+To learn about using this SDK, visit the [Gridworks Atn docs](https://gridworks-atn.readthedocs.io/en/latest/). To explore the rest of GridWorks, visit the [GridWorks docs](https://gridworks.readthedocs.io/en/latest/).
 
 ## License
 
 Distributed under the terms of the [MIT license][license],
-_Gridworks Atn Spaceheat_ is free and open source software.
+**Gridworks Atn** is free and open source software.
 
 ## Issues
 
