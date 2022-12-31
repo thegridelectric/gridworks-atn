@@ -12,21 +12,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { python: "3.10", os: "ubuntu-latest", session: "pre-commit" }
-          - { python: "3.10", os: "ubuntu-latest", session: "safety" }
-          - { python: "3.10", os: "ubuntu-latest", session: "mypy" }
-          - { python: "3.9", os: "ubuntu-latest", session: "mypy" }
-          - { python: "3.8", os: "ubuntu-latest", session: "mypy" }
-          - { python: "3.7", os: "ubuntu-latest", session: "mypy" }
+          # - { python: "3.10", os: "ubuntu-latest", session: "pre-commit" }
+          # - { python: "3.10", os: "ubuntu-latest", session: "safety" }
+          # - { python: "3.10", os: "ubuntu-latest", session: "mypy" }
+          - { python: "3.11", os: "ubuntu-latest", session: "tests" }
           - { python: "3.10", os: "ubuntu-latest", session: "tests" }
-          - { python: "3.9", os: "ubuntu-latest", session: "tests" }
-          - { python: "3.8", os: "ubuntu-latest", session: "tests" }
-          - { python: "3.7", os: "ubuntu-latest", session: "tests" }
-          - { python: "3.10", os: "windows-latest", session: "tests" }
-          - { python: "3.10", os: "macos-latest", session: "tests" }
-          - { python: "3.10", os: "ubuntu-latest", session: "typeguard" }
-          - { python: "3.10", os: "ubuntu-latest", session: "xdoctest" }
-          - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
+          # - { python: "3.10", os: "windows-latest", session: "tests" }
+          # - { python: "3.10", os: "macos-latest", session: "tests" }
+          # - { python: "3.10", os: "ubuntu-latest", session: "typeguard" }
+          # - { python: "3.10", os: "ubuntu-latest", session: "xdoctest" }
+          # - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
 
     env:
       NOXSESSION: ${{ matrix.session }}
@@ -36,6 +31,14 @@ jobs:
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
+
+      - name: Start World Broker
+        uses: namoshek/rabbitmq-github-action@v1
+        with:
+          version: "3.9.13"
+          ports: "1885:1885 4369:4369 5672:5672 15672:15672 15674:15674 25672:25672"
+          config: ${{ github.workspace }}/.ci/rabbitmq.conf
+          container-name: "rabbit"
 
       - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v4
@@ -96,7 +99,7 @@ jobs:
           nox --python=${{ matrix.python }}
 
       - name: Upload coverage data
-        if: always() && matrix.session == 'tests'
+        if: matrix.session == 'tests' && matrix.python == '3.10' && matrix.os == 'ubuntu-latest'
         uses: "actions/upload-artifact@v3"
         with:
           name: coverage-data
@@ -119,7 +122,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Upgrade pip
         run: |
@@ -151,4 +154,4 @@ jobs:
           nox --session=coverage -- xml
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@v3.1.1
