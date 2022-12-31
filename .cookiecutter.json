@@ -1,0 +1,14 @@
+{
+  "_output_dir": "/Users/jess/Coding/GridWorks/Platform",
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "gridworks",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 2 - Pre-Alpha",
+  "email": "gridworks@gridworks-consulting.com",
+  "friendly_name": "Gridworks AtomicTNode",
+  "github_user": "thegridelectric",
+  "license": "MIT",
+  "package_name": "gwatn",
+  "project_name": "gridworks-atn",
+  "version": "0.0.0"
+}
