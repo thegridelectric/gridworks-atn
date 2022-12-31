@@ -22,7 +22,7 @@
             <FileSetFile>
                     <xsl:element name="RelativePath"><xsl:text>../../../../src/gwatn/api_types.py</xsl:text></xsl:element>
 
-                <OverwriteMode>Never</OverwriteMode>
+                <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
 <xsl:text>
 """ List of all the types used"""
