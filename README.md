@@ -24,9 +24,8 @@
 This is the [GridWorks](https://gridworks.readthedocs.io/) Python SDK for building Atomic Transactive Nodes, or
 [AtomicTNodes](https://gridworks.readthedocs.io/en/latest/atomic-t-node.html>).
 
-An AtomicTNode is a type of [GNodes](https://gridworks.readthedocs.io/en/latest/g-node.html) ("G" for Grid) -
-perhaps the most fun and interesting to build. These cloud-based GNode actors are what make devices
-_transactive_ - each AtomicTNode is dedicated to the job of operating its very own
+AtomicTNodes are the most fun and interesting GridWorks actors to design and build. They are what make electrical devices
+_transactive_. More specifically, each AtomicTNode is dedicated to the job of operating its very own
 [Transactive Device](https://gridworks.readthedocs.io/en/latest/transactive-device.html), and simultaneously bidding on its behalf into electricity markets.
 
 To learn about using this SDK, visit the [Gridworks Atn docs](https://gridworks-atn.readthedocs.io/en/latest/). To explore the rest of GridWorks, visit the [GridWorks docs](https://gridworks.readthedocs.io/en/latest/).
