@@ -1,8 +1,23 @@
 # Gridworks Atn Spaceheat
 
+[![PyPI](https://img.shields.io/pypi/v/gridworks-atn.svg)][pypi_]
+[![Status](https://img.shields.io/pypi/status/gridworks-atn.svg)][status]
+[![Python Version](https://img.shields.io/pypi/pyversions/gridworks-atn)][python version]
+[![License](https://img.shields.io/pypi/l/gridworks-atn)][license]
+
+[![Read the documentation at https://gridworks-atn.readthedocs.io/](https://img.shields.io/readthedocs/gridworks/latest.svg?label=Read%20the%20Docs)][read the docs]
+[![Tests](https://github.com/thegridelectric/gridworks-atn/workflows/Tests/badge.svg)][tests]
+[![Codecov](https://codecov.io/gh/thegridelectric/gridworks-atn/branch/main/graph/badge.svg)][codecov]
+
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
 
+[pypi_]: https://pypi.org/project/gridworks-atn/
+[status]: https://pypi.org/project/gridworks-atn/
+[python version]: https://pypi.org/project/gridworks-atn
+[read the docs]: https://gridworks-atn.readthedocs.io/
+[tests]: https://github.com/thegridelectric/gridworks-atn/actions?workflow=Tests
+[codecov]: https://app.codecov.io/gh/thegridelectric/gridworks-atn
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
