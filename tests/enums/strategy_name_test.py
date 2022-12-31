@@ -3,15 +3,13 @@ from gwatn.enums import StrategyName
 
 
 def test_strategy_name() -> None:
-    assert set(StrategyName.values()) == set(
-        [
-            "NoActor",
-            "WorldA",
-            "SupervisorA",
-            "AtnHeatPumpWithBoostStore",
-            "TcGlobalA",
-            "MarketMakerA",
-        ]
-    )
+    assert set(StrategyName.values()) == {
+        "NoActor",
+        "WorldA",
+        "SupervisorA",
+        "AtnHeatPumpWithBoostStore",
+        "TcGlobalA",
+        "MarketMakerA",
+    }
 
     assert StrategyName.default() == StrategyName.NoActor

@@ -4,11 +4,12 @@ from typing import Any
 from typing import Dict
 from typing import Literal
 
-from gridworks import property_format
 from gridworks.errors import SchemaError
-from gridworks.property_format import predicate_validator
 from pydantic import BaseModel
 from pydantic import validator
+
+from gwatn import property_format
+from gwatn.property_format import predicate_validator
 
 
 class TerminalassetCertifyHack(BaseModel):

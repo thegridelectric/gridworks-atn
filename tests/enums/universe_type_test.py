@@ -3,11 +3,9 @@ from gwatn.enums import UniverseType
 
 
 def test_universe_type() -> None:
-    assert set(UniverseType.values()) == set(
-        [
-            "Dev",
-            "Hybrid",
-        ]
-    )
+    assert set(UniverseType.values()) == {
+        "Dev",
+        "Hybrid",
+    }
 
     assert UniverseType.default() == UniverseType.Dev

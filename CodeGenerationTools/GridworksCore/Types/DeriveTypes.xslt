@@ -90,7 +90,7 @@ from fastapi_utils.enums import StrEnum</xsl:text>
 </xsl:if>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and ((normalize-space(SubTypeDataClass) != '') or (normalize-space(PrimitiveFormat) != ''))]) > 0">
 <xsl:text>
-from gridworks import property_format</xsl:text>
+from gwatn import property_format</xsl:text>
 </xsl:if>
 
 <xsl:if test="MakeDataClass='true'">
@@ -119,7 +119,7 @@ from gwatn.data_classes.</xsl:text>
 
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id) and (IsRequired = 'true') and (IsPrimitive='true') and not (IsList='true') and normalize-space(PrimitiveFormat) != '']) > 0">
 <xsl:text>
-from gridworks.property_format import predicate_validator</xsl:text>
+from gwatn.property_format import predicate_validator</xsl:text>
 </xsl:if>
 <xsl:text>
 from gridworks.errors import SchemaError

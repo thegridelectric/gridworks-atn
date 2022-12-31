@@ -3,12 +3,10 @@ from gwatn.enums import MixingValveFeedbackModel
 
 
 def test_mixing_valve_feedback_model() -> None:
-    assert set(MixingValveFeedbackModel.values()) == set(
-        [
-            "ConstantSwt",
-            "NaiveVariableSwt",
-            "CautiousVariableSwt",
-        ]
-    )
+    assert set(MixingValveFeedbackModel.values()) == {
+        "ConstantSwt",
+        "NaiveVariableSwt",
+        "CautiousVariableSwt",
+    }
 
     assert MixingValveFeedbackModel.default() == MixingValveFeedbackModel.ConstantSwt

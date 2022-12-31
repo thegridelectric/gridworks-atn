@@ -3,12 +3,10 @@ from gwatn.enums import EnergySupplyType
 
 
 def test_energy_supply_type() -> None:
-    assert set(EnergySupplyType.values()) == set(
-        [
-            "Unknown",
-            "StandardOffer",
-            "RealtimeLocalLmp",
-        ]
-    )
+    assert set(EnergySupplyType.values()) == {
+        "Unknown",
+        "StandardOffer",
+        "RealtimeLocalLmp",
+    }
 
     assert EnergySupplyType.default() == EnergySupplyType.Unknown

@@ -7,9 +7,10 @@ from typing import NamedTuple
 from typing import Optional
 from typing import Tuple
 
-import gridworks.property_format as property_format
 import numpy as np
 from gridworks.errors import SchemaError
+
+import gwatn.property_format as property_format
 
 
 class CsvDistpSync(NamedTuple):

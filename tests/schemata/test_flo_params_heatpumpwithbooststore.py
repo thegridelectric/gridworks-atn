@@ -2,6 +2,7 @@
 import json
 
 import pytest
+from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
 from gwatn.enums import DistributionTariff
@@ -10,7 +11,6 @@ from gwatn.enums import EnergySupplyType
 from gwatn.enums import MixingValveFeedbackModel
 from gwatn.enums import RecognizedCurrencyUnit
 from gwatn.enums import RecognizedTemperatureUnit
-from gwatn.errors import SchemaError
 from gwatn.schemata import FloParamsHeatpumpwithbooststore_Maker as Maker
 
 
