@@ -42,7 +42,7 @@ in order to learn how this works.
 
 
 
-To explore the rest of GridWorks, visit the `GridWorks docs <https://gridworks.readthedocs.io/en/latest/>`_
+To explore the rest of GridWorks, visit the `GridWorks docs <https://gridworks.readthedocs.io/en/latest/>`_.
 
 
 

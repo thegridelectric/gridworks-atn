@@ -1748,6 +1748,7 @@
       <FiniteStringSetMembers>recTyArL6Li3xWPx4</FiniteStringSetMembers>
       <FiniteStringSetMembers>receKVsL3pT6iHkAW</FiniteStringSetMembers>
       <FiniteStringSetMembers>recBvWAtxnRxd7bry</FiniteStringSetMembers>
+      <FiniteStringSetMembers>recBTSPLKqojr0im3</FiniteStringSetMembers>
       <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
       <TypesThatUse>rec8uTC7GK5qgXzg9</TypesThatUse>
       <Version>000</Version>
@@ -2350,6 +2351,16 @@
       <DisplayName>spaceheat.telemetry.name.000__WaterTempFTimes1000</DisplayName>
     </EnumSymbol>
     <EnumSymbol>
+      <EnumSymbolId>recBTSPLKqojr0im3</EnumSymbolId>
+      <createdTime>2022-12-31T22:46:22Z</createdTime>
+      <Symbol>db57d184</Symbol>
+      <Idx>12</Idx>
+      <Version>000</Version>
+      <LocalValue>AggregatedTNode</LocalValue>
+      <Enum>recZB6uJDEaCzvTZX</Enum>
+      <DisplayName>g.node.role.000__AggregatedTNode</DisplayName>
+    </EnumSymbol>
+    <EnumSymbol>
       <EnumSymbolId>recBUljA6RHgKD5H9</EnumSymbolId>
       <createdTime>2022-06-03T22:00:44Z</createdTime>
       <Symbol>f6a567c9</Symbol>
@@ -2936,6 +2947,7 @@
       <Enum>rec7qsokBmd2hN5vT</Enum>
       <DisplayName>component.category.000__Generator</DisplayName>
     </EnumSymbol>
+    <EnumSymbol>itrlgTVEyhudxuh9r/recQH1y9oFoMDcnsd</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recQVMwz6qwFEr9n8</EnumSymbolId>
       <createdTime>2022-07-15T17:12:47Z</createdTime>
@@ -2945,7 +2957,6 @@
       <Enum>rec6tWfTKE5P1Yoa0</Enum>
       <DisplayName>spaceheat.node.role.000__RadiatorFan</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrI9DCKqugu1eYmK/recQVMwz6qwFEr9n8</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recQaKnbC0w5e4KS9</EnumSymbolId>
       <createdTime>2022-07-15T17:12:23Z</createdTime>
@@ -3856,6 +3867,7 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <LocalValue>DedicatedThermalStore</LocalValue>
       <DisplayName>__DedicatedThermalStore</DisplayName>
     </EnumSymbol>
+    <EnumSymbol>itrlgTVEyhudxuh9r/recq3XELpgNTZptBh</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recqLabDaSMQ5uIPL</EnumSymbolId>
       <createdTime>2022-06-03T22:00:36Z</createdTime>
@@ -3863,7 +3875,6 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <LocalValue>HydronicPipe</LocalValue>
       <DisplayName>__HydronicPipe</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrI9DCKqugu1eYmK/recqLabDaSMQ5uIPL</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recqZ8LSzlPWUPcKF</EnumSymbolId>
       <createdTime>2022-08-01T12:19:44Z</createdTime>
@@ -4669,6 +4680,7 @@ If a GNode is Active, its parent GNode MUST ALSO be active.</Description>
       <SchemaRoot>recERKCcoJa8mkC8L</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recYSfcJBIVxFIWCZ</ProtocolTypes>
+      <ProtocolTypes>recCqC0KKS00693kw</ProtocolTypes>
       <Alias>initial.tadeed.algo.optin.001</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -4981,6 +4993,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaRoot>recde7ZQpg5BRpHxm</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recPRrjd1GyqOVHIZ</ProtocolTypes>
+      <ProtocolTypes>recbN7L6MH925xDby</ProtocolTypes>
       <Alias>old.tadeed.algo.return.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -5249,6 +5262,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaRoot>recTSdWeNPEKAZuAP</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recQItJExa3ZiV3Jh</ProtocolTypes>
+      <ProtocolTypes>reckwTitpkjc24FAx</ProtocolTypes>
       <Alias>new.tadeed.send.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -6552,6 +6566,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Axioms>rechGHjDdnbThfv1R</Axioms>
       <Axioms>recBWcnuqdt9wzynI</Axioms>
       <ProtocolTypes>rec9HUzZ3tgJOalLk</ProtocolTypes>
+      <ProtocolTypes>recAO8C6pnLKe00p1</ProtocolTypes>
       <Alias>new.tadeed.algo.optin.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -8254,7 +8269,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubTypeDataClass>BaseGNode</SubTypeDataClass>
       <SubMessageFormatAliasRoot>basegnode.gt</SubMessageFormatAliasRoot>
     </SchemaAttribute>
-    <SchemaAttribute>itr1dxjXU2IMe7fJW/recCuVGEIt5PtitBs</SchemaAttribute>
+    <SchemaAttribute>itr6P6eE1b2dF9gcb/recCuVGEIt5PtitBs</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recCyeOy0hRRYAvoc</SchemaAttributeId>
       <createdTime>2022-07-05T12:57:13Z</createdTime>
@@ -9634,7 +9649,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itr1dxjXU2IMe7fJW/recLeFRJhQzSaEqF9</SchemaAttribute>
+    <SchemaAttribute>itr6P6eE1b2dF9gcb/recLeFRJhQzSaEqF9</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recLfb3AjS6LNracR</SchemaAttributeId>
       <createdTime>2022-07-12T18:12:46Z</createdTime>
@@ -11084,7 +11099,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itr1dxjXU2IMe7fJW/recW0NRRevzaIKzIT</SchemaAttribute>
+    <SchemaAttribute>itr6P6eE1b2dF9gcb/recW0NRRevzaIKzIT</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recW0pfyJkVdjaRTY</SchemaAttributeId>
       <createdTime>2022-06-04T19:22:47Z</createdTime>
@@ -12465,7 +12480,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
     </SchemaAttribute>
-    <SchemaAttribute>itr1dxjXU2IMe7fJW/rechtGIFRjENiH3Cv</SchemaAttribute>
+    <SchemaAttribute>itr6P6eE1b2dF9gcb/rechtGIFRjENiH3Cv</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rechysRxaDzIfMVDw</SchemaAttributeId>
       <createdTime>2022-11-08T17:27:10Z</createdTime>
@@ -13879,7 +13894,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itr1dxjXU2IMe7fJW/rectMt3G7nhz2ujs5</SchemaAttribute>
+    <SchemaAttribute>itr6P6eE1b2dF9gcb/rectMt3G7nhz2ujs5</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recuB9KYdZDBm0dal</SchemaAttributeId>
       <createdTime>2022-12-02T17:51:16Z</createdTime>
@@ -15585,6 +15600,10 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolTypes>recfLzamGrtSF52cT</ProtocolTypes>
       <ProtocolTypes>recGSPzbsyt0nPa5B</ProtocolTypes>
       <ProtocolTypes>recSxY4F5Ewetp9tW</ProtocolTypes>
+      <ProtocolTypes>recCqC0KKS00693kw</ProtocolTypes>
+      <ProtocolTypes>recAO8C6pnLKe00p1</ProtocolTypes>
+      <ProtocolTypes>reckwTitpkjc24FAx</ProtocolTypes>
+      <ProtocolTypes>recbN7L6MH925xDby</ProtocolTypes>
       <Name>atn</Name>
       <ProtocolEnums>recLjDrJSnNnwWD54</ProtocolEnums>
       <ProtocolEnums>recRncRvdA6tysnAt</ProtocolEnums>
@@ -15748,7 +15767,6 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <Protocol>
       <ProtocolId>recvaW2RuHMh5mwwR</ProtocolId>
       <createdTime>2022-12-31T12:58:01Z</createdTime>
-      <Name>newatn</Name>
       <ProtocolTypes>recB57YfEtBGpfH71</ProtocolTypes>
       <ProtocolTypes>recZBrVC3qx5dJ9B0</ProtocolTypes>
       <ProtocolTypes>rec2D8QrI2Tps74Ce</ProtocolTypes>
@@ -15761,6 +15779,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolTypes>rec9jyOwhibLuECVH</ProtocolTypes>
       <ProtocolTypes>rec86XZBf9WnCg5bX</ProtocolTypes>
       <ProtocolTypes>recSENoEtLHiKubGR</ProtocolTypes>
+      <Name>newatn</Name>
     </Protocol>
   </Protocols>
   <ProtocolTypes>
@@ -15830,11 +15849,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>rec2D8QrI2Tps74Ce</ProtocolTypeId>
       <createdTime>2022-12-27T16:00:31Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>reckjdX6D9rVXnUVC</Type>
       <Name>newatn electric.meter.cac.gt.000</Name>
-      <TypeName>electric.meter.cac.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>electric.meter.cac.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec2Gvd8Nt7DvqTpf</ProtocolTypeId>
@@ -15911,11 +15930,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>rec86XZBf9WnCg5bX</ProtocolTypeId>
       <createdTime>2022-12-27T16:04:50Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recrnRklRws6Txbqr</Type>
       <Name>newatn snapshot.spaceheat.000</Name>
-      <TypeName>snapshot.spaceheat.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>snapshot.spaceheat.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec8cREVO03dOhbWy</ProtocolTypeId>
@@ -15943,11 +15962,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>rec9jyOwhibLuECVH</ProtocolTypeId>
       <createdTime>2022-12-27T15:58:16Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recDjO3rdq76LMOoL</Type>
       <Name>newatn resistive.heater.component.gt.000</Name>
-      <TypeName>resistive.heater.component.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>resistive.heater.component.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec9y2OWDqjR6vSAp</ProtocolTypeId>
@@ -15986,6 +16005,15 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>heartbeat.a.001</TypeName>
     </ProtocolType>
     <ProtocolType>
+      <ProtocolTypeId>recAO8C6pnLKe00p1</ProtocolTypeId>
+      <createdTime>2022-12-31T23:50:23Z</createdTime>
+      <Name>atn new.tadeed.algo.optin.000</Name>
+      <Protocol>rec3nJaxOMLIKJoNY</Protocol>
+      <ProtocolName>atn</ProtocolName>
+      <Type>recvWBuo1Ws1SIL4b</Type>
+      <TypeName>new.tadeed.algo.optin.000</TypeName>
+    </ProtocolType>
+    <ProtocolType>
       <ProtocolTypeId>recASxd0yY7a1nWR4</ProtocolTypeId>
       <createdTime>2022-11-06T20:36:28Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
@@ -16015,11 +16043,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recB57YfEtBGpfH71</ProtocolTypeId>
       <createdTime>2022-12-27T15:56:38Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>reca2LF7P05qQmFJW</Type>
       <Name>newatn boolean.actuator.cac.gt.000</Name>
-      <TypeName>boolean.actuator.cac.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>boolean.actuator.cac.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recCLW1iXAhVHGoUm</ProtocolTypeId>
@@ -16029,6 +16057,15 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf sla.enter.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>sla.enter.000</TypeName>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recCqC0KKS00693kw</ProtocolTypeId>
+      <createdTime>2022-12-31T23:49:59Z</createdTime>
+      <Name>atn initial.tadeed.algo.optin.001</Name>
+      <Protocol>rec3nJaxOMLIKJoNY</Protocol>
+      <ProtocolName>atn</ProtocolName>
+      <Type>recAWKkS0hcyws7O6</Type>
+      <TypeName>initial.tadeed.algo.optin.001</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recCuch3XtEssNGuu</ProtocolTypeId>
@@ -16106,11 +16143,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recGk4c4hm4Ng97pB</ProtocolTypeId>
       <createdTime>2022-12-27T15:43:20Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recTZ13dEbwrKazkL</Type>
       <Name>newatn gt.dispatch.boolean.100</Name>
-      <TypeName>gt.dispatch.boolean.100</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>gt.dispatch.boolean.100</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recGpv7lXS5nQj5jR</ProtocolTypeId>
@@ -16312,6 +16349,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>new.tadeed.send.000</TypeName>
     </ProtocolType>
     <ProtocolType>
+      <ProtocolTypeId>recR0I6YDYPnvPeTV</ProtocolTypeId>
+      <createdTime>2022-12-31T23:50:21Z</createdTime>
+      <Name></Name>
+    </ProtocolType>
+    <ProtocolType>
       <ProtocolTypeId>recRLpRImAACQhmSj</ProtocolTypeId>
       <createdTime>2022-11-21T14:53:28Z</createdTime>
       <Protocol>rec2J6tKssVJwVmFd</Protocol>
@@ -16323,11 +16365,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recSENoEtLHiKubGR</ProtocolTypeId>
       <createdTime>2022-12-27T16:04:36Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recdNEAMkZeOLS8Vo</Type>
       <Name>newatn telemetry.snapshot.spaceheat.000</Name>
-      <TypeName>telemetry.snapshot.spaceheat.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>telemetry.snapshot.spaceheat.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recSEzthAkF4L0on3</ProtocolTypeId>
@@ -16400,11 +16442,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recWQ4qoe36jdvDDu</ProtocolTypeId>
       <createdTime>2022-12-27T16:00:54Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>rec4MOmfHutZVLMYz</Type>
       <Name>newatn electric.meter.component.gt.000</Name>
-      <TypeName>electric.meter.component.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>electric.meter.component.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recY4ZPVnAi4v6y0i</ProtocolTypeId>
@@ -16450,11 +16492,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recZBrVC3qx5dJ9B0</ProtocolTypeId>
       <createdTime>2022-12-27T15:55:43Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recPbLemXyDnvKcIc</Type>
       <Name>newatn boolean.actuator.component.gt.000</Name>
-      <TypeName>boolean.actuator.component.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>boolean.actuator.component.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZCRfLe9nDmrRAU</ProtocolTypeId>
@@ -16482,6 +16524,15 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>atn latest.price.000</Name>
       <ProtocolName>atn</ProtocolName>
       <TypeName>latest.price.000</TypeName>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recbN7L6MH925xDby</ProtocolTypeId>
+      <createdTime>2022-12-31T23:51:04Z</createdTime>
+      <Name>atn old.tadeed.algo.return.000</Name>
+      <Protocol>rec3nJaxOMLIKJoNY</Protocol>
+      <ProtocolName>atn</ProtocolName>
+      <Type>recMyDdiQjtfTMAP1</Type>
+      <TypeName>old.tadeed.algo.return.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbV3eBvST23mHgN</ProtocolTypeId>
@@ -16549,11 +16600,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>rece0jNAI2D1qrYj7</ProtocolTypeId>
       <createdTime>2022-12-27T16:02:17Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recGuvhjDYO65d5rP</Type>
       <Name>newatn pipe.flow.sensor.component.gt.000</Name>
-      <TypeName>pipe.flow.sensor.component.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>pipe.flow.sensor.component.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recfLzamGrtSF52cT</ProtocolTypeId>
@@ -16600,6 +16651,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolName>scada</ProtocolName>
       <TypeName>electric.meter.cac.gt.000</TypeName>
     </ProtocolType>
+    <ProtocolType>itrejoMVESc1BwMUW/rechF5mJ2nH8ZB9Vn</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reci2IGqh2kbuZxSa</ProtocolTypeId>
       <createdTime>2022-12-27T19:14:22Z</createdTime>
@@ -16636,7 +16688,6 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>sim.timestep.000</TypeName>
     </ProtocolType>
-    <ProtocolType>itrTQLVi0az0lo3Bb/reciXeCa9g1WrIc02</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recianedmKDqWVh0O</ProtocolTypeId>
       <createdTime>2022-11-21T05:23:50Z</createdTime>
@@ -16649,11 +16700,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recjg4AvSyxIiItff</ProtocolTypeId>
       <createdTime>2022-12-27T16:01:54Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recmVKHF3ugtUOYrz</Type>
       <Name>newatn pipe.flow.sensor.cac.gt.000</Name>
-      <TypeName>pipe.flow.sensor.cac.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>pipe.flow.sensor.cac.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reckr1EbtWVGkY1KM</ProtocolTypeId>
@@ -16663,6 +16714,15 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks super.starter.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>super.starter.000</TypeName>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>reckwTitpkjc24FAx</ProtocolTypeId>
+      <createdTime>2022-12-31T23:50:46Z</createdTime>
+      <Name>atn new.tadeed.send.000</Name>
+      <Protocol>rec3nJaxOMLIKJoNY</Protocol>
+      <ProtocolName>atn</ProtocolName>
+      <Type>recPy6SuizSerb3JG</Type>
+      <TypeName>new.tadeed.send.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recl5eLv36HJnILWJ</ProtocolTypeId>
@@ -16829,20 +16889,20 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recuqYXBpW9rcXrKC</ProtocolTypeId>
       <createdTime>2022-12-27T15:57:28Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>rec2m06PsjtFd0cfu</Type>
       <Name>newatn resistive.heater.cac.gt.000</Name>
-      <TypeName>resistive.heater.cac.gt.000</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>resistive.heater.cac.gt.000</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recuxGhKEXF5Edw2W</ProtocolTypeId>
       <createdTime>2022-12-27T16:03:06Z</createdTime>
+      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <Type>recQVDSRdSrYEHimS</Type>
       <Name>newatn gt.sh.cli.atn.cmd.110</Name>
-      <TypeName>gt.sh.cli.atn.cmd.110</TypeName>
-      <Protocol>recvaW2RuHMh5mwwR</Protocol>
       <ProtocolName>newatn</ProtocolName>
+      <TypeName>gt.sh.cli.atn.cmd.110</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recvb41OOfKOcXySK</ProtocolTypeId>

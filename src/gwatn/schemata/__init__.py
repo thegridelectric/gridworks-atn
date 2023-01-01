@@ -36,6 +36,8 @@ from gwatn.schemata.g_node_instance_gt import GNodeInstanceGt
 from gwatn.schemata.g_node_instance_gt import GNodeInstanceGt_Maker
 from gwatn.schemata.heartbeat_a import HeartbeatA
 from gwatn.schemata.heartbeat_a import HeartbeatA_Maker
+from gwatn.schemata.initial_tadeed_algo_optin import InitialTadeedAlgoOptin
+from gwatn.schemata.initial_tadeed_algo_optin import InitialTadeedAlgoOptin_Maker
 from gwatn.schemata.latest_price import LatestPrice
 from gwatn.schemata.latest_price import LatestPrice_Maker
 from gwatn.schemata.market_price import MarketPrice
@@ -44,6 +46,12 @@ from gwatn.schemata.market_slot import MarketSlot
 from gwatn.schemata.market_slot import MarketSlot_Maker
 from gwatn.schemata.market_type_gt import MarketTypeGt
 from gwatn.schemata.market_type_gt import MarketTypeGt_Maker
+from gwatn.schemata.new_tadeed_algo_optin import NewTadeedAlgoOptin
+from gwatn.schemata.new_tadeed_algo_optin import NewTadeedAlgoOptin_Maker
+from gwatn.schemata.new_tadeed_send import NewTadeedSend
+from gwatn.schemata.new_tadeed_send import NewTadeedSend_Maker
+from gwatn.schemata.old_tadeed_algo_return import OldTadeedAlgoReturn
+from gwatn.schemata.old_tadeed_algo_return import OldTadeedAlgoReturn_Maker
 from gwatn.schemata.price_quantity import PriceQuantity
 from gwatn.schemata.price_quantity import PriceQuantity_Maker
 from gwatn.schemata.price_quantity_unitless import PriceQuantityUnitless
@@ -83,6 +91,8 @@ __all__ = [
     "GNodeInstanceGt_Maker",
     "HeartbeatA",
     "HeartbeatA_Maker",
+    "InitialTadeedAlgoOptin",
+    "InitialTadeedAlgoOptin_Maker",
     "LatestPrice",
     "LatestPrice_Maker",
     "MarketPrice",
@@ -91,6 +101,12 @@ __all__ = [
     "MarketSlot_Maker",
     "MarketTypeGt",
     "MarketTypeGt_Maker",
+    "NewTadeedAlgoOptin",
+    "NewTadeedAlgoOptin_Maker",
+    "NewTadeedSend",
+    "NewTadeedSend_Maker",
+    "OldTadeedAlgoReturn",
+    "OldTadeedAlgoReturn_Maker",
     "PriceQuantity",
     "PriceQuantity_Maker",
     "PriceQuantityUnitless",
