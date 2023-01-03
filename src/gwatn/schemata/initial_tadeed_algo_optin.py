@@ -4,6 +4,7 @@ from typing import Any
 from typing import Dict
 from typing import Literal
 
+from algosdk import encoding
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
@@ -54,13 +55,13 @@ class InitialTadeedAlgoOptin(BaseModel):
     @root_validator(pre=True)
     def _axiom_1(cls, v) -> Any:
         """Axiom 1 (SignedTransaction) Decoded SignedInitialDaemonFundingTxn must have type SignedTransaction"""
-        SignedTaDeedCreationTxn = v.get("SignedInitialDaemonFundingTxn", None)
-        if not property_format.is_algo_msg_pack_encoded(SignedTaDeedCreationTxn):
+        SignedInitialDaemonFundingTxn = v.get("SignedInitialDaemonFundingTxn", None)
+        if not property_format.is_algo_msg_pack_encoded(SignedInitialDaemonFundingTxn):
             raise ValueError(
                 f"SignedInitialDaemonFundingTxn: is_algo_msg_pack_encoded fails for [{SignedInitialDaemonFundingTxn}]"
             )
-        txn = encoding.future_msgpack_decode(SignedTaDeedCreationTxn)
-        if not isinstance(txn, SignedTaDeedCreationTxn):
+        txn = encoding.future_msgpack_decode(SignedInitialDaemonFundingTxn)
+        if not isinstance(txn, SignedInitialDaemonFundingTxn):
             raise ValueError(
                 "Axiom 1 (SignedTransaction): "
                 "Decoded SignedInitialDaemonFundingTxn must have type SignedTransaction"
