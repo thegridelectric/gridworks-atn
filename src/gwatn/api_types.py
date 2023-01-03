@@ -13,14 +13,19 @@ from gwatn.schemata import FloParamsHeatpumpwithbooststore_Maker
 from gwatn.schemata import GNodeGt_Maker
 from gwatn.schemata import GNodeInstanceGt_Maker
 from gwatn.schemata import HeartbeatA_Maker
+from gwatn.schemata import InitialTadeedAlgoOptin_Maker
 from gwatn.schemata import LatestPrice_Maker
 from gwatn.schemata import MarketPrice_Maker
 from gwatn.schemata import MarketSlot_Maker
 from gwatn.schemata import MarketTypeGt_Maker
+from gwatn.schemata import NewTadeedAlgoOptin_Maker
+from gwatn.schemata import NewTadeedSend_Maker
+from gwatn.schemata import OldTadeedAlgoReturn_Maker
 from gwatn.schemata import PriceQuantity_Maker
 from gwatn.schemata import PriceQuantityUnitless_Maker
 from gwatn.schemata import Ready_Maker
 from gwatn.schemata import SimTimestep_Maker
+from gwatn.schemata import SlaEnter_Maker
 from gwatn.schemata import SuperStarter_Maker
 from gwatn.schemata import SupervisorContainerGt_Maker
 from gwatn.schemata import TadeedSpecsHack_Maker
@@ -43,14 +48,19 @@ def type_makers() -> List[HeartbeatA_Maker]:
         GNodeGt_Maker,
         GNodeInstanceGt_Maker,
         HeartbeatA_Maker,
+        InitialTadeedAlgoOptin_Maker,
         LatestPrice_Maker,
         MarketPrice_Maker,
         MarketSlot_Maker,
         MarketTypeGt_Maker,
+        NewTadeedAlgoOptin_Maker,
+        NewTadeedSend_Maker,
+        OldTadeedAlgoReturn_Maker,
         PriceQuantity_Maker,
         PriceQuantityUnitless_Maker,
         Ready_Maker,
         SimTimestep_Maker,
+        SlaEnter_Maker,
         SuperStarter_Maker,
         SupervisorContainerGt_Maker,
         TadeedSpecsHack_Maker,
@@ -79,14 +89,19 @@ def version_by_type_name() -> Dict[str, str]:
         "g.node.gt": "000",
         "g.node.instance.gt": "000",
         "heartbeat.a": "001",
+        "initial.tadeed.algo.optin": "002",
         "latest.price": "000",
         "market.price": "000",
         "market.slot": "000",
         "market.type.gt": "000",
+        "new.tadeed.algo.optin": "000",
+        "new.tadeed.send": "000",
+        "old.tadeed.algo.return": "000",
         "price.quantity": "000",
         "price.quantity.unitless": "000",
         "ready": "001",
         "sim.timestep": "000",
+        "sla.enter": "000",
         "super.starter": "000",
         "supervisor.container.gt": "000",
         "tadeed.specs.hack": "000",
@@ -113,14 +128,19 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "g.node.gt.000": "Pending",
         "g.node.instance.gt.000": "Pending",
         "heartbeat.a.001": "Pending",
+        "initial.tadeed.algo.optin.002": "Pending",
         "latest.price.000": "Pending",
         "market.price.000": "Pending",
         "market.slot.000": "Pending",
         "market.type.gt.000": "Pending",
+        "new.tadeed.algo.optin.000": "Pending",
+        "new.tadeed.send.000": "Pending",
+        "old.tadeed.algo.return.000": "Pending",
         "price.quantity.000": "Pending",
         "price.quantity.unitless.000": "Pending",
         "ready.001": "Pending",
         "sim.timestep.000": "Pending",
+        "sla.enter.000": "Pending",
         "super.starter.000": "Pending",
         "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",

@@ -583,7 +583,7 @@ test = ["faulthandler", "objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.0.5"
+version = "0.0.6"
 description = "Gridworks"
 category = "main"
 optional = false
@@ -2109,7 +2109,7 @@ tests-strict = ["cmake (==3.21.2)", "codecov (==2.0.15)", "ninja (==1.10.2)", "p
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "960ed88840a16b671d92a3f43ec99f03c10d764e4fa0cc8112889ec121f7b964"
+content-hash = "4bf010131f3acef0c31a61d1d80718599c1dc3f0bbd52419db458a975d321959"
 
 [metadata.files]
 aiocache = [
@@ -2501,8 +2501,8 @@ greenlet = [
     {file = "greenlet-2.0.1.tar.gz", hash = "sha256:42e602564460da0e8ee67cb6d7236363ee5e131aa15943b6670e44e5c2ed0f67"},
 ]
 gridworks = [
-    {file = "gridworks-0.0.5-py3-none-any.whl", hash = "sha256:b8fca5cd13a9b038d58ad27f6c0909cfaf212c6fad999b470eacc15d160cee61"},
-    {file = "gridworks-0.0.5.tar.gz", hash = "sha256:d667cbe5644e7cf857d33da9622923e676294148d191938717beb9ff51133b5e"},
+    {file = "gridworks-0.0.6-py3-none-any.whl", hash = "sha256:4a14e66af6dfaacd9c9d3b3025d36bc405e709bf7f46ba931d384153f846abc6"},
+    {file = "gridworks-0.0.6.tar.gz", hash = "sha256:fbe8d6ef4f00e220fbccf3eb7cb1af4b4ee6110dbef3a272a0a3a0c66b7d1605"},
 ]
 gridworks-protocol = [
     {file = "gridworks_protocol-0.1.6-py3-none-any.whl", hash = "sha256:0762ca056c930d5705ffe5a397d114b39ef2ac122962b09855247298e60bdd42"},

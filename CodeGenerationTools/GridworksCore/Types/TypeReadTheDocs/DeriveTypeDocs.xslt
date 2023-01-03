@@ -55,7 +55,7 @@ GridWorks Atn Schemata
     <xsl:with-param name="mp-schema-text" select="AliasRoot" />
 </xsl:call-template>
   <xsl:text>
-    &#3a; members &#3a;
+    members
 
 </xsl:text>
 

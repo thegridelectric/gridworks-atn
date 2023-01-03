@@ -1,23 +1,21 @@
 import logging
 from typing import List
-from typing import Optional
 
 import dotenv
-import gnf.config as config
 import gridworks.algo_utils as algo_utils
 import gridworks.api_utils as api_utils
 from algosdk import encoding
 from algosdk.future import transaction
 from algosdk.v2client.algod import AlgodClient
-from gnf.algo_utils import BasicAccount
-from gnf.schemata import InitialTadeedAlgoOptin
-from gnf.schemata import NewTadeedAlgoOptin
-from gnf.schemata import NewTadeedSend
-from gnf.schemata import NewTadeedSend_Maker
-from gnf.schemata import OldTadeedAlgoReturn
-from gnf.schemata import SlaEnter
-from gnf.utils import RestfulResponse
-from pydantic import SecretStr
+from gridworks.algo_utils import BasicAccount
+from gridworks.utils import RestfulResponse
+
+import gwatn.config as config
+from gwatn.schemata import InitialTadeedAlgoOptin
+from gwatn.schemata import NewTadeedAlgoOptin
+from gwatn.schemata import NewTadeedSend_Maker
+from gwatn.schemata import OldTadeedAlgoReturn
+from gwatn.schemata import SlaEnter
 
 
 LOGGER = logging.getLogger(__name__)

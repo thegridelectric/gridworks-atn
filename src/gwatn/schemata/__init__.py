@@ -60,6 +60,8 @@ from gwatn.schemata.ready import Ready
 from gwatn.schemata.ready import Ready_Maker
 from gwatn.schemata.sim_timestep import SimTimestep
 from gwatn.schemata.sim_timestep import SimTimestep_Maker
+from gwatn.schemata.sla_enter import SlaEnter
+from gwatn.schemata.sla_enter import SlaEnter_Maker
 from gwatn.schemata.super_starter import SuperStarter
 from gwatn.schemata.super_starter import SuperStarter_Maker
 from gwatn.schemata.supervisor_container_gt import SupervisorContainerGt
@@ -115,6 +117,8 @@ __all__ = [
     "Ready_Maker",
     "SimTimestep",
     "SimTimestep_Maker",
+    "SlaEnter",
+    "SlaEnter_Maker",
     "SuperStarter",
     "SuperStarter_Maker",
     "SupervisorContainerGt",

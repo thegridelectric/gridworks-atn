@@ -1,14 +1,13 @@
-import os
-
+"""The Rest API wrapper for the TaDaemon Smart Contract"""
 from fastapi import FastAPI
 from fastapi import HTTPException
-from fastapi.responses import FileResponse
-from gnf.python_ta_daemon import PythonTaDaemon
-from gnf.schemata import InitialTadeedAlgoOptin
-from gnf.schemata import NewTadeedAlgoOptin
-from gnf.schemata import OldTadeedAlgoReturn
-from gnf.schemata import SlaEnter
-from gnf.utils import RestfulResponse
+from gridworks.utils import RestfulResponse
+
+from gwatn.python_ta_daemon import PythonTaDaemon
+from gwatn.schemata import InitialTadeedAlgoOptin
+from gwatn.schemata import NewTadeedAlgoOptin
+from gwatn.schemata import OldTadeedAlgoReturn
+from gwatn.schemata import SlaEnter
 
 
 app = FastAPI()
@@ -22,9 +21,9 @@ daemon = PythonTaDaemon()
 #         return FileResponse("docs/wiki/img/mushroom.png", media_type="image/png")
 
 
-@app.get("/icon/")
-async def main():
-    return daemon.ta_deed_icon_file
+# @app.get("/icon/")
+# async def main():
+#     return daemon.ta_deed_icon_file
 
 
 @app.get("/owned-tadeeds/")

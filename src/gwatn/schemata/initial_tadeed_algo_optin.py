@@ -1,4 +1,4 @@
-"""Type initial.tadeed.algo.optin, version 001"""
+"""Type initial.tadeed.algo.optin, version 002"""
 import json
 from typing import Any
 from typing import Dict
@@ -6,6 +6,8 @@ from typing import Literal
 
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
+from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
 
 from gwatn import property_format
@@ -13,13 +15,25 @@ from gwatn.property_format import predicate_validator
 
 
 class InitialTadeedAlgoOptin(BaseModel):
-    TerminalAssetAlias: str  #
-    TaOwnerAddr: str  #
-    ValidatorAddr: str  #
-    SignedInitialDaemonFundingTxn: str  #
-    TaDaemonPrivateKey: str  #
-    TypeName: Literal["initial.tadeed.algo.optin"] = "initial.tadeed.algo.optin"
-    Version: str = "001"
+    TerminalAssetAlias: str = Field(
+        title="TerminalAssetAlias", description="A STRANGE KANGAROO."
+    )  #
+    TaOwnerAddr: str = Field(
+        title="TaOwnerAddr",
+        description="The GNodeAlias of the TerminalAsset owned by the TaOwner.",
+    )  #
+    ValidatorAddr: str = Field(
+        title="ValidatorAddr",
+        description="The Algorand address for the Validator of the TerminalAsset.",
+    )  #
+    SignedInitialDaemonFundingTxn: str = Field(
+        title="SignedInitialDaemonFundingTxn",
+        description="Funding transaction for the TaDaemon account, signed by the TaOwner.",
+    )  #
+    TypeName: Literal["initial.tadeed.algo.optin"] = Field(
+        eq="initial.tadeed.algo.optin"
+    )
+    Version: str = "002"
 
     _validator_terminal_asset_alias = predicate_validator(
         "TerminalAssetAlias", property_format.is_lrd_alias_format
@@ -37,6 +51,23 @@ class InitialTadeedAlgoOptin(BaseModel):
         "SignedInitialDaemonFundingTxn", property_format.is_algo_msg_pack_encoded
     )
 
+    @root_validator(pre=True)
+    def _axiom_1(cls, v) -> Any:
+        """Axiom 1 (SignedTransaction) Decoded SignedInitialDaemonFundingTxn must have type SignedTransaction"""
+        SignedTaDeedCreationTxn = v.get("SignedInitialDaemonFundingTxn", None)
+        if not property_format.is_algo_msg_pack_encoded(SignedTaDeedCreationTxn):
+            raise ValueError(
+                f"SignedInitialDaemonFundingTxn: is_algo_msg_pack_encoded fails for [{SignedInitialDaemonFundingTxn}]"
+            )
+        txn = encoding.future_msgpack_decode(SignedTaDeedCreationTxn)
+        if not isinstance(txn, SignedTaDeedCreationTxn):
+            raise ValueError(
+                "Axiom 1 (SignedTransaction): "
+                "Decoded SignedInitialDaemonFundingTxn must have type SignedTransaction"
+                f", got {type(txn)}"
+            )
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
         return d
@@ -47,7 +78,7 @@ class InitialTadeedAlgoOptin(BaseModel):
 
 class InitialTadeedAlgoOptin_Maker:
     type_name = "initial.tadeed.algo.optin"
-    version = "001"
+    version = "002"
 
     def __init__(
         self,
@@ -55,14 +86,12 @@ class InitialTadeedAlgoOptin_Maker:
         ta_owner_addr: str,
         validator_addr: str,
         signed_initial_daemon_funding_txn: str,
-        ta_daemon_private_key: str,
     ):
         self.tuple = InitialTadeedAlgoOptin(
             TerminalAssetAlias=terminal_asset_alias,
             TaOwnerAddr=ta_owner_addr,
             ValidatorAddr=validator_addr,
             SignedInitialDaemonFundingTxn=signed_initial_daemon_funding_txn,
-            TaDaemonPrivateKey=ta_daemon_private_key,
             #
         )
 
@@ -91,8 +120,6 @@ class InitialTadeedAlgoOptin_Maker:
             raise SchemaError(f"dict {d2} missing ValidatorAddr")
         if "SignedInitialDaemonFundingTxn" not in d2.keys():
             raise SchemaError(f"dict {d2} missing SignedInitialDaemonFundingTxn")
-        if "TaDaemonPrivateKey" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing TaDaemonPrivateKey")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -101,7 +128,6 @@ class InitialTadeedAlgoOptin_Maker:
             TaOwnerAddr=d2["TaOwnerAddr"],
             ValidatorAddr=d2["ValidatorAddr"],
             SignedInitialDaemonFundingTxn=d2["SignedInitialDaemonFundingTxn"],
-            TaDaemonPrivateKey=d2["TaDaemonPrivateKey"],
             TypeName=d2["TypeName"],
-            Version="001",
+            Version="002",
         )
