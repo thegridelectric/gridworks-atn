@@ -10,7 +10,19 @@ from gwatn.schemata import OldTadeedAlgoReturn
 from gwatn.schemata import SlaEnter
 
 
-app = FastAPI()
+tags_metadata = [
+    {
+        "name": "initial.tadeed.algo.optin",
+        "description": "Request TaDaemon to opt into the first TaDeed for its TerminalAsset. "
+        "Must be sent by the TaOwner.",
+        "externalDocs": {
+            "description": "Lexicon w definitions of TaDaemon, TaDeed, TerminalAsset, TaOwner",
+            "url": "https://gridworks.readthedocs.io/en/latest/lexicon.html",
+        },
+    },
+]
+
+app = FastAPI(openapi_tags=tags_metadata)
 daemon = PythonTaDaemon()
 
 # @app.get("/", response_class=FileResponse)
@@ -44,7 +56,11 @@ async def show_env():
     return daemon.settings
 
 
-@app.post("/initial-tadeed-algo-optin/", response_model=RestfulResponse)
+@app.post(
+    "/initial-tadeed-algo-optin/",
+    response_model=RestfulResponse,
+    tags=["initial.tadeed.algo.optin"],
+)
 async def initial_tadeed_algo_optin_received(payload: InitialTadeedAlgoOptin):
     r = daemon.initial_tadeed_algo_optin_received(payload)
     if r.HttpStatusCode > 200:

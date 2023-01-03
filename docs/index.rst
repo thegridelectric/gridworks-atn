@@ -47,7 +47,7 @@ To explore the rest of GridWorks, visit the `GridWorks docs <https://gridworks.r
 
 
 Installation
-^^^^^^^^^^^
+^^^^^^^^^^^^
 
 .. note::
     gridworks-atn requires python 3.10 or higher.

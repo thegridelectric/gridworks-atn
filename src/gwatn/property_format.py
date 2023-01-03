@@ -56,8 +56,6 @@ def is_algo_address_string_format(candidate: str) -> bool:
     """The public key of a private/public Ed25519 key pairis transformed into an Algorand address,
     by adding a 4-byte checksum to the end of the public key and then encoding it
     in base32.
-
-    Args:
         candidate (str): candidate
 
     Returns:
