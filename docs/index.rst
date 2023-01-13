@@ -57,41 +57,33 @@ Installation
 
     (venv)$ pip install gridworks-atn
 
-.. toctree::
-    :hidden:
-    :maxdepth: 2
-    :caption: Validation
-
-    TaDeeds <tadeed>
-    TradingRights <trading-rights>
-    TaDaemon <tadaemon>
-
-
-.. toctree::
-    :hidden:
-    :maxdepth: 2
-    :caption: Atn Contracts
-
-    Dispatch Contract <dispatch-contract>
-    Representation Contract <representation-contract>
-
 
 .. toctree::
     :hidden:
     :maxdepth: 2
     :caption: Code Support
 
-    Algorand Smart Contracts <smart-contracts>
+    Hello AtomicTNode <hello-atn>
     Forward Looking Optimization <flo>
+    Lexicon <https://gridworks.readthedocs.io/en/latest/lexicon.html>
+
 
 .. toctree::
     :hidden:
     :maxdepth: 2
-    :caption: Generated Docs
+    :caption: API docs
 
-    Schemata <schemata>
+    Type APIs <apis/types>
 
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    :caption: SDK docs
 
+    TwoChannelActorBase <two-channel-actor-base>
+    DataClasses <data-classes>
+    Enums <enums>
+    Types <sdk-types>
 
 .. toctree::
     :hidden:

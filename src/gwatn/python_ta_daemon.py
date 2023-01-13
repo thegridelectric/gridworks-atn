@@ -11,11 +11,11 @@ from gridworks.algo_utils import BasicAccount
 from gridworks.utils import RestfulResponse
 
 import gwatn.config as config
-from gwatn.schemata import InitialTadeedAlgoOptin
-from gwatn.schemata import NewTadeedAlgoOptin
-from gwatn.schemata import NewTadeedSend_Maker
-from gwatn.schemata import OldTadeedAlgoReturn
-from gwatn.schemata import SlaEnter
+from gwatn.types import InitialTadeedAlgoOptin
+from gwatn.types import NewTadeedAlgoOptin
+from gwatn.types import NewTadeedSend_Maker
+from gwatn.types import OldTadeedAlgoReturn
+from gwatn.types import SlaEnter
 
 
 LOGGER = logging.getLogger(__name__)

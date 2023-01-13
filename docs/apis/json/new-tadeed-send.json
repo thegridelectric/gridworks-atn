@@ -1,0 +1,48 @@
+{
+  "gwapi": "001",
+  "type_name": "new.tadeed.send",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "properties": {
+    "NewTaDeedIdx": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "OldTaDeedIdx": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "TaDaemonAddr": {
+      "type": "string",
+      "format": "AlgoAddressStringFormat",
+      "title": "",
+      "required": true
+    },
+    "ValidatorAddr": {
+      "type": "string",
+      "format": "AlgoAddressStringFormat",
+      "title": "",
+      "required": true
+    },
+    "SignedTadeedOptinTxn": {
+      "type": "string",
+      "format": "AlgoMsgPackEncoded",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "new.tadeed.send.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

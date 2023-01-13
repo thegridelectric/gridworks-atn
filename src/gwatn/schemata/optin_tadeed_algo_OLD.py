@@ -81,7 +81,7 @@ class OptinTadeedAlgo(BaseModel):
             )
         ta_deed_g_node_alias = gnf_new_deed_info["created-asset"]["name"]
         try:
-            property_format.check_is_lrd_alias_format(ta_deed_g_node_alias)
+            property_format.check_is_left_right_dot(ta_deed_g_node_alias)
         except SchemaError as e:
             raise ValueError(f"Axiom 6: Optin asset must be a valid TaDeed! {e}")
         universe = config.GnfPublic().universe

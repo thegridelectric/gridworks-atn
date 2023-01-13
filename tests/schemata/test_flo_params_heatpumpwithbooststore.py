@@ -11,7 +11,7 @@ from gwatn.enums import EnergySupplyType
 from gwatn.enums import MixingValveFeedbackModel
 from gwatn.enums import RecognizedCurrencyUnit
 from gwatn.enums import RecognizedTemperatureUnit
-from gwatn.schemata import FloParamsHeatpumpwithbooststore_Maker as Maker
+from gwatn.types import FloParamsHeatpumpwithbooststore_Maker as Maker
 
 
 def test_flo_params_heatpumpwithbooststore_generated() -> None:

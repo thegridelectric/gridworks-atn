@@ -4,10 +4,10 @@ from fastapi import HTTPException
 from gridworks.utils import RestfulResponse
 
 from gwatn.python_ta_daemon import PythonTaDaemon
-from gwatn.schemata import InitialTadeedAlgoOptin
-from gwatn.schemata import NewTadeedAlgoOptin
-from gwatn.schemata import OldTadeedAlgoReturn
-from gwatn.schemata import SlaEnter
+from gwatn.types import InitialTadeedAlgoOptin
+from gwatn.types import NewTadeedAlgoOptin
+from gwatn.types import OldTadeedAlgoReturn
+from gwatn.types import SlaEnter
 
 
 tags_metadata = [

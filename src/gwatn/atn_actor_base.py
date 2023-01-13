@@ -12,13 +12,13 @@ from gwatn.config import Settings
 from gwatn.enums import GNodeRole
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
-from gwatn.schemata import HeartbeatA
-from gwatn.schemata import HeartbeatA_Maker
-from gwatn.schemata import LatestPrice
-from gwatn.schemata import LatestPrice_Maker
-from gwatn.schemata import SimTimestep
-from gwatn.schemata import SimTimestep_Maker
 from gwatn.two_channel_actor_base import TwoChannelActorBase
+from gwatn.types import HeartbeatA
+from gwatn.types import HeartbeatA_Maker
+from gwatn.types import LatestPrice
+from gwatn.types import LatestPrice_Maker
+from gwatn.types import SimTimestep
+from gwatn.types import SimTimestep_Maker
 
 
 LOG_FORMAT = (

@@ -108,7 +108,7 @@ class TadeedAlgoExchange(BaseModel):
 
         old_ta_deed_g_node_alias = asset_dict["name"]
         try:
-            property_format.check_is_lrd_alias_format(old_ta_deed_g_node_alias)
+            property_format.check_is_left_right_dot(old_ta_deed_g_node_alias)
         except SchemaError as e:
             raise ValueError(f"The asset name must have valid GNode format: {e}")
         universe = config.GnfPublic().universe
