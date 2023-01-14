@@ -1,6 +1,8 @@
 """ GwSchema Enums used in gwatn """
 from gwatn.enums.actor_class import ActorClass
+from gwatn.enums.algo_cert_type import AlgoCertType
 from gwatn.enums.atn_spaceheat_strategy_name import AtnSpaceheatStrategyName
+from gwatn.enums.core_g_node_role import CoreGNodeRole
 from gwatn.enums.distribution_tariff import DistributionTariff
 from gwatn.enums.emitter_pump_feedback_model import EmitterPumpFeedbackModel
 from gwatn.enums.energy_supply_type import EnergySupplyType
@@ -26,7 +28,9 @@ from gwatn.enums.universe_type import UniverseType
 
 
 __all__ = [
+    "AlgoCertType",
     "AtnSpaceheatStrategyName",
+    "CoreGNodeRole",
     "DistributionTariff",
     "EmitterPumpFeedbackModel",
     "EnergySupplyType",

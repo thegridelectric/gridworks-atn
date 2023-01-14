@@ -9,6 +9,7 @@ def test_g_node_role() -> None:
         "Scada",
         "PriceService",
         "WeatherService",
+        "AggregatedTNode",
         "AtomicTNode",
         "MarketMaker",
         "AtomicMeteringNode",

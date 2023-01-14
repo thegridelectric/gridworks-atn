@@ -1,0 +1,349 @@
+{
+  "gwapi": "001",
+  "type_name": "atn.params.heatpumpwithbooststore",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "",
+  "enums": {
+    "DistributionTariff000": {
+      "type": "string",
+      "name": "distribution.tariff.000",
+      "description": "Name of distribution tariff of local network company/utility",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "2127aba6",
+          "title": "VersantStorageHeatTariff",
+          "description": ""
+        },
+        {
+          "const": "ea5c675a",
+          "title": "VersantATariff",
+          "description": ""
+        }
+      ]
+    },
+    "EmitterPumpFeedbackModel000": {
+      "type": "string",
+      "name": "emitter.pump.feedback.model.000",
+      "description": "",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "ConstantDeltaT",
+          "description": ""
+        },
+        {
+          "const": "f6bde4fa",
+          "title": "ConstantGpm",
+          "description": ""
+        }
+      ]
+    },
+    "RecognizedCurrencyUnit000": {
+      "type": "string",
+      "name": "recognized.currency.unit.000",
+      "description": "Unit of currency",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "e57c5143",
+          "title": "USD",
+          "description": "US Dollar"
+        },
+        {
+          "const": "f7b38fc5",
+          "title": "GBP",
+          "description": "Pounds sterling"
+        }
+      ]
+    },
+    "RecognizedTemperatureUnit000": {
+      "type": "string",
+      "name": "recognized.temperature.unit.000",
+      "description": "Unit of temperature",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "C",
+          "description": "Celcius"
+        },
+        {
+          "const": "6f16ee63",
+          "title": "F",
+          "description": "Fahrenheit"
+        }
+      ]
+    },
+    "MixingValveFeedbackModel000": {
+      "type": "string",
+      "name": "mixing.valve.feedback.model.000",
+      "description": "Control mechanism for a mixing valve, used by Spaceheat SCADAs",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "ConstantSwt",
+          "description": "Constant Source Water Temp"
+        },
+        {
+          "const": "0397c1df",
+          "title": "NaiveVariableSwt",
+          "description": "Variable Source Water Temp, naive assumptions about distribution system capabilities"
+        },
+        {
+          "const": "6a668ab8",
+          "title": "CautiousVariableSwt",
+          "description": "Variable Source Water Temp, conservative assumptions about distribution system capabilities"
+        }
+      ]
+    },
+    "EnergySupplyType000": {
+      "type": "string",
+      "name": "energy.supply.type.000",
+      "description": "",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "cb18f937",
+          "title": "StandardOffer",
+          "description": ""
+        },
+        {
+          "const": "e9dc99a6",
+          "title": "RealtimeLocalLmp",
+          "description": ""
+        }
+      ]
+    }
+  },
+  "properties": {
+    "StoreSizeGallons": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "MaxStoreTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "StoreMaxPowerKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "RatedHeatpumpElectricityKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "MaxHeatpumpSourceWaterTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "SystemMaxHeatOutputSwtF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "SystemMaxHeatOutputDeltaTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "SystemMaxHeatOutputGpm": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "EmitterMaxSafeSwtF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "CirculatorPumpMaxGpm": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "HeatpumpTariff": {
+      "type": "string",
+      "format": "DistributionTariff000",
+      "title": "",
+      "required": true
+    },
+    "HeatpumpEnergySupplyType": {
+      "type": "string",
+      "format": "EnergySupplyType000",
+      "title": "",
+      "required": true
+    },
+    "BoostTariff": {
+      "type": "string",
+      "format": "DistributionTariff000",
+      "title": "",
+      "required": true
+    },
+    "BoostEnergySupplyType": {
+      "type": "string",
+      "format": "EnergySupplyType000",
+      "title": "",
+      "required": true
+    },
+    "StandardOfferPriceDollarsPerMwh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "DistributionTariffDollarsPerMwh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "AmbientTempStoreF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "StorePassiveLossRatio": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "RoomTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "AmbientPowerInKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "ZeroPotentialEnergyWaterTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "EmitterPumpFeedbackModel": {
+      "type": "string",
+      "format": "EmitterPumpFeedbackModel000",
+      "title": "",
+      "required": true
+    },
+    "MixingValveFeedbackModel": {
+      "type": "string",
+      "format": "MixingValveFeedbackModel000",
+      "title": "",
+      "required": true
+    },
+    "CautiousMixingValveTempDeltaF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "Cop1TempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "Cop4TempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "CurrencyUnit": {
+      "type": "string",
+      "format": "RecognizedCurrencyUnit000",
+      "title": "",
+      "required": true
+    },
+    "TempUnit": {
+      "type": "string",
+      "format": "RecognizedTemperatureUnit000",
+      "title": "",
+      "required": true
+    },
+    "TimezoneString": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "HomeCity": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "StorageSteps": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "FloSlices": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "SliceDurationMinutes": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "HouseWorstCaseTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "AnnualHvacKwhTh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "BetaOt": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "HouseHeatingCapacity": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "GNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "GNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "atn.params.heatpumpwithbooststore.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

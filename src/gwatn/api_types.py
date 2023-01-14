@@ -3,28 +3,41 @@ from typing import Dict
 from typing import List
 from typing import no_type_check
 
-from gwatn.schemata import AcceptedBid_Maker
-from gwatn.schemata import AtnBid_Maker
-from gwatn.schemata import AtnParamsHeatpumpwithbooststore_Maker
-from gwatn.schemata import AtnParamsReportHeatpumpwithbooststore_Maker
-from gwatn.schemata import AtnStateHeatpumpwithbooststore_Maker
-from gwatn.schemata import BidAck_Maker
-from gwatn.schemata import FloParamsHeatpumpwithbooststore_Maker
-from gwatn.schemata import GNodeGt_Maker
-from gwatn.schemata import GNodeInstanceGt_Maker
-from gwatn.schemata import HeartbeatA_Maker
-from gwatn.schemata import LatestPrice_Maker
-from gwatn.schemata import MarketPrice_Maker
-from gwatn.schemata import MarketSlot_Maker
-from gwatn.schemata import MarketTypeGt_Maker
-from gwatn.schemata import PriceQuantity_Maker
-from gwatn.schemata import PriceQuantityUnitless_Maker
-from gwatn.schemata import Ready_Maker
-from gwatn.schemata import SimTimestep_Maker
-from gwatn.schemata import SuperStarter_Maker
-from gwatn.schemata import SupervisorContainerGt_Maker
-from gwatn.schemata import TadeedSpecsHack_Maker
-from gwatn.schemata import TerminalassetCertifyHack_Maker
+from gwatn.types import AcceptedBid_Maker
+from gwatn.types import AtnBid_Maker
+from gwatn.types import AtnParamsHeatpumpwithbooststore_Maker
+from gwatn.types import AtnParamsReportHeatpumpwithbooststore_Maker
+from gwatn.types import AtnStateHeatpumpwithbooststore_Maker
+from gwatn.types import BaseGNodeGt_Maker
+from gwatn.types import DiscoverycertAlgoCreate_Maker
+from gwatn.types import FloParamsHeatpumpwithbooststore_Maker
+from gwatn.types import GNodeGt_Maker
+from gwatn.types import GNodeInstanceGt_Maker
+from gwatn.types import GtDispatchBoolean_Maker
+from gwatn.types import GwCertId_Maker
+from gwatn.types import HeartbeatA_Maker
+from gwatn.types import HeartbeatAlgoAudit_Maker
+from gwatn.types import HeartbeatB_Maker
+from gwatn.types import InitialTadeedAlgoCreate_Maker
+from gwatn.types import InitialTadeedAlgoOptin_Maker
+from gwatn.types import InitialTadeedAlgoTransfer_Maker
+from gwatn.types import LatestPrice_Maker
+from gwatn.types import MarketSlot_Maker
+from gwatn.types import MarketTypeGt_Maker
+from gwatn.types import NewTadeedAlgoOptin_Maker
+from gwatn.types import NewTadeedSend_Maker
+from gwatn.types import OldTadeedAlgoReturn_Maker
+from gwatn.types import PriceQuantity_Maker
+from gwatn.types import PriceQuantityUnitless_Maker
+from gwatn.types import Ready_Maker
+from gwatn.types import SimTimestep_Maker
+from gwatn.types import SlaEnter_Maker
+from gwatn.types import SuperStarter_Maker
+from gwatn.types import SupervisorContainerGt_Maker
+from gwatn.types import TadeedSpecsHack_Maker
+from gwatn.types import TavalidatorcertAlgoCreate_Maker
+from gwatn.types import TavalidatorcertAlgoTransfer_Maker
+from gwatn.types import TerminalassetCertifyHack_Maker
 
 
 TypeMakerByName: Dict[str, HeartbeatA_Maker] = {}
@@ -38,22 +51,35 @@ def type_makers() -> List[HeartbeatA_Maker]:
         AtnParamsHeatpumpwithbooststore_Maker,
         AtnParamsReportHeatpumpwithbooststore_Maker,
         AtnStateHeatpumpwithbooststore_Maker,
-        BidAck_Maker,
+        BaseGNodeGt_Maker,
+        DiscoverycertAlgoCreate_Maker,
         FloParamsHeatpumpwithbooststore_Maker,
         GNodeGt_Maker,
         GNodeInstanceGt_Maker,
+        GtDispatchBoolean_Maker,
+        GwCertId_Maker,
         HeartbeatA_Maker,
+        HeartbeatAlgoAudit_Maker,
+        HeartbeatB_Maker,
+        InitialTadeedAlgoCreate_Maker,
+        InitialTadeedAlgoOptin_Maker,
+        InitialTadeedAlgoTransfer_Maker,
         LatestPrice_Maker,
-        MarketPrice_Maker,
         MarketSlot_Maker,
         MarketTypeGt_Maker,
+        NewTadeedAlgoOptin_Maker,
+        NewTadeedSend_Maker,
+        OldTadeedAlgoReturn_Maker,
         PriceQuantity_Maker,
         PriceQuantityUnitless_Maker,
         Ready_Maker,
         SimTimestep_Maker,
+        SlaEnter_Maker,
         SuperStarter_Maker,
         SupervisorContainerGt_Maker,
         TadeedSpecsHack_Maker,
+        TavalidatorcertAlgoCreate_Maker,
+        TavalidatorcertAlgoTransfer_Maker,
         TerminalassetCertifyHack_Maker,
     ]
 
@@ -74,22 +100,35 @@ def version_by_type_name() -> Dict[str, str]:
         "atn.params.heatpumpwithbooststore": "000",
         "atn.params.report.heatpumpwithbooststore": "000",
         "atn.state.heatpumpwithbooststore": "000",
-        "bid.ack": "000",
+        "base.g.node.gt": "001",
+        "discoverycert.algo.create": "000",
         "flo.params.heatpumpwithbooststore": "000",
-        "g.node.gt": "000",
+        "g.node.gt": "001",
         "g.node.instance.gt": "000",
-        "heartbeat.a": "001",
+        "gt.dispatch.boolean": "110",
+        "gw.cert.id": "000",
+        "heartbeat.a": "100",
+        "heartbeat.algo.audit": "000",
+        "heartbeat.b": "000",
+        "initial.tadeed.algo.create": "000",
+        "initial.tadeed.algo.optin": "002",
+        "initial.tadeed.algo.transfer": "000",
         "latest.price": "000",
-        "market.price": "000",
         "market.slot": "000",
         "market.type.gt": "000",
+        "new.tadeed.algo.optin": "000",
+        "new.tadeed.send": "000",
+        "old.tadeed.algo.return": "000",
         "price.quantity": "000",
         "price.quantity.unitless": "000",
         "ready": "001",
         "sim.timestep": "000",
+        "sla.enter": "000",
         "super.starter": "000",
         "supervisor.container.gt": "000",
         "tadeed.specs.hack": "000",
+        "tavalidatorcert.algo.create": "000",
+        "tavalidatorcert.algo.transfer": "000",
         "terminalasset.certify.hack": "000",
     }
 
@@ -108,22 +147,35 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "atn.params.heatpumpwithbooststore.000": "Active",
         "atn.params.report.heatpumpwithbooststore.000": "Pending",
         "atn.state.heatpumpwithbooststore.000": "Pending",
-        "bid.ack.000": "Pending",
+        "base.g.node.gt.001": "Pending",
+        "discoverycert.algo.create.000": "Pending",
         "flo.params.heatpumpwithbooststore.000": "Active",
-        "g.node.gt.000": "Pending",
+        "g.node.gt.001": "Pending",
         "g.node.instance.gt.000": "Pending",
-        "heartbeat.a.001": "Pending",
+        "gt.dispatch.boolean.110": "Pending",
+        "gw.cert.id.000": "Pending",
+        "heartbeat.a.100": "Pending",
+        "heartbeat.algo.audit.000": "Pending",
+        "heartbeat.b.000": "Pending",
+        "initial.tadeed.algo.create.000": "Pending",
+        "initial.tadeed.algo.optin.002": "Pending",
+        "initial.tadeed.algo.transfer.000": "Pending",
         "latest.price.000": "Pending",
-        "market.price.000": "Pending",
         "market.slot.000": "Pending",
         "market.type.gt.000": "Pending",
+        "new.tadeed.algo.optin.000": "Pending",
+        "new.tadeed.send.000": "Pending",
+        "old.tadeed.algo.return.000": "Pending",
         "price.quantity.000": "Pending",
         "price.quantity.unitless.000": "Pending",
         "ready.001": "Pending",
         "sim.timestep.000": "Pending",
+        "sla.enter.000": "Pending",
         "super.starter.000": "Pending",
         "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",
+        "tavalidatorcert.algo.create.000": "Active",
+        "tavalidatorcert.algo.transfer.000": "Pending",
         "terminalasset.certify.hack.000": "Pending",
     }
 

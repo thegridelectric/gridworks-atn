@@ -1,2 +1,0 @@
-Forward Looking Optimization (FLO)
-=================================
