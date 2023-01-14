@@ -1,8 +1,9 @@
-import gnf.algo_utils as algo_utils
-import gnf.config as config
-import gnf.dev_utils.algo_setup as algo_setup
+import gridworks.algo_utils as algo_utils
+import gridworks.dev_utils.algo_setup as algo_setup
 from algosdk.v2client.algod import AlgodClient
-from gnf.dev_utils import DevValidator
+
+import gwatn.config as config
+from gwatn.dev_utils import DevValidator
 
 
 # from gnf import GNodeFactoryDb
