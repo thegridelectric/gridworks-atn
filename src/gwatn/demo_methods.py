@@ -9,6 +9,7 @@ from pydantic import SecretStr
 from rich.pretty import pprint
 
 import gwatn.config as config
+from gwatn.dev_utils import DevDiscoverer
 from gwatn.dev_utils import DevTaOwner
 from gwatn.dev_utils import DevValidator
 from gwatn.types import BaseGNodeGt_Maker
@@ -126,6 +127,12 @@ def enter_slas(ta_owners: List[DevTaOwner]) -> RestfulResponse:
                 ta_owner.stop()
             return rr
     return RestfulResponse(Note="Success with entering ServiceLevelAgreements")
+
+
+def create_new_ctn():
+    ada = DevDiscoverer(settings=config.DiscovererSettings())
+    rr = ada.post_discoverycert_algo_create()
+    LOGGER.info("Ada received response to discoverycert algo")
 
 
 demo_plant_names: List[str] = [

@@ -33,7 +33,6 @@ Python pydantic class corresponding to  json type ```base.g.node.gt```.
 
 **OwnershipDeedNftId**:
     - Description:
-    - Format: PositiveInteger
 
 **OwnershipDeedValidatorAddr**:
     - Description:

@@ -1,21 +1,24 @@
-"""Tests sim.timestep type, version 000"""
+"""Tests discoverycert.algo.create type, version 000"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.types import SimTimestep_Maker as Maker
+from gwatn.enums import CoreGNodeRole
+from gwatn.types import DiscoverycertAlgoCreate_Maker as Maker
 
 
-def test_sim_timestep_generated() -> None:
+def test_discoverycert_algo_create_generated() -> None:
     d = {
-        "FromGNodeAlias": "d1.tc",
-        "FromGNodeInstanceId": "bdb20ce2-332f-4d3e-b848-0c350be2ea67",
-        "TimeUnixS": 1667852537,
-        "TimestepCreatedMs": 1667852537000,
-        "MessageId": "7bc73995-c71b-45b4-a608-761fdc1c28eb",
-        "TypeName": "sim.timestep",
+        "GNodeAlias": "d1.isone.ver.keene",
+        "RoleGtEnumSymbol": "4502e355",
+        "OldChildAliasList": ["d1.isone.ver.keene.holly"],
+        "DiscovererAddr": "KH3K4W3RXDUQNB2PUYSQECSK6RPP25NQUYYX6TYPTQBJAFG3K3O3B7KMZY",
+        "SupportingMaterialHash": "hash of supporting material",
+        "MicroLat": 44838681,
+        "MicroLon": -68705311,
+        "TypeName": "discoverycert.algo.create",
         "Version": "000",
     }
 
@@ -34,11 +37,13 @@ def test_sim_timestep_generated() -> None:
 
     # test Maker init
     t = Maker(
-        from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        time_unix_s=gtuple.TimeUnixS,
-        timestep_created_ms=gtuple.TimestepCreatedMs,
-        message_id=gtuple.MessageId,
+        g_node_alias=gtuple.GNodeAlias,
+        role=gtuple.Role,
+        old_child_alias_list=gtuple.OldChildAliasList,
+        discoverer_addr=gtuple.DiscovererAddr,
+        supporting_material_hash=gtuple.SupportingMaterialHash,
+        micro_lat=gtuple.MicroLat,
+        micro_lon=gtuple.MicroLon,
     ).tuple
     assert t == gtuple
 
@@ -52,39 +57,56 @@ def test_sim_timestep_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromGNodeAlias"]
+    del d2["GNodeAlias"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromGNodeInstanceId"]
+    del d2["RoleGtEnumSymbol"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TimeUnixS"]
+    del d2["OldChildAliasList"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TimestepCreatedMs"]
+    del d2["DiscovererAddr"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["MessageId"]
+    del d2["SupportingMaterialHash"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
+
+    ######################################
+    # Optional attributes can be removed from type
+    ######################################
+
+    d2 = dict(d)
+    if "MicroLat" in d2.keys():
+        del d2["MicroLat"]
+    Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    if "MicroLon" in d2.keys():
+        del d2["MicroLon"]
+    Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TimeUnixS="1667852537.1")
+    d2 = dict(d, RoleGtEnumSymbol="hi")
+    Maker.dict_to_tuple(d2).Role = CoreGNodeRole.default()
+
+    d2 = dict(d, MicroLat="44838681.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TimestepCreatedMs="1667852537000.1")
+    d2 = dict(d, MicroLon="-68705311.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -100,23 +122,11 @@ def test_sim_timestep_generated() -> None:
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
-    d2 = dict(d, FromGNodeAlias="a.b-h")
+    d2 = dict(d, GNodeAlias="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FromGNodeInstanceId="d4be12d5-33ba-4f1f-b9e5")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TimeUnixS=32503683600)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TimestepCreatedMs=1656245000)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, MessageId="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, OldChildAliasList=["a.b-h"])
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

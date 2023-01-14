@@ -24,11 +24,15 @@ forth between type instances and Python objects.
     AtnParamsReportHeatpumpwithbooststore  <types/atn-params-report-heatpumpwithbooststore>
     AtnStateHeatpumpwithbooststore  <types/atn-state-heatpumpwithbooststore>
     BaseGNodeGt  <types/base-g-node-gt>
+    DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
     FloParamsHeatpumpwithbooststore  <types/flo-params-heatpumpwithbooststore>
     GNodeGt  <types/g-node-gt>
     GNodeInstanceGt  <types/g-node-instance-gt>
+    GtDispatchBoolean  <types/gt-dispatch-boolean>
     GwCertId  <types/gw-cert-id>
     HeartbeatA  <types/heartbeat-a>
+    HeartbeatAlgoAudit  <types/heartbeat-algo-audit>
+    HeartbeatB  <types/heartbeat-b>
     InitialTadeedAlgoCreate  <types/initial-tadeed-algo-create>
     InitialTadeedAlgoOptin  <types/initial-tadeed-algo-optin>
     InitialTadeedAlgoTransfer  <types/initial-tadeed-algo-transfer>

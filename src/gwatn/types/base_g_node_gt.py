@@ -353,18 +353,6 @@ class BaseGNodeGt(BaseModel):
             )
         return v
 
-    @validator("OwnershipDeedNftId")
-    def _check_ownership_deed_nft_id(cls, v: Optional[int]) -> Optional[int]:
-        if v is None:
-            return v
-        try:
-            check_is_positive_integer(v)
-        except ValueError as e:
-            raise ValueError(
-                f"OwnershipDeedNftId failed PositiveInteger format validation: {e}"
-            )
-        return v
-
     @validator("OwnershipDeedValidatorAddr")
     def _check_ownership_deed_validator_addr(cls, v: Optional[str]) -> Optional[str]:
         if v is None:

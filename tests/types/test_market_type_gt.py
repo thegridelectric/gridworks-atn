@@ -2,13 +2,13 @@
 import json
 
 import pytest
+from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
 from gwatn.enums import MarketPriceUnit
 from gwatn.enums import MarketQuantityUnit
 from gwatn.enums import MarketTypeName
 from gwatn.enums import RecognizedCurrencyUnit
-from gwatn.errors import SchemaError
 from gwatn.types import MarketTypeGt_Maker as Maker
 
 

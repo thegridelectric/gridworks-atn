@@ -1,12 +1,12 @@
 import logging
 
 import gridworks.algo_utils as algo_utils
+import gridworks.api_utils as api_utils
 import requests
 from algosdk.v2client.algod import AlgodClient
-from gridwoks.algo_utils import BasicAccount
+from gridworks.algo_utils import BasicAccount
 from gridworks.utils import RestfulResponse
 
-import gwatn.api_utils as api_utils
 import gwatn.config as config
 from gwatn.enums import CoreGNodeRole
 from gwatn.types import DiscoverycertAlgoCreate_Maker

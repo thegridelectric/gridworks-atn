@@ -2,11 +2,11 @@
 import json
 
 import pytest
+from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
 from gwatn.enums import MarketPriceUnit
 from gwatn.enums import MarketQuantityUnit
-from gwatn.errors import SchemaError
 from gwatn.types import PriceQuantity_Maker as Maker
 
 

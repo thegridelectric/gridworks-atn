@@ -2,10 +2,10 @@
 import json
 
 import pytest
+from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
 from gwatn.enums import AlgoCertType
-from gwatn.errors import SchemaError
 from gwatn.types import GwCertId_Maker as Maker
 
 

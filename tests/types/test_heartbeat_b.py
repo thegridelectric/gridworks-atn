@@ -1,21 +1,22 @@
-"""Tests sim.timestep type, version 000"""
+"""Tests heartbeat.b type, version 000"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.types import SimTimestep_Maker as Maker
+from gwatn.types import HeartbeatB_Maker as Maker
 
 
-def test_sim_timestep_generated() -> None:
+def test_heartbeat_b_generated() -> None:
     d = {
-        "FromGNodeAlias": "d1.tc",
-        "FromGNodeInstanceId": "bdb20ce2-332f-4d3e-b848-0c350be2ea67",
-        "TimeUnixS": 1667852537,
-        "TimestepCreatedMs": 1667852537000,
-        "MessageId": "7bc73995-c71b-45b4-a608-761fdc1c28eb",
-        "TypeName": "sim.timestep",
+        "FromGNodeAlias": "d1.isone.ver.keene.holly",
+        "FromGNodeInstanceId": "97eba574-bd20-45b5-bf82-9ba2f492d8f6",
+        "MyHex": "a",
+        "YourLastHex": 2,
+        "LastReceivedTimeUnixMs": 1673635764282,
+        "SendTimeUnixMs": 1673635765317,
+        "TypeName": "heartbeat.b",
         "Version": "000",
     }
 
@@ -36,9 +37,10 @@ def test_sim_timestep_generated() -> None:
     t = Maker(
         from_g_node_alias=gtuple.FromGNodeAlias,
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        time_unix_s=gtuple.TimeUnixS,
-        timestep_created_ms=gtuple.TimestepCreatedMs,
-        message_id=gtuple.MessageId,
+        my_hex=gtuple.MyHex,
+        your_last_hex=gtuple.YourLastHex,
+        last_received_time_unix_ms=gtuple.LastReceivedTimeUnixMs,
+        send_time_unix_ms=gtuple.SendTimeUnixMs,
     ).tuple
     assert t == gtuple
 
@@ -62,17 +64,22 @@ def test_sim_timestep_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TimeUnixS"]
+    del d2["MyHex"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TimestepCreatedMs"]
+    del d2["YourLastHex"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["MessageId"]
+    del d2["LastReceivedTimeUnixMs"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["SendTimeUnixMs"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -80,11 +87,11 @@ def test_sim_timestep_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TimeUnixS="1667852537.1")
+    d2 = dict(d, LastReceivedTimeUnixMs="1673635764282.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TimestepCreatedMs="1667852537000.1")
+    d2 = dict(d, SendTimeUnixMs="1673635765317.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -108,15 +115,19 @@ def test_sim_timestep_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TimeUnixS=32503683600)
+    d2 = dict(d, MyHex="g")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TimestepCreatedMs=1656245000)
+    d2 = dict(d, YourLastHex="g")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, MessageId="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, LastReceivedTimeUnixMs=1656245000)
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, SendTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

@@ -9,11 +9,15 @@ from gwatn.types import AtnParamsHeatpumpwithbooststore_Maker
 from gwatn.types import AtnParamsReportHeatpumpwithbooststore_Maker
 from gwatn.types import AtnStateHeatpumpwithbooststore_Maker
 from gwatn.types import BaseGNodeGt_Maker
+from gwatn.types import DiscoverycertAlgoCreate_Maker
 from gwatn.types import FloParamsHeatpumpwithbooststore_Maker
 from gwatn.types import GNodeGt_Maker
 from gwatn.types import GNodeInstanceGt_Maker
+from gwatn.types import GtDispatchBoolean_Maker
 from gwatn.types import GwCertId_Maker
 from gwatn.types import HeartbeatA_Maker
+from gwatn.types import HeartbeatAlgoAudit_Maker
+from gwatn.types import HeartbeatB_Maker
 from gwatn.types import InitialTadeedAlgoCreate_Maker
 from gwatn.types import InitialTadeedAlgoOptin_Maker
 from gwatn.types import InitialTadeedAlgoTransfer_Maker
@@ -48,11 +52,15 @@ def type_makers() -> List[HeartbeatA_Maker]:
         AtnParamsReportHeatpumpwithbooststore_Maker,
         AtnStateHeatpumpwithbooststore_Maker,
         BaseGNodeGt_Maker,
+        DiscoverycertAlgoCreate_Maker,
         FloParamsHeatpumpwithbooststore_Maker,
         GNodeGt_Maker,
         GNodeInstanceGt_Maker,
+        GtDispatchBoolean_Maker,
         GwCertId_Maker,
         HeartbeatA_Maker,
+        HeartbeatAlgoAudit_Maker,
+        HeartbeatB_Maker,
         InitialTadeedAlgoCreate_Maker,
         InitialTadeedAlgoOptin_Maker,
         InitialTadeedAlgoTransfer_Maker,
@@ -93,11 +101,15 @@ def version_by_type_name() -> Dict[str, str]:
         "atn.params.report.heatpumpwithbooststore": "000",
         "atn.state.heatpumpwithbooststore": "000",
         "base.g.node.gt": "001",
+        "discoverycert.algo.create": "000",
         "flo.params.heatpumpwithbooststore": "000",
         "g.node.gt": "001",
         "g.node.instance.gt": "000",
+        "gt.dispatch.boolean": "110",
         "gw.cert.id": "000",
         "heartbeat.a": "100",
+        "heartbeat.algo.audit": "000",
+        "heartbeat.b": "000",
         "initial.tadeed.algo.create": "000",
         "initial.tadeed.algo.optin": "002",
         "initial.tadeed.algo.transfer": "000",
@@ -136,11 +148,15 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "atn.params.report.heatpumpwithbooststore.000": "Pending",
         "atn.state.heatpumpwithbooststore.000": "Pending",
         "base.g.node.gt.001": "Pending",
+        "discoverycert.algo.create.000": "Pending",
         "flo.params.heatpumpwithbooststore.000": "Active",
         "g.node.gt.001": "Pending",
         "g.node.instance.gt.000": "Pending",
+        "gt.dispatch.boolean.110": "Pending",
         "gw.cert.id.000": "Pending",
         "heartbeat.a.100": "Pending",
+        "heartbeat.algo.audit.000": "Pending",
+        "heartbeat.b.000": "Pending",
         "initial.tadeed.algo.create.000": "Pending",
         "initial.tadeed.algo.optin.002": "Pending",
         "initial.tadeed.algo.transfer.000": "Pending",

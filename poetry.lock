@@ -38,11 +38,11 @@ hiredis = "*"
 
 [[package]]
 name = "alabaster"
-version = "0.7.12"
+version = "0.7.13"
 description = "A configurable sidebar-enabled Sphinx theme"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [[package]]
 name = "anyio"
@@ -580,7 +580,7 @@ test = ["faulthandler", "objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.0.9"
+version = "0.0.11"
 description = "Gridworks"
 category = "main"
 optional = false
@@ -2099,7 +2099,7 @@ tests-strict = ["cmake (==3.21.2)", "codecov (==2.0.15)", "ninja (==1.10.2)", "p
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "4e9ac081967b81a41aec31a2194aca8784b41c529a0385ff7e14bd64d5105ddd"
+content-hash = "75c1f953f899dccd710e8ce5231aa3db8f9f509816d23f305b5e360803b43bbe"
 
 [metadata.files]
 aiocache = [
@@ -2115,8 +2115,8 @@ aioredis = [
     {file = "aioredis-1.3.1.tar.gz", hash = "sha256:15f8af30b044c771aee6787e5ec24694c048184c7b9e54c3b60c750a4b93273a"},
 ]
 alabaster = [
-    {file = "alabaster-0.7.12-py2.py3-none-any.whl", hash = "sha256:446438bdcca0e05bd45ea2de1668c1d9b032e1a9154c2c259092d77031ddd359"},
-    {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
+    {file = "alabaster-0.7.13-py3-none-any.whl", hash = "sha256:1ee19aca801bbabb5ba3f5f258e4422dfa86f82f3e9cefb0859b283cdd7f62a3"},
+    {file = "alabaster-0.7.13.tar.gz", hash = "sha256:a27a4a084d5e690e16e01e03ad2b2e552c61a65469419b907243193de1a84ae2"},
 ]
 anyio = [
     {file = "anyio-3.6.2-py3-none-any.whl", hash = "sha256:fbbe32bd270d2a2ef3ed1c5d45041250284e31fc0a4df4a5a6071842051a51e3"},
@@ -2577,8 +2577,8 @@ greenlet = [
     {file = "greenlet-2.0.1.tar.gz", hash = "sha256:42e602564460da0e8ee67cb6d7236363ee5e131aa15943b6670e44e5c2ed0f67"},
 ]
 gridworks = [
-    {file = "gridworks-0.0.9-py3-none-any.whl", hash = "sha256:c0c5441e98a83206ae8bfde7caa54960cacec5cfeec68c1cb99e5dc2f56ed33f"},
-    {file = "gridworks-0.0.9.tar.gz", hash = "sha256:98ac683ff87cdb9caa9bcbb554172995e19817836abd3def99dcdae29dffae31"},
+    {file = "gridworks-0.0.11-py3-none-any.whl", hash = "sha256:7b9d209c68574d6d9db00d7bf302e7b3b94777369e7be7b3544ba76187f998a4"},
+    {file = "gridworks-0.0.11.tar.gz", hash = "sha256:eb94001a47b41b3ed3a2a06d19fcabacf23950e66c226abcf51c13a6222631e6"},
 ]
 gridworks-protocol = [
     {file = "gridworks_protocol-0.1.6-py3-none-any.whl", hash = "sha256:0762ca056c930d5705ffe5a397d114b39ef2ac122962b09855247298e60bdd42"},

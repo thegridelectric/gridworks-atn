@@ -1,22 +1,23 @@
-"""Tests sim.timestep type, version 000"""
+"""Tests gt.dispatch.boolean type, version 110"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.types import SimTimestep_Maker as Maker
+from gwatn.types import GtDispatchBoolean_Maker as Maker
 
 
-def test_sim_timestep_generated() -> None:
+def test_gt_dispatch_boolean_generated() -> None:
     d = {
-        "FromGNodeAlias": "d1.tc",
-        "FromGNodeInstanceId": "bdb20ce2-332f-4d3e-b848-0c350be2ea67",
-        "TimeUnixS": 1667852537,
-        "TimestepCreatedMs": 1667852537000,
-        "MessageId": "7bc73995-c71b-45b4-a608-761fdc1c28eb",
-        "TypeName": "sim.timestep",
-        "Version": "000",
+        "AboutNodeName": "a.elt1.relay",
+        "ToGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
+        "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1",
+        "FromGNodeInstanceId": "e7f7d6cc-08b0-4b36-bbbb-0a1f8447fd32",
+        "RelayState": 0,
+        "SendTimeUnixMs": 1657024737661,
+        "TypeName": "gt.dispatch.boolean",
+        "Version": "110",
     }
 
     with pytest.raises(SchemaError):
@@ -34,11 +35,12 @@ def test_sim_timestep_generated() -> None:
 
     # test Maker init
     t = Maker(
+        about_node_name=gtuple.AboutNodeName,
+        to_g_node_alias=gtuple.ToGNodeAlias,
         from_g_node_alias=gtuple.FromGNodeAlias,
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        time_unix_s=gtuple.TimeUnixS,
-        timestep_created_ms=gtuple.TimestepCreatedMs,
-        message_id=gtuple.MessageId,
+        relay_state=gtuple.RelayState,
+        send_time_unix_ms=gtuple.SendTimeUnixMs,
     ).tuple
     assert t == gtuple
 
@@ -48,6 +50,16 @@ def test_sim_timestep_generated() -> None:
 
     d2 = dict(d)
     del d2["TypeName"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["AboutNodeName"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["ToGNodeAlias"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -62,17 +74,12 @@ def test_sim_timestep_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TimeUnixS"]
+    del d2["RelayState"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["TimestepCreatedMs"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["MessageId"]
+    del d2["SendTimeUnixMs"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -80,11 +87,11 @@ def test_sim_timestep_generated() -> None:
     # Behavior on incorrect types
     ######################################
 
-    d2 = dict(d, TimeUnixS="1667852537.1")
+    d2 = dict(d, RelayState="0.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TimestepCreatedMs="1667852537000.1")
+    d2 = dict(d, SendTimeUnixMs="1657024737661.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -100,6 +107,14 @@ def test_sim_timestep_generated() -> None:
     # SchemaError raised if primitive attributes do not have appropriate property_format
     ######################################
 
+    d2 = dict(d, AboutNodeName="a.b-h")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, ToGNodeAlias="a.b-h")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d, FromGNodeAlias="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
@@ -108,15 +123,7 @@ def test_sim_timestep_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, TimeUnixS=32503683600)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, TimestepCreatedMs=1656245000)
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, MessageId="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, SendTimeUnixMs=1656245000)
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

@@ -52,7 +52,7 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from gwatn.errors import SchemaError
+from gridworks.errors import SchemaError
 from gwatn.types import </xsl:text>
 <xsl:value-of select="$class-name"/><xsl:text>_Maker as Maker</xsl:text>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[(normalize-space(Alias) !='')  and (count(TypesThatUse[text()=$schema-id])>0)]">

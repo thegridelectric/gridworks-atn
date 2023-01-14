@@ -1,14 +1,14 @@
 {
   "gwapi": "001",
-  "type_name": "old.tadeed.algo.return",
+  "type_name": "heartbeat.algo.audit",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "",
+  "description": ". Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to DispatchContract on Algo blockchain",
   "formats": {
-    "AlgoAddressStringFormat": {
+    "LeftRightDot": {
       "type": "string",
-      "description": "String of length 32, characters are all base32 digits.",
-      "example": "RNMHG32VTIHTC7W3LZOEPTDGREL5IQGK46HKD3KBLZHYQUCAKLMT4G5ALI"
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
     },
     "AlgoMsgPackEncoded": {
       "type": "string",
@@ -17,32 +17,26 @@
     }
   },
   "properties": {
-    "OldTaDeedIdx": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "TaDaemonAddr": {
+    "FromGNodeAlias": {
       "type": "string",
-      "format": "AlgoAddressStringFormat",
-      "title": "",
+      "format": "LeftRightDot",
+      "title": "GNodeAlias of sender (AtomicTNode or Scada)",
       "required": true
     },
-    "ValidatorAddr": {
-      "type": "string",
-      "format": "AlgoAddressStringFormat",
-      "title": "",
+    "Heartbeat": {
+      "type": "heartbeat.b.000",
+      "title": "Heartbeat sender last sent to its partner",
       "required": true
     },
-    "SignedNewDeedTransferTxn": {
+    "SignedProof": {
       "type": "string",
       "format": "AlgoMsgPackEncoded",
-      "title": "",
+      "title": "Tiny signed payment to DispatchContract to prove identity",
       "required": true
     },
     "TypeName": {
       "type": "string",
-      "value": "old.tadeed.algo.return.000",
+      "value": "heartbeat.algo.audit.000",
       "title": "The type name"
     },
     "Version": {

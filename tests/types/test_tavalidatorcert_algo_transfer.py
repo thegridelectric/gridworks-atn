@@ -2,9 +2,9 @@
 import json
 
 import pytest
+from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.errors import SchemaError
 from gwatn.types import TavalidatorcertAlgoTransfer_Maker as Maker
 
 

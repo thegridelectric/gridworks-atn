@@ -26,6 +26,10 @@ BaseGNodeGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/base-g-node-gt.json
 
+DiscoverycertAlgoCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/discoverycert-algo-create.json
+
 FloParamsHeatpumpwithbooststore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/flo-params-heatpumpwithbooststore.json
@@ -38,6 +42,10 @@ GNodeInstanceGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/g-node-instance-gt.json
 
+GtDispatchBoolean
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/gt-dispatch-boolean.json
+
 GwCertId
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/gw-cert-id.json
@@ -45,6 +53,14 @@ GwCertId
 HeartbeatA
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/heartbeat-a.json
+
+HeartbeatAlgoAudit
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/heartbeat-algo-audit.json
+
+HeartbeatB
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/heartbeat-b.json
 
 InitialTadeedAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

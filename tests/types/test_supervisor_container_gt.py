@@ -2,10 +2,10 @@
 import json
 
 import pytest
+from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
 from gwatn.enums import SupervisorContainerStatus
-from gwatn.errors import SchemaError
 from gwatn.types import SupervisorContainerGt_Maker as Maker
 
 

@@ -23,5 +23,13 @@ Python pydantic class corresponding to  json type ```new.tadeed.send```.
     - Description:
     - Format: AlgoMsgPackEncoded
 
+.. autoclass:: gwatn.types.new_tadeed_send.check_is_algo_address_string_format
+    :members:
+
+
+.. autoclass:: gwatn.types.new_tadeed_send.check_is_algo_msg_pack_encoded
+    :members:
+
+
 .. autoclass:: gwatn.types.NewTadeedSend_Maker
     :members:

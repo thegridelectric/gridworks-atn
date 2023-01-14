@@ -10,6 +10,40 @@ from pydantic import Field
 from pydantic import validator
 
 
+def check_is_algo_address_string_format(v: str) -> None:
+    """
+    AlgoAddressStringFormat format: The public key of a private/public Ed25519
+    key pair, transformed into an  Algorand address, by adding a 4-byte checksum
+    to the end of the public key and then encoding in base32.
+
+    Raises:
+        ValueError: if not AlgoAddressStringFormat format
+    """
+    import algosdk
+
+    at = algosdk.abi.AddressType()
+    try:
+        result = at.decode(at.encode(v))
+    except Exception as e:
+        raise ValueError(f"Not AlgoAddressStringFormat: {e}")
+
+
+def check_is_algo_msg_pack_encoded(v: str) -> None:
+    """
+    AlgoMSgPackEncoded format: the format of an  transaction sent to
+    the Algorand blockchain.
+
+    Raises:
+        ValueError: if not AlgoMSgPackEncoded  format
+    """
+    import algosdk
+
+    try:
+        algosdk.encoding.future_msgpack_decode(v)
+    except Exception as e:
+        raise ValueError(f"Not AlgoMsgPackEncoded format: {e}")
+
+
 class NewTadeedSend(BaseModel):
     """ """
 

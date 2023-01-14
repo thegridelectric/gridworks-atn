@@ -12,7 +12,8 @@ class Settings(GNodeSettings):
     g_node_alias: str = "d1.isone.ver.keene.holly"
     g_node_role_value: str = "AtomicTNode"
     my_super_alias: str = "d1.isone.ver.keene.super1"
-
+    g_node_id: str = "6bb37cc5-740d-40f5-a535-43987a5d07b4"
+    g_node_instance_id: str = "97eba574-bd20-45b5-bf82-9ba2f492d8f6"
     # Next 4 settings are consistent with dev env settings in gridworks-marketmaker repo
     market_maker_alias = "d1.isone.ver.keene"
     market_maker_algo_address = (
@@ -86,6 +87,26 @@ class TaDaemonSettings(BaseSettings):
 
     class Config:
         env_prefix = "TAD_"
+        env_nested_delimiter = "__"
+
+
+class ScadaSettings(GNodeSettings):
+    g_node_alias: str = "d1.isone.ver.keene.holly.ta.scada"
+    g_node_role_value: str = "Scada"
+    my_super_alias: str = "d1.isone.ver.keene.holly.ta.scada"
+    g_node_id: str = "282b2121-ec42-44e0-99fe-d77c40f64ac0"
+    g_node_instance_id: str = "b6eab35e-ff90-4380-a5c9-08cf26aaf45e"
+    # Next 4 settings are consistent with dev env settings in gridworks-marketmaker repo
+    sk: SecretStr = SecretStr(
+        "rH/hNUgNn0ULRxj/GdZyP57Bipl64IG0dvePIFB2dIRllXm6FNshcTEkRgfXpMiOopaSg6lQdeP9vnr0yxo/9w=="
+    )
+    # addr "MWKXTOQU3MQXCMJEIYD5PJGIR2RJNEUDVFIHLY75XZ5PJSY2H73W4DPHTM"
+    initial_time_unix_s = pendulum.datetime(
+        year=2020, month=1, day=1, hour=4, minute=20
+    ).int_timestamp
+
+    class Config:
+        env_prefix = "ATN_"
         env_nested_delimiter = "__"
 
 
