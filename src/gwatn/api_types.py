@@ -174,7 +174,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "super.starter.000": "Pending",
         "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",
-        "tavalidatorcert.algo.create.000": "Pending",
+        "tavalidatorcert.algo.create.000": "Active",
         "tavalidatorcert.algo.transfer.000": "Pending",
         "terminalasset.certify.hack.000": "Pending",
     }

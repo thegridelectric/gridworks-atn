@@ -4,6 +4,11 @@ from typing import Any
 from typing import Dict
 from typing import Literal
 
+import gridworks.algo_utils as algo_utils
+import gridworks.api_utils as api_utils
+import gridworks.gw_config as config
+from algosdk import encoding
+from algosdk.future import transaction
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
@@ -66,15 +71,23 @@ class TavalidatorcertAlgoCreate(BaseModel):
     def check_validator_addr(cls, v: str) -> str:
         """
         Axiom 5: Uniqueness.
-        There must not already be a ValidatorCert belonging to the  2-sig [GnfAdminAddr, ValidatorAddr] address.
+        There must not already be a TaValidatorCert belonging to the  2-sig [GnfAdminAddr, ValidatorAddr] address.
         """
+        ValidatorAddr = v
+        gnf_admin_addr = config.Public().gnf_admin_addr
+        multi = algo_utils.MultisigAccount(
+            version=1,
+            threshold=2,
+            addresses=[gnf_admin_addr, ValidatorAddr],
+        )
         try:
             check_is_algo_address_string_format(v)
         except ValueError as e:
             raise ValueError(
                 f"ValidatorAddr failed AlgoAddressStringFormat format validation: {e}"
             )
-        raise NotImplementedError("Implement axiom(s)")
+        if api_utils.is_validator_addr(ValidatorAddr):
+            ValueError("Axiom 5: Already has TaValidatorCert")
         return v
 
     @validator("HalfSignedCertCreationMtx")
@@ -86,8 +99,8 @@ class TavalidatorcertAlgoCreate(BaseModel):
         The transaction must have type AssetConfigTxn.
 
         Axiom 3: Is ValidatorCert.
-        For the asset getting created: total = 1, unit_name=VLDTR, manager is GnfAdminAddr,
-        asset_name and url not blank.
+        For the asset getting created: Total is 1, Decimals is 0, UnitName is VLDTR, Manager is GnfAdminAddr,
+        AssetName is not blank.
         [More info](https://gridworks.readthedocs.io/en/latest/ta-validator.html#tavalidator-certificate)
         """
         try:
@@ -96,7 +109,43 @@ class TavalidatorcertAlgoCreate(BaseModel):
             raise ValueError(
                 f"HalfSignedCertCreationMtx failed AlgoMsgPackEncoded format validation: {e}"
             )
-        raise NotImplementedError("Implement axiom(s)")
+        mtx = encoding.future_msgpack_decode(v)
+        txn = mtx.transaction
+        gnf_admin_addr = config.Public().gnf_admin_addr
+        if not isinstance(txn, transaction.AssetConfigTxn):
+            raise ValueError(
+                "Axiom 2: The transaction must have type AssetConfigTxn"
+                f" got {type(txn)}."
+            )
+        if not txn.total == 1:
+            raise ValueError(
+                "Axiom 3: TaValidatorCert ASA Total must be 1, "
+                f" got {txn.total}."
+                " See https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr"
+            )
+        if not txn.decimals == 0:
+            raise ValueError(
+                "Axiom 3: TaValidatorCert ASA Decimals must be 0, "
+                f" got {txn.decimals}."
+                " See https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr"
+            )
+        if not txn.unit_name == "VLDTR":
+            raise ValueError(
+                "Axiom 3: TaValidatorCert ASA UnitName must be 'VLDTR', "
+                f" got {txn.decimals}."
+                " See https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr"
+            )
+        if not txn.manager == gnf_admin_addr:
+            raise ValueError(
+                "Axiom 3: TaValidatorCert manager must be Universe gnf_admin_addr, "
+                f" got {txn.decimals}."
+                " See https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr"
+            )
+        if (txn.asset_name is None) or (txn.asset_name == ""):
+            raise ValueError(
+                "Axiom 3: TaValidatorCert AssetName cannot be blank, "
+                " See https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr"
+            )
         return v
 
     @root_validator(pre=True)
@@ -104,18 +153,34 @@ class TavalidatorcertAlgoCreate(BaseModel):
         """
         Axiom 1: Is correct Multisig.
         Decoded HalfSignedCertCreationMtx must have type MultisigTransaction from the
-        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].
+        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by ValidatorAddr.
         [More info](https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr)
         """
-        raise NotImplementedError("Implement check for axiom 1")
+        mtx = encoding.future_msgpack_decode(v.get("HalfSignedCertCreationMtx", None))
+        ValidatorAddr = v.get("ValidatorAddr")
+        gnf_admin_addr = config.Public().gnf_admin_addr
+        multi = algo_utils.MultisigAccount(
+            version=1,
+            threshold=2,
+            addresses=[gnf_admin_addr, ValidatorAddr],
+        )
 
-    @root_validator
-    def check_axiom_4(cls, v: dict) -> dict:
-        """
-        Axiom 4: TaValidator has signed.
-        ValidatorAddr must have signed the HalfSignedCertCreationMtx.
-        """
-        raise NotImplementedError("Implement check for axiom 4")
+        if not isinstance(mtx, transaction.MultisigTransaction):
+            raise ValueError(
+                "Axiom 1: Decoded HalfSignedCertCreationMtx must have type MultisigTransaction,"
+                f" got {type(mtx)}."
+            )
+
+        if not multi.addr == mtx.multisig.address():
+            raise ValueError(
+                "Axiom 1: Decoded HalfSignedCertCreationMtx must come from the 2-sig MultiAccount ,"
+                f" [GnfAdminAddr, ValidatorAddr], got {type(mtx)}."
+            )
+        if mtx.multisig.subsigs[1].signature is None:
+            raise ValueError(
+                "Axiom 1: Decoded HalfSignedCertCreationMtx missing TaValidator signature.}"
+            )
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()

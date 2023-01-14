@@ -124,7 +124,6 @@ class DevValidator:
             asset_name=self.settings.cert_name,
             unit_name="VLDTR",
             note=self.settings.name,
-            url=self.settings.api_root,
             sp=self.client.suggested_params(),
         )
 

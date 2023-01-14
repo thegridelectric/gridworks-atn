@@ -3343,7 +3343,7 @@
       <Enum>rec2HyLffy6QK9QId</Enum>
       <DisplayName>spaceheat.telemetry.name.000__WattHours</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrK6g6Iqmpv6ptfq/recPV5eCtZVeT7zmX</EnumSymbol>
+    <EnumSymbol>itrXNh5PoP14cACfu/recPV5eCtZVeT7zmX</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recPY9T9Npi1jCIVV</EnumSymbolId>
       <createdTime>2022-08-30T18:05:22Z</createdTime>
@@ -4291,7 +4291,7 @@
       <LocalValue>Actuator</LocalValue>
       <DisplayName>__Actuator</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrK6g6Iqmpv6ptfq/recob3YuE614ND3hl</EnumSymbol>
+    <EnumSymbol>itrXNh5PoP14cACfu/recob3YuE614ND3hl</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>reconXBspv9L7OQqS</EnumSymbolId>
       <createdTime>2022-08-01T12:19:26Z</createdTime>
@@ -6552,11 +6552,10 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
       <PropertyFormatsUsed>recvbnpa4cX2nNp9p</PropertyFormatsUsed>
       <SchemaRoot>rechCPLYrkc1asuPJ</SchemaRoot>
-      <PreStatus>Pending</PreStatus>
+      <PreStatus>Active</PreStatus>
       <ProtocolTypes>rec3V5oWa4cyRtWNc</ProtocolTypes>
       <ProtocolTypes>rec50dqlnp2l3PH7B</ProtocolTypes>
       <ProtocolTypes>rec5LcnUo5uGaILj6</ProtocolTypes>
-      <MultiPropertyAxioms>recOxFpekpRcZJpFj</MultiPropertyAxioms>
       <MultiPropertyAxioms>recSkcGAjBCP4uFPX</MultiPropertyAxioms>
       <Alias>tavalidatorcert.algo.create.000</Alias>
       <RootStatus>Active</RootStatus>
@@ -6570,10 +6569,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <AliasRoot>tavalidatorcert.algo.create</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <InGwProto />
       <Title>Used for Step 1 of TaValidator certification</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html</Url>
+      <Example>{
+"ValidatorAddr":"7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII",
+   "HalfSignedCertCreationMtx":"gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxECeARrO2EeYKIqsObwggXge02aA+Lf5D/lXB23O98qsyuf7f9jqDu+WT2U/KB53CPR+XSUWGh5nonEUdp63TDIEo3RocgKhdgGjdHhuiaRhcGFyhKJhbq9Nb2xseSBNZXRlcm1haWShbcQgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmhdAGidW6lVkxEVFKjZmVlzQPoomZ2A6NnZW6qc2FuZG5ldC12MaJnaMQgZGDSySH2HEYnRD3oWlUn77Xl6iBj3QBYmURoHXJQSRCibHbNA+ukbm90ZcQrTW9sbHkgSW5jIFRlbGVtZXRyeSBTdXJ2ZXlvcnMgYW5kIFB1cnZleW9yc6NzbmTEIMdnGF0JPZPHHFmVn8fmYiS7Wzi6UObcSZTp1gpcJYQHpHR5cGWkYWNmZw==",
+   "TypeName":"tavalidatorcert.algo.create",
+   "Version":"000"
+}</Example>
     </Schema>
     <Schema>
       <SchemaId>reccy0CAc6XAa6fGb</SchemaId>
@@ -7542,7 +7547,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Deprecated</Status>
       <InGwProto />
     </Schema>
-    <Schema>itrqq7vqMdTeofR6T/recyD0ycgUiT7TiH2</Schema>
+    <Schema>itrhS1JYK4xbdHodR/recyD0ycgUiT7TiH2</Schema>
     <Schema>
       <SchemaId>reczVqlxJInFWonml</SchemaId>
       <createdTime>2022-11-29T13:57:13Z</createdTime>
@@ -9301,7 +9306,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>SpaceheatMakeModel000</Format>
       <EnumPropertyFormat>SpaceheatMakeModel000</EnumPropertyFormat>
     </SchemaAttribute>
-    <SchemaAttribute>itr2aMT0c7ggyspfu/recC9UBTiJt4Qvu0t</SchemaAttribute>
+    <SchemaAttribute>itrpLHJ9TSTzUST0s/recC9UBTiJt4Qvu0t</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recCMCD6fLQzuN9RA</SchemaAttributeId>
       <createdTime>2022-09-30T19:16:20Z</createdTime>
@@ -10873,7 +10878,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr2aMT0c7ggyspfu/recL82cVWJ66J772b</SchemaAttribute>
+    <SchemaAttribute>itrpLHJ9TSTzUST0s/recL82cVWJ66J772b</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recL9BeJniQtSOgyV</SchemaAttributeId>
       <createdTime>2022-06-04T19:23:07Z</createdTime>
@@ -12516,7 +12521,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr2aMT0c7ggyspfu/recVgR5ZOHi7dvBav</SchemaAttribute>
+    <SchemaAttribute>itrpLHJ9TSTzUST0s/recVgR5ZOHi7dvBav</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recViTC1TmtkHrDKI</SchemaAttributeId>
       <createdTime>2022-11-10T14:23:24Z</createdTime>
@@ -14064,7 +14069,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr2aMT0c7ggyspfu/recfZc4IUiLfkPmHs</SchemaAttribute>
+    <SchemaAttribute>itrpLHJ9TSTzUST0s/recfZc4IUiLfkPmHs</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recfeynTSBzTXnyUK</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:51Z</createdTime>
@@ -15634,7 +15639,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubMessageFormatAliasRoot>gt.sh.simple.single.status</SubMessageFormatAliasRoot>
       <TypeInPayload>gt.sh.simple.single.status.100</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr2aMT0c7ggyspfu/recqTlmb22FCbFzaQ</SchemaAttribute>
+    <SchemaAttribute>itrpLHJ9TSTzUST0s/recqTlmb22FCbFzaQ</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recqWDbdtjF1TThWh</SchemaAttributeId>
       <createdTime>2022-11-08T04:07:01Z</createdTime>
@@ -16904,7 +16909,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaAxiomId>recEDIu6H6gEbyn4v</SchemaAxiomId>
       <createdTime>2022-09-22T06:13:13Z</createdTime>
       <SinglePropertyAxiom>recrD0Mo96XS8itFz</SinglePropertyAxiom>
-      <Description>There must not already be a ValidatorCert belonging to the  2-sig [GnfAdminAddr, ValidatorAddr] address.</Description>
+      <Description>There must not already be a TaValidatorCert belonging to the  2-sig [GnfAdminAddr, ValidatorAddr] address.</Description>
       <AxiomNumber>5</AxiomNumber>
       <Title>Uniqueness</Title>
       <Name>tavalidatorcert.algo.create.000 Type Axiom 5</Name>
@@ -16916,8 +16921,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-09-22T03:05:04Z</createdTime>
       <SinglePropertyAxiom>reclWEqctUrS5WXwG</SinglePropertyAxiom>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html#tavalidator-certificate</Url>
-      <Description>For the asset getting created: total = 1, unit_name=VLDTR, manager is GnfAdminAddr,
-        asset_name and url not blank.</Description>
+      <Description>For the asset getting created: Total is 1, Decimals is 0, UnitName is VLDTR, Manager is GnfAdminAddr,
+        AssetName is not blank.</Description>
       <AxiomNumber>3</AxiomNumber>
       <Title>Is ValidatorCert</Title>
       <Name>tavalidatorcert.algo.create.000 Type Axiom 3</Name>
@@ -17060,16 +17065,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
-      <SchemaAxiomId>recOxFpekpRcZJpFj</SchemaAxiomId>
-      <createdTime>2022-09-22T03:05:09Z</createdTime>
-      <Description>ValidatorAddr must have signed the HalfSignedCertCreationMtx.</Description>
-      <AxiomNumber>4</AxiomNumber>
-      <Title>TaValidator has signed</Title>
-      <MultiPropertyAxiom>reccFZLsGTVhuzGsn</MultiPropertyAxiom>
-      <Name>tavalidatorcert.algo.create.000 Type Axiom 4</Name>
-      <Type>tavalidatorcert.algo.create.000</Type>
-    </SchemaAxiom>
-    <SchemaAxiom>
       <SchemaAxiomId>recOyMaXAxwASJw4J</SchemaAxiomId>
       <createdTime>2022-09-22T02:51:31Z</createdTime>
       <Description>The Mtx must be signed by the DeedValidatorAddr</Description>
@@ -17114,7 +17109,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <CheckFirst>true</CheckFirst>
       <Url>https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr</Url>
       <Description>Decoded HalfSignedCertCreationMtx must have type MultisigTransaction from the
-        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].</Description>
+        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by ValidatorAddr.</Description>
       <AxiomNumber>1</AxiomNumber>
       <Title>Is correct Multisig</Title>
       <MultiPropertyAxiom>reccFZLsGTVhuzGsn</MultiPropertyAxiom>
@@ -19059,7 +19054,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>old.tadeed.algo.return.000</TypeName>
     </ProtocolType>
-    <ProtocolType>itrLzhmPttOr3ElIT/recbN7L6MH925xDby</ProtocolType>
+    <ProtocolType>itrY2jQSUkHG0mGzF/recbN7L6MH925xDby</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbV3eBvST23mHgN</ProtocolTypeId>
       <createdTime>2022-11-17T06:14:01Z</createdTime>
@@ -19351,10 +19346,10 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <ProtocolType>
       <ProtocolTypeId>recs6Jf8auLqC5z1T</ProtocolTypeId>
       <createdTime>2023-01-14T12:16:01Z</createdTime>
-      <Name>gwatn discoverycert.algo.create.000</Name>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
-      <ProtocolName>gwatn</ProtocolName>
       <Type>rec5bEVzI1k5qcXYg</Type>
+      <Name>gwatn discoverycert.algo.create.000</Name>
+      <ProtocolName>gwatn</ProtocolName>
       <TypeName>discoverycert.algo.create.000</TypeName>
     </ProtocolType>
     <ProtocolType>
