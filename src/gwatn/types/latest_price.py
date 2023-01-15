@@ -103,7 +103,7 @@ def check_is_iso_format(v: str) -> None:
     import datetime
 
     try:
-        datetime.fromisoformat(v.replace("Z", "+00:00"))
+        datetime.datetime.fromisoformat(v.replace("Z", "+00:00"))
     except:
         raise ValueError(f"{v} is not IsoFormat")
 
