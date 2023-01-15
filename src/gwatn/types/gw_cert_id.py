@@ -8,14 +8,13 @@ from typing import Literal
 from typing import Optional
 
 from fastapi_utils.enums import StrEnum
+from gridworks.enums import AlgoCertType
 from gridworks.errors import SchemaError
 from gridworks.message import as_enum
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import root_validator
 from pydantic import validator
-
-from gwatn.enums import AlgoCertType
 
 
 class AlgoCertType000SchemaEnum:
@@ -131,7 +130,21 @@ class GwCertId(BaseModel):
         If Type is ASA, then Id exists and Addr does not. Otherwise, Addr exists
         and Id does not.
         """
-        raise NotImplementedError("Implement check for axiom 1")
+        Type: AlgoCertType = v.get("Type", None)
+        Idx: int = v.get("Idx", None)
+        Addr: str = v.get("Addr", None)
+
+        if Type == AlgoCertType.ASA:
+            if Idx is None:
+                raise ValueError("If Type is ASA then Idx must exist")
+            if Addr is not None:
+                raise ValueError("If Type is ASA then Addr must be None")
+        if Type == AlgoCertType.SmartSig:
+            if Idx is not None:
+                raise ValueError("If Type is SmartSig then Idx must be None")
+            if Addr is None:
+                raise ValueError("If Type is SmartSig then Addr must exist")
+        return v
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()

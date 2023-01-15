@@ -1,16 +1,16 @@
-"""Tests g.node.gt type, version 002"""
+"""Tests base.g.node.gt type, version 002"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.enums import GNodeRole
+from gwatn.enums import CoreGNodeRole
 from gwatn.enums import GNodeStatus
-from gwatn.types import GNodeGt_Maker as Maker
+from gwatn.types import BaseGNodeGt_Maker as Maker
 
 
-def test_g_node_gt_generated() -> None:
+def test_base_g_node_gt_generated() -> None:
     d = {
         "GNodeId": "9405686a-14fd-4aef-945b-cd7c97903f14",
         "Alias": "d1.iso.me.orange.ta",
@@ -24,11 +24,9 @@ def test_g_node_gt_generated() -> None:
         "OwnerAddr": "7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII",
         "DaemonAddr": "7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII",
         "TradingRightsId": 1,
-        "ScadaAlgoAddr": "MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU",
+        "ScadaAlgoAddr": "7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII",
         "ScadaCertId": 10,
-        "ComponentId": "19d3dd42-14de-427f-a489-d96b404ae3c5",
-        "DisplayName": "Simulated Freedom House 1",
-        "TypeName": "g.node.gt",
+        "TypeName": "base.g.node.gt",
         "Version": "002",
     }
 
@@ -61,8 +59,6 @@ def test_g_node_gt_generated() -> None:
         trading_rights_id=gtuple.TradingRightsId,
         scada_algo_addr=gtuple.ScadaAlgoAddr,
         scada_cert_id=gtuple.ScadaCertId,
-        component_id=gtuple.ComponentId,
-        display_name=gtuple.DisplayName,
     ).tuple
     assert t == gtuple
 
@@ -157,16 +153,6 @@ def test_g_node_gt_generated() -> None:
         del d2["ScadaCertId"]
     Maker.dict_to_tuple(d2)
 
-    d2 = dict(d)
-    if "ComponentId" in d2.keys():
-        del d2["ComponentId"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "DisplayName" in d2.keys():
-        del d2["DisplayName"]
-    Maker.dict_to_tuple(d2)
-
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -175,7 +161,7 @@ def test_g_node_gt_generated() -> None:
     Maker.dict_to_tuple(d2).Status = GNodeStatus.default()
 
     d2 = dict(d, RoleGtEnumSymbol="hi")
-    Maker.dict_to_tuple(d2).Role = GNodeRole.default()
+    Maker.dict_to_tuple(d2).Role = CoreGNodeRole.default()
 
     d2 = dict(d, OwnershipDeedId="5.1")
     with pytest.raises(ValidationError):
@@ -214,10 +200,6 @@ def test_g_node_gt_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, GpsPointId="d4be12d5-33ba-4f1f-b9e5")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, ComponentId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

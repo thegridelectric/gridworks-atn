@@ -4,7 +4,6 @@ from typing import List
 from typing import no_type_check
 
 from gwatn.types import AcceptedBid_Maker
-from gwatn.types import AtnBid_Maker
 from gwatn.types import AtnParamsHeatpumpwithbooststore_Maker
 from gwatn.types import AtnParamsReportHeatpumpwithbooststore_Maker
 from gwatn.types import AtnStateHeatpumpwithbooststore_Maker
@@ -47,7 +46,6 @@ TypeMakerByName: Dict[str, HeartbeatA_Maker] = {}
 def type_makers() -> List[HeartbeatA_Maker]:
     return [
         AcceptedBid_Maker,
-        AtnBid_Maker,
         AtnParamsHeatpumpwithbooststore_Maker,
         AtnParamsReportHeatpumpwithbooststore_Maker,
         AtnStateHeatpumpwithbooststore_Maker,
@@ -96,14 +94,13 @@ def version_by_type_name() -> Dict[str, str]:
 
     v: Dict[str, str] = {
         "accepted.bid": "000",
-        "atn.bid": "000",
         "atn.params.heatpumpwithbooststore": "000",
         "atn.params.report.heatpumpwithbooststore": "000",
         "atn.state.heatpumpwithbooststore": "000",
-        "base.g.node.gt": "001",
+        "base.g.node.gt": "002",
         "discoverycert.algo.create": "000",
         "flo.params.heatpumpwithbooststore": "000",
-        "g.node.gt": "001",
+        "g.node.gt": "002",
         "g.node.instance.gt": "000",
         "gt.dispatch.boolean": "110",
         "gw.cert.id": "000",
@@ -143,17 +140,16 @@ def status_by_versioned_type_name() -> Dict[str, str]:
 
     v: Dict[str, str] = {
         "accepted.bid.000": "Pending",
-        "atn.bid.000": "Pending",
         "atn.params.heatpumpwithbooststore.000": "Active",
         "atn.params.report.heatpumpwithbooststore.000": "Pending",
         "atn.state.heatpumpwithbooststore.000": "Pending",
-        "base.g.node.gt.001": "Pending",
+        "base.g.node.gt.002": "Pending",
         "discoverycert.algo.create.000": "Pending",
         "flo.params.heatpumpwithbooststore.000": "Active",
-        "g.node.gt.001": "Pending",
+        "g.node.gt.002": "Pending",
         "g.node.instance.gt.000": "Pending",
         "gt.dispatch.boolean.110": "Pending",
-        "gw.cert.id.000": "Pending",
+        "gw.cert.id.000": "Active",
         "heartbeat.a.100": "Pending",
         "heartbeat.algo.audit.000": "Pending",
         "heartbeat.b.000": "Pending",
@@ -175,7 +171,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",
         "tavalidatorcert.algo.create.000": "Active",
-        "tavalidatorcert.algo.transfer.000": "Pending",
+        "tavalidatorcert.algo.transfer.000": "Active",
         "terminalasset.certify.hack.000": "Pending",
     }
 

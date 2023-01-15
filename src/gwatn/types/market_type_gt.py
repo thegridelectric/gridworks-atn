@@ -275,25 +275,34 @@ class MarketQuantityUnitMap:
 
 
 class MarketTypeGt(BaseModel):
-    """ """
+    """Used by MarketMakers to simultaneously run several different types of Markets.
+
+        A [MarketMaker](https://gridworks.readthedocs.io/en/latest/market-maker.html) GNode can run several types of Markets. For example, it can run an
+    hourly real-time market and also an ancillary services market for Regulation. This is captured
+    by the concept of MarketType.
+        [More info](https://gridworks.readthedocs.io/en/latest/market-type.html).
+    """
 
     Name: MarketTypeName = Field(
-        title="Name",
+        title="Name of the MarketType",
     )
     DurationMinutes: int = Field(
-        title="DurationMinutes",
+        title="Duration of MarketSlots, in minutes",
     )
     GateClosingSeconds: int = Field(
-        title="GateClosingSeconds",
+        title="Seconds before the start of a MarketSlot after which bids are not accepted",
     )
     PriceUnit: MarketPriceUnit = Field(
-        title="PriceUnit",
+        title="Price Unit for market (e.g. USD Per MWh)",
     )
     QuantityUnit: MarketQuantityUnit = Field(
-        title="QuantityUnit",
+        title="Quantity Unit for market (e.g. AvgMW)",
     )
     CurrencyUnit: RecognizedCurrencyUnit = Field(
-        title="CurrencyUnit",
+        title="Currency Unit for market (e.g. USD)",
+    )
+    PriceMax: int = Field(
+        title="PMax, required for defining bids",
     )
     TypeName: Literal["market.type.gt"] = "market.type.gt"
     Version: str = "000"
@@ -354,6 +363,7 @@ class MarketTypeGt_Maker:
         price_unit: MarketPriceUnit,
         quantity_unit: MarketQuantityUnit,
         currency_unit: RecognizedCurrencyUnit,
+        price_max: int,
     ):
         self.tuple = MarketTypeGt(
             Name=name,
@@ -362,6 +372,7 @@ class MarketTypeGt_Maker:
             PriceUnit=price_unit,
             QuantityUnit=quantity_unit,
             CurrencyUnit=currency_unit,
+            PriceMax=price_max,
             #
         )
 
@@ -425,6 +436,8 @@ class MarketTypeGt_Maker:
             )
         else:
             d2["CurrencyUnit"] = RecognizedCurrencyUnit.default()
+        if "PriceMax" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing PriceMax")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -435,6 +448,7 @@ class MarketTypeGt_Maker:
             PriceUnit=d2["PriceUnit"],
             QuantityUnit=d2["QuantityUnit"],
             CurrencyUnit=d2["CurrencyUnit"],
+            PriceMax=d2["PriceMax"],
             TypeName=d2["TypeName"],
             Version="000",
         )
@@ -451,6 +465,7 @@ class MarketTypeGt_Maker:
                 price_unit=t.PriceUnit,
                 quantity_unit=t.QuantityUnit,
                 currency_unit=t.CurrencyUnit,
+                price_max=t.PriceMax,
             )
 
         return dc
@@ -464,6 +479,7 @@ class MarketTypeGt_Maker:
             price_unit=dc.price_unit,
             quantity_unit=dc.quantity_unit,
             currency_unit=dc.currency_unit,
+            price_max=dc.price_max,
         ).tuple
         return t
 
