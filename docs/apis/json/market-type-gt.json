@@ -3,7 +3,8 @@
   "type_name": "market.type.gt",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "",
+  "description": "Used by MarketMakers to simultaneously run several different types of Markets. A [MarketMaker](https://gridworks.readthedocs.io/en/latest/market-maker.html) GNode can run several types of Markets. For example, it can run an hourly real-time market and also an ancillary services market for Regulation. This is captured by the concept of MarketType.",
+  "url": "https://gridworks.readthedocs.io/en/latest/market-type.html",
   "enums": {
     "MarketPriceUnit000": {
       "type": "string",
@@ -108,35 +109,40 @@
     "Name": {
       "type": "string",
       "format": "MarketTypeName000",
-      "title": "",
+      "title": "Name of the MarketType",
       "required": true
     },
     "DurationMinutes": {
       "type": "integer",
-      "title": "",
+      "title": "Duration of MarketSlots, in minutes",
       "required": true
     },
     "GateClosingSeconds": {
       "type": "integer",
-      "title": "",
+      "title": "Seconds before the start of a MarketSlot after which bids are not accepted",
       "required": true
     },
     "PriceUnit": {
       "type": "string",
       "format": "MarketPriceUnit000",
-      "title": "",
+      "title": "Price Unit for market (e.g. USD Per MWh)",
       "required": true
     },
     "QuantityUnit": {
       "type": "string",
       "format": "MarketQuantityUnit000",
-      "title": "",
+      "title": "Quantity Unit for market (e.g. AvgMW)",
       "required": true
     },
     "CurrencyUnit": {
       "type": "string",
       "format": "RecognizedCurrencyUnit000",
-      "title": "",
+      "title": "Currency Unit for market (e.g. USD)",
+      "required": true
+    },
+    "PriceMax": {
+      "type": "integer",
+      "title": "PMax, required for defining bids",
       "required": true
     },
     "TypeName": {

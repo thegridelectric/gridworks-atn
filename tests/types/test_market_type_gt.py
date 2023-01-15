@@ -20,6 +20,7 @@ def test_market_type_gt_generated() -> None:
         "PriceUnitGtEnumSymbol": "00000000",
         "QuantityUnitGtEnumSymbol": "c272f3b3",
         "CurrencyUnitGtEnumSymbol": "e57c5143",
+        "PriceMax": 10000,
         "TypeName": "market.type.gt",
         "Version": "000",
     }
@@ -45,6 +46,7 @@ def test_market_type_gt_generated() -> None:
         price_unit=gtuple.PriceUnit,
         quantity_unit=gtuple.QuantityUnit,
         currency_unit=gtuple.CurrencyUnit,
+        price_max=gtuple.PriceMax,
     ).tuple
     assert t == gtuple
 
@@ -95,6 +97,11 @@ def test_market_type_gt_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d)
+    del d2["PriceMax"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
     ######################################
     # Behavior on incorrect types
     ######################################
@@ -118,6 +125,10 @@ def test_market_type_gt_generated() -> None:
 
     d2 = dict(d, CurrencyUnitGtEnumSymbol="hi")
     Maker.dict_to_tuple(d2).CurrencyUnit = RecognizedCurrencyUnit.default()
+
+    d2 = dict(d, PriceMax="10000.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect

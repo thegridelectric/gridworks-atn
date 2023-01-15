@@ -56,15 +56,6 @@ class DevValidator:
         self.seed_fund_validator_joint_account()
         LOGGER.info("DevValidator Initialized")
 
-    def send_message_to_gnf(self, payload: TavalidatorcertAlgoCreate):
-        """Stub for when there is a mechanism (probably FastAPI) for validators  sending
-        messages to GNodeFactory.
-
-        Args:
-            payload: Any valid payload in the API for sending
-        """
-        pass
-
     #################
     # Messages received
     ################
@@ -130,10 +121,10 @@ class DevValidator:
         mtx = self.validator_multi.create_mtx(txn)
         mtx.sign(self.acct.sk)
 
-        payload = TavalidatorcertAlgoCreate_Maker(
-            validator_addr=self.acct.addr,
-            half_signed_cert_creation_mtx=encoding.msgpack_encode(mtx),
-        ).tuple
+        payload = TavalidatorcertAlgoCreate(
+            ValidatorAddr=self.acct.addr,
+            HalfSignedCertCreationMtx=encoding.msgpack_encode(mtx),
+        )
         LOGGER.info("Posting request to GnfRestAPI to create new TaValidatorCert")
         api_endpoint = (
             f"{self.settings.public.gnf_api_root}/tavalidatorcert-algo-create/"
@@ -282,11 +273,10 @@ class DevValidator:
         mtx = self.validator_multi.create_mtx(transfer_txn)
         mtx.sign(self.acct.sk)
 
-        payload = TavalidatorcertAlgoTransfer_Maker(
-            validator_addr=self.acct.addr,
-            half_signed_cert_transfer_mtx=encoding.msgpack_encode(mtx),
-        ).tuple
-        self.send_message_to_gnf(payload)
+        payload = TavalidatorcertAlgoTransfer(
+            ValidatorAddr=self.acct.addr,
+            HalfSignedCertTransferMtx=encoding.msgpack_encode(mtx),
+        )
         return payload
 
     ##########################

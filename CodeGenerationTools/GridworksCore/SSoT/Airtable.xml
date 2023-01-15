@@ -254,7 +254,12 @@
       <MakeDataClass>true</MakeDataClass>
       <Status>Active</Status>
       <AliasRoot>market.type.gt</AliasRoot>
+      <Description>A [MarketMaker](https://gridworks.readthedocs.io/en/latest/market-maker.html) GNode can run several types of Markets. For example, it can run an
+hourly real-time market and also an ancillary services market for Regulation. This is captured
+by the concept of MarketType.</Description>
+      <Title>Used by MarketMakers to simultaneously run several different types of Markets</Title>
       <CurrentSemanticEnd>000</CurrentSemanticEnd>
+      <Url>https://gridworks.readthedocs.io/en/latest/market-type.html</Url>
       <Alias>market.type.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -390,7 +395,7 @@
     that SSoT to share information with actors about their GNodes, and the GNodes
     that they will observe and communicate with.</Description>
       <Title>Used to send and receive updates about GNodes</Title>
-      <CurrentSemanticEnd>001</CurrentSemanticEnd>
+      <CurrentSemanticEnd>002</CurrentSemanticEnd>
       <Url>https://gridworks.readthedocs.io/en/latest/g-node.html</Url>
       <Alias>g.node.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
@@ -558,10 +563,11 @@
       <createdTime>2022-11-08T04:10:06Z</createdTime>
       <ProtocolCategory>Json</ProtocolCategory>
       <SchemaRootscopy>recH9GUDdSB7SiwNG</SchemaRootscopy>
+      <SchemaRootscopy>recECSz5o4Z7NFjhG</SchemaRootscopy>
       <Status>Active</Status>
       <AliasRoot>atn.bid</AliasRoot>
       <Title>AtomicTNode bid sent to a MarketMaker</Title>
-      <CurrentSemanticEnd>000</CurrentSemanticEnd>
+      <CurrentSemanticEnd>001</CurrentSemanticEnd>
       <Url>https://gridworks.readthedocs.io/en/latest/market-bid.html</Url>
       <Alias>atn.bid</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
@@ -749,7 +755,7 @@
       <Status>Active</Status>
       <AliasRoot>base.g.node.gt</AliasRoot>
       <Description>BaseGNode. Authority is GNodeFactory. </Description>
-      <CurrentSemanticEnd>001</CurrentSemanticEnd>
+      <CurrentSemanticEnd>002</CurrentSemanticEnd>
       <Alias>base.g.node.gt</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
@@ -1587,6 +1593,8 @@
       <TypesThatUse>recDYjXYf8RbWmUFe</TypesThatUse>
       <TypesThatUse>recd5K0XiAzHsj2Pw</TypesThatUse>
       <TypesThatUse>rec3H5b04RB2vmYrk</TypesThatUse>
+      <TypesThatUse>recXhMHsIoQQsIuhA</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Version>000</Version>
       <Description>Price unit assigned to MarketMaker MarketType</Description>
       <ProtocolEnums>rec8B7NqLQHwAZjcw</ProtocolEnums>
@@ -1599,6 +1607,7 @@
       <SchemaAttributes>recRU6cvY6FKUwxbv</SchemaAttributes>
       <SchemaAttributes>recSWBVF41HakpB18</SchemaAttributes>
       <SchemaAttributes>recRwEFucyvVZaXY2</SchemaAttributes>
+      <SchemaAttributes>recfzsWHMU0fhZE47</SchemaAttributes>
       <Alias>market.price.unit.000</Alias>
       <DefaultSymbol>00000000</DefaultSymbol>
       <DefaultEnumValue>USDPerMWh</DefaultEnumValue>
@@ -1987,6 +1996,7 @@
       <PropertyFormatRoot>MarketTypeName</PropertyFormatRoot>
       <TypesThatUse>recDYjXYf8RbWmUFe</TypesThatUse>
       <TypesThatUse>recH9GUDdSB7SiwNG</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Version>000</Version>
       <Description>Categorizes different markets run by MarketMaker</Description>
       <ProtocolEnums>recJX40Wt0rcWDFET</ProtocolEnums>
@@ -2202,6 +2212,8 @@
       <TypesThatUse>rechXkF4uGNAulje7</TypesThatUse>
       <TypesThatUse>recH9GUDdSB7SiwNG</TypesThatUse>
       <TypesThatUse>recDYjXYf8RbWmUFe</TypesThatUse>
+      <TypesThatUse>recXhMHsIoQQsIuhA</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Version>000</Version>
       <Description>Quantity unit assigned to MarketMaker MarketType</Description>
       <ProtocolEnums>recy37qKrW01vTt7S</ProtocolEnums>
@@ -2212,6 +2224,7 @@
       <SchemaAttributes>recehDezdvO5nKJJQ</SchemaAttributes>
       <SchemaAttributes>rec5yCVNnWVXBDdMc</SchemaAttributes>
       <SchemaAttributes>recOhTtiANrJcVKgf</SchemaAttributes>
+      <SchemaAttributes>recREgyk5HQKEtSMJ</SchemaAttributes>
       <Alias>market.quantity.unit.000</Alias>
       <DefaultSymbol>00000000</DefaultSymbol>
       <DefaultEnumValue>AvgMW</DefaultEnumValue>
@@ -3343,7 +3356,7 @@
       <Enum>rec2HyLffy6QK9QId</Enum>
       <DisplayName>spaceheat.telemetry.name.000__WattHours</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrXNh5PoP14cACfu/recPV5eCtZVeT7zmX</EnumSymbol>
+    <EnumSymbol>itrXX1oMa2bBJxxVb/recPV5eCtZVeT7zmX</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recPY9T9Npi1jCIVV</EnumSymbolId>
       <createdTime>2022-08-30T18:05:22Z</createdTime>
@@ -4291,7 +4304,7 @@
       <LocalValue>Actuator</LocalValue>
       <DisplayName>__Actuator</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrXNh5PoP14cACfu/recob3YuE614ND3hl</EnumSymbol>
+    <EnumSymbol>itrXX1oMa2bBJxxVb/recob3YuE614ND3hl</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>reconXBspv9L7OQqS</EnumSymbolId>
       <createdTime>2022-08-01T12:19:26Z</createdTime>
@@ -4705,14 +4718,13 @@
       <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
       <PropertyFormatsUsed>recvbnpa4cX2nNp9p</PropertyFormatsUsed>
       <SchemaRoot>rec0dMwyxvm5Cx9Hu</SchemaRoot>
-      <PreStatus>Pending</PreStatus>
+      <PreStatus>Active</PreStatus>
       <ProtocolTypes>recxtr4LhX2Ixojmg</ProtocolTypes>
       <ProtocolTypes>rec49oZw87DHVaGGI</ProtocolTypes>
       <ProtocolTypes>recnvClBEU4WU5lOe</ProtocolTypes>
       <MultiPropertyAxioms>recDXr4RoTH1jDsXd</MultiPropertyAxioms>
       <MultiPropertyAxioms>recKmoKIL8lpLdK2U</MultiPropertyAxioms>
       <MultiPropertyAxioms>rech3zpojTnscbsH1</MultiPropertyAxioms>
-      <MultiPropertyAxioms>rec9XtfVmUCtTZwfg</MultiPropertyAxioms>
       <Alias>tavalidatorcert.algo.transfer.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -4725,7 +4737,7 @@
       <AliasRoot>tavalidatorcert.algo.transfer</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <InGwProto />
       <Title>Used for Step 2 of TaValidator certification</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html</Url>
@@ -5059,7 +5071,7 @@
     <Schema>
       <SchemaId>rec8uTC7GK5qgXzg9</SchemaId>
       <createdTime>2022-11-06T20:02:04Z</createdTime>
-      <SemanticEnd>001</SemanticEnd>
+      <SemanticEnd>002</SemanticEnd>
       <SchemaAttributes>recQnH1rlTK3K4DZz</SchemaAttributes>
       <SchemaAttributes>recQJigqO8DLTKCqH</SchemaAttributes>
       <SchemaAttributes>recVtNsE7nmGPy31j</SchemaAttributes>
@@ -5075,6 +5087,7 @@
       <SchemaAttributes>recx4xJLSgpMi1EVN</SchemaAttributes>
       <SchemaAttributes>recstfJ6XtUvbv3Vc</SchemaAttributes>
       <SchemaAttributes>recYFsJii0BGiCmAH</SchemaAttributes>
+      <SchemaAttributes>recIhSSpqIviBUW64</SchemaAttributes>
       <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
       <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
@@ -5101,7 +5114,7 @@
       <ProtocolTypes>recnwesXAnDk54IJt</ProtocolTypes>
       <ProtocolTypes>rect3RqANsPtjXr8a</ProtocolTypes>
       <DataClassIdField>GNodeId</DataClassIdField>
-      <Alias>g.node.gt.001</Alias>
+      <Alias>g.node.gt.002</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass>true</MakeDataClass>
@@ -5115,7 +5128,7 @@
     that SSoT to share information with actors about their GNodes, and the GNodes
     that they will observe and communicate with.</Description>
       <AliasRoot>g.node.gt</AliasRoot>
-      <RootCurrentSemanticEnd>001</RootCurrentSemanticEnd>
+      <RootCurrentSemanticEnd>002</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Pending</Status>
       <InGwProto />
@@ -5261,6 +5274,7 @@
       <SchemaAttributes>recRU6cvY6FKUwxbv</SchemaAttributes>
       <SchemaAttributes>recOhTtiANrJcVKgf</SchemaAttributes>
       <SchemaAttributes>recV7ixIyYTmrGAbL</SchemaAttributes>
+      <SchemaAttributes>recc5A1JaRXNBZe9g</SchemaAttributes>
       <SchemaRoot>rec6PDgvHMkqnbyOQ</SchemaRoot>
       <UsedAsSubMessagein>recwDJqmDK7sTdTTC</UsedAsSubMessagein>
       <UsedAsSubMessagein>recDaxDt8J5MZRx8y</UsedAsSubMessagein>
@@ -5280,11 +5294,16 @@
       <IsCac />
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>A [MarketMaker](https://gridworks.readthedocs.io/en/latest/market-maker.html) GNode can run several types of Markets. For example, it can run an
+hourly real-time market and also an ancillary services market for Regulation. This is captured
+by the concept of MarketType.</Description>
       <AliasRoot>market.type.gt</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Pending</Status>
       <InGwProto />
+      <Title>Used by MarketMakers to simultaneously run several different types of Markets</Title>
+      <Url>https://gridworks.readthedocs.io/en/latest/market-type.html</Url>
     </Schema>
     <Schema>
       <SchemaId>recDjO3rdq76LMOoL</SchemaId>
@@ -5318,7 +5337,7 @@
     <Schema>
       <SchemaId>recDp8U1jLA9zeEx2</SchemaId>
       <createdTime>2022-10-02T23:32:44Z</createdTime>
-      <SemanticEnd>001</SemanticEnd>
+      <SemanticEnd>002</SemanticEnd>
       <SchemaAttributes>recbP43UORyJcMOyK</SchemaAttributes>
       <SchemaAttributes>recSyaqv9CQCvmg7I</SchemaAttributes>
       <SchemaAttributes>rec3Ip25a5UdscQKD</SchemaAttributes>
@@ -5332,6 +5351,7 @@
       <SchemaAttributes>recyvC2QcCmnStivi</SchemaAttributes>
       <SchemaAttributes>recKtxHw3srimaENr</SchemaAttributes>
       <SchemaAttributes>recKVh2K6tmazsz4r</SchemaAttributes>
+      <SchemaAttributes>recHPzXnfcnuA7lLS</SchemaAttributes>
       <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
       <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
       <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
@@ -5365,7 +5385,7 @@
       <UpdateDescription>New attributes: PrevAlias, OwnerAddr, DaemonAddr, TradingRightsNftId.
 
 CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
-      <Alias>base.g.node.gt.001</Alias>
+      <Alias>base.g.node.gt.002</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass>true</MakeDataClass>
@@ -5375,7 +5395,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <ConsistencyCheck>1</ConsistencyCheck>
       <Description>BaseGNode. Authority is GNodeFactory. </Description>
       <AliasRoot>base.g.node.gt</AliasRoot>
-      <RootCurrentSemanticEnd>001</RootCurrentSemanticEnd>
+      <RootCurrentSemanticEnd>002</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Pending</Status>
       <InGwProto />
@@ -5433,6 +5453,45 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsCurrent>1</IsCurrent>
       <Status>Pending</Status>
       <InGwProto />
+    </Schema>
+    <Schema>
+      <SchemaId>recECSz5o4Z7NFjhG</SchemaId>
+      <createdTime>2023-01-15T12:53:53Z</createdTime>
+      <SemanticEnd>001</SemanticEnd>
+      <SchemaAttributes>rec8t56gTGBi3AXBr</SchemaAttributes>
+      <SchemaAttributes>recHNfUgwXIvrBwWK</SchemaAttributes>
+      <SchemaAttributes>rec4tCsBpIaZUGllT</SchemaAttributes>
+      <SchemaAttributes>recSH9Gcj0yME4EIk</SchemaAttributes>
+      <SchemaAttributes>recLK2A8DxkXE6XHB</SchemaAttributes>
+      <SchemaAttributes>recREgyk5HQKEtSMJ</SchemaAttributes>
+      <SchemaAttributes>recfzsWHMU0fhZE47</SchemaAttributes>
+      <SchemaAttributes>recqXdxf3WK0BhhJo</SchemaAttributes>
+      <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
+      <PropertyFormatsUsed>rec24qjC90m0f4Kvl</PropertyFormatsUsed>
+      <PropertyFormatsUsed>recdsSDIz6EmZCvr9</PropertyFormatsUsed>
+      <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
+      <SchemaRoot>recLF7qGdmXsqb9M2</SchemaRoot>
+      <PreStatus>Pending</PreStatus>
+      <Enums>rec75xMuw0SMkzjVc</Enums>
+      <Enums>recounhEj97w5SfDm</Enums>
+      <Enums>recZmZP13YV9Rmbnw</Enums>
+      <MultiPropertyAxioms>rec4x9sbCR3Q6Bwm8</MultiPropertyAxioms>
+      <MultiPropertyAxioms>recQEk0lDO3sQJDyc</MultiPropertyAxioms>
+      <UpdateDescription>BidList changed to PqPairs</UpdateDescription>
+      <Alias>atn.bid.001</Alias>
+      <RootStatus>Active</RootStatus>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <AliasRoot>atn.bid</AliasRoot>
+      <RootCurrentSemanticEnd>001</RootCurrentSemanticEnd>
+      <IsCurrent>1</IsCurrent>
+      <Status>Pending</Status>
+      <InGwProto />
+      <Title>AtomicTNode bid sent to a MarketMaker</Title>
+      <Url>https://gridworks.readthedocs.io/en/latest/market-bid.html</Url>
     </Schema>
     <Schema>
       <SchemaId>recFrR35Q6mQhx1KM</SchemaId>
@@ -5518,9 +5577,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsComponent />
       <ConsistencyCheck>1</ConsistencyCheck>
       <AliasRoot>atn.bid</AliasRoot>
-      <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
-      <IsCurrent>1</IsCurrent>
-      <Status>Pending</Status>
+      <RootCurrentSemanticEnd>001</RootCurrentSemanticEnd>
+      <IsCurrent>0</IsCurrent>
+      <Status>Deprecated</Status>
       <InGwProto />
       <Title>AtomicTNode bid sent to a MarketMaker</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/market-bid.html</Url>
@@ -6242,6 +6301,15 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto />
     </Schema>
     <Schema>
+      <SchemaId>recXhMHsIoQQsIuhA</SchemaId>
+      <createdTime>2023-01-15T12:53:30Z</createdTime>
+      <Enums>rec75xMuw0SMkzjVc</Enums>
+      <Enums>recounhEj97w5SfDm</Enums>
+      <Alias>.</Alias>
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <IsCurrent>1</IsCurrent>
+    </Schema>
+    <Schema>
       <SchemaId>recXrOxZu3uUqL6pH</SchemaId>
       <createdTime>2022-09-21T11:38:59Z</createdTime>
       <SemanticEnd>000</SemanticEnd>
@@ -6552,6 +6620,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
       <PropertyFormatsUsed>recvbnpa4cX2nNp9p</PropertyFormatsUsed>
       <SchemaRoot>rechCPLYrkc1asuPJ</SchemaRoot>
+      <Example>{
+"ValidatorAddr":"7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII",
+   "HalfSignedCertCreationMtx":"gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxECeARrO2EeYKIqsObwggXge02aA+Lf5D/lXB23O98qsyuf7f9jqDu+WT2U/KB53CPR+XSUWGh5nonEUdp63TDIEo3RocgKhdgGjdHhuiaRhcGFyhKJhbq9Nb2xseSBNZXRlcm1haWShbcQgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmhdAGidW6lVkxEVFKjZmVlzQPoomZ2A6NnZW6qc2FuZG5ldC12MaJnaMQgZGDSySH2HEYnRD3oWlUn77Xl6iBj3QBYmURoHXJQSRCibHbNA+ukbm90ZcQrTW9sbHkgSW5jIFRlbGVtZXRyeSBTdXJ2ZXlvcnMgYW5kIFB1cnZleW9yc6NzbmTEIMdnGF0JPZPHHFmVn8fmYiS7Wzi6UObcSZTp1gpcJYQHpHR5cGWkYWNmZw==",
+   "TypeName":"tavalidatorcert.algo.create",
+   "Version":"000"
+}</Example>
       <PreStatus>Active</PreStatus>
       <ProtocolTypes>rec3V5oWa4cyRtWNc</ProtocolTypes>
       <ProtocolTypes>rec50dqlnp2l3PH7B</ProtocolTypes>
@@ -6573,12 +6647,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto />
       <Title>Used for Step 1 of TaValidator certification</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html</Url>
-      <Example>{
-"ValidatorAddr":"7QQT4GN3ZPAQEFCNWF5BMF7NULVK3CWICZVT4GM3BQRISD52YEDLWJ4MII",
-   "HalfSignedCertCreationMtx":"gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxECeARrO2EeYKIqsObwggXge02aA+Lf5D/lXB23O98qsyuf7f9jqDu+WT2U/KB53CPR+XSUWGh5nonEUdp63TDIEo3RocgKhdgGjdHhuiaRhcGFyhKJhbq9Nb2xseSBNZXRlcm1haWShbcQgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmhdAGidW6lVkxEVFKjZmVlzQPoomZ2A6NnZW6qc2FuZG5ldC12MaJnaMQgZGDSySH2HEYnRD3oWlUn77Xl6iBj3QBYmURoHXJQSRCibHbNA+ukbm90ZcQrTW9sbHkgSW5jIFRlbGVtZXRyeSBTdXJ2ZXlvcnMgYW5kIFB1cnZleW9yc6NzbmTEIMdnGF0JPZPHHFmVn8fmYiS7Wzi6UObcSZTp1gpcJYQHpHR5cGWkYWNmZw==",
-   "TypeName":"tavalidatorcert.algo.create",
-   "Version":"000"
-}</Example>
     </Schema>
     <Schema>
       <SchemaId>reccy0CAc6XAa6fGb</SchemaId>
@@ -7309,6 +7377,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaRoot>recaDjX9PV6CUrf6k</SchemaRoot>
       <UsedAsSubMessagein>recb85VFWSeaqaKV0</UsedAsSubMessagein>
       <UsedAsSubMessagein>rec68T9cqrrclsIpW</UsedAsSubMessagein>
+      <UsedAsSubMessagein>recSH9Gcj0yME4EIk</UsedAsSubMessagein>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recDST3lwGBFXqsz1</ProtocolTypes>
       <ProtocolTypes>rec5dH5f6YcOKD0RU</ProtocolTypes>
@@ -7473,6 +7542,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Pending</Status>
       <InGwProto />
     </Schema>
+    <Schema>itrhXgFO3pEfv7Si7/recwr8WwMjrVGNL7L</Schema>
     <Schema>
       <SchemaId>recxNIfCRauFrb57o</SchemaId>
       <createdTime>2022-06-20T12:49:53Z</createdTime>
@@ -7547,7 +7617,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Deprecated</Status>
       <InGwProto />
     </Schema>
-    <Schema>itrhS1JYK4xbdHodR/recyD0ycgUiT7TiH2</Schema>
     <Schema>
       <SchemaId>reczVqlxJInFWonml</SchemaId>
       <createdTime>2022-11-29T13:57:13Z</createdTime>
@@ -8499,6 +8568,23 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>LeftRightDot</Format>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>rec4tCsBpIaZUGllT</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:21Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>MarketSlotName</Value>
+      <Idx>2</Idx>
+      <PrimitiveFormatId>recdsSDIz6EmZCvr9</PrimitiveFormatId>
+      <TestValue>"rt60gate5.d1.isone.ver.keene.1667880000"</TestValue>
+      <PrimitiveFormat>MarketSlotNameLrdFormat</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>MarketSlotNameLrdFormat</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>rec57uhIFk7eVwvKQ</SchemaAttributeId>
       <createdTime>2022-11-23T14:02:10Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -8617,12 +8703,18 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>price.quantity.unitless.000</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>rec6CnViJP5zRds2E</SchemaAttributeId>
+      <createdTime>2023-01-15T14:23:24Z</createdTime>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>rec6MQ1HJUBz9pC5d</SchemaAttributeId>
       <createdTime>2022-11-06T20:03:56Z</createdTime>
       <IsPrimitive>true</IsPrimitive>
       <Schema>rec8uTC7GK5qgXzg9</Schema>
       <PrimitiveType>Integer</PrimitiveType>
-      <Value>TradingRightsNftId</Value>
+      <Value>TradingRightsId</Value>
       <Idx>11</Idx>
       <Title>Algorand Id of ASA TradingRights</Title>
       <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
@@ -8880,6 +8972,24 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubTypeDataClass>GNodeInstance</SubTypeDataClass>
       <SubMessageFormatAliasRoot>g.node.instance.gt</SubMessageFormatAliasRoot>
       <TypeInPayload>g.node.instance.gt.000</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>rec8t56gTGBi3AXBr</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:17Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>BidderAlias</Value>
+      <Idx>0</Idx>
+      <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
+      <TestValue>"d1.isone.ver.keene.holly.ta"</TestValue>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>LeftRightDot</Format>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rec8xg10A3XVqZhG0</SchemaAttributeId>
@@ -9188,6 +9298,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <Value>DurationMinutes</Value>
       <Idx>1</Idx>
+      <Title>Duration of MarketSlots, in minutes</Title>
       <TestValue>60</TestValue>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -9253,6 +9364,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrGxF83TTOvEqWb1/recBw1TvOwQk1gM0K</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recC2OJXewZyxgy8T</SchemaAttributeId>
       <createdTime>2022-11-17T06:04:05Z</createdTime>
@@ -9306,7 +9418,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>SpaceheatMakeModel000</Format>
       <EnumPropertyFormat>SpaceheatMakeModel000</EnumPropertyFormat>
     </SchemaAttribute>
-    <SchemaAttribute>itrpLHJ9TSTzUST0s/recC9UBTiJt4Qvu0t</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recCMCD6fLQzuN9RA</SchemaAttributeId>
       <createdTime>2022-09-30T19:16:20Z</createdTime>
@@ -9376,12 +9487,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
   'GNodeRegistryAddr': 'MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU',
   'TypeName': 'basegnode.gt',
   'Version': '020'}]</TestValue>
-      <SubMessageFormatAlias>base.g.node.gt.001</SubMessageFormatAlias>
+      <SubMessageFormatAlias>base.g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
       <SubTypeDataClass>BaseGNode</SubTypeDataClass>
       <SubMessageFormatAliasRoot>base.g.node.gt</SubMessageFormatAliasRoot>
-      <TypeInPayload>base.g.node.gt.001</TypeInPayload>
+      <TypeInPayload>base.g.node.gt.002</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recCyeOy0hRRYAvoc</SchemaAttributeId>
@@ -10198,6 +10309,39 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>Number</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>recHNfUgwXIvrBwWK</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:19Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>BidderGNodeInstanceId</Value>
+      <Idx>1</Idx>
+      <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
+      <TestValue>"d4057686-c199-4274-b595-f7e39ce863e2"</TestValue>
+      <PrimitiveFormat>UuidCanonicalTextual</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>UuidCanonicalTextual</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recHPzXnfcnuA7lLS</SchemaAttributeId>
+      <createdTime>2023-01-15T14:25:03Z</createdTime>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Schema>recDp8U1jLA9zeEx2</Schema>
+      <Idx>13</Idx>
+      <Value>ScadaCertId</Value>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
+      <PydanticFormat>PositiveInteger</PydanticFormat>
+      <TestValue>10</TestValue>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>recHYSlx2bkFlTrmH</SchemaAttributeId>
       <createdTime>2022-08-11T17:28:05Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -10349,7 +10493,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsPrimitive>true</IsPrimitive>
       <Schema>rec8uTC7GK5qgXzg9</Schema>
       <PrimitiveType>Integer</PrimitiveType>
-      <Value>OwnershipDeedNftId</Value>
+      <Value>OwnershipDeedId</Value>
       <Idx>7</Idx>
       <Title>Algorand Id of ASA Deed</Title>
       <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
@@ -10359,6 +10503,21 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <PydanticFormat>PositiveInteger</PydanticFormat>
       <TypeInPayload>Integer</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recIhSSpqIviBUW64</SchemaAttributeId>
+      <createdTime>2023-01-15T14:30:03Z</createdTime>
+      <IsType>false</IsType>
+      <IsEnum>false</IsEnum>
+      <TypeInPayload>Integer</TypeInPayload>
+      <Schema>rec8uTC7GK5qgXzg9</Schema>
+      <Value>ScadaCertId</Value>
+      <Idx>13</Idx>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
+      <PydanticFormat>PositiveInteger</PydanticFormat>
+      <TestValue>10</TestValue>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recIkJy1G5tzWXqbs</SchemaAttributeId>
@@ -10784,6 +10943,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrGxF83TTOvEqWb1/recKdVPFQyTt95V3Y</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKh7AdivSqkof7s</SchemaAttributeId>
       <createdTime>2022-11-10T13:23:35Z</createdTime>
@@ -10818,15 +10978,15 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-10-02T23:40:15Z</createdTime>
       <IsPrimitive>true</IsPrimitive>
       <Schema>recDp8U1jLA9zeEx2</Schema>
-      <PrimitiveType>Integer</PrimitiveType>
-      <Value>TradingRightsNftId</Value>
+      <Value>TradingRightsId</Value>
       <Idx>11</Idx>
-      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
       <TestValue>1</TestValue>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
-      <PydanticFormat>PositiveInteger</PydanticFormat>
       <TypeInPayload>Integer</TypeInPayload>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
+      <PydanticFormat>PositiveInteger</PydanticFormat>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKwPBxJr8R55KlB</SchemaAttributeId>
@@ -10878,7 +11038,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrpLHJ9TSTzUST0s/recL82cVWJ66J772b</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recL9BeJniQtSOgyV</SchemaAttributeId>
       <createdTime>2022-06-04T19:23:07Z</createdTime>
@@ -10917,6 +11076,21 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recLK2A8DxkXE6XHB</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:26Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <DefaultValue>False</DefaultValue>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <PrimitiveType>Boolean</PrimitiveType>
+      <Value>InjectionIsPositive</Value>
+      <Idx>4</Idx>
+      <TestValue>True</TestValue>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>Boolean</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recLO20AZmUda0yof</SchemaAttributeId>
@@ -11084,12 +11258,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
  'Version': '000',
  'StatusGtEnumSymbol': 'a2cfc2f7',
  'RoleGtEnumSymbol': '3901c7d2'}</TestValue>
-      <SubMessageFormatAlias>g.node.gt.001</SubMessageFormatAlias>
+      <SubMessageFormatAlias>g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
       <SubTypeDataClass>GNode</SubTypeDataClass>
       <SubMessageFormatAliasRoot>g.node.gt</SubMessageFormatAliasRoot>
-      <TypeInPayload>g.node.gt.001</TypeInPayload>
+      <TypeInPayload>g.node.gt.002</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recMNoEhsIjpp7oXK</SchemaAttributeId>
@@ -11458,6 +11632,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Schema>recDYjXYf8RbWmUFe</Schema>
       <Value>QuantityUnit</Value>
       <Idx>4</Idx>
+      <Title>Quantity Unit for market (e.g. AvgMW)</Title>
       <Enum>recounhEj97w5SfDm</Enum>
       <TestValue>"c272f3b3"</TestValue>
       <EnumLocalName>market.quantity.unit</EnumLocalName>
@@ -11492,6 +11667,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Schema>recDYjXYf8RbWmUFe</Schema>
       <Value>Name</Value>
       <Idx>0</Idx>
+      <Title>Name of the MarketType</Title>
       <Enum>recZmZP13YV9Rmbnw</Enum>
       <TestValue>"618f9c0a"</TestValue>
       <EnumLocalName>market.type.name</EnumLocalName>
@@ -11753,6 +11929,26 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>recREgyk5HQKEtSMJ</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:31Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <DefaultValue>AvgMW</DefaultValue>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <Value>QuantityUnit</Value>
+      <Idx>6</Idx>
+      <Enum>recounhEj97w5SfDm</Enum>
+      <TestValue>"c272f3b3"</TestValue>
+      <EnumLocalName>market.quantity.unit</EnumLocalName>
+      <IsEnum>true</IsEnum>
+      <IsType>false</IsType>
+      <EnumName>market.quantity.unit.000</EnumName>
+      <DefaultEnumValue>AvgMW</DefaultEnumValue>
+      <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>MarketQuantityUnit000</Format>
+      <EnumPropertyFormat>MarketQuantityUnit000</EnumPropertyFormat>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>recRMYT3frXP98k2q</SchemaAttributeId>
       <createdTime>2022-11-04T13:44:57Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -11798,6 +11994,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Schema>recDYjXYf8RbWmUFe</Schema>
       <Value>PriceUnit</Value>
       <Idx>3</Idx>
+      <Title>Price Unit for market (e.g. USD Per MWh)</Title>
       <Enum>rec75xMuw0SMkzjVc</Enum>
       <TestValue>"00000000"</TestValue>
       <EnumLocalName>market.price.unit</EnumLocalName>
@@ -11945,6 +12142,24 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recSH9Gcj0yME4EIk</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:23Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsList>true</IsList>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <SubTypeFormat>recsHXkpUxoOF9vYp</SubTypeFormat>
+      <Value>PqPairs</Value>
+      <Idx>3</Idx>
+      <Title>Price Quantity Pairs</Title>
+      <TestValue>[{"PriceTimes1000": 40000, {"QuantityTimes1000": 10000} ]</TestValue>
+      <Description>The list of Price Quantity Pairs making up the bid. The units are provided by the AtnBid.PriceUnit and AtnBid.QuantityUnit. </Description>
+      <SubMessageFormatAlias>price.quantity.unitless.000</SubMessageFormatAlias>
+      <IsEnum>false</IsEnum>
+      <IsType>true</IsType>
+      <SubMessageFormatAliasRoot>price.quantity.unitless</SubMessageFormatAliasRoot>
+      <TypeInPayload>price.quantity.unitless.000</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recSNRAurDrIeUgqg</SchemaAttributeId>
@@ -12371,6 +12586,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Number</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrGxF83TTOvEqWb1/recUgM344FS0QIgRe</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recUgsnOcEMiKpYMF</SchemaAttributeId>
       <createdTime>2022-06-04T19:22:01Z</createdTime>
@@ -12415,6 +12631,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Schema>recDYjXYf8RbWmUFe</Schema>
       <Value>CurrencyUnit</Value>
       <Idx>5</Idx>
+      <Title>Currency Unit for market (e.g. USD)</Title>
       <Enum>recA15Ak50x6bNMx1</Enum>
       <TestValue>"e57c5143"</TestValue>
       <EnumLocalName>recognized.currency.unit</EnumLocalName>
@@ -12521,7 +12738,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrpLHJ9TSTzUST0s/recVgR5ZOHi7dvBav</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recViTC1TmtkHrDKI</SchemaAttributeId>
       <createdTime>2022-11-10T14:23:24Z</createdTime>
@@ -12667,6 +12883,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveType>Integer</PrimitiveType>
       <Value>GateClosingSeconds</Value>
       <Idx>2</Idx>
+      <Title>Seconds before the start of a MarketSlot after which bids are not accepted</Title>
       <TestValue>60</TestValue>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -12926,12 +13143,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
    "TypeName":"gnode.gt",
    "Version":"000"
 }]</TestValue>
-      <SubMessageFormatAlias>g.node.gt.001</SubMessageFormatAlias>
+      <SubMessageFormatAlias>g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
       <SubTypeDataClass>GNode</SubTypeDataClass>
       <SubMessageFormatAliasRoot>g.node.gt</SubMessageFormatAliasRoot>
-      <TypeInPayload>g.node.gt.001</TypeInPayload>
+      <TypeInPayload>g.node.gt.002</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recYNAWavNDwN3uX1</SchemaAttributeId>
@@ -13245,7 +13462,9 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubTypeFormat>recsHXkpUxoOF9vYp</SubTypeFormat>
       <Value>BidList</Value>
       <Idx>3</Idx>
+      <Title>Price Quantity Pairs</Title>
       <TestValue>[{"PriceTimes1000": 40000, {"QuantityTimes1000": 10000} ]</TestValue>
+      <Description>The list of Price Quantity Pairs making up the bid. The units are provided by the AtnBid.PriceUnit and AtnBid.QuantityUnit. </Description>
       <SubMessageFormatAlias>price.quantity.unitless.000</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
@@ -13470,6 +13689,21 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>recc5A1JaRXNBZe9g</SchemaAttributeId>
+      <createdTime>2023-01-15T12:15:03Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recDYjXYf8RbWmUFe</Schema>
+      <PrimitiveType>Integer</PrimitiveType>
+      <Value>PriceMax</Value>
+      <Idx>6</Idx>
+      <Title>PMax, required for defining bids</Title>
+      <TestValue>10000</TestValue>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>Integer</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>recc5ycF0PbAAyQtA</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:47Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -13492,17 +13726,17 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>recc60wtw6OyygCAS</SchemaAttributeId>
       <createdTime>2022-10-02T23:33:51Z</createdTime>
-      <IsPrimitive>true</IsPrimitive>
       <Schema>recDp8U1jLA9zeEx2</Schema>
-      <PrimitiveType>Integer</PrimitiveType>
-      <Value>OwnershipDeedNftId</Value>
+      <Value>OwnershipDeedId</Value>
       <Idx>7</Idx>
-      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
-      <TestValue>5</TestValue>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
-      <PydanticFormat>PositiveInteger</PydanticFormat>
       <TypeInPayload>Integer</TypeInPayload>
+      <TestValue>5</TestValue>
+      <IsPrimitive>true</IsPrimitive>
+      <PrimitiveType>Integer</PrimitiveType>
+      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
+      <PydanticFormat>PositiveInteger</PydanticFormat>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recc61I5CYPBiSoz2</SchemaAttributeId>
@@ -13937,6 +14171,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
+    <SchemaAttribute>itrGxF83TTOvEqWb1/recf6wuHG8fRxT16j</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recf7SmMMs2XvQ4TE</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:28Z</createdTime>
@@ -14069,7 +14304,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrpLHJ9TSTzUST0s/recfZc4IUiLfkPmHs</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recfeynTSBzTXnyUK</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:51Z</createdTime>
@@ -14101,6 +14335,26 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recfzsWHMU0fhZE47</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:29Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <DefaultValue>USDPerMWh</DefaultValue>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <Value>PriceUnit</Value>
+      <Idx>5</Idx>
+      <Enum>rec75xMuw0SMkzjVc</Enum>
+      <TestValue>"00000000"</TestValue>
+      <EnumLocalName>market.price.unit</EnumLocalName>
+      <IsEnum>true</IsEnum>
+      <IsType>false</IsType>
+      <EnumName>market.price.unit.000</EnumName>
+      <DefaultEnumValue>USDPerMWh</DefaultEnumValue>
+      <PythonEnumNameStyle>UpperPython</PythonEnumNameStyle>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>MarketPriceUnit000</Format>
+      <EnumPropertyFormat>MarketPriceUnit000</EnumPropertyFormat>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recg8JNR1e1aZk41L</SchemaAttributeId>
@@ -14346,12 +14600,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
    "TypeName":"gnode.gt",
    "Version":"000"
 }</TestValue>
-      <SubMessageFormatAlias>g.node.gt.001</SubMessageFormatAlias>
+      <SubMessageFormatAlias>g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
       <SubTypeDataClass>GNode</SubTypeDataClass>
       <SubMessageFormatAliasRoot>g.node.gt</SubMessageFormatAliasRoot>
-      <TypeInPayload>g.node.gt.001</TypeInPayload>
+      <TypeInPayload>g.node.gt.002</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>reci0niurz5s0wuXJ</SchemaAttributeId>
@@ -15418,12 +15672,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
  'GNodeRegistryAddr': 'MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU',
  'TypeName': 'basegnode.gt',
  'Version': '020'}</TestValue>
-      <SubMessageFormatAlias>base.g.node.gt.001</SubMessageFormatAlias>
+      <SubMessageFormatAlias>base.g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
       <SubTypeDataClass>BaseGNode</SubTypeDataClass>
       <SubMessageFormatAliasRoot>base.g.node.gt</SubMessageFormatAliasRoot>
-      <TypeInPayload>base.g.node.gt.001</TypeInPayload>
+      <TypeInPayload>base.g.node.gt.002</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recojCBLEKvcVMiLq</SchemaAttributeId>
@@ -15475,6 +15729,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrGxF83TTOvEqWb1/recp2owpZMZa2bjww</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recpGkpFxO7Fj1xFv</SchemaAttributeId>
       <createdTime>2023-01-06T03:12:34Z</createdTime>
@@ -15639,7 +15894,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubMessageFormatAliasRoot>gt.sh.simple.single.status</SubMessageFormatAliasRoot>
       <TypeInPayload>gt.sh.simple.single.status.100</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrpLHJ9TSTzUST0s/recqTlmb22FCbFzaQ</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recqWDbdtjF1TThWh</SchemaAttributeId>
       <createdTime>2022-11-08T04:07:01Z</createdTime>
@@ -15653,6 +15907,23 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recqXdxf3WK0BhhJo</SchemaAttributeId>
+      <createdTime>2023-01-15T12:55:34Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recECSz5o4Z7NFjhG</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>SignedMarketFeeTxn</Value>
+      <Idx>7</Idx>
+      <PrimitiveFormatId>recvbnpa4cX2nNp9p</PrimitiveFormatId>
+      <TestValue>'gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxEAEp8UcTEJSyTmgw96/mCnNHKfhkdYMCD5jxWejHRmPCrR8U9z/FBVsoCGbjDTTk2L1k7n/eVlumEk/M1KSe48Jo3RocgKhdgGjdHhuiaRhcGFyhaJhbq9Nb2xseSBNZXRlcm1haWSiYXXZKWh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9tb2xseWNvL3doby13ZS1hcmUvoW3EIItYc29Vmg8xftteXEfMZokX1EDK546h7UFeT4hQQFLZoXQBonVupVZMRFRSo2ZlZc0D6KJmdlGjZ2VuqnNhbmRuZXQtdjGiZ2jEIC/iF+bI4LU6UTgG4SIxyD10PS0/vNAEa93OC5SVRFn6omx2zQQ5pG5vdGXEK01vbGx5IEluYyBUZWxlbWV0cnkgU3VydmV5b3JzIGFuZCBQdXJ2ZXlvcnOjc25kxCDHZxhdCT2TxxxZlZ/H5mIku1s4ulDm3EmU6dYKXCWEB6R0eXBlpGFjZmc='</TestValue>
+      <PrimitiveFormat>AlgoMsgPackEncoded</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>AlgoMsgPackEncoded</Format>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recqbPC3JOFtb5oXx</SchemaAttributeId>
@@ -15975,7 +16246,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Schema>rec8uTC7GK5qgXzg9</Schema>
       <PrimitiveType>String</PrimitiveType>
       <Value>DisplayName</Value>
-      <Idx>14</Idx>
+      <Idx>15</Idx>
       <Title>Display Name</Title>
       <TestValue>'Simulated Freedom House 1'</TestValue>
       <IsEnum>false</IsEnum>
@@ -16352,7 +16623,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Schema>rec8uTC7GK5qgXzg9</Schema>
       <PrimitiveType>String</PrimitiveType>
       <Value>ComponentId</Value>
-      <Idx>13</Idx>
+      <Idx>14</Idx>
       <Title>Unique identifier for GNode's Component</Title>
       <PrimitiveFormatId>rec24qjC90m0f4Kvl</PrimitiveFormatId>
       <TestValue>'19d3dd42-14de-427f-a489-d96b404ae3c5'</TestValue>
@@ -16698,7 +16969,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <OldSchema>recDp8U1jLA9zeEx2</OldSchema>
       <AxiomNumber>3</AxiomNumber>
       <DataClassOnly>true</DataClassOnly>
-      <Name>base.g.node.gt.001 Update Axiom 3</Name>
+      <Name>base.g.node.gt.002 Update Axiom 3</Name>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
@@ -16755,6 +17026,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MakeDataClass />
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>rec4x9sbCR3Q6Bwm8</SchemaAxiomId>
+      <createdTime>2023-01-15T13:01:20Z</createdTime>
+      <Description>There is a GridWorks global list of MarketTypes (a GridWorks type), identified by their MarketTypeNames (a GridWorks enum).  The MarketType has a PriceMax, which must be the first price of the first PriceQuantity pair in PqPairs.</Description>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>PqPairs PriceMax matches MarketType</Title>
+      <MultiPropertyAxiom>recECSz5o4Z7NFjhG</MultiPropertyAxiom>
+      <Name>atn.bid.001 Type Axiom 1</Name>
+      <Type>atn.bid.001</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>rec5VDuzpUgfcEkJx</SchemaAxiomId>
       <createdTime>2022-09-22T14:04:02Z</createdTime>
       <Description>The MultiSig must belong to the 2-sig Multi [Gnf Admin, payload.DeedValidatorAddr]</Description>
@@ -16787,16 +17068,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-07-22T12:08:41Z</createdTime>
       <Description>MeteredShNodeAlias for Component must be the alias of a node whose role is either ResistiveHeatingElement, HeatPump, CirculatorPump or RadiatorFan</Description>
       <Name> Type Axiom </Name>
-    </SchemaAxiom>
-    <SchemaAxiom>
-      <SchemaAxiomId>rec9XtfVmUCtTZwfg</SchemaAxiomId>
-      <createdTime>2022-09-22T04:42:58Z</createdTime>
-      <Description>ValidatorAddr must have signed the mtx.</Description>
-      <AxiomNumber>5</AxiomNumber>
-      <Title>TaValidator has signed</Title>
-      <MultiPropertyAxiom>rec1SFXYQUXElpeJ9</MultiPropertyAxiom>
-      <Name>tavalidatorcert.algo.transfer.000 Type Axiom 5</Name>
-      <Type>tavalidatorcert.algo.transfer.000</Type>
     </SchemaAxiom>
     <SchemaAxiom>
       <SchemaAxiomId>rec9ncrQz98EtjseD</SchemaAxiomId>
@@ -16876,14 +17147,13 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-09-22T03:48:48Z</createdTime>
       <Url>https://gridworks.readthedocs.io/en/latest/ta-validator.html#tavalidator-certificate</Url>
       <Description> - The transaction must be the transfer of an Algorand Standard Asset
-         - It must be getting transferred from its creator, which must be the 2-sig Multi [GnfAdmin, TaValidatorAddr]
+         -The sender must be the 2-sig Multi [GnfAdminAddr, TaValidatorAddr], which also created and owns the ASA
          - It must be getting sent to the ValidatorAddr
          -The ASA must have:
            - Total = 1
            - UnitName=VLDITR
            - GnfAdminAddr as manage
-           - AssetName and
-           - Url not blank.
+           - AssetName not blank
         - The transfer amount must be 1</Description>
       <AxiomNumber>2</AxiomNumber>
       <Title>Transfers correct certificate</Title>
@@ -17004,7 +17274,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <CheckFirst>true</CheckFirst>
       <Url>https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr</Url>
       <Description>Decoded HalfSignedCertTransferMtx must have type MultisigTransaction from the
-        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].</Description>
+        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by the ValidatorAddr</Description>
       <AxiomNumber>1</AxiomNumber>
       <Title>Is correct Multisig</Title>
       <MultiPropertyAxiom>rec1SFXYQUXElpeJ9</MultiPropertyAxiom>
@@ -17083,6 +17353,14 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MakeDataClass />
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recQEk0lDO3sQJDyc</SchemaAxiomId>
+      <createdTime>2023-01-15T13:05:45Z</createdTime>
+      <AxiomNumber>2</AxiomNumber>
+      <MultiPropertyAxiom>recECSz5o4Z7NFjhG</MultiPropertyAxiom>
+      <Name>atn.bid.001 Type Axiom 2</Name>
+      <Type>atn.bid.001</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recQUUMz6KxDUEjWi</SchemaAxiomId>
       <createdTime>2023-01-11T20:33:04Z</createdTime>
       <Description>There is an ASA TaDeed created by and owned by the 2-sig MultiAccount [GnfAdminAddr, ValidatorAddr],
@@ -17145,7 +17423,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <OldSchema>recDp8U1jLA9zeEx2</OldSchema>
       <AxiomNumber>4</AxiomNumber>
       <DataClassOnly>true</DataClassOnly>
-      <Name>base.g.node.gt.001 Update Axiom 4</Name>
+      <Name>base.g.node.gt.002 Update Axiom 4</Name>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
@@ -17234,7 +17512,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <OldSchema>recDp8U1jLA9zeEx2</OldSchema>
       <AxiomNumber>6</AxiomNumber>
       <DataClassOnly>true</DataClassOnly>
-      <Name>base.g.node.gt.001 Update Axiom 6</Name>
+      <Name>base.g.node.gt.002 Update Axiom 6</Name>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
@@ -17273,7 +17551,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <OldSchema>recDp8U1jLA9zeEx2</OldSchema>
       <AxiomNumber>1</AxiomNumber>
       <DataClassOnly>true</DataClassOnly>
-      <Name>base.g.node.gt.001 Update Axiom 1</Name>
+      <Name>base.g.node.gt.002 Update Axiom 1</Name>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
@@ -17328,7 +17606,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <OldSchema>recDp8U1jLA9zeEx2</OldSchema>
       <AxiomNumber>5</AxiomNumber>
       <DataClassOnly>true</DataClassOnly>
-      <Name>base.g.node.gt.001 Update Axiom 5</Name>
+      <Name>base.g.node.gt.002 Update Axiom 5</Name>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
@@ -17427,7 +17705,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <OldSchema>recDp8U1jLA9zeEx2</OldSchema>
       <AxiomNumber>2</AxiomNumber>
       <DataClassOnly>true</DataClassOnly>
-      <Name>base.g.node.gt.001 Update Axiom 2</Name>
+      <Name>base.g.node.gt.002 Update Axiom 2</Name>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
@@ -17539,6 +17817,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>recx4xJLSgpMi1EVN</MpSchemaAttributes>
       <MpSchemaAttributes>recee7OczpcTACTcR</MpSchemaAttributes>
       <MpSchemaAttributes>recnbtuaL96kZW7Sn</MpSchemaAttributes>
+      <MpSchemaAttributes>recHNfUgwXIvrBwWK</MpSchemaAttributes>
       <TypesThatUse>recc2Km1jUViJqVeK</TypesThatUse>
       <TypesThatUse>rec8uTC7GK5qgXzg9</TypesThatUse>
       <TypesThatUse>reczVqlxJInFWonml</TypesThatUse>
@@ -17562,6 +17841,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>recE3bIWWFpMPqyS1</TypesThatUse>
       <TypesThatUse>recTZ13dEbwrKazkL</TypesThatUse>
       <TypesThatUse>reckTci9LVdsEt2WQ</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Example>652ba6b0-c3bf-4f06-8a80-6b9832d60a25</Example>
       <Name>UuidCanonicalTextual</Name>
     </PropertyFormat>
@@ -17583,6 +17863,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <SchemaAttributes2>recvaw2vy5mebzESQ</SchemaAttributes2>
       <SchemaAttributes2>recc60wtw6OyygCAS</SchemaAttributes2>
       <SchemaAttributes2>recKtxHw3srimaENr</SchemaAttributes2>
+      <SchemaAttributes2>recHPzXnfcnuA7lLS</SchemaAttributes2>
+      <SchemaAttributes2>recIhSSpqIviBUW64</SchemaAttributes2>
     </PropertyFormat>
     <PropertyFormat>
       <PropertyFormatId>recLyqFB0L7XFIp6C</PropertyFormatId>
@@ -17704,6 +17986,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>recdyA1ugrK3wpjRN</MpSchemaAttributes>
       <MpSchemaAttributes>recKRNkuHxdnCTbXe</MpSchemaAttributes>
       <MpSchemaAttributes>recvGseMiH5N85Am3</MpSchemaAttributes>
+      <MpSchemaAttributes>rec8t56gTGBi3AXBr</MpSchemaAttributes>
       <TypesThatUse>recc2Km1jUViJqVeK</TypesThatUse>
       <TypesThatUse>rec8uTC7GK5qgXzg9</TypesThatUse>
       <TypesThatUse>reczVqlxJInFWonml</TypesThatUse>
@@ -17736,6 +18019,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>recTZ13dEbwrKazkL</TypesThatUse>
       <TypesThatUse>reckTci9LVdsEt2WQ</TypesThatUse>
       <TypesThatUse>rechKgkXf88R5dkGD</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Example>dw1.isone.me.freedom.apple</Example>
       <Name>LeftRightDot</Name>
     </PropertyFormat>
@@ -17754,10 +18038,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>rechysRxaDzIfMVDw</MpSchemaAttributes>
       <MpSchemaAttributes>recTV2IpdZjy1gFiQ</MpSchemaAttributes>
       <MpSchemaAttributes>recTov3rcOqhTWWcf</MpSchemaAttributes>
+      <MpSchemaAttributes>rec4tCsBpIaZUGllT</MpSchemaAttributes>
       <TypesThatUse>recH9GUDdSB7SiwNG</TypesThatUse>
       <TypesThatUse>recacY2b5R2bByiAQ</TypesThatUse>
       <TypesThatUse>recvGFiTtzXNrhLBm</TypesThatUse>
       <TypesThatUse>recd5K0XiAzHsj2Pw</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Name>MarketSlotNameLrdFormat</Name>
     </PropertyFormat>
     <PropertyFormat>
@@ -17834,6 +18120,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>recn0YpsBzBOA9yvq</TypesThatUse>
       <TypesThatUse>recJH4tbXOqVJkMVW</TypesThatUse>
       <TypesThatUse>recazQb2vEXgbroHd</TypesThatUse>
+      <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
       <Example>RNMHG32VTIHTC7W3LZOEPTDGREL5IQGK46HKD3KBLZHYQUCAKLMT4G5ALI</Example>
       <Name>AlgoAddressStringFormat</Name>
     </PropertyFormat>
@@ -17884,6 +18171,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>recOeaCOt6KQeMuNX</MpSchemaAttributes>
       <MpSchemaAttributes>reccbS1SXnmZ0Rvrd</MpSchemaAttributes>
       <MpSchemaAttributes>recqsyHUDPXWxf39U</MpSchemaAttributes>
+      <MpSchemaAttributes>recqXdxf3WK0BhhJo</MpSchemaAttributes>
       <TypesThatUse>reccFZLsGTVhuzGsn</TypesThatUse>
       <TypesThatUse>rec1SFXYQUXElpeJ9</TypesThatUse>
       <TypesThatUse>recO8OdobcISYms0B</TypesThatUse>
@@ -18031,6 +18319,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-10-24T23:07:49Z</createdTime>
       <Description>Protocol used by the SCADA repository</Description>
       <Name>gwproto</Name>
+    </Protocol>
+    <Protocol>
+      <ProtocolId>recHY8DLO7gBfWjtC</ProtocolId>
+      <createdTime>2023-01-14T15:00:31Z</createdTime>
+      <fields />
     </Protocol>
     <Protocol>
       <ProtocolId>recN6489A2iI0CRXz</ProtocolId>
@@ -18597,9 +18890,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2023-01-12T18:24:04Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
       <Type>recDp8U1jLA9zeEx2</Type>
-      <Name>gwatn base.g.node.gt.001</Name>
+      <Name>gwatn base.g.node.gt.002</Name>
       <ProtocolName>gwatn</ProtocolName>
-      <TypeName>base.g.node.gt.001</TypeName>
+      <TypeName>base.g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recGk4c4hm4Ng97pB</ProtocolTypeId>
@@ -18633,9 +18926,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-11-21T14:53:17Z</createdTime>
       <Protocol>rec2J6tKssVJwVmFd</Protocol>
       <Type>recDp8U1jLA9zeEx2</Type>
-      <Name>gnr base.g.node.gt.001</Name>
+      <Name>gnr base.g.node.gt.002</Name>
       <ProtocolName>gnr</ProtocolName>
-      <TypeName>base.g.node.gt.001</TypeName>
+      <TypeName>base.g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recI3qMEZNOVje6qG</ProtocolTypeId>
@@ -19054,7 +19347,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>old.tadeed.algo.return.000</TypeName>
     </ProtocolType>
-    <ProtocolType>itrY2jQSUkHG0mGzF/recbN7L6MH925xDby</ProtocolType>
+    <ProtocolType>itr1ccpdTIowxgwk6/recbN7L6MH925xDby</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbV3eBvST23mHgN</ProtocolTypeId>
       <createdTime>2022-11-17T06:14:01Z</createdTime>
@@ -19105,9 +19398,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-10-31T20:31:08Z</createdTime>
       <Protocol>recXaQaXNNDyxIlT7</Protocol>
       <Type>recDp8U1jLA9zeEx2</Type>
-      <Name>gnf base.g.node.gt.001</Name>
+      <Name>gnf base.g.node.gt.002</Name>
       <ProtocolName>gnf</ProtocolName>
-      <TypeName>base.g.node.gt.001</TypeName>
+      <TypeName>base.g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reccuFJPlMliv6yW8</ProtocolTypeId>
@@ -19141,9 +19434,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-11-29T13:23:38Z</createdTime>
       <Protocol>rec2J6tKssVJwVmFd</Protocol>
       <Type>rec8uTC7GK5qgXzg9</Type>
-      <Name>gnr g.node.gt.001</Name>
+      <Name>gnr g.node.gt.002</Name>
       <ProtocolName>gnr</ProtocolName>
-      <TypeName>g.node.gt.001</TypeName>
+      <TypeName>g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recfsDYNRW0af16Ol</ProtocolTypeId>
@@ -19285,9 +19578,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-11-06T19:58:32Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
       <Type>rec8uTC7GK5qgXzg9</Type>
-      <Name>gwatn g.node.gt.001</Name>
+      <Name>gwatn g.node.gt.002</Name>
       <ProtocolName>gwatn</ProtocolName>
-      <TypeName>g.node.gt.001</TypeName>
+      <TypeName>g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnBbGAlK4U8sngT</ProtocolTypeId>
@@ -19321,9 +19614,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-12-03T16:07:00Z</createdTime>
       <Protocol>recN6489A2iI0CRXz</Protocol>
       <Type>rec8uTC7GK5qgXzg9</Type>
-      <Name>gworld g.node.gt.001</Name>
+      <Name>gworld g.node.gt.002</Name>
       <ProtocolName>gworld</ProtocolName>
-      <TypeName>g.node.gt.001</TypeName>
+      <TypeName>g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recrPfgjVyVAXVJ3k</ProtocolTypeId>
@@ -19339,9 +19632,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-11-16T19:17:13Z</createdTime>
       <Protocol>rec3E1mvlkD3mlc6K</Protocol>
       <Type>rec8uTC7GK5qgXzg9</Type>
-      <Name>gwmm g.node.gt.001</Name>
+      <Name>gwmm g.node.gt.002</Name>
       <ProtocolName>gwmm</ProtocolName>
-      <TypeName>g.node.gt.001</TypeName>
+      <TypeName>g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recs6Jf8auLqC5z1T</ProtocolTypeId>
@@ -19384,9 +19677,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-12-03T16:10:21Z</createdTime>
       <Protocol>rect1hCTZjieEGxgr</Protocol>
       <Type>rec8uTC7GK5qgXzg9</Type>
-      <Name>gridworks g.node.gt.001</Name>
+      <Name>gridworks g.node.gt.002</Name>
       <ProtocolName>gridworks</ProtocolName>
-      <TypeName>g.node.gt.001</TypeName>
+      <TypeName>g.node.gt.002</TypeName>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rect61DlS8mCPHnUL</ProtocolTypeId>
