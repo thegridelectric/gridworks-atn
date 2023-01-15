@@ -3356,7 +3356,7 @@ by the concept of MarketType.</Description>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <DisplayName>spaceheat.telemetry.name.000__WattHours</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrXX1oMa2bBJxxVb/recPV5eCtZVeT7zmX</EnumSymbol>
+    <EnumSymbol>itrU12qS09dXKM3BX/recPV5eCtZVeT7zmX</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recPY9T9Npi1jCIVV</EnumSymbolId>
       <createdTime>2022-08-30T18:05:22Z</createdTime>
@@ -4304,7 +4304,7 @@ by the concept of MarketType.</Description>
       <LocalValue>Actuator</LocalValue>
       <DisplayName>__Actuator</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrXX1oMa2bBJxxVb/recob3YuE614ND3hl</EnumSymbol>
+    <EnumSymbol>itrU12qS09dXKM3BX/recob3YuE614ND3hl</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>reconXBspv9L7OQqS</EnumSymbolId>
       <createdTime>2022-08-01T12:19:26Z</createdTime>
@@ -7409,7 +7409,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
    "TypeName":"gw.cert.id",
    "Version":"000"
 }</Example>
-      <PreStatus>Pending</PreStatus>
+      <PreStatus>Active</PreStatus>
       <Enums>recCQyaQ1Oq0MlT20</Enums>
       <ProtocolTypes>recWbhB62TTgTQUtI</ProtocolTypes>
       <ProtocolTypes>recJqKGuHpco4ynvW</ProtocolTypes>
@@ -7425,7 +7425,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <AliasRoot>gw.cert.id</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
-      <Status>Pending</Status>
+      <Status>Active</Status>
       <InGwProto />
       <Title>Clarifies whether cert id is an Algorand Standard Asset or SmartSig</Title>
     </Schema>
@@ -7542,7 +7542,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Status>Pending</Status>
       <InGwProto />
     </Schema>
-    <Schema>itrhXgFO3pEfv7Si7/recwr8WwMjrVGNL7L</Schema>
+    <Schema>itrmOaRxgz3aiRrbN/recwr8WwMjrVGNL7L</Schema>
     <Schema>
       <SchemaId>recxNIfCRauFrb57o</SchemaId>
       <createdTime>2022-06-20T12:49:53Z</createdTime>
@@ -8705,8 +8705,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>rec6CnViJP5zRds2E</SchemaAttributeId>
       <createdTime>2023-01-15T14:23:24Z</createdTime>
-      <IsType>false</IsType>
       <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>rec6MQ1HJUBz9pC5d</SchemaAttributeId>
@@ -9364,7 +9364,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrGxF83TTOvEqWb1/recBw1TvOwQk1gM0K</SchemaAttribute>
+    <SchemaAttribute>itrAYSq1azKKBobRd/recBw1TvOwQk1gM0K</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recC2OJXewZyxgy8T</SchemaAttributeId>
       <createdTime>2022-11-17T06:04:05Z</createdTime>
@@ -9473,20 +9473,26 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubTypeFormat>recDp8U1jLA9zeEx2</SubTypeFormat>
       <Value>DescendantGNodeList</Value>
       <Idx>4</Idx>
-      <TestValue>[{'GNodeId': '7b1df82e-10c5-49d9-8d02-1e837e31b87e',
-  'Alias': 'd1',
-  'StatusGtEnumSymbol': '153d3475',
-  'RoleGtEnumSymbol': '00000000',
-  'GNodeRegistryAddr': 'MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU',
-  'TypeName': 'basegnode.gt',
-  'Version': '020'},
- {'GNodeId': 'c0119953-a48f-495d-87cc-58fb92eb4cee',
-  'Alias': 'd1.isone',
-  'StatusGtEnumSymbol': '153d3475',
-  'RoleGtEnumSymbol': '4502e355',
-  'GNodeRegistryAddr': 'MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU',
-  'TypeName': 'basegnode.gt',
-  'Version': '020'}]</TestValue>
+      <TestValue>[
+            {
+                "GNodeId": "7b1df82e-10c5-49d9-8d02-1e837e31b87e",
+                "Alias": "d1",
+                "StatusGtEnumSymbol": "153d3475",
+                "RoleGtEnumSymbol": "00000000",
+                "GNodeRegistryAddr": "MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU",
+                "TypeName": "base.g.node.gt",
+                "Version": "001",
+            },
+            {
+                "GNodeId": "c0119953-a48f-495d-87cc-58fb92eb4cee",
+                "Alias": "d1.isone",
+                "StatusGtEnumSymbol": "153d3475",
+                "RoleGtEnumSymbol": "4502e355",
+                "GNodeRegistryAddr": "MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU",
+                "TypeName": "base.g.node.gt",
+                "Version": "001",
+            },
+        ]</TestValue>
       <SubMessageFormatAlias>base.g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
@@ -10329,17 +10335,17 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>recHPzXnfcnuA7lLS</SchemaAttributeId>
       <createdTime>2023-01-15T14:25:03Z</createdTime>
-      <IsType>false</IsType>
-      <IsEnum>false</IsEnum>
-      <TypeInPayload>Integer</TypeInPayload>
-      <Schema>recDp8U1jLA9zeEx2</Schema>
-      <Idx>13</Idx>
-      <Value>ScadaCertId</Value>
       <IsPrimitive>true</IsPrimitive>
+      <Schema>recDp8U1jLA9zeEx2</Schema>
       <PrimitiveType>Integer</PrimitiveType>
+      <Value>ScadaCertId</Value>
+      <Idx>13</Idx>
       <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
-      <PydanticFormat>PositiveInteger</PydanticFormat>
       <TestValue>10</TestValue>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <PydanticFormat>PositiveInteger</PydanticFormat>
+      <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recHYSlx2bkFlTrmH</SchemaAttributeId>
@@ -10507,17 +10513,17 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>recIhSSpqIviBUW64</SchemaAttributeId>
       <createdTime>2023-01-15T14:30:03Z</createdTime>
-      <IsType>false</IsType>
-      <IsEnum>false</IsEnum>
-      <TypeInPayload>Integer</TypeInPayload>
+      <IsPrimitive>true</IsPrimitive>
       <Schema>rec8uTC7GK5qgXzg9</Schema>
+      <PrimitiveType>Integer</PrimitiveType>
       <Value>ScadaCertId</Value>
       <Idx>13</Idx>
-      <IsPrimitive>true</IsPrimitive>
-      <PrimitiveType>Integer</PrimitiveType>
       <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
-      <PydanticFormat>PositiveInteger</PydanticFormat>
       <TestValue>10</TestValue>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <PydanticFormat>PositiveInteger</PydanticFormat>
+      <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recIkJy1G5tzWXqbs</SchemaAttributeId>
@@ -10943,7 +10949,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>String</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrGxF83TTOvEqWb1/recKdVPFQyTt95V3Y</SchemaAttribute>
+    <SchemaAttribute>itrAYSq1azKKBobRd/recKdVPFQyTt95V3Y</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKh7AdivSqkof7s</SchemaAttributeId>
       <createdTime>2022-11-10T13:23:35Z</createdTime>
@@ -10978,15 +10984,15 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <createdTime>2022-10-02T23:40:15Z</createdTime>
       <IsPrimitive>true</IsPrimitive>
       <Schema>recDp8U1jLA9zeEx2</Schema>
+      <PrimitiveType>Integer</PrimitiveType>
       <Value>TradingRightsId</Value>
       <Idx>11</Idx>
+      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
       <TestValue>1</TestValue>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
-      <TypeInPayload>Integer</TypeInPayload>
-      <PrimitiveType>Integer</PrimitiveType>
-      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
       <PydanticFormat>PositiveInteger</PydanticFormat>
+      <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKwPBxJr8R55KlB</SchemaAttributeId>
@@ -12586,7 +12592,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Number</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrGxF83TTOvEqWb1/recUgM344FS0QIgRe</SchemaAttribute>
+    <SchemaAttribute>itrAYSq1azKKBobRd/recUgM344FS0QIgRe</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recUgsnOcEMiKpYMF</SchemaAttributeId>
       <createdTime>2022-06-04T19:22:01Z</createdTime>
@@ -13726,17 +13732,17 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>recc60wtw6OyygCAS</SchemaAttributeId>
       <createdTime>2022-10-02T23:33:51Z</createdTime>
+      <IsPrimitive>true</IsPrimitive>
       <Schema>recDp8U1jLA9zeEx2</Schema>
+      <PrimitiveType>Integer</PrimitiveType>
       <Value>OwnershipDeedId</Value>
       <Idx>7</Idx>
+      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
+      <TestValue>5</TestValue>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
-      <TypeInPayload>Integer</TypeInPayload>
-      <TestValue>5</TestValue>
-      <IsPrimitive>true</IsPrimitive>
-      <PrimitiveType>Integer</PrimitiveType>
-      <PydanticFormatId>recKcuGOfjTIPqtXk</PydanticFormatId>
       <PydanticFormat>PositiveInteger</PydanticFormat>
+      <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recc61I5CYPBiSoz2</SchemaAttributeId>
@@ -14171,7 +14177,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itrGxF83TTOvEqWb1/recf6wuHG8fRxT16j</SchemaAttribute>
+    <SchemaAttribute>itrAYSq1azKKBobRd/recf6wuHG8fRxT16j</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recf7SmMMs2XvQ4TE</SchemaAttributeId>
       <createdTime>2022-11-09T23:00:28Z</createdTime>
@@ -15665,13 +15671,15 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SubTypeFormat>recDp8U1jLA9zeEx2</SubTypeFormat>
       <Value>TopGNode</Value>
       <Idx>3</Idx>
-      <TestValue>{'GNodeId': '7b1df82e-10c5-49d9-8d02-1e837e31b87e',
- 'Alias': 'd1',
- 'StatusGtEnumSymbol': '153d3475',
- 'RoleGtEnumSymbol': '00000000',
- 'GNodeRegistryAddr': 'MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU',
- 'TypeName': 'basegnode.gt',
- 'Version': '020'}</TestValue>
+      <TestValue>{
+            "GNodeId": "7b1df82e-10c5-49d9-8d02-1e837e31b87e",
+            "Alias": "d1",
+            "StatusGtEnumSymbol": "153d3475",
+            "RoleGtEnumSymbol": "00000000",
+            "GNodeRegistryAddr": "MONSDN5MXG4VMIOHJNCJJBVASG7HEZQSCEIKJAPEPVI5ZJUMQGXQKSOAYU",
+            "TypeName": "base.g.node.gt",
+            "Version": "001",
+        }</TestValue>
       <SubMessageFormatAlias>base.g.node.gt.002</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
       <IsType>true</IsType>
@@ -15729,7 +15737,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrGxF83TTOvEqWb1/recp2owpZMZa2bjww</SchemaAttribute>
+    <SchemaAttribute>itrAYSq1azKKBobRd/recp2owpZMZa2bjww</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recpGkpFxO7Fj1xFv</SchemaAttributeId>
       <createdTime>2023-01-06T03:12:34Z</createdTime>
@@ -19347,7 +19355,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>old.tadeed.algo.return.000</TypeName>
     </ProtocolType>
-    <ProtocolType>itr1ccpdTIowxgwk6/recbN7L6MH925xDby</ProtocolType>
+    <ProtocolType>itrC9o7eXeIudWZuu/recbN7L6MH925xDby</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbV3eBvST23mHgN</ProtocolTypeId>
       <createdTime>2022-11-17T06:14:01Z</createdTime>

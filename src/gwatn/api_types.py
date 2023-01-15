@@ -149,7 +149,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "g.node.gt.002": "Pending",
         "g.node.instance.gt.000": "Pending",
         "gt.dispatch.boolean.110": "Pending",
-        "gw.cert.id.000": "Pending",
+        "gw.cert.id.000": "Active",
         "heartbeat.a.100": "Pending",
         "heartbeat.algo.audit.000": "Pending",
         "heartbeat.b.000": "Pending",
