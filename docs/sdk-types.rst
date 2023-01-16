@@ -24,6 +24,7 @@ forth between type instances and Python objects.
     AtnStateHeatpumpwithbooststore  <types/atn-state-heatpumpwithbooststore>
     BaseGNodeGt  <types/base-g-node-gt>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
+    DispatchContractConfirmed  <types/dispatch-contract-confirmed>
     FloParamsHeatpumpwithbooststore  <types/flo-params-heatpumpwithbooststore>
     GNodeGt  <types/g-node-gt>
     GNodeInstanceGt  <types/g-node-instance-gt>
@@ -35,6 +36,7 @@ forth between type instances and Python objects.
     InitialTadeedAlgoCreate  <types/initial-tadeed-algo-create>
     InitialTadeedAlgoOptin  <types/initial-tadeed-algo-optin>
     InitialTadeedAlgoTransfer  <types/initial-tadeed-algo-transfer>
+    JoinDispatchContract  <types/join-dispatch-contract>
     LatestPrice  <types/latest-price>
     MarketSlot  <types/market-slot>
     MarketTypeGt  <types/market-type-gt>
@@ -44,6 +46,7 @@ forth between type instances and Python objects.
     PriceQuantity  <types/price-quantity>
     PriceQuantityUnitless  <types/price-quantity-unitless>
     Ready  <types/ready>
+    SimScadaDriverReport  <types/sim-scada-driver-report>
     SimTimestep  <types/sim-timestep>
     SlaEnter  <types/sla-enter>
     SuperStarter  <types/super-starter>

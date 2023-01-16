@@ -1,10 +1,15 @@
 {
   "gwapi": "001",
-  "type_name": "heartbeat.algo.audit",
+  "type_name": "dispatch.contract.confirmed",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": ". Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to DispatchContract on Algo blockchain",
+  "description": "Message sent from AtomicTNode back to SCADA via Rabbit . Paired with join.dispatch.contract. Sent from AtomicTNode back to SCADA once the AtomicTNode has successfully finished bootstrapping the Dispatch Contract and opted in. Once it has done this, the Dispatch Contract is ready to collect audit information about heartbeats, dispatch, energy and power. https://gridworks.readthedocs.io/en/latest/dispatch-contract.html",
   "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
     "LeftRightDot": {
       "type": "string",
       "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
@@ -17,20 +22,27 @@
     }
   },
   "properties": {
+    "FromGNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "FromGNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
     "SignedProof": {
       "type": "string",
       "format": "AlgoMsgPackEncoded",
-      "title": "Tiny signed payment to DispatchContract to prove identity",
-      "required": true
-    },
-    "Heartbeat": {
-      "type": "heartbeat.b.000",
-      "title": "Heartbeat sender last sent to its partner",
+      "title": "",
       "required": true
     },
     "TypeName": {
       "type": "string",
-      "value": "heartbeat.algo.audit.000",
+      "value": "dispatch.contract.confirmed.000",
       "title": "The type name"
     },
     "Version": {
