@@ -1,0 +1,130 @@
+{
+  "hints": {
+    "heartbeat_algo_audit": {
+      "structs": {
+        "heartbeat": {
+          "name": "HeartbeatB",
+          "elements": [
+            ["FromGNodeAlias", "string"],
+            ["FromGNodeInstanceId", "string"],
+            ["MyHex", "string"],
+            ["YourLastHex", "string"],
+            ["LastReceivedTimeUnixMs", "uint64"],
+            ["SendTimeUnixMs", "uint64"],
+            ["TypeName", "string"],
+            ["Version", "string"]
+          ]
+        }
+      }
+    }
+  },
+  "source": {
+    "approval": "I3ByYWdtYSB2ZXJzaW9uIDgKaW50Y2Jsb2NrIDAgMQpieXRlY2Jsb2NrIDB4NzQ2MTVmNjE2YzY5NjE3MyAweDE1MWY3Yzc1IDB4NjcgMHg3MyAweDYxIDB4NzM2MzYxNjQ2MTVmNjM2NTcyNzQKdHhuIE51bUFwcEFyZ3MKaW50Y18wIC8vIDAKPT0KYm56IG1haW5fbDEwCnR4bmEgQXBwbGljYXRpb25BcmdzIDAKcHVzaGJ5dGVzIDB4YjEyODM4NTcgLy8gImJvb3RzdHJhcDEocGF5LGFzc2V0KXN0cmluZyIKPT0KYm56IG1haW5fbDkKdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMApwdXNoYnl0ZXMgMHhjYzIzMWRiZSAvLyAiYm9vdHN0cmFwMihwYXksYXNzZXQpc3RyaW5nIgo9PQpibnogbWFpbl9sOAp0eG5hIEFwcGxpY2F0aW9uQXJncyAwCnB1c2hieXRlcyAweDFlOWRhYTBkIC8vICJnZXRfdGFfYWxpYXMoKXN0cmluZyIKPT0KYm56IG1haW5fbDcKdHhuYSBBcHBsaWNhdGlvbkFyZ3MgMApwdXNoYnl0ZXMgMHg4YmI5NzU5MyAvLyAiaGVhcnRiZWF0X2FsZ29fYXVkaXQocGF5LChzdHJpbmcsc3RyaW5nLHN0cmluZyxzdHJpbmcsdWludDY0LHVpbnQ2NCxzdHJpbmcsc3RyaW5nKSlzdHJpbmciCj09CmJueiBtYWluX2w2CmVycgptYWluX2w2Ogp0eG4gT25Db21wbGV0aW9uCmludGNfMCAvLyBOb09wCj09CnR4biBBcHBsaWNhdGlvbklECmludGNfMCAvLyAwCiE9CiYmCmFzc2VydAp0eG5hIEFwcGxpY2F0aW9uQXJncyAxCnN0b3JlIDM3CnR4biBHcm91cEluZGV4CmludGNfMSAvLyAxCi0Kc3RvcmUgMzYKbG9hZCAzNgpndHhucyBUeXBlRW51bQppbnRjXzEgLy8gcGF5Cj09CmFzc2VydApsb2FkIDM2CmxvYWQgMzcKY2FsbHN1YiBoZWFydGJlYXRhbGdvYXVkaXRfNwpzdG9yZSAzOApieXRlY18xIC8vIDB4MTUxZjdjNzUKbG9hZCAzOApjb25jYXQKbG9nCmludGNfMSAvLyAxCnJldHVybgptYWluX2w3Ogp0eG4gT25Db21wbGV0aW9uCmludGNfMCAvLyBOb09wCj09CnR4biBBcHBsaWNhdGlvbklECmludGNfMCAvLyAwCiE9CiYmCmFzc2VydApjYWxsc3ViIGdldHRhYWxpYXNfNgpzdG9yZSAzNApieXRlY18xIC8vIDB4MTUxZjdjNzUKbG9hZCAzNApjb25jYXQKbG9nCmludGNfMSAvLyAxCnJldHVybgptYWluX2w4Ogp0eG4gT25Db21wbGV0aW9uCmludGNfMCAvLyBOb09wCj09CnR4biBBcHBsaWNhdGlvbklECmludGNfMCAvLyAwCiE9CiYmCmFzc2VydAp0eG5hIEFwcGxpY2F0aW9uQXJncyAxCmludGNfMCAvLyAwCmdldGJ5dGUKc3RvcmUgMjEKdHhuIEdyb3VwSW5kZXgKaW50Y18xIC8vIDEKLQpzdG9yZSAyMApsb2FkIDIwCmd0eG5zIFR5cGVFbnVtCmludGNfMSAvLyBwYXkKPT0KYXNzZXJ0CmxvYWQgMjAKbG9hZCAyMQpjYWxsc3ViIGJvb3RzdHJhcDJfNQpzdG9yZSAyMgpieXRlY18xIC8vIDB4MTUxZjdjNzUKbG9hZCAyMgpjb25jYXQKbG9nCmludGNfMSAvLyAxCnJldHVybgptYWluX2w5Ogp0eG4gT25Db21wbGV0aW9uCmludGNfMCAvLyBOb09wCj09CnR4biBBcHBsaWNhdGlvbklECmludGNfMCAvLyAwCiE9CiYmCmFzc2VydAp0eG5hIEFwcGxpY2F0aW9uQXJncyAxCmludGNfMCAvLyAwCmdldGJ5dGUKc3RvcmUgMwp0eG4gR3JvdXBJbmRleAppbnRjXzEgLy8gMQotCnN0b3JlIDIKbG9hZCAyCmd0eG5zIFR5cGVFbnVtCmludGNfMSAvLyBwYXkKPT0KYXNzZXJ0CmxvYWQgMgpsb2FkIDMKY2FsbHN1YiBib290c3RyYXAxXzQKc3RvcmUgNApieXRlY18xIC8vIDB4MTUxZjdjNzUKbG9hZCA0CmNvbmNhdApsb2cKaW50Y18xIC8vIDEKcmV0dXJuCm1haW5fbDEwOgp0eG4gT25Db21wbGV0aW9uCmludGNfMCAvLyBOb09wCj09CmJueiBtYWluX2wxNAp0eG4gT25Db21wbGV0aW9uCmludGNfMSAvLyBPcHRJbgo9PQpibnogbWFpbl9sMTMKZXJyCm1haW5fbDEzOgp0eG4gQXBwbGljYXRpb25JRAppbnRjXzAgLy8gMAohPQphc3NlcnQKY2FsbHN1YiBvcHRpbl8yCmludGNfMSAvLyAxCnJldHVybgptYWluX2wxNDoKdHhuIEFwcGxpY2F0aW9uSUQKaW50Y18wIC8vIDAKPT0KYXNzZXJ0CmNhbGxzdWIgY3JlYXRlXzEKaW50Y18xIC8vIDEKcmV0dXJuCgovLyBhdXRoX29ubHkKYXV0aG9ubHlfMDoKYnl0ZWNfMiAvLyAiZyIKYXBwX2dsb2JhbF9nZXQKPT0KcmV0c3ViCgovLyBjcmVhdGUKY3JlYXRlXzE6CmludGNfMCAvLyAwCmJ5dGVjXzIgLy8gImciCmFwcF9nbG9iYWxfZ2V0X2V4CnN0b3JlIDEKc3RvcmUgMApsb2FkIDEKIQphc3NlcnQKYnl0ZWNfMiAvLyAiZyIKZ2xvYmFsIENyZWF0b3JBZGRyZXNzCmFwcF9nbG9iYWxfcHV0CnJldHN1YgoKLy8gb3B0X2luCm9wdGluXzI6CnJldHN1YgoKLy8gYXV0aF9vcHRlZF9pbgphdXRob3B0ZWRpbl8zOgpnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uSUQKYXBwX29wdGVkX2luCnJldHN1YgoKLy8gYm9vdHN0cmFwMQpib290c3RyYXAxXzQ6CnN0b3JlIDYKc3RvcmUgNQp0eG4gU2VuZGVyCmNhbGxzdWIgYXV0aG9ubHlfMAovLyB1bmF1dGhvcml6ZWQKYXNzZXJ0CmxvYWQgNQpndHhucyBSZWNlaXZlcgpnbG9iYWwgQ3VycmVudEFwcGxpY2F0aW9uQWRkcmVzcwo9PQovLyByZWNlaXZlciBub3QgYXBwIGFkZHJlc3MKYXNzZXJ0CmxvYWQgNQpndHhucyBBbW91bnQKcHVzaGludCAxMDAwMDAwMCAvLyAxMDAwMDAwMAo+PQovLyBhbW91bnQgbWluaW11bSBub3QgbWV0CmFzc2VydApsb2FkIDYKdHhuYXMgQXNzZXRzCmFzc2V0X3BhcmFtc19nZXQgQXNzZXRVbml0TmFtZQpzdG9yZSA5CnN0b3JlIDgKbG9hZCA5CmFzc2VydApsb2FkIDgKcHVzaGJ5dGVzIDB4NTM0MzQxNDQ0MSAvLyAiU0NBREEiCj09Ci8vIFVuaXROYW1lIG5vdCBTQ0FEQQphc3NlcnQKbG9hZCA2CnR4bmFzIEFzc2V0cwphc3NldF9wYXJhbXNfZ2V0IEFzc2V0TmFtZQpzdG9yZSAxMQpzdG9yZSAxMApsb2FkIDExCmFzc2VydAppbnRjXzAgLy8gMApieXRlY18zIC8vICJzIgphcHBfZ2xvYmFsX2dldF9leApzdG9yZSAxMwpzdG9yZSAxMgpsb2FkIDEzCiEKYXNzZXJ0CmJ5dGVjXzMgLy8gInMiCmxvYWQgNQpndHhucyBTZW5kZXIKYXBwX2dsb2JhbF9wdXQKYnl0ZWNfMyAvLyAicyIKYXBwX2dsb2JhbF9nZXQKbG9hZCA2CnR4bmFzIEFzc2V0cwphc3NldF9ob2xkaW5nX2dldCBBc3NldEJhbGFuY2UKc3RvcmUgMTUKc3RvcmUgMTQKbG9hZCAxNQphc3NlcnQKbG9hZCAxNAppbnRjXzEgLy8gMQo9PQovLyBjcmVhdG9yIGRvZXMgbm90IG93biBhIFNjYWRhQ2VydAphc3NlcnQKaW50Y18wIC8vIDAKYnl0ZWMgNSAvLyAic2NhZGFfY2VydCIKYXBwX2dsb2JhbF9nZXRfZXgKc3RvcmUgMTcKc3RvcmUgMTYKbG9hZCAxNwohCmFzc2VydApieXRlYyA1IC8vICJzY2FkYV9jZXJ0Igpsb2FkIDYKdHhuYXMgQXNzZXRzCmFwcF9nbG9iYWxfcHV0CmludGNfMCAvLyAwCmJ5dGVjXzAgLy8gInRhX2FsaWFzIgphcHBfZ2xvYmFsX2dldF9leApzdG9yZSAxOQpzdG9yZSAxOApsb2FkIDE5CiEKYXNzZXJ0CmJ5dGVjXzAgLy8gInRhX2FsaWFzIgpsb2FkIDEwCmFwcF9nbG9iYWxfcHV0CmxvYWQgMTAKc3RvcmUgNwpsb2FkIDcKbGVuCml0b2IKZXh0cmFjdCA2IDAKbG9hZCA3CmNvbmNhdApzdG9yZSA3CmxvYWQgNwpyZXRzdWIKCi8vIGJvb3RzdHJhcDIKYm9vdHN0cmFwMl81OgpzdG9yZSAyNApzdG9yZSAyMwpsb2FkIDIzCmd0eG5zIFJlY2VpdmVyCmdsb2JhbCBDdXJyZW50QXBwbGljYXRpb25BZGRyZXNzCj09Ci8vIHJlY2VpdmVyIG5vdCBhcHAgYWRkcmVzcwphc3NlcnQKbG9hZCAyNAp0eG5hcyBBc3NldHMKYXNzZXRfcGFyYW1zX2dldCBBc3NldFVuaXROYW1lCnN0b3JlIDI3CnN0b3JlIDI2CmxvYWQgMjcKYXNzZXJ0CmxvYWQgMjYKcHVzaGJ5dGVzIDB4NTQ0MTU0NTI0MTQ0NDUgLy8gIlRBVFJBREUiCj09Ci8vIFVuaXROYW1lIG5vdCBUQVRSQURFCmFzc2VydApsb2FkIDI0CnR4bmFzIEFzc2V0cwphc3NldF9wYXJhbXNfZ2V0IEFzc2V0TmFtZQpzdG9yZSAyOQpzdG9yZSAyOApsb2FkIDI5CmFzc2VydApieXRlY18wIC8vICJ0YV9hbGlhcyIKYXBwX2dsb2JhbF9nZXQKbG9hZCAyOAo9PQphc3NlcnQKaW50Y18wIC8vIDAKYnl0ZWMgNCAvLyAiYSIKYXBwX2dsb2JhbF9nZXRfZXgKc3RvcmUgMzEKc3RvcmUgMzAKbG9hZCAzMQohCmFzc2VydApieXRlYyA0IC8vICJhIgpsb2FkIDIzCmd0eG5zIFNlbmRlcgphcHBfZ2xvYmFsX3B1dApieXRlYyA0IC8vICJhIgphcHBfZ2xvYmFsX2dldApsb2FkIDI0CnR4bmFzIEFzc2V0cwphc3NldF9ob2xkaW5nX2dldCBBc3NldEJhbGFuY2UKc3RvcmUgMzMKc3RvcmUgMzIKbG9hZCAzMwovLyBBdG4gZG9lcyBub3Qgb3duIHRoZSBjb3JyZWN0IFRhVHJhZGluZ1JpZ2h0cwphc3NlcnQKbG9hZCAzMgppbnRjXzEgLy8gMQo9PQovLyBBdG4gZG9lcyBub3Qgb3duIHRoZSBjb3JyZWN0IFRhVHJhZGluZ1JpZ2h0cwphc3NlcnQKYnl0ZWNfMCAvLyAidGFfYWxpYXMiCmFwcF9nbG9iYWxfZ2V0CnN0b3JlIDI1CmxvYWQgMjUKbGVuCml0b2IKZXh0cmFjdCA2IDAKbG9hZCAyNQpjb25jYXQKc3RvcmUgMjUKbG9hZCAyNQpyZXRzdWIKCi8vIGdldF90YV9hbGlhcwpnZXR0YWFsaWFzXzY6CmJ5dGVjXzAgLy8gInRhX2FsaWFzIgphcHBfZ2xvYmFsX2dldApzdG9yZSAzNQpsb2FkIDM1CmxlbgppdG9iCmV4dHJhY3QgNiAwCmxvYWQgMzUKY29uY2F0CnN0b3JlIDM1CmxvYWQgMzUKcmV0c3ViCgovLyBoZWFydGJlYXRfYWxnb19hdWRpdApoZWFydGJlYXRhbGdvYXVkaXRfNzoKc3RvcmUgNDAKc3RvcmUgMzkKdHhuIFNlbmRlcgpjYWxsc3ViIGF1dGhvcHRlZGluXzMKLy8gdW5hdXRob3JpemVkCmFzc2VydApieXRlY18wIC8vICJ0YV9hbGlhcyIKYXBwX2dsb2JhbF9nZXQKc3RvcmUgNDEKbG9hZCA0MQpsZW4KaXRvYgpleHRyYWN0IDYgMApsb2FkIDQxCmNvbmNhdApzdG9yZSA0MQpsb2FkIDQxCnJldHN1Yg==",
+    "clear": "I3ByYWdtYSB2ZXJzaW9uIDgKcHVzaGludCAwIC8vIDAKcmV0dXJu"
+  },
+  "schema": {
+    "local": {
+      "declared": {},
+      "reserved": {}
+    },
+    "global": {
+      "declared": {
+        "governor": {
+          "type": "bytes",
+          "key": "g",
+          "descr": "The governor of this contract"
+        },
+        "scada_addr": {
+          "type": "bytes",
+          "key": "s",
+          "descr": "Address of the Scada acct. Must own Scada Cert"
+        },
+        "scada_cert": {
+          "type": "uint64",
+          "key": "scada_cert",
+          "descr": "The asset id of the Scada Cert"
+        },
+        "ta_alias": {
+          "type": "bytes",
+          "key": "ta_alias",
+          "descr": "TerminalAsset GNodeAlias"
+        },
+        "atn_addr": {
+          "type": "bytes",
+          "key": "a",
+          "descr": "Address of the Atn acct. Must own TaTradingRights"
+        }
+      },
+      "reserved": {}
+    }
+  },
+  "contract": {
+    "name": "DispatchContract",
+    "methods": [
+      {
+        "name": "bootstrap1",
+        "args": [
+          {
+            "type": "pay",
+            "name": "scada_seed"
+          },
+          {
+            "type": "asset",
+            "name": "ScadaCert"
+          }
+        ],
+        "returns": {
+          "type": "string"
+        },
+        "desc": "First half of the bootstrap. Checks that\n- ScadaCert is valid    - payment sender (also the governor) owns the ScadaCert, thus proving their    identity as Scada\nIf these checks pass, then the global scada_addr and ta_alias are set.\nArgs:     scada_seed: Initial Payment transaction to the app, by Scada Acct     ScadaCert: The asset owned by the Scada Addr validating that the GNodeFactory     authorized its GNode as a SCADA.\nReturns:     The TerminalAssetAlias (from the ScadaCert)"
+      },
+      {
+        "name": "bootstrap2",
+        "args": [
+          {
+            "type": "pay",
+            "name": "atn_seed"
+          },
+          {
+            "type": "asset",
+            "name": "TaTradingRights"
+          }
+        ],
+        "returns": {
+          "type": "string"
+        },
+        "desc": "\"Second half of the bootstrap, done by Atn. Checks that\n- TaTradingRIghts are valid, and match the global    ta_alias (which must already exist)    - Atn payment meets the MinimumBalance requirements of the DispatchContract    - payment sender owns the TaTradingRights, thus proving their    identity as AtomicTNode\nhttps://gridworks.readthedocs.io/en/latest/ta-trading-rights.html     If these checks pass, then the global atn_addr is set.\nArgs:     atn_seed: Initial Payment transaction to the app from Atn. This pays for boxes.     TaTradingRights: The asset owned by the Atn Addr validating is right to trade     energy on behalf of the TerminalAsset\nReturns:     The TerminalAssetAlias"
+      },
+      {
+        "name": "get_ta_alias",
+        "args": [],
+        "returns": {
+          "type": "string",
+          "desc": "TerminalAsset GNodeAlias"
+        },
+        "desc": "Returns the GNodeAlias of the TerminalAsset for the Dispatch Contract.\nhttps://gridworks.readthedocs.io/en/latest/g-node-alias.html https://gridworks.readthedocs.io/en/latest/terminal-asset.html"
+      },
+      {
+        "name": "heartbeat_algo_audit",
+        "args": [
+          {
+            "type": "pay",
+            "name": "signed_proof",
+            "desc": "A small PaymentTransaction, where the sender is either the ScadaAddr or the AtnAddr"
+          },
+          {
+            "type": "(string,string,string,string,uint64,uint64,string,string)",
+            "name": "heartbeat",
+            "desc": "A report of the heartbeat.b that was just sent by the sender to its partner."
+          }
+        ],
+        "returns": {
+          "type": "string"
+        },
+        "desc": "After validating the identity of the sender by inspecting the signed_proof, the\nDispatchContract shortens up the heartbeat info into the more compact form of HeartbeatStorageData, and stores in a box. Two hours of the most recent minutely heartbeats are stored, using one box for recent Atn heartbeats and one box for recent Scada heartbeats.\nSee https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#heartbeatalgoaudit"
+      }
+    ],
+    "networks": {},
+    "desc": "The DispatchContract between an AtomicTNode-Scada pair that is coordinating\n    the control of their shared TerminalAsset.\n\n    https://gridworks.readthedocs.io/en/latest/dispatch-contract.html\n    "
+  }
+}

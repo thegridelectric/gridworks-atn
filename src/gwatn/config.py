@@ -8,12 +8,15 @@ from pydantic import BaseSettings
 from pydantic import SecretStr
 
 
-class Settings(GNodeSettings):
+class AtnSettings(GNodeSettings):
     g_node_alias: str = "d1.isone.ver.keene.holly"
     g_node_role_value: str = "AtomicTNode"
     my_super_alias: str = "d1.isone.ver.keene.super1"
     g_node_id: str = "6bb37cc5-740d-40f5-a535-43987a5d07b4"
     g_node_instance_id: str = "97eba574-bd20-45b5-bf82-9ba2f492d8f6"
+    sk: SecretStr = SecretStr(
+        "K6iB3AHmzSQ8wDE91QdUfaheDMEtf2WJUMYeeRptKxHiTxG3HC+iKpngXmi82y2r9uVPYwTI5aGiMhdXmPRxcQ=="
+    )
     # Next 4 settings are consistent with dev env settings in gridworks-marketmaker repo
     market_maker_alias = "d1.isone.ver.keene"
     market_maker_algo_address = (

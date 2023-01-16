@@ -1,0 +1,69 @@
+{
+  "name": "DispatchContract",
+  "methods": [
+    {
+      "name": "bootstrap1",
+      "args": [
+        {
+          "type": "pay",
+          "name": "scada_seed"
+        },
+        {
+          "type": "asset",
+          "name": "ScadaCert"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      },
+      "desc": "First half of the bootstrap. Checks that\n- ScadaCert is valid    - payment sender (also the governor) owns the ScadaCert, thus proving their    identity as Scada\nIf these checks pass, then the global scada_addr and ta_alias are set.\nArgs:     scada_seed: Initial Payment transaction to the app, by Scada Acct     ScadaCert: The asset owned by the Scada Addr validating that the GNodeFactory     authorized its GNode as a SCADA.\nReturns:     The TerminalAssetAlias (from the ScadaCert)"
+    },
+    {
+      "name": "bootstrap2",
+      "args": [
+        {
+          "type": "pay",
+          "name": "atn_seed"
+        },
+        {
+          "type": "asset",
+          "name": "TaTradingRights"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      },
+      "desc": "\"Second half of the bootstrap, done by Atn. Checks that\n- TaTradingRIghts are valid, and match the global    ta_alias (which must already exist)    - Atn payment meets the MinimumBalance requirements of the DispatchContract    - payment sender owns the TaTradingRights, thus proving their    identity as AtomicTNode\nhttps://gridworks.readthedocs.io/en/latest/ta-trading-rights.html     If these checks pass, then the global atn_addr is set.\nArgs:     atn_seed: Initial Payment transaction to the app from Atn. This pays for boxes.     TaTradingRights: The asset owned by the Atn Addr validating is right to trade     energy on behalf of the TerminalAsset\nReturns:     The TerminalAssetAlias"
+    },
+    {
+      "name": "get_ta_alias",
+      "args": [],
+      "returns": {
+        "type": "string",
+        "desc": "TerminalAsset GNodeAlias"
+      },
+      "desc": "Returns the GNodeAlias of the TerminalAsset for the Dispatch Contract.\nhttps://gridworks.readthedocs.io/en/latest/g-node-alias.html https://gridworks.readthedocs.io/en/latest/terminal-asset.html"
+    },
+    {
+      "name": "heartbeat_algo_audit",
+      "args": [
+        {
+          "type": "pay",
+          "name": "signed_proof",
+          "desc": "A small PaymentTransaction, where the sender is either the ScadaAddr or the AtnAddr"
+        },
+        {
+          "type": "(string,string,string,string,uint64,uint64,string,string)",
+          "name": "heartbeat",
+          "desc": "A report of the heartbeat.b that was just sent by the sender to its partner."
+        }
+      ],
+      "returns": {
+        "type": "string"
+      },
+      "desc": "After validating the identity of the sender by inspecting the signed_proof, the\nDispatchContract shortens up the heartbeat info into the more compact form of HeartbeatStorageData, and stores in a box. Two hours of the most recent minutely heartbeats are stored, using one box for recent Atn heartbeats and one box for recent Scada heartbeats.\nSee https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#heartbeatalgoaudit"
+    }
+  ],
+  "networks": {},
+  "desc": "The DispatchContract between an AtomicTNode-Scada pair that is coordinating\n    the control of their shared TerminalAsset.\n\n    https://gridworks.readthedocs.io/en/latest/dispatch-contract.html\n    "
+}

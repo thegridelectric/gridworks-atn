@@ -18,7 +18,7 @@ from fastapi_utils.enums import StrEnum
 from gridworks.errors import SchemaError
 
 import gwatn.api_types as api_types
-from gwatn.config import Settings
+from gwatn.config import AtnSettings
 from gwatn.enums import GNodeRole
 from gwatn.enums import MessageCategory
 from gwatn.enums import MessageCategorySymbol
@@ -87,7 +87,7 @@ class TwoChannelActorBase(ABC):
 
     def __init__(
         self,
-        settings: Settings,
+        settings: AtnSettings,
     ):
         self.latest_routing_key: Optional[str] = None
         self.shutting_down: bool = False

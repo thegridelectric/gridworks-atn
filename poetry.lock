@@ -580,7 +580,7 @@ test = ["faulthandler", "objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.0.12"
+version = "0.0.15"
 description = "Gridworks"
 category = "main"
 optional = false
@@ -2058,7 +2058,7 @@ anyio = ">=3.0.0"
 
 [[package]]
 name = "wcwidth"
-version = "0.2.5"
+version = "0.2.6"
 description = "Measures the displayed width of unicode strings in a terminal"
 category = "dev"
 optional = false
@@ -2099,7 +2099,7 @@ tests-strict = ["cmake (==3.21.2)", "codecov (==2.0.15)", "ninja (==1.10.2)", "p
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.10,<4.0"
-content-hash = "5a04d4b54dfba388a0989f8e62624b757bb5a0d37eb1b9a8f2b5cca6ff00dbc9"
+content-hash = "a5da2f7e9bb1e6426ba767de304765592e417baf1af8d6e76ae03ada7fdff2ea"
 
 [metadata.files]
 aiocache = [
@@ -2577,8 +2577,8 @@ greenlet = [
     {file = "greenlet-2.0.1.tar.gz", hash = "sha256:42e602564460da0e8ee67cb6d7236363ee5e131aa15943b6670e44e5c2ed0f67"},
 ]
 gridworks = [
-    {file = "gridworks-0.0.12-py3-none-any.whl", hash = "sha256:fcfc0973cb16b701d4ff697fd527abe6c0025e6cda33cef3fad1324d01c82485"},
-    {file = "gridworks-0.0.12.tar.gz", hash = "sha256:5a375f50d0a47d10bba73b00f3e7bc74efb52bb1d756a5d5f0cd24af2e4a767b"},
+    {file = "gridworks-0.0.15-py3-none-any.whl", hash = "sha256:c9fd225852b45967acb30b56aeb4de40e3e4811c43b80c758ece9dfe1afe3ed2"},
+    {file = "gridworks-0.0.15.tar.gz", hash = "sha256:9a0f6de15db43de80e11f87b03094a502069c9727abbe59f3cbf85d91512277f"},
 ]
 gridworks-protocol = [
     {file = "gridworks_protocol-0.1.6-py3-none-any.whl", hash = "sha256:0762ca056c930d5705ffe5a397d114b39ef2ac122962b09855247298e60bdd42"},
@@ -3660,8 +3660,7 @@ watchfiles = [
     {file = "watchfiles-0.18.1.tar.gz", hash = "sha256:4ec0134a5e31797eb3c6c624dbe9354f2a8ee9c720e0b46fc5b7bab472b7c6d4"},
 ]
 wcwidth = [
-    {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
-    {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
+    {file = "wcwidth-0.2.6.tar.gz", hash = "sha256:a5220780a404dbe3353789870978e472cfe477761f06ee55077256e509b156d0"},
 ]
 websockets = [
     {file = "websockets-10.4-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:d58804e996d7d2307173d56c297cf7bc132c52df27a3efaac5e8d43e36c21c48"},
