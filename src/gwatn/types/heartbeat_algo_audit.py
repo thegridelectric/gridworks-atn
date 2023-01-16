@@ -61,27 +61,14 @@ class HeartbeatAlgoAudit(BaseModel):
     DispatchContract on Algo blockchain
     """
 
-    FromGNodeAlias: str = Field(
-        title="GNodeAlias of sender (AtomicTNode or Scada)",
+    SignedProof: str = Field(
+        title="Tiny signed payment to DispatchContract to prove identity",
     )
     Heartbeat: HeartbeatB = Field(
         title="Heartbeat sender last sent to its partner",
     )
-    SignedProof: str = Field(
-        title="Tiny signed payment to DispatchContract to prove identity",
-    )
     TypeName: Literal["heartbeat.algo.audit"] = "heartbeat.algo.audit"
     Version: str = "000"
-
-    @validator("FromGNodeAlias")
-    def _check_from_g_node_alias(cls, v: str) -> str:
-        try:
-            check_is_left_right_dot(v)
-        except ValueError as e:
-            raise ValueError(
-                f"FromGNodeAlias failed LeftRightDot format validation: {e}"
-            )
-        return v
 
     @validator("SignedProof")
     def _check_signed_proof(cls, v: str) -> str:
@@ -106,13 +93,10 @@ class HeartbeatAlgoAudit_Maker:
     type_name = "heartbeat.algo.audit"
     version = "000"
 
-    def __init__(
-        self, from_g_node_alias: str, heartbeat: HeartbeatB, signed_proof: str
-    ):
+    def __init__(self, signed_proof: str, heartbeat: HeartbeatB):
         self.tuple = HeartbeatAlgoAudit(
-            FromGNodeAlias=from_g_node_alias,
-            Heartbeat=heartbeat,
             SignedProof=signed_proof,
+            Heartbeat=heartbeat,
             #
         )
 
@@ -139,23 +123,20 @@ class HeartbeatAlgoAudit_Maker:
     @classmethod
     def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatAlgoAudit:
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
+        if "SignedProof" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing SignedProof")
         if "Heartbeat" not in d2.keys():
             raise SchemaError(f"dict {d2} missing Heartbeat")
         if not isinstance(d2["Heartbeat"], dict):
             raise SchemaError(f"d['Heartbeat'] {d2['Heartbeat']} must be a HeartbeatB!")
         heartbeat = HeartbeatB_Maker.dict_to_tuple(d2["Heartbeat"])
         d2["Heartbeat"] = heartbeat
-        if "SignedProof" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing SignedProof")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
         return HeartbeatAlgoAudit(
-            FromGNodeAlias=d2["FromGNodeAlias"],
-            Heartbeat=d2["Heartbeat"],
             SignedProof=d2["SignedProof"],
+            Heartbeat=d2["Heartbeat"],
             TypeName=d2["TypeName"],
             Version="000",
         )

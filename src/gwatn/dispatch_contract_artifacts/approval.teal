@@ -1,0 +1,403 @@
+#pragma version 8
+intcblock 0 1
+bytecblock 0x74615f616c696173 0x151f7c75 0x67 0x73 0x61 0x73636164615f63657274
+txn NumAppArgs
+intc_0 // 0
+==
+bnz main_l10
+txna ApplicationArgs 0
+pushbytes 0xb1283857 // "bootstrap1(pay,asset)string"
+==
+bnz main_l9
+txna ApplicationArgs 0
+pushbytes 0xcc231dbe // "bootstrap2(pay,asset)string"
+==
+bnz main_l8
+txna ApplicationArgs 0
+pushbytes 0x1e9daa0d // "get_ta_alias()string"
+==
+bnz main_l7
+txna ApplicationArgs 0
+pushbytes 0x8bb97593 // "heartbeat_algo_audit(pay,(string,string,string,string,uint64,uint64,string,string))string"
+==
+bnz main_l6
+err
+main_l6:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+store 37
+txn GroupIndex
+intc_1 // 1
+-
+store 36
+load 36
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+load 36
+load 37
+callsub heartbeatalgoaudit_7
+store 38
+bytec_1 // 0x151f7c75
+load 38
+concat
+log
+intc_1 // 1
+return
+main_l7:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+callsub gettaalias_6
+store 34
+bytec_1 // 0x151f7c75
+load 34
+concat
+log
+intc_1 // 1
+return
+main_l8:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+store 21
+txn GroupIndex
+intc_1 // 1
+-
+store 20
+load 20
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+load 20
+load 21
+callsub bootstrap2_5
+store 22
+bytec_1 // 0x151f7c75
+load 22
+concat
+log
+intc_1 // 1
+return
+main_l9:
+txn OnCompletion
+intc_0 // NoOp
+==
+txn ApplicationID
+intc_0 // 0
+!=
+&&
+assert
+txna ApplicationArgs 1
+intc_0 // 0
+getbyte
+store 3
+txn GroupIndex
+intc_1 // 1
+-
+store 2
+load 2
+gtxns TypeEnum
+intc_1 // pay
+==
+assert
+load 2
+load 3
+callsub bootstrap1_4
+store 4
+bytec_1 // 0x151f7c75
+load 4
+concat
+log
+intc_1 // 1
+return
+main_l10:
+txn OnCompletion
+intc_0 // NoOp
+==
+bnz main_l14
+txn OnCompletion
+intc_1 // OptIn
+==
+bnz main_l13
+err
+main_l13:
+txn ApplicationID
+intc_0 // 0
+!=
+assert
+callsub optin_2
+intc_1 // 1
+return
+main_l14:
+txn ApplicationID
+intc_0 // 0
+==
+assert
+callsub create_1
+intc_1 // 1
+return
+
+// auth_only
+authonly_0:
+bytec_2 // "g"
+app_global_get
+==
+retsub
+
+// create
+create_1:
+intc_0 // 0
+bytec_2 // "g"
+app_global_get_ex
+store 1
+store 0
+load 1
+!
+assert
+bytec_2 // "g"
+global CreatorAddress
+app_global_put
+retsub
+
+// opt_in
+optin_2:
+retsub
+
+// auth_opted_in
+authoptedin_3:
+global CurrentApplicationID
+app_opted_in
+retsub
+
+// bootstrap1
+bootstrap1_4:
+store 6
+store 5
+txn Sender
+callsub authonly_0
+// unauthorized
+assert
+load 5
+gtxns Receiver
+global CurrentApplicationAddress
+==
+// receiver not app address
+assert
+load 5
+gtxns Amount
+pushint 10000000 // 10000000
+>=
+// amount minimum not met
+assert
+load 6
+txnas Assets
+asset_params_get AssetUnitName
+store 9
+store 8
+load 9
+assert
+load 8
+pushbytes 0x5343414441 // "SCADA"
+==
+// UnitName not SCADA
+assert
+load 6
+txnas Assets
+asset_params_get AssetName
+store 11
+store 10
+load 11
+assert
+intc_0 // 0
+bytec_3 // "s"
+app_global_get_ex
+store 13
+store 12
+load 13
+!
+assert
+bytec_3 // "s"
+load 5
+gtxns Sender
+app_global_put
+bytec_3 // "s"
+app_global_get
+load 6
+txnas Assets
+asset_holding_get AssetBalance
+store 15
+store 14
+load 15
+assert
+load 14
+intc_1 // 1
+==
+// creator does not own a ScadaCert
+assert
+intc_0 // 0
+bytec 5 // "scada_cert"
+app_global_get_ex
+store 17
+store 16
+load 17
+!
+assert
+bytec 5 // "scada_cert"
+load 6
+txnas Assets
+app_global_put
+intc_0 // 0
+bytec_0 // "ta_alias"
+app_global_get_ex
+store 19
+store 18
+load 19
+!
+assert
+bytec_0 // "ta_alias"
+load 10
+app_global_put
+load 10
+store 7
+load 7
+len
+itob
+extract 6 0
+load 7
+concat
+store 7
+load 7
+retsub
+
+// bootstrap2
+bootstrap2_5:
+store 24
+store 23
+load 23
+gtxns Receiver
+global CurrentApplicationAddress
+==
+// receiver not app address
+assert
+load 24
+txnas Assets
+asset_params_get AssetUnitName
+store 27
+store 26
+load 27
+assert
+load 26
+pushbytes 0x54415452414445 // "TATRADE"
+==
+// UnitName not TATRADE
+assert
+load 24
+txnas Assets
+asset_params_get AssetName
+store 29
+store 28
+load 29
+assert
+bytec_0 // "ta_alias"
+app_global_get
+load 28
+==
+assert
+intc_0 // 0
+bytec 4 // "a"
+app_global_get_ex
+store 31
+store 30
+load 31
+!
+assert
+bytec 4 // "a"
+load 23
+gtxns Sender
+app_global_put
+bytec 4 // "a"
+app_global_get
+load 24
+txnas Assets
+asset_holding_get AssetBalance
+store 33
+store 32
+load 33
+// Atn does not own the correct TaTradingRights
+assert
+load 32
+intc_1 // 1
+==
+// Atn does not own the correct TaTradingRights
+assert
+bytec_0 // "ta_alias"
+app_global_get
+store 25
+load 25
+len
+itob
+extract 6 0
+load 25
+concat
+store 25
+load 25
+retsub
+
+// get_ta_alias
+gettaalias_6:
+bytec_0 // "ta_alias"
+app_global_get
+store 35
+load 35
+len
+itob
+extract 6 0
+load 35
+concat
+store 35
+load 35
+retsub
+
+// heartbeat_algo_audit
+heartbeatalgoaudit_7:
+store 40
+store 39
+txn Sender
+callsub authoptedin_3
+// unauthorized
+assert
+bytec_0 // "ta_alias"
+app_global_get
+store 41
+load 41
+len
+itob
+extract 6 0
+load 41
+concat
+store 41
+load 41
+retsub

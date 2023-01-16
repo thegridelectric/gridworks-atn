@@ -35,12 +35,12 @@ class DevValidator:
         ),
     ):
         self.settings = settings
+        self.acct: BasicAccount = BasicAccount(
+            private_key=self.settings.sk.get_secret_value()
+        )
         self.client: AlgodClient = AlgodClient(
             settings.algo_api_secrets.algod_token.get_secret_value(),
             settings.public.algod_address,
-        )
-        self.acct: BasicAccount = BasicAccount(
-            private_key=self.settings.sk.get_secret_value()
         )
         self.validator_multi: MultisigAccount = (
             api_utils.get_validator_account_with_admin(self.acct.addr)

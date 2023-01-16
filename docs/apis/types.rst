@@ -26,6 +26,10 @@ DiscoverycertAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/discoverycert-algo-create.json
 
+DispatchContractConfirmed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/dispatch-contract-confirmed.json
+
 FloParamsHeatpumpwithbooststore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/flo-params-heatpumpwithbooststore.json
@@ -70,6 +74,10 @@ InitialTadeedAlgoTransfer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/initial-tadeed-algo-transfer.json
 
+JoinDispatchContract
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/join-dispatch-contract.json
+
 LatestPrice
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/latest-price.json
@@ -105,6 +113,10 @@ PriceQuantityUnitless
 Ready
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/ready.json
+
+SimScadaDriverReport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/sim-scada-driver-report.json
 
 SimTimestep
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

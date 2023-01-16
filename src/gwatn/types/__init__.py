@@ -22,6 +22,8 @@ from gwatn.types.base_g_node_gt import BaseGNodeGt
 from gwatn.types.base_g_node_gt import BaseGNodeGt_Maker
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate_Maker
+from gwatn.types.dispatch_contract_confirmed import DispatchContractConfirmed
+from gwatn.types.dispatch_contract_confirmed import DispatchContractConfirmed_Maker
 from gwatn.types.flo_params_heatpumpwithbooststore import (
     FloParamsHeatpumpwithbooststore,
 )
@@ -48,6 +50,8 @@ from gwatn.types.initial_tadeed_algo_optin import InitialTadeedAlgoOptin
 from gwatn.types.initial_tadeed_algo_optin import InitialTadeedAlgoOptin_Maker
 from gwatn.types.initial_tadeed_algo_transfer import InitialTadeedAlgoTransfer
 from gwatn.types.initial_tadeed_algo_transfer import InitialTadeedAlgoTransfer_Maker
+from gwatn.types.join_dispatch_contract import JoinDispatchContract
+from gwatn.types.join_dispatch_contract import JoinDispatchContract_Maker
 from gwatn.types.latest_price import LatestPrice
 from gwatn.types.latest_price import LatestPrice_Maker
 from gwatn.types.market_slot import MarketSlot
@@ -66,6 +70,8 @@ from gwatn.types.price_quantity_unitless import PriceQuantityUnitless
 from gwatn.types.price_quantity_unitless import PriceQuantityUnitless_Maker
 from gwatn.types.ready import Ready
 from gwatn.types.ready import Ready_Maker
+from gwatn.types.sim_scada_driver_report import SimScadaDriverReport
+from gwatn.types.sim_scada_driver_report import SimScadaDriverReport_Maker
 from gwatn.types.sim_timestep import SimTimestep
 from gwatn.types.sim_timestep import SimTimestep_Maker
 from gwatn.types.sla_enter import SlaEnter
@@ -87,6 +93,8 @@ from gwatn.types.terminalasset_certify_hack import TerminalassetCertifyHack_Make
 __all__ = [
     "PriceQuantity",
     "PriceQuantity_Maker",
+    "SimScadaDriverReport",
+    "SimScadaDriverReport_Maker",
     "HeartbeatAlgoAudit",
     "HeartbeatAlgoAudit_Maker",
     "TerminalassetCertifyHack",
@@ -115,6 +123,8 @@ __all__ = [
     "BaseGNodeGt_Maker",
     "FloParamsHeatpumpwithbooststore",
     "FloParamsHeatpumpwithbooststore_Maker",
+    "JoinDispatchContract",
+    "JoinDispatchContract_Maker",
     "AcceptedBid",
     "AcceptedBid_Maker",
     "MarketSlot",
@@ -153,4 +163,6 @@ __all__ = [
     "MarketTypeGt_Maker",
     "SimTimestep",
     "SimTimestep_Maker",
+    "DispatchContractConfirmed",
+    "DispatchContractConfirmed_Maker",
 ]

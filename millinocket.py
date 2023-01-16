@@ -22,7 +22,7 @@ import gwatn.demo_methods as demo_methods
 #             f"Please enter an integer number of homes to simulate, not {sys.argv[1]}"
 #         )
 
-sim_size = 4
+sim_size = 1
 full_plant_names = demo_methods.demo_plant_names
 plant_names = full_plant_names[0:sim_size]
 
@@ -54,10 +54,10 @@ atn_address_list = [
     "R3PKD54UOAOW6MTPO7ECZ6YX4COQWN5BJM4OZIHYWFVVGAITM53RGUF6LI",
 ]
 
-for addr in atn_address_list:
-    algo_setup.dev_fund_to_min(addr=addr, min_algos=25)
+# for addr in atn_address_list:
+#     algo_setup.dev_fund_to_min(addr=addr, min_algos=25)
 
-
+addr = atn_address_list[0]
 print("")
 print("")
 print("Certifying MollyMetermaid as a TaValidator")
