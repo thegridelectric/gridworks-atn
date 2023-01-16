@@ -2,6 +2,18 @@
   "name": "DispatchContract",
   "methods": [
     {
+      "name": "hello",
+      "args": [
+        {
+          "type": "string",
+          "name": "name"
+        }
+      ],
+      "returns": {
+        "type": "string"
+      }
+    },
+    {
       "name": "bootstrap1",
       "args": [
         {
@@ -33,7 +45,7 @@
       "returns": {
         "type": "string"
       },
-      "desc": "\"Second half of the bootstrap, done by Atn. Checks that\n- TaTradingRIghts are valid, and match the global    ta_alias (which must already exist)    - Atn payment meets the MinimumBalance requirements of the DispatchContract    - payment sender owns the TaTradingRights, thus proving their    identity as AtomicTNode\nhttps://gridworks.readthedocs.io/en/latest/ta-trading-rights.html     If these checks pass, then the global atn_addr is set.\nArgs:     atn_seed: Initial Payment transaction to the app from Atn. This pays for boxes.     TaTradingRights: The asset owned by the Atn Addr validating is right to trade     energy on behalf of the TerminalAsset\nReturns:     The TerminalAssetAlias"
+      "desc": "\"Second half of the bootstrap, done by Atn calling this method. Method checks that\n- TaTradingRights are valid, and match the global    ta_alias (which must already exist)    - Atn payment meets the MinimumBalance requirements of the DispatchContract    - payment sender owns the TaTradingRights, thus proving their    identity as AtomicTNode\nhttps://gridworks.readthedocs.io/en/latest/ta-trading-rights.html     If these checks pass, then the global atn_addr is set.\nArgs:     atn_seed: Initial Payment transaction to the app from Atn. This pays for boxes.     TaTradingRights: The asset owned by the Atn Addr validating is right to trade     energy on behalf of the TerminalAsset\nReturns:     The TerminalAssetAlias"
     },
     {
       "name": "get_ta_alias",

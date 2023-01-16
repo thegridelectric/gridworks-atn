@@ -16,10 +16,13 @@ Python pydantic class corresponding to  json type ```sim.scada.driver.report```.
 **BoostPowerKwTimes1000**:
     - Description:
 
-**CopTimes10**:
+**HeatpumpPowerKwTimes1000**:
     - Description:
 
 **StoreKwh**:
+    - Description:
+
+**CopTimes10**:
     - Description:
 
 **MaxStoreKwh**:

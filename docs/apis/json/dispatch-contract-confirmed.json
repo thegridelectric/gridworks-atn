@@ -40,6 +40,11 @@
       "title": "",
       "required": true
     },
+    "AtnParams": {
+      "type": "atn.params.heatpumpwithbooststore.000",
+      "title": "",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
       "value": "dispatch.contract.confirmed.000",

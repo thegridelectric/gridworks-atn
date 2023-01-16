@@ -8,7 +8,9 @@ from typing import Optional
 from typing import no_type_check
 
 import gridworks.algo_utils as algo_utils
+import gridworks.conversion_factors as cf
 import pendulum
+from algosdk import encoding
 from algosdk.atomic_transaction_composer import TransactionWithSigner
 from algosdk.future.transaction import *
 from algosdk.v2client.algod import AlgodClient
@@ -16,15 +18,16 @@ from beaker.client import ApplicationClient
 from gridworks.actor_base import ActorBase
 from gridworks.algo_utils import BasicAccount
 from gridworks.message import as_enum
-from gwproto.messages import GtShStatus_Maker
-from gwproto.messages import GtTelemetry_Maker
-from gwproto.messages import SnapshotSpaceheat_Maker
+from pydantic import BaseModel
 
 from gwatn import DispatchContract
 from gwatn.config import ScadaSettings
 from gwatn.enums import GNodeRole
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
+from gwatn.types import AtnParamsHeatpumpwithbooststore as AtnParams
+from gwatn.types import DispatchContractConfirmed
+from gwatn.types import DispatchContractConfirmed_Maker
 from gwatn.types import GtDispatchBoolean
 from gwatn.types import GtDispatchBoolean_Maker
 from gwatn.types import HeartbeatA
@@ -33,8 +36,12 @@ from gwatn.types import HeartbeatAlgoAudit
 from gwatn.types import HeartbeatAlgoAudit_Maker
 from gwatn.types import HeartbeatB
 from gwatn.types import HeartbeatB_Maker
+from gwatn.types import JoinDispatchContract_Maker
+from gwatn.types import SimScadaDriverReport
+from gwatn.types import SimScadaDriverReport_Maker
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
+from gwatn.types import SnapshotHeatpumpwithbooststore
 
 
 LOG_FORMAT = (
@@ -46,6 +53,20 @@ LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.INFO)
 
 
+def get_max_store_kwh_th(params: AtnParams) -> float:
+    return (
+        cf.KWH_TH_PER_GALLON_PER_DEG_F
+        * params.StoreSizeGallons
+        * (params.MaxStoreTempF - params.ZeroPotentialEnergyWaterTempF)
+    )
+
+
+class AtnHbStatus(BaseModel):
+    LastHeartbeatReceivedMs: int
+    AtnLastHex: str = "0"
+    ScadaLastHex: str = "0"
+
+
 class ScadaActor(ActorBase):
     def __init__(self, settings: ScadaSettings):
         super().__init__(settings=settings)
@@ -54,6 +75,11 @@ class ScadaActor(ActorBase):
         self.client: AlgodClient = AlgodClient(
             settings.algo_api_secrets.algod_token.get_secret_value(),
             settings.public.algod_address,
+        )
+        self.has_dispatch_contract: bool = False
+        self.talking_with: bool = False
+        self.atn_hb_status: AtnHbStatus = AtnHbStatus(
+            LastHeartbeatReceivedMs=int(1000 * time.time())
         )
         # The dc_client (DispatchContract client) builds on top of the Algorand beaker ApplicationClient
         self.dc_client = ApplicationClient(
@@ -68,14 +94,11 @@ class ScadaActor(ActorBase):
         self.atn_gni_id: Optional[int] = None
         self.atn_addr: Optional[str] = None
 
-    def check_dispatch_contract_on_init(self):
-        """The dispatch contract may already exist. If it does, populate the relevant
-        attributes"""
-        app_ids = (
-            self.client.account_info(self.acct.addr).get("apps-total-schema", []).keys()
-        )
-
-        self.client.account_info(self.acct.addr)
+        self.boost_power_kw: float = 0
+        self.heatpump_power_kw: float = 0
+        self.cop: float = 0
+        self.store_kwh: int = 0
+        self.atn_params: Optional[AtnParams] = None
 
     @property
     def atn_alias(self):
@@ -85,7 +108,7 @@ class ScadaActor(ActorBase):
     @property
     def ta_alias(self):
         """Removes `ta.scada` from the end of the SCADA's GNodeAlias"""
-        return self.alias[:-3]
+        return self.alias[:-6]
 
     def local_rabbit_startup(self) -> None:
         rjb = MessageCategorySymbol.rjb.value
@@ -126,7 +149,16 @@ class ScadaActor(ActorBase):
     def route_message(
         self, from_alias: str, from_role: GNodeRole, payload: HeartbeatB
     ) -> None:
-        if payload.TypeName == GtDispatchBoolean_Maker.type_name:
+        if payload.TypeName == DispatchContractConfirmed_Maker.type_name:
+            if from_role != GNodeRole.AtomicTNode:
+                LOGGER.info(
+                    f"Ignoring DispatchContractConfrimed from GNode with role {from_role}; expects AtomicTNode"
+                )
+            try:
+                self.dispatch_contract_confirmed_received(payload)
+            except:
+                LOGGER.exception("Error in dispatch_contract_confirmed_received")
+        elif payload.TypeName == GtDispatchBoolean_Maker.type_name:
             if from_role != GNodeRole.AtomicTNode:
                 LOGGER.info(
                     f"Ignoring GtDispatchBooleanfrom GNode with role {from_role}; expects AtomicTNode"
@@ -151,9 +183,14 @@ class ScadaActor(ActorBase):
                     f"Ignoring HeartbeatB from GNode with role {from_role}; expects AtomicTNode"
                 )
             try:
-                self.heartbeat_from_partner(payload)
+                self.heartbeat_from_atn(payload)
             except:
-                LOGGER.exception("Error in heartbeat_from_partner")
+                LOGGER.exception("Error in heartbeat_from_atn")
+        elif payload.TypeName == SimScadaDriverReport_Maker.type_name:
+            try:
+                self.sim_scada_driver_report_received(payload)
+            except:
+                LOGGER.exception("Error in sim_scada_driver_report_received")
         elif payload.TypeName == SimTimestep_Maker.type_name:
             if from_role != GNodeRole.TimeCoordinator:
                 LOGGER.info(
@@ -164,7 +201,7 @@ class ScadaActor(ActorBase):
             except:
                 LOGGER.exception("Error in timestep_from_timecoordinator")
 
-    def heartbeat_from_partner(self, ping: HeartbeatB) -> None:
+    def heartbeat_from_atn(self, ping: HeartbeatB) -> None:
         """
         This is the Scada's half of the DispatchContract Heartbeat pattern.
         It:
@@ -181,7 +218,26 @@ class ScadaActor(ActorBase):
             AtomicTNode partner
 
         """
-        ...
+        received_ms = int(time.time() * 1000)
+        if ping.FromGNodeInstanceId != self.atn_gni_id:
+            LOGGER.info(f"Ignoring {ping}, wrong Atn GNodeInstanceId")
+            return
+        self.atn_hb_status.LastHeartbeatReceivedMs = int(time.time() * 1000)
+        self.atn_hb_status.AtnLastHex = ping.MyHex
+        self.atn_hb_status.ScadaLastHex = str(random.choice("0123456789abcdef"))
+        pong = HeartbeatB_Maker(
+            from_g_node_alias=self.alias,
+            from_g_node_instance_id=self.g_node_instance_id,
+            my_hex=self.atn_hb_status.ScadaLastHex,
+            your_last_hex=self.atn_hb_status.AtnLastHex,
+            last_received_time_unix_ms=self.atn_hb_status.LastHeartbeatReceivedMs,
+            send_time_unix_ms=int(1000 * time.time()),
+        ).tuple
+        self.send_message(
+            payload=pong, to_role=GNodeRole.AtomicTNode, to_g_node_alias=self.atn_alias
+        )
+        # Todo: make PaymentTxn and send HeartbeatAlgo
+        # hb_audit = HeartbeatAlgoAudit_Maker()
 
     def heartbeat_from_super(self, from_alias: str, ping: HeartbeatA) -> None:
         pong = HeartbeatA_Maker(
@@ -273,23 +329,113 @@ class ScadaActor(ActorBase):
                 f" got {result.return_value}"
             )
 
+        txn = PaymentTxn(
+            sender=self.acct.addr, receiver=self.dc_client.app_addr, sp=sp, amt=1000
+        )
+        signed_txn = txn.sign(self.acct.sk)
+        # Don't need to actually send it in order to establish signature
+        payload = JoinDispatchContract_Maker(
+            from_g_node_alias=self.alias,
+            from_g_node_instance_id=self.g_node_instance_id,
+            dispatch_contract_app_id=self.dc_app_id,
+            signed_proof=encoding.msgpack_encode(signed_txn),
+        ).tuple
+        self.send_message(
+            payload=payload,
+            to_role=GNodeRole.AtomicTNode,
+            to_g_node_alias=self.atn_alias,
+        )
+
+    def dispatch_contract_confirmed_received(self, payload: DispatchContractConfirmed):
+        """Check the state of the app to confirm that the Atn has finished the bootstrap.
+        Expect the AtomicTNode to send this after they get the JoinDispatchContract message
+        and successfully do the second half of bootstrapping the Dispatch Contract."""
+        if self.dc_app_id is None:
+            raise Exception(
+                "Thats odd ... dont have a Dispatch Contract App Id and I need to be"
+                "the creator"
+            )
+            return
+        app_state = self.dc_client.get_application_state()
+        if "a" not in app_state.keys():
+            LOGGER.warning(f"Atn bootstrap is NOT finished. Ignoring")
+            return
+        atn_addr = app_state["a"]
+        self.client.account_info(atn_addr)
+
     #########################################################
     # Below be made abstractmethods if pulling out base class
     #########################################################
 
-    def dispatch_received(payload: GtDispatchBoolean) -> None:
+    def sim_scada_driver_report_received(self, payload: SimScadaDriverReport) -> None:
+        """This gets received right before the top of the hour, from our
+        best simulation of the TerminalAsset (which is happening in the
+        AtomicTNode)."""
+        if payload.FromGNodeInstanceId != self.atn_gni_id:
+            LOGGER.info(f"Igoring {payload} - incorrect GNodeInstanceId")
+        self.boost_power_kw = payload.BoostPowerKwTimes1000 / 1000
+        self.heatpump_power_kw = payload.HeatpumpPowerKwTimes1000 / 1000
+        self.cop = payload.CopTimes10 / 10
+        self.store_kwh = payload.StoreKwh
+        self.max_store_kwh = payload.MaxStoreKwh
+        self.send_snapshot()
+
+    def send_snapshot(self):
+        """Send a snapshot of current core sensed values to AtomicTNode.
+        This is done every hour, and also on sensed power change."""
+        if self.atn_params is None:
+            return
+        report_payload = SnapshotHeatpumpwithbooststore(
+            FromGNodeAlias=self.alias,
+            FromGNodeInstanceId=self.g_node_instance_id,
+            BoostPowerKwTimes1000=int(1000 * self.boost_power_kw),
+            HeatpumpPowerKwTimes1000=int(1000 * self.heatpump_power_kw),
+            CopTimes10=int(10 * self.cop),
+            MaxStoreKwh=get_max_store_kwh_th(self.atn_params),
+            AboutTerminalAssetAlias=self.ta_alias,
+        )
+        self.send_message(
+            payload=report_payload,
+            to_role=GNodeRole.AtomicTNode,
+            to_g_node_alias=self.atn_alias,
+        )
+
+    def dispatch_received(self, payload: GtDispatchBoolean) -> None:
         """
         Dispatch received from AtomicTNode
 
           - Checks that the GNodeAlias and GNodeInstanceId belong to its
-        AtomicTNode
-          - Follows instructions (turns on or turns off)
+        AtomicTNode and that we have a dispatch contract
+          - Sets talking_with to true
+          - Follows instructions (turns on or turns off). Will turn on or
+          off boost unless AboutNodeName is "a.heatpump"
 
         For hourly sim:
-          - Updates energy and power
+          - Updatespower
           - Send status to AtomicTNode
         """
-        raise NotImplementedError
+        if self.atn_params is None or self.has_dispatch_contract is False:
+            LOGGER.info("Igoring dispatch command, DispatchContract is not started")
+        if payload.FromGNodeInstanceId != self.atn_gni_id:
+            LOGGER.info(f"Igoring {payload}, not my Atn's GNodeInstanceId")
+        self.talking_with = True
+        if payload.AboutNodeName == "a.heatpump":
+            # Making the grossly simplifying assumption that the heat pump turns on immediately
+            if payload.RelayState == 1:
+                new_heatpump_power_kw = self.atn_params.RatedHeatpumpElectricityKw
+            else:
+                new_heatpump_power_kw = 0
+            if self.heatpump_power_kw != new_heatpump_power_kw:
+                self.heatpump_power_kw = new_heatpump_power_kw
+                self.send_snapshot()
+        else:
+            if payload.RelayState == 1:
+                new_boost_power_kw = self.atn_params.StoreMaxPowerKw
+            else:
+                new_boost_power_kw = 0
+            if self.boost_power_kw != new_boost_power_kw:
+                self.boost_power_kw = new_boost_power_kw
+                self.send_snapshot()
 
     def new_timestep(self, payload: SimTimestep) -> None:
         # LOGGER.info("New timestep in atn_actor_base")

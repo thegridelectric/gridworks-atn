@@ -13,8 +13,9 @@ def test_sim_scada_driver_report_generated() -> None:
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
         "FromGNodeInstanceId": "60e5c73a-77e1-4c01-8b78-02c92d20f18a",
         "BoostPowerKwTimes1000": 12000,
-        "CopTimes10": 25,
+        "HeatpumpPowerKwTimes1000": 5000,
         "StoreKwh": 40000,
+        "CopTimes10": 25,
         "MaxStoreKwh": 80000,
         "TypeName": "sim.scada.driver.report",
         "Version": "000",
@@ -38,8 +39,9 @@ def test_sim_scada_driver_report_generated() -> None:
         from_g_node_alias=gtuple.FromGNodeAlias,
         from_g_node_instance_id=gtuple.FromGNodeInstanceId,
         boost_power_kw_times1000=gtuple.BoostPowerKwTimes1000,
-        cop_times10=gtuple.CopTimes10,
+        heatpump_power_kw_times1000=gtuple.HeatpumpPowerKwTimes1000,
         store_kwh=gtuple.StoreKwh,
+        cop_times10=gtuple.CopTimes10,
         max_store_kwh=gtuple.MaxStoreKwh,
     ).tuple
     assert t == gtuple
@@ -69,12 +71,17 @@ def test_sim_scada_driver_report_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["CopTimes10"]
+    del d2["HeatpumpPowerKwTimes1000"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     del d2["StoreKwh"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["CopTimes10"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -91,11 +98,15 @@ def test_sim_scada_driver_report_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, CopTimes10="25.1")
+    d2 = dict(d, HeatpumpPowerKwTimes1000="5000.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, StoreKwh="40000.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, CopTimes10="25.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

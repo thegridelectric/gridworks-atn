@@ -1,4 +1,4 @@
-"""Type atn.state.heatpumpwithbooststore, version 000"""
+"""Type snapshot.heatpumpwithbooststore, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -66,7 +66,7 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-class AtnStateHeatpumpwithbooststore(BaseModel):
+class SnapshotHeatpumpwithbooststore(BaseModel):
     """ """
 
     FromGNodeAlias: str = Field(
@@ -94,8 +94,8 @@ class AtnStateHeatpumpwithbooststore(BaseModel):
         title="AboutTerminalAssetAlias",
     )
     TypeName: Literal[
-        "atn.state.heatpumpwithbooststore"
-    ] = "atn.state.heatpumpwithbooststore"
+        "snapshot.heatpumpwithbooststore"
+    ] = "snapshot.heatpumpwithbooststore"
     Version: str = "000"
 
     @validator("FromGNodeAlias")
@@ -136,8 +136,8 @@ class AtnStateHeatpumpwithbooststore(BaseModel):
         return json.dumps(self.as_dict())
 
 
-class AtnStateHeatpumpwithbooststore_Maker:
-    type_name = "atn.state.heatpumpwithbooststore"
+class SnapshotHeatpumpwithbooststore_Maker:
+    type_name = "snapshot.heatpumpwithbooststore"
     version = "000"
 
     def __init__(
@@ -151,7 +151,7 @@ class AtnStateHeatpumpwithbooststore_Maker:
         max_store_kwh: int,
         about_terminal_asset_alias: str,
     ):
-        self.tuple = AtnStateHeatpumpwithbooststore(
+        self.tuple = SnapshotHeatpumpwithbooststore(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
             BoostPowerKwTimes1000=boost_power_kw_times1000,
@@ -164,14 +164,14 @@ class AtnStateHeatpumpwithbooststore_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: AtnStateHeatpumpwithbooststore) -> str:
+    def tuple_to_type(cls, tuple: SnapshotHeatpumpwithbooststore) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> AtnStateHeatpumpwithbooststore:
+    def type_to_tuple(cls, t: str) -> SnapshotHeatpumpwithbooststore:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -184,7 +184,7 @@ class AtnStateHeatpumpwithbooststore_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> AtnStateHeatpumpwithbooststore:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SnapshotHeatpumpwithbooststore:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeAlias")
@@ -205,7 +205,7 @@ class AtnStateHeatpumpwithbooststore_Maker:
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return AtnStateHeatpumpwithbooststore(
+        return SnapshotHeatpumpwithbooststore(
             FromGNodeAlias=d2["FromGNodeAlias"],
             FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             BoostPowerKwTimes1000=d2["BoostPowerKwTimes1000"],

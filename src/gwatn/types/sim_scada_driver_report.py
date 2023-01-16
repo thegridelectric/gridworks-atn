@@ -78,11 +78,14 @@ class SimScadaDriverReport(BaseModel):
     BoostPowerKwTimes1000: int = Field(
         title="BoostPowerKwTimes1000",
     )
-    CopTimes10: int = Field(
-        title="CopTimes10",
+    HeatpumpPowerKwTimes1000: int = Field(
+        title="HeatpumpPowerKwTimes1000",
     )
     StoreKwh: int = Field(
         title="StoreKwh",
+    )
+    CopTimes10: int = Field(
+        title="CopTimes10",
     )
     MaxStoreKwh: int = Field(
         title="MaxStoreKwh",
@@ -127,16 +130,18 @@ class SimScadaDriverReport_Maker:
         from_g_node_alias: str,
         from_g_node_instance_id: str,
         boost_power_kw_times1000: int,
-        cop_times10: int,
+        heatpump_power_kw_times1000: int,
         store_kwh: int,
+        cop_times10: int,
         max_store_kwh: int,
     ):
         self.tuple = SimScadaDriverReport(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
             BoostPowerKwTimes1000=boost_power_kw_times1000,
-            CopTimes10=cop_times10,
+            HeatpumpPowerKwTimes1000=heatpump_power_kw_times1000,
             StoreKwh=store_kwh,
+            CopTimes10=cop_times10,
             MaxStoreKwh=max_store_kwh,
             #
         )
@@ -170,10 +175,12 @@ class SimScadaDriverReport_Maker:
             raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "BoostPowerKwTimes1000" not in d2.keys():
             raise SchemaError(f"dict {d2} missing BoostPowerKwTimes1000")
-        if "CopTimes10" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing CopTimes10")
+        if "HeatpumpPowerKwTimes1000" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing HeatpumpPowerKwTimes1000")
         if "StoreKwh" not in d2.keys():
             raise SchemaError(f"dict {d2} missing StoreKwh")
+        if "CopTimes10" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing CopTimes10")
         if "MaxStoreKwh" not in d2.keys():
             raise SchemaError(f"dict {d2} missing MaxStoreKwh")
         if "TypeName" not in d2.keys():
@@ -183,8 +190,9 @@ class SimScadaDriverReport_Maker:
             FromGNodeAlias=d2["FromGNodeAlias"],
             FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             BoostPowerKwTimes1000=d2["BoostPowerKwTimes1000"],
-            CopTimes10=d2["CopTimes10"],
+            HeatpumpPowerKwTimes1000=d2["HeatpumpPowerKwTimes1000"],
             StoreKwh=d2["StoreKwh"],
+            CopTimes10=d2["CopTimes10"],
             MaxStoreKwh=d2["MaxStoreKwh"],
             TypeName=d2["TypeName"],
             Version="000",

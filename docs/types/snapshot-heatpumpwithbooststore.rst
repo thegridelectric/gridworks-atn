@@ -1,8 +1,8 @@
-AtnStateHeatpumpwithbooststore
+SnapshotHeatpumpwithbooststore
 ==========================
-Python pydantic class corresponding to  json type ```atn.state.heatpumpwithbooststore```.
+Python pydantic class corresponding to  json type ```snapshot.heatpumpwithbooststore```.
 
-.. autoclass:: gwatn.types.AtnStateHeatpumpwithbooststore
+.. autoclass:: gwatn.types.SnapshotHeatpumpwithbooststore
     :members:
 
 **FromGNodeAlias**:
@@ -32,13 +32,13 @@ Python pydantic class corresponding to  json type ```atn.state.heatpumpwithboost
     - Description:
     - Format: LeftRightDot
 
-.. autoclass:: gwatn.types.atn_state_heatpumpwithbooststore.check_is_uuid_canonical_textual
+.. autoclass:: gwatn.types.snapshot_heatpumpwithbooststore.check_is_uuid_canonical_textual
     :members:
 
 
-.. autoclass:: gwatn.types.atn_state_heatpumpwithbooststore.check_is_left_right_dot
+.. autoclass:: gwatn.types.snapshot_heatpumpwithbooststore.check_is_left_right_dot
     :members:
 
 
-.. autoclass:: gwatn.types.AtnStateHeatpumpwithbooststore_Maker
+.. autoclass:: gwatn.types.SnapshotHeatpumpwithbooststore_Maker
     :members:

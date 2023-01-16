@@ -6,7 +6,6 @@ from typing import no_type_check
 from gwatn.types import AcceptedBid_Maker
 from gwatn.types import AtnParamsHeatpumpwithbooststore_Maker
 from gwatn.types import AtnParamsReportHeatpumpwithbooststore_Maker
-from gwatn.types import AtnStateHeatpumpwithbooststore_Maker
 from gwatn.types import BaseGNodeGt_Maker
 from gwatn.types import DiscoverycertAlgoCreate_Maker
 from gwatn.types import DispatchContractConfirmed_Maker
@@ -34,6 +33,7 @@ from gwatn.types import Ready_Maker
 from gwatn.types import SimScadaDriverReport_Maker
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SlaEnter_Maker
+from gwatn.types import SnapshotHeatpumpwithbooststore_Maker
 from gwatn.types import SuperStarter_Maker
 from gwatn.types import SupervisorContainerGt_Maker
 from gwatn.types import TadeedSpecsHack_Maker
@@ -51,7 +51,6 @@ def type_makers() -> List[HeartbeatA_Maker]:
         AcceptedBid_Maker,
         AtnParamsHeatpumpwithbooststore_Maker,
         AtnParamsReportHeatpumpwithbooststore_Maker,
-        AtnStateHeatpumpwithbooststore_Maker,
         BaseGNodeGt_Maker,
         DiscoverycertAlgoCreate_Maker,
         DispatchContractConfirmed_Maker,
@@ -79,6 +78,7 @@ def type_makers() -> List[HeartbeatA_Maker]:
         SimScadaDriverReport_Maker,
         SimTimestep_Maker,
         SlaEnter_Maker,
+        SnapshotHeatpumpwithbooststore_Maker,
         SuperStarter_Maker,
         SupervisorContainerGt_Maker,
         TadeedSpecsHack_Maker,
@@ -102,7 +102,6 @@ def version_by_type_name() -> Dict[str, str]:
         "accepted.bid": "000",
         "atn.params.heatpumpwithbooststore": "000",
         "atn.params.report.heatpumpwithbooststore": "000",
-        "atn.state.heatpumpwithbooststore": "000",
         "base.g.node.gt": "002",
         "discoverycert.algo.create": "000",
         "dispatch.contract.confirmed": "000",
@@ -130,6 +129,7 @@ def version_by_type_name() -> Dict[str, str]:
         "sim.scada.driver.report": "000",
         "sim.timestep": "000",
         "sla.enter": "000",
+        "snapshot.heatpumpwithbooststore": "000",
         "super.starter": "000",
         "supervisor.container.gt": "000",
         "tadeed.specs.hack": "000",
@@ -151,7 +151,6 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "accepted.bid.000": "Pending",
         "atn.params.heatpumpwithbooststore.000": "Active",
         "atn.params.report.heatpumpwithbooststore.000": "Pending",
-        "atn.state.heatpumpwithbooststore.000": "Pending",
         "base.g.node.gt.002": "Pending",
         "discoverycert.algo.create.000": "Pending",
         "dispatch.contract.confirmed.000": "Pending",
@@ -179,6 +178,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "sim.scada.driver.report.000": "Pending",
         "sim.timestep.000": "Pending",
         "sla.enter.000": "Pending",
+        "snapshot.heatpumpwithbooststore.000": "Pending",
         "super.starter.000": "Pending",
         "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",

@@ -1,14 +1,14 @@
-"""Tests atn.state.heatpumpwithbooststore type, version 000"""
+"""Tests snapshot.heatpumpwithbooststore type, version 000"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.types import AtnStateHeatpumpwithbooststore_Maker as Maker
+from gwatn.types import SnapshotHeatpumpwithbooststore_Maker as Maker
 
 
-def test_atn_state_heatpumpwithbooststore_generated() -> None:
+def test_snapshot_heatpumpwithbooststore_generated() -> None:
     d = {
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
         "FromGNodeInstanceId": "d4057686-c199-4274-b595-f7e39ce863e2",
@@ -18,7 +18,7 @@ def test_atn_state_heatpumpwithbooststore_generated() -> None:
         "CopTimes10": 23,
         "MaxStoreKwh": 80,
         "AboutTerminalAssetAlias": "d1.isone.ver.keene.holly.ta",
-        "TypeName": "atn.state.heatpumpwithbooststore",
+        "TypeName": "snapshot.heatpumpwithbooststore",
         "Version": "000",
     }
 

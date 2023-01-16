@@ -14,10 +14,6 @@ from gwatn.types.atn_params_report_heatpumpwithbooststore import (
 from gwatn.types.atn_params_report_heatpumpwithbooststore import (
     AtnParamsReportHeatpumpwithbooststore_Maker,
 )
-from gwatn.types.atn_state_heatpumpwithbooststore import AtnStateHeatpumpwithbooststore
-from gwatn.types.atn_state_heatpumpwithbooststore import (
-    AtnStateHeatpumpwithbooststore_Maker,
-)
 from gwatn.types.base_g_node_gt import BaseGNodeGt
 from gwatn.types.base_g_node_gt import BaseGNodeGt_Maker
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate
@@ -76,6 +72,10 @@ from gwatn.types.sim_timestep import SimTimestep
 from gwatn.types.sim_timestep import SimTimestep_Maker
 from gwatn.types.sla_enter import SlaEnter
 from gwatn.types.sla_enter import SlaEnter_Maker
+from gwatn.types.snapshot_heatpumpwithbooststore import SnapshotHeatpumpwithbooststore
+from gwatn.types.snapshot_heatpumpwithbooststore import (
+    SnapshotHeatpumpwithbooststore_Maker,
+)
 from gwatn.types.super_starter import SuperStarter
 from gwatn.types.super_starter import SuperStarter_Maker
 from gwatn.types.supervisor_container_gt import SupervisorContainerGt
@@ -129,8 +129,8 @@ __all__ = [
     "AcceptedBid_Maker",
     "MarketSlot",
     "MarketSlot_Maker",
-    "AtnStateHeatpumpwithbooststore",
-    "AtnStateHeatpumpwithbooststore_Maker",
+    "SnapshotHeatpumpwithbooststore",
+    "SnapshotHeatpumpwithbooststore_Maker",
     "SuperStarter",
     "SuperStarter_Maker",
     "InitialTadeedAlgoCreate",

@@ -34,12 +34,17 @@
       "title": "",
       "required": true
     },
-    "CopTimes10": {
+    "HeatpumpPowerKwTimes1000": {
       "type": "integer",
       "title": "",
       "required": true
     },
     "StoreKwh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "CopTimes10": {
       "type": "integer",
       "title": "",
       "required": true

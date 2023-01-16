@@ -12,6 +12,7 @@ from pyteal import Assert
 from pyteal import AssetHolding
 from pyteal import AssetParam
 from pyteal import Bytes
+from pyteal import Concat
 from pyteal import Expr
 from pyteal import Global
 from pyteal import Int
@@ -102,31 +103,38 @@ class DispatchContract(Application):
         descr="The governor of this contract",
     )
 
-    scada_addr: Final[ApplicationStateValue] = ApplicationStateValue(
-        stack_type=TealType.bytes,
-        static=True,
-        key=Bytes("s"),
-        descr="Address of the Scada acct. Must own Scada Cert",
-    )
-
-    scada_cert: Final[ApplicationStateValue] = ApplicationStateValue(
-        stack_type=TealType.uint64,
-        static=True,
-        descr="The asset id of the Scada Cert",
-    )
-
     ta_alias: Final[ApplicationStateValue] = ApplicationStateValue(
         stack_type=TealType.bytes,
         static=True,
         descr="TerminalAsset GNodeAlias",
     )
 
-    atn_addr: Final[ApplicationStateValue] = ApplicationStateValue(
-        stack_type=TealType.bytes,
+    scada_cert_idx: Final[ApplicationStateValue] = ApplicationStateValue(
+        stack_type=TealType.uint64,
         static=True,
-        key=Bytes("a"),
-        descr="Address of the Atn acct. Must own TaTradingRights",
+        descr="The asset id of the Scada Cert ASA",
     )
+
+    ta_trading_rights_idx: Final[ApplicationStateValue] = ApplicationStateValue(
+        stack_type=TealType.uint64,
+        static=True,
+        descr="The asset id of the TaTradingRights ASA",
+    )
+
+    @external
+    def hello(self, name: abi.String, *, output: abi.String):
+        """This is in one of the intro beaker vignettes from their
+        great set of examples.
+
+        https://github.com/algorand-devrel/beaker/blob/master/examples/simple/hello.py#L8
+
+        Args:
+            name: a string
+
+        Returns:
+            Hello, name
+        """
+        return output.set(Concat(Bytes("Hello, "), name.get()))
 
     @external(authorize=Authorize.only(governor))
     def bootstrap1(
@@ -169,9 +177,8 @@ class DispatchContract(Application):
             ),
             ta_alias := AssetParam.name(ScadaCert.asset_id()),
             Assert(ta_alias.hasValue()),
-            self.scada_addr.set(scada_seed.get().sender()),
             scada_cert_balance := AssetHolding.balance(
-                self.scada_addr, ScadaCert.asset_id()
+                scada_seed.get().sender(), ScadaCert.asset_id()
             ),
             Assert(scada_cert_balance.hasValue()),
             Assert(
@@ -190,7 +197,7 @@ class DispatchContract(Application):
             #     manager.value() == config.Public().gnf_admin_addr,
             #     comment=ScadaCertErrors.WrongManager,
             # ),
-            self.scada_cert.set(ScadaCert.asset_id()),
+            self.scada_cert_idx.set(ScadaCert.asset_id()),
             self.ta_alias.set(ta_alias.value()),
             output.set(ta_alias.value()),
         )
@@ -204,8 +211,8 @@ class DispatchContract(Application):
         output: abi.String,
     ):
         """
-        "Second half of the bootstrap, done by Atn. Checks that
-           - TaTradingRIghts are valid, and match the global
+        "Second half of the bootstrap, done by Atn calling this method. Method checks that
+           - TaTradingRights are valid, and match the global
            ta_alias (which must already exist)
            - Atn payment meets the MinimumBalance requirements of the DispatchContract
            - payment sender owns the TaTradingRights, thus proving their
@@ -236,9 +243,8 @@ class DispatchContract(Application):
             ta_alias := AssetParam.name(TaTradingRights.asset_id()),
             Assert(ta_alias.hasValue()),
             Assert(self.ta_alias == ta_alias.value()),
-            self.atn_addr.set(atn_seed.get().sender()),
             atn_cert_balance := AssetHolding.balance(
-                self.atn_addr, TaTradingRights.asset_id()
+                atn_seed.get().sender(), TaTradingRights.asset_id()
             ),
             Assert(
                 atn_cert_balance.hasValue(),
@@ -248,6 +254,7 @@ class DispatchContract(Application):
                 atn_cert_balance.value() == Int(1),
                 comment=DispatchContractErrors.AtnDoesNotOwnTradingRights,
             ),
+            self.ta_trading_rights_idx.set(TaTradingRights.asset_id()),
             output.set(self.ta_alias),
         )
 

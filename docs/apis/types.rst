@@ -14,10 +14,6 @@ AtnParamsReportHeatpumpwithbooststore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-params-report-heatpumpwithbooststore.json
 
-AtnStateHeatpumpwithbooststore
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/atn-state-heatpumpwithbooststore.json
-
 BaseGNodeGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/base-g-node-gt.json
@@ -125,6 +121,10 @@ SimTimestep
 SlaEnter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sla-enter.json
+
+SnapshotHeatpumpwithbooststore
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/snapshot-heatpumpwithbooststore.json
 
 SuperStarter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

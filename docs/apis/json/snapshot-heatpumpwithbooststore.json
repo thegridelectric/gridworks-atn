@@ -1,6 +1,6 @@
 {
   "gwapi": "001",
-  "type_name": "atn.state.heatpumpwithbooststore",
+  "type_name": "snapshot.heatpumpwithbooststore",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "",
@@ -62,7 +62,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "atn.state.heatpumpwithbooststore.000",
+      "value": "snapshot.heatpumpwithbooststore.000",
       "title": "The type name"
     },
     "Version": {

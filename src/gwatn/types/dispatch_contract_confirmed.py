@@ -9,6 +9,13 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
+from gwatn.types.atn_params_heatpumpwithbooststore import (
+    AtnParamsHeatpumpwithbooststore,
+)
+from gwatn.types.atn_params_heatpumpwithbooststore import (
+    AtnParamsHeatpumpwithbooststore_Maker,
+)
+
 
 def check_is_uuid_canonical_textual(v: str) -> None:
     """
@@ -102,6 +109,9 @@ class DispatchContractConfirmed(BaseModel):
     SignedProof: str = Field(
         title="SignedProof",
     )
+    AtnParams: AtnParamsHeatpumpwithbooststore = Field(
+        title="AtnParams",
+    )
     TypeName: Literal["dispatch.contract.confirmed"] = "dispatch.contract.confirmed"
     Version: str = "000"
 
@@ -137,6 +147,7 @@ class DispatchContractConfirmed(BaseModel):
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
+        d["AtnParams"] = self.AtnParams.as_dict()
         return d
 
     def as_type(self) -> str:
@@ -148,12 +159,17 @@ class DispatchContractConfirmed_Maker:
     version = "000"
 
     def __init__(
-        self, from_g_node_alias: str, from_g_node_instance_id: str, signed_proof: str
+        self,
+        from_g_node_alias: str,
+        from_g_node_instance_id: str,
+        signed_proof: str,
+        atn_params: AtnParamsHeatpumpwithbooststore,
     ):
         self.tuple = DispatchContractConfirmed(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
             SignedProof=signed_proof,
+            AtnParams=atn_params,
             #
         )
 
@@ -186,6 +202,16 @@ class DispatchContractConfirmed_Maker:
             raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "SignedProof" not in d2.keys():
             raise SchemaError(f"dict {d2} missing SignedProof")
+        if "AtnParams" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AtnParams")
+        if not isinstance(d2["AtnParams"], dict):
+            raise SchemaError(
+                f"d['AtnParams'] {d2['AtnParams']} must be a AtnParamsHeatpumpwithbooststore!"
+            )
+        atn_params = AtnParamsHeatpumpwithbooststore_Maker.dict_to_tuple(
+            d2["AtnParams"]
+        )
+        d2["AtnParams"] = atn_params
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -193,6 +219,7 @@ class DispatchContractConfirmed_Maker:
             FromGNodeAlias=d2["FromGNodeAlias"],
             FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             SignedProof=d2["SignedProof"],
+            AtnParams=d2["AtnParams"],
             TypeName=d2["TypeName"],
             Version="000",
         )
