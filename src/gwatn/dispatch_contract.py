@@ -290,7 +290,11 @@ class DispatchContract(Application):
         *,
         output: abi.String,
     ):
-        """After validating the identity of the sender by inspecting the signed_proof, the
+        """
+        What: Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to
+        DispatchContract on Algo blockchain
+
+        Why: After validating the identity of the sender by inspecting the signed_proof, the
         DispatchContract shortens up the heartbeat info into the more compact form of
         HeartbeatStorageData, and stores in a box. Two hours of the most recent minutely heartbeats are
         stored, using one box for recent Atn heartbeats and one box for recent Scada heartbeats.
@@ -298,8 +302,8 @@ class DispatchContract(Application):
         See https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#heartbeatalgoaudit
 
         Args:
-            signed_proof: A small PaymentTransaction, where the sender is either the ScadaAddr or the AtnAddr
-            heartbeat: A report of the heartbeat.b that was just sent by the sender to its partner.
+            signed_proof: Tiny signed payment to DispatchContract to prove identity
+            heartbeat: Heartbeat sender last sent to its partner
             See https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#heartbeatb
         """
         return Seq(

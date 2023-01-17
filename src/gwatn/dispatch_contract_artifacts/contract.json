@@ -6,12 +6,15 @@
       "args": [
         {
           "type": "string",
-          "name": "name"
+          "name": "name",
+          "desc": "a string"
         }
       ],
       "returns": {
-        "type": "string"
-      }
+        "type": "string",
+        "desc": "Hello, name"
+      },
+      "desc": "This is in one of the intro beaker vignettes from their\ngreat set of examples.\nhttps://github.com/algorand-devrel/beaker/blob/master/examples/simple/hello.py#L8"
     },
     {
       "name": "bootstrap1",
@@ -62,18 +65,18 @@
         {
           "type": "pay",
           "name": "signed_proof",
-          "desc": "A small PaymentTransaction, where the sender is either the ScadaAddr or the AtnAddr"
+          "desc": "Tiny signed payment to DispatchContract to prove identity"
         },
         {
           "type": "(string,string,string,string,uint64,uint64,string,string)",
           "name": "heartbeat",
-          "desc": "A report of the heartbeat.b that was just sent by the sender to its partner."
+          "desc": "Heartbeat sender last sent to its partner"
         }
       ],
       "returns": {
         "type": "string"
       },
-      "desc": "After validating the identity of the sender by inspecting the signed_proof, the\nDispatchContract shortens up the heartbeat info into the more compact form of HeartbeatStorageData, and stores in a box. Two hours of the most recent minutely heartbeats are stored, using one box for recent Atn heartbeats and one box for recent Scada heartbeats.\nSee https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#heartbeatalgoaudit"
+      "desc": "What: Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to\nDispatchContract on Algo blockchain\nWhy: After validating the identity of the sender by inspecting the signed_proof, the DispatchContract shortens up the heartbeat info into the more compact form of HeartbeatStorageData, and stores in a box. Two hours of the most recent minutely heartbeats are stored, using one box for recent Atn heartbeats and one box for recent Scada heartbeats.\nSee https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#heartbeatalgoaudit"
     }
   ],
   "networks": {},

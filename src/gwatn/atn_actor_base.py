@@ -16,10 +16,13 @@ from gwatn.enums import GNodeRole
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.two_channel_actor_base import TwoChannelActorBase
+from gwatn.types import DispatchContractConfirmed_Maker
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
 from gwatn.types import HeartbeatB
 from gwatn.types import HeartbeatB_Maker
+from gwatn.types import JoinDispatchContract
+from gwatn.types import JoinDispatchContract_Maker
 from gwatn.types import LatestPrice
 from gwatn.types import LatestPrice_Maker
 from gwatn.types import SimTimestep
@@ -110,6 +113,15 @@ class AtnActorBase(TwoChannelActorBase):
                 self.heartbeat_from_partner(payload)
             except:
                 LOGGER.exception("Error in heartbeat_from_partner")
+        elif payload.TypeName == JoinDispatchContract_Maker.type_name:
+            if from_role != GNodeRole.SCADA:
+                LOGGER.info(
+                    f"Ignoring HeartbeatB from GNode with role {from_role}; expects SCADA"
+                )
+            try:
+                self.join_dispatch_contract_from_scada(payload)
+            except:
+                LOGGER.exception("join_dispatch_contract_from_scada")
         elif payload.TypeName == LatestPrice_Maker.type_name:
             if from_role == GNodeRole.MarketMaker:
                 try:
@@ -152,6 +164,10 @@ class AtnActorBase(TwoChannelActorBase):
 
         """
         ...
+
+    @abstractmethod
+    def join_dispatch_contract_from_scada(self, payload: JoinDispatchContract) -> None:
+        raise NotImplementedError
 
     @abstractmethod
     def latest_price_from_market_maker(self, payload: LatestPrice) -> None:
