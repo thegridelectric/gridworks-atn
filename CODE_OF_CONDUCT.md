@@ -23,7 +23,6 @@ send an email to her at [jmillar@gridworks-consulting.com](mailto:jmillar@gridwo
 All complaints will be reviewed and investigated, and Jessica will respect
 the privacy and security of the reporter of any incident.
 
-
 ## Suggestions
 
 - Respect privacy

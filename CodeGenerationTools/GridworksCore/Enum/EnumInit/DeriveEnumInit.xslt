@@ -25,7 +25,7 @@
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
 <xsl:text>""" GwSchema Enums used in gwatn """</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='atn')]">
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
 <xsl:sort select="EnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
@@ -43,7 +43,7 @@ from gwatn.enums.</xsl:text>
 
 
 __all__ = [</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='atn')]">
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
 <xsl:sort select="EnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">

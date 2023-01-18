@@ -1,0 +1,43 @@
+{
+  "gwapi": "001",
+  "type_name": "heartbeat.algo.audit",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to DispatchContract on Algo blockchain",
+  "formats": {
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    },
+    "AlgoMsgPackEncoded": {
+      "type": "string",
+      "description": "Error is not thrown with algosdk.encoding.future_msg_decode(candidate)",
+      "example": "gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxEAEp8UcTEJSyTmgw96/mCnNHKfhkdYMCD5jxWejHRmPCrR8U9z/FBVsoCGbjDTTk2L1k7n/eVlumEk/M1KSe48Jo3RocgKhdgGjdHhuiaRhcGFyhaJhbq9Nb2xseSBNZXRlcm1haWSiYXXZKWh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9tb2xseWNvL3doby13ZS1hcmUvoW3EIItYc29Vmg8xftteXEfMZokX1EDK546h7UFeT4hQQFLZoXQBonVupVZMRFRSo2ZlZc0D6KJmdlGjZ2VuqnNhbmRuZXQtdjGiZ2jEIC/iF+bI4LU6UTgG4SIxyD10PS0/vNAEa93OC5SVRFn6omx2zQQ5pG5vdGXEK01vbGx5IEluYyBUZWxlbWV0cnkgU3VydmV5b3JzIGFuZCBQdXJ2ZXlvcnOjc25kxCDHZxhdCT2TxxxZlZ/H5mIku1s4ulDm3EmU6dYKXCWEB6R0eXBlpGFjZmc="
+    }
+  },
+  "properties": {
+    "SignedProof": {
+      "type": "string",
+      "format": "AlgoMsgPackEncoded",
+      "title": "Tiny signed payment to DispatchContract to prove identity",
+      "required": true
+    },
+    "Heartbeat": {
+      "type": "heartbeat.b.000",
+      "title": "Heartbeat sender last sent to its partner",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "heartbeat.algo.audit.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}
