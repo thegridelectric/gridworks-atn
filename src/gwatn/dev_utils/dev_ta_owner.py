@@ -44,7 +44,7 @@ class DevTaOwner:
             threshold=2,
             addresses=[
                 self.settings.public.gnf_admin_addr,
-                self.settings.validator_addr,
+                self.settings.ta_validator_addr,
             ],
         )
         if self.settings.initial_ta_alias == "d1.isone.ver.keene.holly.ta":

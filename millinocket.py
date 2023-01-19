@@ -8,19 +8,9 @@ import requests
 from rich.pretty import pprint
 
 import gwatn.demo_methods as demo_methods
+from gwatn.dev_utils.dev_ta_owner import DevTaOwner
+from gwatn.dev_utils.dev_validator import DevValidator
 
-
-# if len(sys.argv) == 1:
-#     sim_size = 2
-#     print("If you want to simulate n assets, run python demo.py n")
-#     time.sleep(2)
-# else:
-#     try:
-#         sim_size = int(sys.argv[1])
-#     except:
-#         raise Exception(
-#             f"Please enter an integer number of homes to simulate, not {sys.argv[1]}"
-#         )
 
 sim_size = 1
 full_plant_names = demo_methods.demo_plant_names
@@ -29,16 +19,12 @@ plant_names = full_plant_names[0:sim_size]
 if sim_size == 0:
     raise Exception("No simulated TerminalAssets. Stopping")
 elif sim_size == 1:
-    print(f"Running simulation for 1 TerminalAsset (molly.ta)")
+    print(f"Running simulation for 1 TerminalAsset (holly.ta)")
 else:
     print(f"Running simulation for {sim_size} TerminalAssets")
 time.sleep(2)
 print("")
-print("")
-print("Resetting Algorand sandbox")
 
-time.sleep(1)
-subprocess.run(["../sandbox/sandbox", "reset"])
 
 print("")
 print("")
@@ -54,8 +40,8 @@ atn_address_list = [
     "R3PKD54UOAOW6MTPO7ECZ6YX4COQWN5BJM4OZIHYWFVVGAITM53RGUF6LI",
 ]
 
-# for addr in atn_address_list:
-#     algo_setup.dev_fund_to_min(addr=addr, min_algos=25)
+for addr in atn_address_list:
+    algo_setup.dev_fund_to_min(addr=addr, min_algos=25)
 
 addr = atn_address_list[0]
 print("")
@@ -66,6 +52,8 @@ print("")
 time.sleep(2)
 
 rr = demo_methods.certify_molly_metermaid()
+
+
 pprint(rr)
 if rr.HttpStatusCode > 200:
     raise Exception("Stopping demo due to errors")
