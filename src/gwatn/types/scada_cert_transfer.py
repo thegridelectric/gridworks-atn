@@ -1,4 +1,4 @@
-"""Type heartbeat.algo.audit, version 000"""
+"""Type scada.cert.transfer, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -7,10 +7,8 @@ from typing import Literal
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import root_validator
 from pydantic import validator
-
-from gwatn.types.heartbeat_b import HeartbeatB
-from gwatn.types.heartbeat_b import HeartbeatB_Maker
 
 
 def check_is_left_right_dot(v: str) -> None:
@@ -54,22 +52,30 @@ def check_is_algo_msg_pack_encoded(v: str) -> None:
         raise ValueError(f"Not AlgoMsgPackEncoded format: {e}")
 
 
-class HeartbeatAlgoAudit(BaseModel):
-    """.
+class ScadaCertTransfer(BaseModel):
+    """Scada Certificate Transfer.
 
-    Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to
-    DispatchContract on Algo blockchain
+    This is a payload designed to be sent from a SCADA device to the GNodeFactory after the SCADA has opted into its certificate.
     """
 
+    TaAlias: str = Field(
+        title="TerminalAsset Alias",
+        description="GNodeAlias of the TerminalAsset for which the SCADA certificate is issued. The ScadaCert can be found from this.",
+    )
     SignedProof: str = Field(
-        title="Tiny signed payment to DispatchContract to prove identity",
-        description="Can be a minimal payment, as long as it comes from the AtomicTNode or SCADA.",
+        title="Signed Proof from the SCADA Actor",
+        description="The Scada GNode has a ScadaAlgoAddr in the GNodeFactory database, and the identity of the SCADA actor can be verified by this.",
     )
-    Heartbeat: HeartbeatB = Field(
-        title="Heartbeat sender last sent to its partner",
-    )
-    TypeName: Literal["heartbeat.algo.audit"] = "heartbeat.algo.audit"
+    TypeName: Literal["scada.cert.transfer"] = "scada.cert.transfer"
     Version: str = "000"
+
+    @validator("TaAlias")
+    def _check_ta_alias(cls, v: str) -> str:
+        try:
+            check_is_left_right_dot(v)
+        except ValueError as e:
+            raise ValueError(f"TaAlias failed LeftRightDot format validation: {e}")
+        return v
 
     @validator("SignedProof")
     def _check_signed_proof(cls, v: str) -> str:
@@ -81,35 +87,44 @@ class HeartbeatAlgoAudit(BaseModel):
             )
         return v
 
+    @root_validator
+    def check_axiom_1(cls, v: dict) -> dict:
+        """
+        Axiom 1: Scada is SignedProof signer.
+        Axiom 1: Scada is SignedProof signer.
+        There is a ScadaCert created by the Gnf with this ta_alias, and  the txn is the OptIn.
+        """
+        # TODO: Implement check for axiom 1"
+        return v
+
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
-        d["Heartbeat"] = self.Heartbeat.as_dict()
         return d
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
 
 
-class HeartbeatAlgoAudit_Maker:
-    type_name = "heartbeat.algo.audit"
+class ScadaCertTransfer_Maker:
+    type_name = "scada.cert.transfer"
     version = "000"
 
-    def __init__(self, signed_proof: str, heartbeat: HeartbeatB):
-        self.tuple = HeartbeatAlgoAudit(
+    def __init__(self, ta_alias: str, signed_proof: str):
+        self.tuple = ScadaCertTransfer(
+            TaAlias=ta_alias,
             SignedProof=signed_proof,
-            Heartbeat=heartbeat,
             #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: HeartbeatAlgoAudit) -> str:
+    def tuple_to_type(cls, tuple: ScadaCertTransfer) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> HeartbeatAlgoAudit:
+    def type_to_tuple(cls, t: str) -> ScadaCertTransfer:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -122,22 +137,18 @@ class HeartbeatAlgoAudit_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> HeartbeatAlgoAudit:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> ScadaCertTransfer:
         d2 = dict(d)
+        if "TaAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TaAlias")
         if "SignedProof" not in d2.keys():
             raise SchemaError(f"dict {d2} missing SignedProof")
-        if "Heartbeat" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing Heartbeat")
-        if not isinstance(d2["Heartbeat"], dict):
-            raise SchemaError(f"d['Heartbeat'] {d2['Heartbeat']} must be a HeartbeatB!")
-        heartbeat = HeartbeatB_Maker.dict_to_tuple(d2["Heartbeat"])
-        d2["Heartbeat"] = heartbeat
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return HeartbeatAlgoAudit(
+        return ScadaCertTransfer(
+            TaAlias=d2["TaAlias"],
             SignedProof=d2["SignedProof"],
-            Heartbeat=d2["Heartbeat"],
             TypeName=d2["TypeName"],
             Version="000",
         )

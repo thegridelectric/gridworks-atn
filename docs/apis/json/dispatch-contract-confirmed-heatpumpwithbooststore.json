@@ -1,6 +1,6 @@
 {
   "gwapi": "001",
-  "type_name": "dispatch.contract.confirmed",
+  "type_name": "dispatch.contract.confirmed.heatpumpwithbooststore",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Message sent from AtomicTNode back to SCADA via Rabbit . Paired with join.dispatch.contract. Sent from AtomicTNode back to SCADA once the AtomicTNode has successfully finished bootstrapping the Dispatch Contract and opted in. Once it has done this, the Dispatch Contract is ready to collect audit information about heartbeats, dispatch, energy and power. https://gridworks.readthedocs.io/en/latest/dispatch-contract.html",
@@ -47,7 +47,7 @@
     },
     "TypeName": {
       "type": "string",
-      "value": "dispatch.contract.confirmed.000",
+      "value": "dispatch.contract.confirmed.heatpumpwithbooststore.000",
       "title": "The type name"
     },
     "Version": {

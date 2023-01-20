@@ -1,9 +1,9 @@
 {
   "gwapi": "001",
-  "type_name": "heartbeat.algo.audit",
+  "type_name": "scada.cert.transfer",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": ". Algo payload with report of last HeartbeatB sent to partner via Rabbit, to be sent to DispatchContract on Algo blockchain",
+  "description": "Scada Certificate Transfer. This is a payload designed to be sent from a SCADA device to the GNodeFactory after the SCADA has opted into its certificate.",
   "formats": {
     "LeftRightDot": {
       "type": "string",
@@ -17,21 +17,23 @@
     }
   },
   "properties": {
+    "TaAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "TerminalAsset Alias",
+      "description": "GNodeAlias of the TerminalAsset for which the SCADA certificate is issued. The ScadaCert can be found from this.",
+      "required": true
+    },
     "SignedProof": {
       "type": "string",
       "format": "AlgoMsgPackEncoded",
-      "title": "Tiny signed payment to DispatchContract to prove identity",
-      "description": "Can be a minimal payment, as long as it comes from the AtomicTNode or SCADA.",
-      "required": true
-    },
-    "Heartbeat": {
-      "type": "heartbeat.b.000",
-      "title": "Heartbeat sender last sent to its partner",
+      "title": "Signed Proof from the SCADA Actor",
+      "description": "The Scada GNode has a ScadaAlgoAddr in the GNodeFactory database, and the identity of the SCADA actor can be verified by this.",
       "required": true
     },
     "TypeName": {
       "type": "string",
-      "value": "heartbeat.algo.audit.000",
+      "value": "scada.cert.transfer.000",
       "title": "The type name"
     },
     "Version": {
@@ -39,6 +41,12 @@
       "title": "The type version",
       "default": "000",
       "required": true
+    }
+  },
+  "axioms": {
+    "Axiom1": {
+      "title": "Scada is SignedProof signer",
+      "description": "Axiom 1: Scada is SignedProof signer. There is a ScadaCert created by the Gnf with this ta_alias, and the txn is the OptIn."
     }
   }
 }

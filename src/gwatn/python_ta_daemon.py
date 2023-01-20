@@ -11,6 +11,7 @@ from gridworks.algo_utils import BasicAccount
 from gridworks.utils import RestfulResponse
 
 import gwatn.config as config
+from gwatn.enums import AlgoCertType
 from gwatn.types import InitialTadeedAlgoOptin
 from gwatn.types import NewTadeedAlgoOptin
 from gwatn.types import NewTadeedSend_Maker
@@ -58,11 +59,11 @@ class PythonTaDaemon:
                 Note=f"Ignoring InitialTadeed Optin. Deeds: {self.ta_deed_alias_list}"
             )
             return r
-        ta_deed_idx = api_utils.get_tadeed_idx(
+        ta_deed_id = api_utils.get_tadeed_id(
             terminal_asset_alias=payload.TerminalAssetAlias,
             validator_addr=payload.ValidatorAddr,
         )
-        if ta_deed_idx is None:
+        if ta_deed_id is None:
             note = f"called when validator {payload.ValidatorAddr[-6:]} did NOT have TADEED for {payload.TerminalAssetAlias}!"
             LOGGER.info(note)
             r = RestfulResponse(
@@ -70,7 +71,8 @@ class PythonTaDaemon:
                 HttpStatusCode=422,
             )
             return r
-
+        if ta_deed_id.Type == AlgoCertType.SmartSig:
+            raise NotImplementedError(f"Does not yet handle SmartSig TaDeeds")
         # Call a TaDaemonSmartContract method of the same
         # name (InitialTadeedAlgoOptin, in some format)
         # args should include :
@@ -85,7 +87,7 @@ class PythonTaDaemon:
         #  - the TaValidatorAddress is its TaValidatorAddress (which it needs to be initialized with)
         txn = transaction.AssetOptInTxn(
             sender=self.acct.addr,
-            index=ta_deed_idx,
+            index=ta_deed_id.Idx,
             sp=self.client.suggested_params(),
         )
         signed_txn = txn.sign(self.acct.sk)
@@ -93,16 +95,18 @@ class PythonTaDaemon:
             self.client.send_transaction(signed_txn)
         except:
             return RestfulResponse(
-                Note=f"Failure sending transaction to opt into TaDeed {ta_deed_idx}",
+                Note=f"Failure sending transaction to opt into TaDeed {ta_deed_id.Idx}",
                 HttpStatusCode=422,
             )
         algo_utils.wait_for_transaction(self.client, signed_txn.get_txid())
-        ta_trading_rights_idx = api_utils.get_tatrading_rights_idx(
+        ta_trading_rights_id = api_utils.get_tatrading_rights_id(
             terminal_asset_alias=payload.TerminalAssetAlias
         )
+        if ta_trading_rights_id.Type == AlgoCertType.SmartSig:
+            raise NotImplementedError(f"Does not yet handle SmartSig TaTradingRights")
         txn = transaction.AssetOptInTxn(
             sender=self.acct.addr,
-            index=ta_trading_rights_idx,
+            index=ta_trading_rights_id.Idx,
             sp=self.client.suggested_params(),
         )
         signed_txn = txn.sign(self.acct.sk)
@@ -110,13 +114,13 @@ class PythonTaDaemon:
             self.client.send_transaction(signed_txn)
         except:
             return RestfulResponse(
-                Note=f"Failure sending transaction to opt into TaTradingRights {ta_trading_rights_idx}",
+                Note=f"Failure sending transaction to opt into TaTradingRights {ta_trading_rights_id.Idx}",
                 HttpStatusCode=422,
             )
 
         note = (
-            f"TaDaemon successfully opted in to Initial TaDeed {ta_deed_idx}"
-            f" and TaTradingRights {ta_trading_rights_idx}"
+            f"TaDaemon successfully opted in to Initial TaDeed {ta_deed_id.Idx}"
+            f" and TaTradingRights {ta_trading_rights_id.Idx}"
         )
         LOGGER.info(note)
         r = RestfulResponse(Note=note)
@@ -206,7 +210,7 @@ class PythonTaDaemon:
         #
         txn = transaction.AssetTransferTxn(
             sender=self.acct.addr,
-            receiver=config.GnfPublic().gnf_admin_addr,
+            receiver=config.Public().gnf_admin_addr,
             amt=1,
             index=payload.OldTaDeedIdx,
             sp=self.client.suggested_params(),
@@ -251,9 +255,11 @@ class PythonTaDaemon:
 
     def sla_enter_received(self, payload: SlaEnter) -> RestfulResponse:
         ta_alias = payload.TerminalAssetAlias
-        ta_trading_rights_idx = api_utils.get_tatrading_rights_idx(
+        ta_trading_rights_id = api_utils.get_tatrading_rights_id(
             terminal_asset_alias=ta_alias
         )
+        if ta_trading_rights_id.Type == AlgoCertType.SmartSig:
+            raise NotImplementedError("Does not handle SmartSig TaTradingRights yet")
         alias_list: List[str] = [
             "d1.isone.ver.keene.holly.ta",
             "d1.isone.ver.keene.juniper.ta",
@@ -261,6 +267,7 @@ class PythonTaDaemon:
             "d1.isone.ver.keene.lettuce.ta",
         ]
 
+        # These are the secret keys for the 4 demo AtomicTNodes.
         sk_list = [
             "K6iB3AHmzSQ8wDE91QdUfaheDMEtf2WJUMYeeRptKxHiTxG3HC+iKpngXmi82y2r9uVPYwTI5aGiMhdXmPRxcQ==",
             "QfKe/7kzD71nhYGfITlSV/DFYGvC4sc5IEa8ieGsgirC9sBaSJT0O1+mdPOK3/wzZAqy/dRVIg58Uh3ucSIUSw==",
@@ -296,7 +303,7 @@ class PythonTaDaemon:
         # Replace when real SLA exists
         txn = transaction.AssetOptInTxn(
             sender=atn_acct.addr,
-            index=ta_trading_rights_idx,
+            index=ta_trading_rights_id.Idx,
             sp=self.client.suggested_params(),
         )
         signed_txn = txn.sign(atn_acct.sk)
@@ -304,7 +311,7 @@ class PythonTaDaemon:
             self.client.send_transaction(signed_txn)
         except:
             return RestfulResponse(
-                Note=f"Atn for {ta_alias} failed to opt into trading rights {ta_trading_rights_idx}",
+                Note=f"Atn for {ta_alias} failed to opt into trading rights {ta_trading_rights_id.Idx}",
                 HttpStatusCode=422,
             )
 
@@ -312,7 +319,7 @@ class PythonTaDaemon:
             sender=self.acct.addr,
             receiver=atn_acct.addr,
             amt=1,
-            index=ta_trading_rights_idx,
+            index=ta_trading_rights_id.Idx,
             sp=self.client.suggested_params(),
         )
         signed_txn = txn.sign(self.acct.sk)
@@ -321,7 +328,7 @@ class PythonTaDaemon:
         except:
             note = (
                 f"Failure sending AssetTransfer for {ta_alias} trading rights"
-                f" {ta_trading_rights_idx}"
+                f" {ta_trading_rights_id.Idx}"
             )
             r = RestfulResponse(Note=note, HttpStatusCode=422)
             return r

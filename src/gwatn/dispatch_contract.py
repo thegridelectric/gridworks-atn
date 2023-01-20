@@ -4,10 +4,13 @@ from typing import Literal
 from beaker import Application
 from beaker import ApplicationStateValue
 from beaker import Authorize
+from beaker import close_out
 from beaker import create
+from beaker import delete
 from beaker import external
 from beaker import opt_in
 from beaker.lib.storage import Mapping
+from pyteal import Approve
 from pyteal import Assert
 from pyteal import AssetHolding
 from pyteal import AssetParam
@@ -90,10 +93,10 @@ class DispatchContract(Application):
     # _heartbeat_box_balance = 4_000_000
     # 2 months of boolean TalkingWith state change, where
     # _talking_with_audit_box_balance = 6_000_000
-    # _min_balance = _heartbeat_box_balance + _talking_with_audit_box_balance
+    # min_balance = _heartbeat_box_balance + _talking_with_audit_box_balance
 
-    _min_balance = 10_000_000
-    MinimumBalance = Int(_min_balance)
+    min_balance = 10_000_000
+    MinimumBalance = Int(min_balance)
 
     governor: Final[ApplicationStateValue] = ApplicationStateValue(
         stack_type=TealType.bytes,
@@ -309,6 +312,14 @@ class DispatchContract(Application):
         return Seq(
             output.set(self.ta_alias.get()),
         )
+
+    @close_out
+    def close_out(self):
+        return Approve()
+
+    @delete(authorize=Authorize.only(governor))
+    def delete(self):
+        return Approve()
 
 
 if __name__ == "__main__":

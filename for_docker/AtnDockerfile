@@ -10,8 +10,7 @@ COPY ./src /app/src
 COPY ./for_docker/docker.env /app/.env
 COPY ./input_data/ /app/input_data/
 COPY README.md /app/README.md
-COPY run_atn.py /app/run_atn.py
-COPY demo.py /app/demo.py
+COPY ./for_docker/run_4_atns.py /app/main.py
 
 RUN pip install -e /app
-CMD ["python", "demo.py"]
+CMD ["python", "main.py"]

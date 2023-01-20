@@ -15,7 +15,8 @@ __pycache__/
 .vscode
 .idea
 
-
+# Ignore env file
+.env
 
 # scratch files and folders
 scratch*

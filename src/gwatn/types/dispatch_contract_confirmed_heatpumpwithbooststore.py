@@ -1,4 +1,4 @@
-"""Type dispatch.contract.confirmed, version 000"""
+"""Type dispatch.contract.confirmed.heatpumpwithbooststore, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -89,7 +89,7 @@ def check_is_algo_msg_pack_encoded(v: str) -> None:
         raise ValueError(f"Not AlgoMsgPackEncoded format: {e}")
 
 
-class DispatchContractConfirmed(BaseModel):
+class DispatchContractConfirmedHeatpumpwithbooststore(BaseModel):
     """Message sent from AtomicTNode back to SCADA via Rabbit .
 
     Paired with join.dispatch.contract. Sent from AtomicTNode back to SCADA
@@ -112,7 +112,9 @@ class DispatchContractConfirmed(BaseModel):
     AtnParams: AtnParamsHeatpumpwithbooststore = Field(
         title="AtnParams",
     )
-    TypeName: Literal["dispatch.contract.confirmed"] = "dispatch.contract.confirmed"
+    TypeName: Literal[
+        "dispatch.contract.confirmed.heatpumpwithbooststore"
+    ] = "dispatch.contract.confirmed.heatpumpwithbooststore"
     Version: str = "000"
 
     @validator("FromGNodeAlias")
@@ -154,8 +156,8 @@ class DispatchContractConfirmed(BaseModel):
         return json.dumps(self.as_dict())
 
 
-class DispatchContractConfirmed_Maker:
-    type_name = "dispatch.contract.confirmed"
+class DispatchContractConfirmedHeatpumpwithbooststore_Maker:
+    type_name = "dispatch.contract.confirmed.heatpumpwithbooststore"
     version = "000"
 
     def __init__(
@@ -165,7 +167,7 @@ class DispatchContractConfirmed_Maker:
         signed_proof: str,
         atn_params: AtnParamsHeatpumpwithbooststore,
     ):
-        self.tuple = DispatchContractConfirmed(
+        self.tuple = DispatchContractConfirmedHeatpumpwithbooststore(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
             SignedProof=signed_proof,
@@ -174,14 +176,16 @@ class DispatchContractConfirmed_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: DispatchContractConfirmed) -> str:
+    def tuple_to_type(
+        cls, tuple: DispatchContractConfirmedHeatpumpwithbooststore
+    ) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> DispatchContractConfirmed:
+    def type_to_tuple(cls, t: str) -> DispatchContractConfirmedHeatpumpwithbooststore:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -194,7 +198,9 @@ class DispatchContractConfirmed_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> DispatchContractConfirmed:
+    def dict_to_tuple(
+        cls, d: dict[str, Any]
+    ) -> DispatchContractConfirmedHeatpumpwithbooststore:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeAlias")
@@ -215,7 +221,7 @@ class DispatchContractConfirmed_Maker:
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return DispatchContractConfirmed(
+        return DispatchContractConfirmedHeatpumpwithbooststore(
             FromGNodeAlias=d2["FromGNodeAlias"],
             FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             SignedProof=d2["SignedProof"],

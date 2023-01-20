@@ -22,8 +22,9 @@ forth between type instances and Python objects.
     AtnParamsHeatpumpwithbooststore  <types/atn-params-heatpumpwithbooststore>
     AtnParamsReportHeatpumpwithbooststore  <types/atn-params-report-heatpumpwithbooststore>
     BaseGNodeGt  <types/base-g-node-gt>
+    BasegnodeScadaCreate  <types/basegnode-scada-create>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
-    DispatchContractConfirmed  <types/dispatch-contract-confirmed>
+    DispatchContractConfirmedHeatpumpwithbooststore  <types/dispatch-contract-confirmed-heatpumpwithbooststore>
     FloParamsHeatpumpwithbooststore  <types/flo-params-heatpumpwithbooststore>
     GNodeGt  <types/g-node-gt>
     GNodeInstanceGt  <types/g-node-instance-gt>
@@ -45,6 +46,7 @@ forth between type instances and Python objects.
     PriceQuantity  <types/price-quantity>
     PriceQuantityUnitless  <types/price-quantity-unitless>
     Ready  <types/ready>
+    ScadaCertTransfer  <types/scada-cert-transfer>
     SimScadaDriverReport  <types/sim-scada-driver-report>
     SimTimestep  <types/sim-timestep>
     SlaEnter  <types/sla-enter>

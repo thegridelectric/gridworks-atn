@@ -18,13 +18,17 @@ BaseGNodeGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/base-g-node-gt.json
 
+BasegnodeScadaCreate
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/basegnode-scada-create.json
+
 DiscoverycertAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/discoverycert-algo-create.json
 
-DispatchContractConfirmed
+DispatchContractConfirmedHeatpumpwithbooststore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/dispatch-contract-confirmed.json
+.. literalinclude:: json/dispatch-contract-confirmed-heatpumpwithbooststore.json
 
 FloParamsHeatpumpwithbooststore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -109,6 +113,10 @@ PriceQuantityUnitless
 Ready
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/ready.json
+
+ScadaCertTransfer
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/scada-cert-transfer.json
 
 SimScadaDriverReport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
