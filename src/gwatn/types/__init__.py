@@ -2,6 +2,8 @@
 
 from gwatn.types.accepted_bid import AcceptedBid
 from gwatn.types.accepted_bid import AcceptedBid_Maker
+from gwatn.types.atn_bid import AtnBid
+from gwatn.types.atn_bid import AtnBid_Maker
 from gwatn.types.atn_params_heatpumpwithbooststore import (
     AtnParamsHeatpumpwithbooststore,
 )
@@ -139,6 +141,8 @@ __all__ = [
     "MarketSlot_Maker",
     "SnapshotHeatpumpwithbooststore",
     "SnapshotHeatpumpwithbooststore_Maker",
+    "AtnBid",
+    "AtnBid_Maker",
     "SuperStarter",
     "SuperStarter_Maker",
     "InitialTadeedAlgoCreate",

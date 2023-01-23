@@ -1463,7 +1463,7 @@ by the concept of MarketType.</Description>
       <Alias>dispatch.contract.confirmed.heatpumpwithbooststore</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
-    <SchemaRoot>itrJPuZvZEBXWZT8i/reczIxfEiJFKQYsNw</SchemaRoot>
+    <SchemaRoot>itrwr0u0vnRpptURI/reczIxfEiJFKQYsNw</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>reczYInsSYetUcVpZ</SchemaRootId>
       <createdTime>2022-09-20T12:14:51Z</createdTime>
@@ -1517,6 +1517,7 @@ by the concept of MarketType.</Description>
       <Description>Specifies the name of sensed data reported by SCADA</Description>
       <ProtocolEnums>recRncRvdA6tysnAt</ProtocolEnums>
       <ProtocolEnums>rec8OQN6hn0y5lwSm</ProtocolEnums>
+      <ProtocolEnums>recfpS2uOHAcfWGdN</ProtocolEnums>
       <Default>recZR3u3WuSGv96su</Default>
       <LocalName>telemetry.name</LocalName>
       <AliasRoot>spaceheat.telemetry.name</AliasRoot>
@@ -1650,6 +1651,7 @@ by the concept of MarketType.</Description>
       <Description>Determines the functional role of a SpaceHeat node supervised by a SCADA</Description>
       <ProtocolEnums>recqMWuADrFZz8VgP</ProtocolEnums>
       <ProtocolEnums>rec1OdnzZiXinfwfj</ProtocolEnums>
+      <ProtocolEnums>recEIu8DZMwf0J7za</ProtocolEnums>
       <Default>recmn8roOV3qQ6bN2</Default>
       <LocalName>role</LocalName>
       <AliasRoot>spaceheat.node.role</AliasRoot>
@@ -1897,6 +1899,7 @@ by the concept of MarketType.</Description>
       <Description>Determines Make/Model of device associated to a Spaceheat Node supervised by SCADA</Description>
       <ProtocolEnums>recDa8t2QVwfTLzpo</ProtocolEnums>
       <ProtocolEnums>recfXjHuQMUL0RQ7H</ProtocolEnums>
+      <ProtocolEnums>recVpliEuu2jtKKUj</ProtocolEnums>
       <Default>recqfsKuobhERLH1d</Default>
       <LocalName>make.model</LocalName>
       <AliasRoot>spaceheat.make.model</AliasRoot>
@@ -1958,6 +1961,7 @@ by the concept of MarketType.</Description>
       <Description>Determines code running Spaceheat Node supervised by SCADA</Description>
       <ProtocolEnums>recyDSPjw1NYVGiOH</ProtocolEnums>
       <ProtocolEnums>recu25eXE4ralXooT</ProtocolEnums>
+      <ProtocolEnums>recg4YcVJnk1bG3PL</ProtocolEnums>
       <Default>recaZld1o7mqNRDS9</Default>
       <LocalName>actor.class</LocalName>
       <AliasRoot>spaceheat.actor.class</AliasRoot>
@@ -2112,6 +2116,7 @@ by the concept of MarketType.</Description>
       <Description>Specifies the physical unit of sensed data reported by SCADA</Description>
       <ProtocolEnums>recLjDrJSnNnwWD54</ProtocolEnums>
       <ProtocolEnums>recWrjAGRucT1hiRq</ProtocolEnums>
+      <ProtocolEnums>recV83OsyQx8GqHV8</ProtocolEnums>
       <Default>recIg9jSoS2FGMvEJ</Default>
       <LocalName>unit</LocalName>
       <AliasRoot>spaceheat.unit</AliasRoot>
@@ -2187,6 +2192,7 @@ by the concept of MarketType.</Description>
       <PropertyFormatRoot>AtnSpaceheatStrategyName</PropertyFormatRoot>
       <Version>000</Version>
       <ProtocolEnums>rec6kz3pyxVALoFsu</ProtocolEnums>
+      <ProtocolEnums>recKJi6uA9s9Sp8XM</ProtocolEnums>
       <Default>recmcoCNDhq8Dknn5</Default>
       <LocalName>atn.spaceheat.strategy.name</LocalName>
       <AliasRoot>atn.spaceheat.strategy.name</AliasRoot>
@@ -3435,7 +3441,7 @@ by the concept of MarketType.</Description>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <DisplayName>spaceheat.telemetry.name.000__WattHours</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrsITBLPVb1mjHca/recPV5eCtZVeT7zmX</EnumSymbol>
+    <EnumSymbol>itrSX6mqs415AK3c0/recPV5eCtZVeT7zmX</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recPY9T9Npi1jCIVV</EnumSymbolId>
       <createdTime>2022-08-30T18:05:22Z</createdTime>
@@ -4383,7 +4389,7 @@ by the concept of MarketType.</Description>
       <LocalValue>Actuator</LocalValue>
       <DisplayName>__Actuator</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrsITBLPVb1mjHca/recob3YuE614ND3hl</EnumSymbol>
+    <EnumSymbol>itrSX6mqs415AK3c0/recob3YuE614ND3hl</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>reconXBspv9L7OQqS</EnumSymbolId>
       <createdTime>2022-08-01T12:19:26Z</createdTime>
@@ -4965,6 +4971,7 @@ by the concept of MarketType.</Description>
       <SchemaRoot>recNgGDYcengufuFe</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recfsDYNRW0af16Ol</ProtocolTypes>
+      <ProtocolTypes>recOoCg1T2rOplTJT</ProtocolTypes>
       <Alias>atn.params.report.heatpumpwithbooststore.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -4994,6 +5001,7 @@ by the concept of MarketType.</Description>
       <SchemaRoot>reczIxfEiJFKQYsNw</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recurndoUQt30tVFv</ProtocolTypes>
+      <ProtocolTypes>recDIPWhldlUQVNYr</ProtocolTypes>
       <Alias>dispatch.contract.confirmed.heatpumpwithbooststore.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -5390,6 +5398,7 @@ by the concept of MarketType.</Description>
       <SchemaRoot>recbm5aHNmuHvaYKJ</SchemaRoot>
       <PreStatus>Active</PreStatus>
       <ProtocolTypes>recIX7Ev6QVM4jtwT</ProtocolTypes>
+      <ProtocolTypes>recg5ScMmCJuinnKL</ProtocolTypes>
       <MultiPropertyAxioms>rec2zpio7xkxnKeuv</MultiPropertyAxioms>
       <Alias>join.dispatch.contract.000</Alias>
       <RootStatus>Active</RootStatus>
@@ -5657,6 +5666,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enums>recounhEj97w5SfDm</Enums>
       <Enums>recZmZP13YV9Rmbnw</Enums>
       <ProtocolTypes>recSIwq3BdNSAxp2e</ProtocolTypes>
+      <ProtocolTypes>recSNej4i6EwucKbV</ProtocolTypes>
       <MultiPropertyAxioms>rec4x9sbCR3Q6Bwm8</MultiPropertyAxioms>
       <MultiPropertyAxioms>recQEk0lDO3sQJDyc</MultiPropertyAxioms>
       <UpdateDescription>BidList changed to PqPairs</UpdateDescription>
@@ -5782,7 +5792,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enums>rec75xMuw0SMkzjVc</Enums>
       <Enums>recounhEj97w5SfDm</Enums>
       <Enums>recZmZP13YV9Rmbnw</Enums>
-      <ProtocolTypes>recSNej4i6EwucKbV</ProtocolTypes>
       <Alias>atn.bid.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -6714,6 +6723,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PreStatus>Pending</PreStatus>
       <Topics>recVOa2DYOtTyarDA</Topics>
       <ProtocolTypes>recM6At5qFrk4dsir</ProtocolTypes>
+      <ProtocolTypes>recJnQIpCbM1mDUV6</ProtocolTypes>
       <Alias>snapshot.heatpumpwithbooststore.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -7559,6 +7569,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enums>recA15Ak50x6bNMx1</Enums>
       <Enums>recEyU9EKDtM3bD18</Enums>
       <ProtocolTypes>recGRKTWPhlGhVZqf</ProtocolTypes>
+      <ProtocolTypes>recl5OGEwbCR9w3O7</ProtocolTypes>
       <Alias>atn.params.heatpumpwithbooststore.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -7684,7 +7695,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto />
       <Title>Bid ack</Title>
     </Schema>
-    <Schema>itrWnVhcc4RXmdgnI/recvGFiTtzXNrhLBm</Schema>
+    <Schema>itrvMuDLL5ER4yp48/recvGFiTtzXNrhLBm</Schema>
     <Schema>
       <SchemaId>recvWBuo1Ws1SIL4b</SchemaId>
       <createdTime>2022-11-03T14:31:01Z</createdTime>
@@ -7944,6 +7955,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enums>recA15Ak50x6bNMx1</Enums>
       <Enums>recEyU9EKDtM3bD18</Enums>
       <ProtocolTypes>recGpv7lXS5nQj5jR</ProtocolTypes>
+      <ProtocolTypes>recvFLJdLpTh7dGh1</ProtocolTypes>
       <Alias>flo.params.heatpumpwithbooststore.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -9594,7 +9606,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrQ3JS7xt0mPNik1/recBYlRmPwCbVbTMn</SchemaAttribute>
+    <SchemaAttribute>itrO7WWVkjRV1mKad/recBYlRmPwCbVbTMn</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recBbPnDHgnSutafc</SchemaAttributeId>
       <createdTime>2022-11-08T05:03:26Z</createdTime>
@@ -11183,7 +11195,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeS</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrQ3JS7xt0mPNik1/recKC523HTZfmLKCA</SchemaAttribute>
+    <SchemaAttribute>itrO7WWVkjRV1mKad/recKC523HTZfmLKCA</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKFwLpMfoUPjFYI</SchemaAttributeId>
       <createdTime>2022-11-07T18:58:24Z</createdTime>
@@ -12808,7 +12820,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>WorldInstanceNameFormat</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itrQ3JS7xt0mPNik1/recTVpMk0yoQ95CTi</SchemaAttribute>
+    <SchemaAttribute>itrO7WWVkjRV1mKad/recTVpMk0yoQ95CTi</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recTddWiWf7lHIRR2</SchemaAttributeId>
       <createdTime>2022-12-04T14:20:45Z</createdTime>
@@ -14404,7 +14416,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Boolean</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itrQ3JS7xt0mPNik1/recdSCNKICUvxsgAo</SchemaAttribute>
+    <SchemaAttribute>itrO7WWVkjRV1mKad/recdSCNKICUvxsgAo</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recdUSog9bonuORLH</SchemaAttributeId>
       <createdTime>2022-11-17T06:21:39Z</createdTime>
@@ -15981,7 +15993,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
-    <SchemaAttribute>itrQ3JS7xt0mPNik1/recnTfzYOvNX100On</SchemaAttribute>
+    <SchemaAttribute>itrO7WWVkjRV1mKad/recnTfzYOvNX100On</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recnVh3bX9GSsAkr3</SchemaAttributeId>
       <createdTime>2022-06-14T10:41:54Z</createdTime>
@@ -19026,7 +19038,20 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
     <Protocol>
       <ProtocolId>recHY8DLO7gBfWjtC</ProtocolId>
       <createdTime>2023-01-14T15:00:31Z</createdTime>
-      <fields />
+      <ProtocolTypes>recg5ScMmCJuinnKL</ProtocolTypes>
+      <ProtocolTypes>recDIPWhldlUQVNYr</ProtocolTypes>
+      <ProtocolTypes>recl5OGEwbCR9w3O7</ProtocolTypes>
+      <ProtocolTypes>recOoCg1T2rOplTJT</ProtocolTypes>
+      <ProtocolTypes>recJnQIpCbM1mDUV6</ProtocolTypes>
+      <ProtocolTypes>recvFLJdLpTh7dGh1</ProtocolTypes>
+      <Description>Spaceheat Atn</Description>
+      <Name>satn</Name>
+      <ProtocolEnums>recKJi6uA9s9Sp8XM</ProtocolEnums>
+      <ProtocolEnums>recg4YcVJnk1bG3PL</ProtocolEnums>
+      <ProtocolEnums>recVpliEuu2jtKKUj</ProtocolEnums>
+      <ProtocolEnums>recEIu8DZMwf0J7za</ProtocolEnums>
+      <ProtocolEnums>recfpS2uOHAcfWGdN</ProtocolEnums>
+      <ProtocolEnums>recV83OsyQx8GqHV8</ProtocolEnums>
     </Protocol>
     <Protocol>
       <ProtocolId>recN6489A2iI0CRXz</ProtocolId>
@@ -19597,6 +19622,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
+      <ProtocolTypeId>recDIPWhldlUQVNYr</ProtocolTypeId>
+      <createdTime>2023-01-23T13:46:41Z</createdTime>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <Type>rec3kcgktiHCBYpA4</Type>
+      <Name>satn dispatch.contract.confirmed.heatpumpwithbooststore.000</Name>
+      <ProtocolName>satn</ProtocolName>
+      <TypeName>dispatch.contract.confirmed.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
       <ProtocolTypeId>recDST3lwGBFXqsz1</ProtocolTypeId>
       <createdTime>2022-11-08T04:09:15Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
@@ -19719,6 +19754,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks supervisor.container.gt.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>supervisor.container.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recJnQIpCbM1mDUV6</ProtocolTypeId>
+      <createdTime>2023-01-23T13:56:06Z</createdTime>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <Type>recbAMyCyUX2bLKfz</Type>
+      <Name>satn snapshot.heatpumpwithbooststore.000</Name>
+      <ProtocolName>satn</ProtocolName>
+      <TypeName>snapshot.heatpumpwithbooststore.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -19852,6 +19897,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
+      <ProtocolTypeId>recOoCg1T2rOplTJT</ProtocolTypeId>
+      <createdTime>2023-01-23T13:47:04Z</createdTime>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <Type>rec3fLb6b0gIeuCTO</Type>
+      <Name>satn atn.params.report.heatpumpwithbooststore.000</Name>
+      <ProtocolName>satn</ProtocolName>
+      <TypeName>atn.params.report.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
       <ProtocolTypeId>recOq6H5IW6gkmww6</ProtocolTypeId>
       <createdTime>2022-12-27T16:09:24Z</createdTime>
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
@@ -19950,11 +20005,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolTypeId>recSNej4i6EwucKbV</ProtocolTypeId>
       <createdTime>2022-11-08T04:42:44Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
-      <Type>recH9GUDdSB7SiwNG</Type>
-      <Name>gwatn atn.bid.000</Name>
+      <Type>recECSz5o4Z7NFjhG</Type>
+      <Name>gwatn atn.bid.001</Name>
       <ProtocolName>gwatn</ProtocolName>
-      <TypeName>atn.bid.000</TypeName>
-      <TypeStatus>Deprecated</TypeStatus>
+      <TypeName>atn.bid.001</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recSxY4F5Ewetp9tW</ProtocolTypeId>
@@ -20101,6 +20156,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>market.maker.info.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
+    <ProtocolType>itrDKgndAR8khzdCn/recYts9GI3HDasco4</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZBrVC3qx5dJ9B0</ProtocolTypeId>
       <createdTime>2022-12-27T15:55:43Z</createdTime>
@@ -20131,7 +20187,6 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeName>sla.enter.000</TypeName>
       <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itrOWlklMet6hzDlz/recZZqjz8vL6Dj548</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZiKOMXJ8UCneY9</ProtocolTypeId>
       <createdTime>2022-10-31T20:32:12Z</createdTime>
@@ -20303,6 +20358,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
+      <ProtocolTypeId>recg5ScMmCJuinnKL</ProtocolTypeId>
+      <createdTime>2023-01-23T13:46:31Z</createdTime>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <Type>recBEBBA0ctnOYQnC</Type>
+      <Name>satn join.dispatch.contract.000</Name>
+      <ProtocolName>satn</ProtocolName>
+      <TypeName>join.dispatch.contract.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
       <ProtocolTypeId>recgroRYrhO8lRT9B</ProtocolTypeId>
       <createdTime>2023-01-13T19:03:54Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
@@ -20410,6 +20475,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn new.tadeed.send.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>new.tadeed.send.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recl5OGEwbCR9w3O7</ProtocolTypeId>
+      <createdTime>2023-01-23T13:46:50Z</createdTime>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <Type>recrZz3gmzl97POA1</Type>
+      <Name>satn atn.params.heatpumpwithbooststore.000</Name>
+      <ProtocolName>satn</ProtocolName>
+      <TypeName>atn.params.heatpumpwithbooststore.000</TypeName>
       <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
@@ -20666,6 +20741,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>gt.sh.cli.atn.cmd.110</TypeName>
       <TypeStatus />
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recvFLJdLpTh7dGh1</ProtocolTypeId>
+      <createdTime>2023-01-23T13:58:03Z</createdTime>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <Type>reczzIn3wGYrEKtbr</Type>
+      <Name>satn flo.params.heatpumpwithbooststore.000</Name>
+      <ProtocolName>satn</ProtocolName>
+      <TypeName>flo.params.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recvb41OOfKOcXySK</ProtocolTypeId>
@@ -21240,6 +21325,14 @@ characterized electrical device, using the meter described, at the location desc
       <EnumName>recognized.currency.unit.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
+      <ProtocolEnumId>recEIu8DZMwf0J7za</ProtocolEnumId>
+      <createdTime>2023-01-23T13:49:46Z</createdTime>
+      <Enum>rec6tWfTKE5P1Yoa0</Enum>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <ProtocolName>satn</ProtocolName>
+      <EnumName>spaceheat.node.role.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
       <ProtocolEnumId>recFcFz3hJ9GJbVDh</ProtocolEnumId>
       <createdTime>2022-12-03T16:08:24Z</createdTime>
       <Enum>recZB6uJDEaCzvTZX</Enum>
@@ -21291,6 +21384,14 @@ characterized electrical device, using the meter described, at the location desc
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
       <ProtocolName>gwatn</ProtocolName>
       <EnumName>market.type.name.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
+      <ProtocolEnumId>recKJi6uA9s9Sp8XM</ProtocolEnumId>
+      <createdTime>2023-01-23T13:49:09Z</createdTime>
+      <Enum>recgq98LIAwVwgALk</Enum>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <ProtocolName>satn</ProtocolName>
+      <EnumName>atn.spaceheat.strategy.name.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
       <ProtocolEnumId>recLRAc86dtBYsogW</ProtocolEnumId>
@@ -21402,6 +21503,14 @@ characterized electrical device, using the meter described, at the location desc
       <EnumName>g.node.status.100</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
+      <ProtocolEnumId>recV83OsyQx8GqHV8</ProtocolEnumId>
+      <createdTime>2023-01-23T13:50:11Z</createdTime>
+      <Enum>recc1W1unmzowrKX9</Enum>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <ProtocolName>satn</ProtocolName>
+      <EnumName>spaceheat.unit.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
       <ProtocolEnumId>recV9jP0nFcRCDphV</ProtocolEnumId>
       <createdTime>2022-11-21T06:33:15Z</createdTime>
       <Enum>rec7pzii3dy9m3jCe</Enum>
@@ -21414,6 +21523,14 @@ characterized electrical device, using the meter described, at the location desc
       <createdTime>2022-11-07T22:58:59Z</createdTime>
       <Enum>recA15Ak50x6bNMx1</Enum>
       <EnumName>recognized.currency.unit.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
+      <ProtocolEnumId>recVpliEuu2jtKKUj</ProtocolEnumId>
+      <createdTime>2023-01-23T13:49:37Z</createdTime>
+      <Enum>recLQWqTvGwSz2GcN</Enum>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <ProtocolName>satn</ProtocolName>
+      <EnumName>spaceheat.make.model.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
       <ProtocolEnumId>recWkTXMymydxR5UX</ProtocolEnumId>
@@ -21542,6 +21659,22 @@ characterized electrical device, using the meter described, at the location desc
       <Protocol>recdu3DxzzmNH2eNq</Protocol>
       <ProtocolName>scada</ProtocolName>
       <EnumName>spaceheat.make.model.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
+      <ProtocolEnumId>recfpS2uOHAcfWGdN</ProtocolEnumId>
+      <createdTime>2023-01-23T13:49:57Z</createdTime>
+      <Enum>rec2HyLffy6QK9QId</Enum>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <ProtocolName>satn</ProtocolName>
+      <EnumName>spaceheat.telemetry.name.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
+      <ProtocolEnumId>recg4YcVJnk1bG3PL</ProtocolEnumId>
+      <createdTime>2023-01-23T13:49:24Z</createdTime>
+      <Enum>recQeMNisJZjsYXTl</Enum>
+      <Protocol>recHY8DLO7gBfWjtC</Protocol>
+      <ProtocolName>satn</ProtocolName>
+      <EnumName>spaceheat.actor.class.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
       <ProtocolEnumId>rechPYPk940Fi7Uud</ProtocolEnumId>

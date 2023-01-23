@@ -6,6 +6,10 @@ AcceptedBid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/accepted-bid.json
 
+AtnBid
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/atn-bid.json
+
 AtnParamsHeatpumpwithbooststore
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-params-heatpumpwithbooststore.json
