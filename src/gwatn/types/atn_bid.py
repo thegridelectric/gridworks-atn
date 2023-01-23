@@ -339,6 +339,22 @@ def check_is_algo_address_string_format(v: str) -> None:
         raise ValueError(f"Not AlgoAddressStringFormat: {e}")
 
 
+def check_is_algo_msg_pack_encoded(v: str) -> None:
+    """
+    AlgoMSgPackEncoded format: the format of an  transaction sent to
+    the Algorand blockchain.
+
+    Raises:
+        ValueError: if not AlgoMSgPackEncoded  format
+    """
+    import algosdk
+
+    try:
+        algosdk.encoding.future_msgpack_decode(v)
+    except Exception as e:
+        raise ValueError(f"Not AlgoMsgPackEncoded format: {e}")
+
+
 class AtnBid(BaseModel):
     """AtomicTNode bid sent to a MarketMaker
     [More info](https://gridworks.readthedocs.io/en/latest/market-bid.html).

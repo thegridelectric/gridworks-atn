@@ -49,5 +49,9 @@ Python pydantic class corresponding to  json type ```atn.bid```.
     :members:
 
 
+.. autoclass:: gwatn.types.atn_bid.check_is_algo_msg_pack_encoded
+    :members:
+
+
 .. autoclass:: gwatn.types.AtnBid_Maker
     :members:

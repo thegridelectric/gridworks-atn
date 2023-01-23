@@ -20,6 +20,8 @@ class AtnSettings(GNodeSettings):
     sk: SecretStr = SecretStr(
         "K6iB3AHmzSQ8wDE91QdUfaheDMEtf2WJUMYeeRptKxHiTxG3HC+iKpngXmi82y2r9uVPYwTI5aGiMhdXmPRxcQ=="
     )
+    # Public address 4JHRDNY4F6RCVGPALZULZWZNVP3OKT3DATEOLINCGILVPGHUOFY7KCHVIQ
+
     # Next 4 settings are consistent with dev env settings in gridworks-marketmaker repo
     market_maker_alias = "d1.isone.ver.keene"
     market_maker_algo_address = (
