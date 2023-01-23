@@ -3,13 +3,14 @@ import functools
 import logging
 import random
 import time
-from abc import abstractmethod
 from typing import Optional
 from typing import no_type_check
 
+import dotenv
 import gridworks.algo_utils as algo_utils
 import gridworks.conversion_factors as cf
 import pendulum
+import requests
 from algosdk import encoding
 from algosdk.atomic_transaction_composer import TransactionWithSigner
 from algosdk.future.transaction import *
@@ -17,19 +18,27 @@ from algosdk.v2client.algod import AlgodClient
 from beaker.client import ApplicationClient
 from gridworks.actor_base import ActorBase
 from gridworks.algo_utils import BasicAccount
+from gridworks.enums import GNodeRole
 from gridworks.message import as_enum
+from gridworks.utils import RestfulResponse
 from pydantic import BaseModel
 
+import gwatn.api_types as api_types
+import gwatn.config as config
 from gwatn import DispatchContract
-from gwatn.config import ScadaSettings
-from gwatn.enums import GNodeRole
+from gwatn.enums import AlgoCertType
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from gwatn.types import DispatchContractConfirmed
-from gwatn.types import DispatchContractConfirmed_Maker
+from gwatn.types import (
+    DispatchContractConfirmedHeatpumpwithbooststore as DispatchContractConfirmed,
+)
+from gwatn.types import (
+    DispatchContractConfirmedHeatpumpwithbooststore_Maker as DispatchContractConfirmed_Maker,
+)
 from gwatn.types import GtDispatchBoolean
 from gwatn.types import GtDispatchBoolean_Maker
+from gwatn.types import GwCertId_Maker
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
 from gwatn.types import HeartbeatAlgoAudit
@@ -37,12 +46,15 @@ from gwatn.types import HeartbeatAlgoAudit_Maker
 from gwatn.types import HeartbeatB
 from gwatn.types import HeartbeatB_Maker
 from gwatn.types import JoinDispatchContract_Maker
+from gwatn.types import ScadaCertTransfer_Maker
 from gwatn.types import SimScadaDriverReport
 from gwatn.types import SimScadaDriverReport_Maker
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SnapshotHeatpumpwithbooststore
 
+
+DISPATCH_CONTRACT_REPORTING_ALGOS = 5
 
 LOG_FORMAT = (
     "%(levelname) -10s %(sasctime)s %(name) -30s %(funcName) "
@@ -63,36 +75,60 @@ def get_max_store_kwh_th(params: AtnParams) -> float:
 
 class AtnHbStatus(BaseModel):
     LastHeartbeatReceivedMs: int
-    AtnLastHex: str = "0"
+    AtnLastHex: Optional[str] = None
     ScadaLastHex: str = "0"
 
 
 class ScadaActor(ActorBase):
-    def __init__(self, settings: ScadaSettings):
+    def __init__(
+        self,
+        settings: config.ScadaSettings = config.ScadaSettings(
+            _env_file=dotenv.find_dotenv()
+        ),
+    ):
         super().__init__(settings=settings)
-        self.settings: ScadaSettings = settings
+        self.api_type_maker_by_name = (
+            api_types.TypeMakerByName
+        )  # overwrites base class to include types used in this repo
+        self.settings = settings
+        self.atn_gni_id = settings.atn_gni_id
         self.acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
         self.client: AlgodClient = AlgodClient(
             settings.algo_api_secrets.algod_token.get_secret_value(),
             settings.public.algod_address,
         )
+        print(f"scada cert is {self.settings.cert_idx}")
+        self.sp = self.client.suggested_params()
+        cert_type = AlgoCertType(self.settings.cert_type_value)
+        if cert_type == AlgoCertType.ASA:
+            if self.settings.cert_idx is None:
+                raise Exception(
+                    f"Scada Cert Type ASA but settings.scada_cert_idx is None!"
+                )
+            self.cert_id = GwCertId_Maker(
+                type=AlgoCertType.ASA, idx=self.settings.cert_idx, addr=None
+            ).tuple
+        else:
+            if self.settings.cert_addr is None:
+                raise Exception(
+                    f"Scada Cert Type SmartSig but settings.scada_cert_addr is None!"
+                )
+            self.cert_id = GwCertId_Maker(
+                type=AlgoCertType.SmartSig, idx=None, addr=self.settings.cert_addr
+            ).tuple
         self.has_dispatch_contract: bool = False
         self.talking_with: bool = False
-        self.atn_hb_status: AtnHbStatus = AtnHbStatus(
+        self.atn_hb_status = AtnHbStatus(
             LastHeartbeatReceivedMs=int(1000 * time.time())
         )
         # The dc_client (DispatchContract client) builds on top of the Algorand beaker ApplicationClient
-        self.dc_client = ApplicationClient(
-            self.client, DispatchContract(), signer=self.acct.as_signer()
-        )
-        self.scada_cert_id: Optional[int] = None
+        self.dc_client: Optional[ApplicationClient] = None
         self.dc_app_id: Optional[int] = None
+        self.algo_init_check()
         self.universe_type = as_enum(
             self.settings.universe_type_value, UniverseType, UniverseType.default()
         )
         self._time: float = self.get_initial_time_s()
-        self.atn_gni_id: Optional[int] = None
-        self.atn_addr: Optional[str] = None
 
         self.boost_power_kw: float = 0
         self.heatpump_power_kw: float = 0
@@ -171,7 +207,7 @@ class ScadaActor(ActorBase):
         elif payload.TypeName == HeartbeatA_Maker.type_name:
             if from_role != GNodeRole.Supervisor:
                 LOGGER.info(
-                    f"Ignoring HeartbeatB from GNode with role {from_role}; expects Supervisor"
+                    f"Ignoring HeartbeatA from GNode with role {from_role}; expects Supervisor"
                 )
             try:
                 self.heartbeat_from_super(payload)
@@ -194,7 +230,7 @@ class ScadaActor(ActorBase):
         elif payload.TypeName == SimTimestep_Maker.type_name:
             if from_role != GNodeRole.TimeCoordinator:
                 LOGGER.info(
-                    f"Ignoring HeartbeatB from GNode with role {from_role}; expects TimeCoordinator"
+                    f"Ignoring SimTimestep from GNode with role {from_role}; expects TimeCoordinator"
                 )
             try:
                 self.timestep_from_timecoordinator(payload)
@@ -218,10 +254,17 @@ class ScadaActor(ActorBase):
             AtomicTNode partner
 
         """
+        self.ping = ping
+        print(f"GOT {ping}")
         received_ms = int(time.time() * 1000)
+        if not self.in_dispatch_contract():
+            LOGGER.info(f"Not in Dispatch Contract. Ignoring")
         if ping.FromGNodeInstanceId != self.atn_gni_id:
-            LOGGER.info(f"Ignoring {ping}, wrong Atn GNodeInstanceId")
-            return
+            raise Exception("In dispatch contract but mismatched Atn Gni Id!")
+        if self.atn_hb_status.AtnLastHex is not None:
+            if ping.YourLastHex != self.atn_hb_status.ScadaLastHex:
+                LOGGER.info("Received incorrect ping. Ignoring")
+                return
         self.atn_hb_status.LastHeartbeatReceivedMs = int(time.time() * 1000)
         self.atn_hb_status.AtnLastHex = ping.MyHex
         self.atn_hb_status.ScadaLastHex = str(random.choice("0123456789abcdef"))
@@ -236,8 +279,13 @@ class ScadaActor(ActorBase):
         self.send_message(
             payload=pong, to_role=GNodeRole.AtomicTNode, to_g_node_alias=self.atn_alias
         )
-        # Todo: make PaymentTxn and send HeartbeatAlgo
-        # hb_audit = HeartbeatAlgoAudit_Maker()
+        # Report to DispatchContract with heartbeat.algo.audit
+        # ptxn = PaymentTxn(self.acct.addr, self.sp, self.dc_client.app_addr, 1000)
+        # self.dc_client.call(
+        #     DispatchContract.heartbeat_algo_audit,
+        #     signed_proof=TransactionWithSigner(ptxn, self.acct.as_signer()),
+        #     heartbeat=pong.as_dict()
+        # )
 
     def heartbeat_from_super(self, from_alias: str, ping: HeartbeatA) -> None:
         pong = HeartbeatA_Maker(
@@ -270,20 +318,144 @@ class ScadaActor(ActorBase):
     #  Related to Dispatch Contract and Scada Cert
     ########################################################
 
+    def algo_init_check(self):
+        """Upon startup, see if the dispatch contract has already been created
+        and also make sure Scada is appropriately funded"""
+
+        # First, request cert transfer. This is idempotent - if scada
+        # addr already owns the ScadaCertificate it does nothing
+
+        self.request_cert_transfer()
+        apps = self.client.account_info(self.acct.addr)["created-apps"]
+        balances = algo_utils.get_balances(self.client, self.acct.addr)
+        micro_algos = balances[0]
+        if len(apps) > 1:
+            raise Exception("Should only be part of one app")
+        if len(apps) == 0:
+            # Create, fund and do bootstrap1 of the Dispatch contract
+            dc_algos = DISPATCH_CONTRACT_REPORTING_ALGOS + (
+                DispatchContract.min_balance / 1_000_000
+            )
+            if micro_algos < (dc_algos + 2) * 1_000_000:
+                raise Exception(f"Insufficient funding! Need at least {dc_algos + 2}")
+            self.dc_client = ApplicationClient(
+                self.client, DispatchContract(), signer=self.acct.as_signer()
+            )
+            app_id, app_address, transaction_id = self.dc_client.create()
+            self.dc_app_id = app_id
+
+            sp = self.dc_client.get_suggested_params()
+            sp.flat_fee = True
+            sp.fee = 2000
+            ptxn = PaymentTxn(
+                self.acct.addr,
+                sp,
+                self.dc_client.app_addr,
+                DispatchContract.min_balance,
+            )
+
+            # Now do the first half of bootstrapping the contract by providing it
+            # with enough money to fund about 32kB in boxes, along with
+            # our ScadaCertId (which can be shown to match our address in the sig)
+
+            result = self.dc_client.call(
+                DispatchContract.bootstrap1,
+                scada_seed=TransactionWithSigner(ptxn, self.acct.as_signer()),
+                ScadaCert=self.cert_id.Idx,
+            )
+            if result.return_value != self.ta_alias:
+                raise Exception(
+                    f"Expected {self.ta_alias} back from bootstrapping app {self.dc_app_id}, but"
+                    f" got {result.return_value}"
+                )
+        else:
+            dc_algos = DISPATCH_CONTRACT_REPORTING_ALGOS
+            if micro_algos < (dc_algos + 2) * 1_000_000:
+                raise Exception(f"Insufficient funding! Need at least {dc_algos + 2}")
+            self.dc_app_id = apps[0]["id"]
+            self.dc_client = ApplicationClient(
+                client=self.client,
+                app=DispatchContract(),
+                signer=self.acct.as_signer(),
+                app_id=self.dc_app_id,
+            )
+
+    def request_cert_transfer(self) -> None:
+        """
+        Opts into certificate and then request transfer of the ScadaCert from the GNodeFactory
+
+        Raises:
+            Exception if the transfer is not successful
+        """
+        if self.cert_id.Type == AlgoCertType.SmartSig:
+            raise NotImplementedError("Not prepared for SmartSig Certificates yet")
+
+        balances = algo_utils.get_balances(self.client, self.acct.addr)
+
+        # First, opt into sig
+        txn = AssetOptInTxn(self.acct.addr, self.sp, self.cert_id.Idx)
+
+        signed_txn = txn.sign(self.acct.sk)
+        if self.cert_id.Idx not in balances.keys():
+            try:
+                self.client.send_transaction(signed_txn)
+            except:
+                raise Exception(
+                    "Failure sending transaction on Algo blockchain. Check sandbox and funding"
+                )
+            algo_utils.wait_for_transaction(self.client, signed_txn.get_txid())
+
+        balances = algo_utils.get_balances(self.client, self.acct.addr)
+
+        if balances[self.cert_id.Idx] == 1:
+            # already own the cert
+            return
+        payload = ScadaCertTransfer_Maker(
+            ta_alias="d1.isone.ver.keene.holly.ta",  # REPLACE WITH api_util.get_alias_from_scada_cert
+            signed_proof=encoding.msgpack_encode(signed_txn),
+        ).tuple
+
+        api_endpoint = f"{self.settings.public.gnf_api_root}/scada-cert-transfer/"
+        try:
+            r = requests.post(url=api_endpoint, json=payload.as_dict())
+        except:
+            raise Exception(f"Post to {api_endpoint} failed")
+        if r.status_code > 200:
+            if r.status_code == 422:
+                note = f"Error entering SLA: " + r.json()["detail"]
+            else:
+                note = r.reason
+            raise Exception(f"Post to {api_endpoint} failed: {note} ")
+
+        # check that scada now owns cert
+        balances = algo_utils.get_balances(self.client, self.acct.addr)
+        if balances[self.cert_id.Idx] != 1:
+            raise Exception(f"Gnf claimed successful transfer but I do not own cert")
+
+        # check that cert ta_alias matches the one from settings
+        cert_ta_alias = self.client.asset_info(self.cert_id.Idx)["params"]["name"]
+        if cert_ta_alias != self.ta_alias:
+            raise Exception(
+                f"Cert TaAlias is {cert_ta_alias} but my ta_alias is {self.ta_alias}"
+            )
+        LOGGER.info(f"Successfully received Scada Cert ASA {self.cert_id.Idx}")
+
     def initialize_dispatch_contract(self):
         """Starts up Dispatch contract to be used with AtomicTNode.
 
+
         Raises exception if Scada Addr
-            - has less than 20 Algos
+            - scada cert from settings matches what is in my acct
             - already has created an app
             - does not already have a unique Scada Cert ASA
         """
-        if algo_utils.algos(self.acct.addr) < 20:
-            raise Exception(
-                f"Please fund Scada addr with at least 12 Algoss: {self.acct.addr}"
+
+        if self.in_dispatch_contract():
+            LOGGER.warning(
+                f"Already in dispatch contract. Ignoring initialize_dispatch_contract!"
             )
-        if len(self.client.account_info(self.acct.addr)["created-apps"]) > 0:
-            raise Exception("Please stop entire simulation and reset sandbox")
+            return
+
         balances = algo_utils.get_balances(self.client, self.acct.addr)
         non_algo_asas = list(set(balances.keys()) - {0})
         scada_certs = list(
@@ -292,6 +464,7 @@ class ScadaActor(ActorBase):
                 non_algo_asas,
             )
         )
+
         if len(scada_certs) > 1:
             raise Exception(
                 f"Scada {self.alias} has 2 scada certs. This should not happen!"
@@ -303,34 +476,17 @@ class ScadaActor(ActorBase):
                 f"before starting up {self.alias}"
             )
 
-        self.scada_cert_id = scada_certs[0]
-        # Start Dispatch contract
-        app_id, app_address, transaction_id = self.dc_client.create()
-        self.dc_app_id = app_id
-
-        sp = self.dc_client.get_suggested_params()
-        sp.flat_fee = True
-        sp.fee = 2000
-        ptxn = PaymentTxn(self.acct.addr, sp, self.dc_client.app_addr, 14_000_000)
-
-        # Now do the first half of bootstrapping the contract by providing it
-        # with enough money to fund about 32kB in boxes, along with
-        # our ScadaCertId (which can be shown to match our address in the sig)
-
-        result = self.dc_client.call(
-            DispatchContract.bootstrap1,
-            scada_seed=TransactionWithSigner(ptxn, self.acct.as_signer()),
-            ScadaCert=self.scada_cert_id,
-        )
-
-        if result.return_value != self.ta_alias:
+        if self.cert_id.Idx != scada_certs[0]:
             raise Exception(
-                f"Expected {self.ta_alias} back from bootstrapping app {self.dc_app_id}, but"
-                f" got {result.return_value}"
+                f"Scada cert in settings {self.cert_id.Idx} does not match"
+                f"scada cert in my acct {scada_certs[0]}"
             )
 
         txn = PaymentTxn(
-            sender=self.acct.addr, receiver=self.dc_client.app_addr, sp=sp, amt=1000
+            sender=self.acct.addr,
+            receiver=self.dc_client.app_addr,
+            sp=self.sp,
+            amt=1000,
         )
         signed_txn = txn.sign(self.acct.sk)
         # Don't need to actually send it in order to establish signature
@@ -340,31 +496,46 @@ class ScadaActor(ActorBase):
             dispatch_contract_app_id=self.dc_app_id,
             signed_proof=encoding.msgpack_encode(signed_txn),
         ).tuple
+
         self.send_message(
             payload=payload,
             to_role=GNodeRole.AtomicTNode,
             to_g_node_alias=self.atn_alias,
         )
+        LOGGER.info(f"Sent d = {payload.as_dict()}")
 
     def dispatch_contract_confirmed_received(self, payload: DispatchContractConfirmed):
         """Check the state of the app to confirm that the Atn has finished the bootstrap.
-        Expect the AtomicTNode to send this after they get the JoinDispatchContract message
-        and successfully do the second half of bootstrapping the Dispatch Contract."""
+        Then
+           - set the atn_gni_id to GNodeInstanceId from the payload (this is how the Scada
+           will confirm identity of the AtomicTNode
+           - set the atn_params to those shared by the AtomicTNode
+           - opt into the Dispatch Contract (now the DispatchContract is live)"""
         if self.dc_app_id is None:
             raise Exception(
                 "Thats odd ... dont have a Dispatch Contract App Id and I need to be"
                 "the creator"
             )
+        if self.in_dispatch_contract():
+            LOGGER.warning(
+                f"Ignoring DispatchContractConfirmed - already in dispatch contract {self.dc_app_id}"
+            )
             return
+
         app_state = self.dc_client.get_application_state()
-        if "a" not in app_state.keys():
-            LOGGER.warning(f"Atn bootstrap is NOT finished. Ignoring")
+        if "ta_trading_rights_idx" not in app_state.keys():
+            LOGGER.warning(f"Atn bootstrap is not finished. Ignoring")
             return
-        atn_addr = app_state["a"]
-        self.client.account_info(atn_addr)
+
+        self.atn_gni_id = payload.FromGNodeInstanceId
+        self.atn_params = payload.AtnParams
+        with open(".env", "a") as file:
+            file.write(f'SCADA_ATN_GNI_ID="{payload.FromGNodeInstanceId}"\n')
+        self.dc_client.opt_in()
+        LOGGER.info(f"Dispatch Contract {self.dc_app_id} is live")
 
     #########################################################
-    # Below be made abstractmethods if pulling out base class
+    # Make the below into abstractmethods if pulling out base class
     #########################################################
 
     def sim_scada_driver_report_received(self, payload: SimScadaDriverReport) -> None:
@@ -438,13 +609,25 @@ class ScadaActor(ActorBase):
                 self.send_snapshot()
 
     def new_timestep(self, payload: SimTimestep) -> None:
-        # LOGGER.info("New timestep in atn_actor_base")
-        if self.dc_app_id is None:
+        # LOGGER.info("New timestep")
+        if not self.in_dispatch_contract():
             self.initialize_dispatch_contract()
 
     def repeat_timestep(self, payload: SimTimestep) -> None:
-        # LOGGER.info("Timestep received again in atn_actor_base")
-        raise NotImplementedError
+        LOGGER.info("Timestep received again")
 
     def time_str(self) -> str:
         return pendulum.from_timestamp(self.time()).strftime("%m/%d/%Y, %H:%M")
+
+    def in_dispatch_contract(self) -> bool:
+        """Checks that bootstrap 2 was completed w addition of ta_trading_rights_idx,
+        and also that Scada is opted in"""
+        app_state = self.dc_client.get_application_state()
+        if "ta_trading_rights_idx" not in app_state.keys():
+            return False
+        # Todo: also check that atn is opted in
+        apps = self.client.account_info(self.acct.addr)["apps-local-state"]
+        app_ids = list(map(lambda x: x["id"], apps))
+        if self.dc_client.app_id in app_ids:
+            return True
+        return False

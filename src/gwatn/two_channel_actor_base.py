@@ -15,20 +15,22 @@ import gridworks.property_format as property_format
 import gridworks.utils as utils
 import pika  # type: ignore
 from fastapi_utils.enums import StrEnum
+from gridworks.enums import GNodeRole
 from gridworks.errors import SchemaError
 
 import gwatn.api_types as api_types
 from gwatn.config import AtnSettings
-from gwatn.enums import GNodeRole
 from gwatn.enums import MessageCategory
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.types import HeartbeatA
+from gwatn.types import HeartbeatA_Maker
 
 
 class RabbitRole(StrEnum):
     atomictnode = auto()
     marketmaker = auto()
+    scada = auto()
     supervisor = auto()
     timecoordinator = auto()
     world = auto()
@@ -37,6 +39,7 @@ class RabbitRole(StrEnum):
 RoleByRabbitRole: Dict[RabbitRole, GNodeRole] = {
     RabbitRole.atomictnode: GNodeRole.AtomicTNode,
     RabbitRole.marketmaker: GNodeRole.MarketMaker,
+    RabbitRole.scada: GNodeRole.Scada,
     RabbitRole.supervisor: GNodeRole.Supervisor,
     RabbitRole.timecoordinator: GNodeRole.TimeCoordinator,
     RabbitRole.world: GNodeRole.World,
@@ -46,6 +49,7 @@ RoleByRabbitRole: Dict[RabbitRole, GNodeRole] = {
 RabbitRolebyRole: Dict[GNodeRole, RabbitRole] = {
     GNodeRole.AtomicTNode: RabbitRole.atomictnode,
     GNodeRole.MarketMaker: RabbitRole.marketmaker,
+    GNodeRole.Scada: RabbitRole.scada,
     GNodeRole.Supervisor: RabbitRole.supervisor,
     GNodeRole.TimeCoordinator: RabbitRole.timecoordinator,
     GNodeRole.World: RabbitRole.world,
@@ -88,7 +92,9 @@ class TwoChannelActorBase(ABC):
     def __init__(
         self,
         settings: AtnSettings,
+        api_type_maker_by_name: Dict[str, HeartbeatA_Maker] = api_types.TypeMakerByName,
     ):
+        self.api_type_maker_by_name = api_type_maker_by_name
         self.latest_routing_key: Optional[str] = None
         self.shutting_down: bool = False
         self.alias: str = settings.g_node_alias
@@ -158,7 +164,7 @@ class TwoChannelActorBase(ABC):
         self._stopping = False
         self._stopped = True
 
-    def local_stop() -> None:
+    def local_stop(self) -> None:
         """This should be overwritten in derived class if there is a requirement
         to stop the additional threads started in local_start"""
         pass
@@ -196,7 +202,7 @@ class TwoChannelActorBase(ABC):
             return
         self.type_name = type_name
 
-        if type_name not in api_types.version_by_type_name().keys():
+        if type_name not in self.api_type_maker_by_name.keys():
             self._latest_on_message_diagnostic = (
                 OnReceiveMessageDiagnostic.UNKNOWN_TYPE_NAME
             )
@@ -206,10 +212,10 @@ class TwoChannelActorBase(ABC):
             return
 
         try:
-            payload = api_types.TypeMakerByName[type_name].type_to_tuple(body)
+            payload = self.api_type_maker_by_name[type_name].type_to_tuple(body)
         except Exception as e:
             LOGGER.warning(
-                f"TypeName for incoming message claimed to be {type_name}, but was not true! Failed to make a {api_types.TypeMakerByName[type_name].tuple}"
+                f"TypeName for incoming message claimed to be {type_name}, but was not true! Failed to make a {self.api_type_maker_by_name[type_name].tuple}"
             )
             return
 

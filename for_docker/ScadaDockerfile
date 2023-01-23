@@ -1,0 +1,15 @@
+
+ARG BASE=jessmillar/atn-base:latest
+
+FROM $BASE AS app-base
+
+
+WORKDIR /app
+
+COPY ./src /app/src
+COPY ./for_docker/scada_docker.env /app/.env
+COPY README.md /app/README.md
+COPY ./for_docker/run_scada.py /app/main.py
+
+RUN pip install -e /app
+CMD ["python", "main.py"]

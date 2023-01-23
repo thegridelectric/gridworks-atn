@@ -21,6 +21,7 @@
       "type": "string",
       "format": "AlgoMsgPackEncoded",
       "title": "Tiny signed payment to DispatchContract to prove identity",
+      "description": "Can be a minimal payment, as long as it comes from the AtomicTNode or SCADA.",
       "required": true
     },
     "Heartbeat": {

@@ -6,7 +6,7 @@ Python pydantic class corresponding to  json type ```heartbeat.algo.audit```.
     :members:
 
 **SignedProof**:
-    - Description: Tiny signed payment to DispatchContract to prove identity
+    - Description: Tiny signed payment to DispatchContract to prove identity. Can be a minimal payment, as long as it comes from the AtomicTNode or SCADA.
     - Format: AlgoMsgPackEncoded
 
 **Heartbeat**:

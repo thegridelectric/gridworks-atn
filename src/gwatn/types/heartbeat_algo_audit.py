@@ -63,6 +63,7 @@ class HeartbeatAlgoAudit(BaseModel):
 
     SignedProof: str = Field(
         title="Tiny signed payment to DispatchContract to prove identity",
+        description="Can be a minimal payment, as long as it comes from the AtomicTNode or SCADA.",
     )
     Heartbeat: HeartbeatB = Field(
         title="Heartbeat sender last sent to its partner",

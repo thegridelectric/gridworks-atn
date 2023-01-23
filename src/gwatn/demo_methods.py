@@ -78,7 +78,7 @@ def create_terminal_asset(ta_owner: DevTaOwner) -> RestfulResponse:
         return RestfulResponse(Note=note, HttpStatusCode=422)
     pprint(rr)
     terminal_asset = BaseGNodeGt_Maker.dict_to_tuple(rr.PayloadAsDict)
-    ta_deed_idx = terminal_asset.OwnershipDeedNftId
+    ta_deed_idx = terminal_asset.OwnershipDeedId
     LOGGER.info(f"Made TaDeed {ta_deed_idx} for {terminal_asset.Alias}")
 
     rr = molly.certify_terminal_asset(
@@ -112,6 +112,21 @@ def create_terminal_assets(ta_owners: List[DevTaOwner]) -> RestfulResponse:
                 ta_owner.stop()
             return rr
     return RestfulResponse(Note="Success with create_terminal_assets")
+
+
+def create_scadas(ta_owners: List[DevTaOwner]) -> RestfulResponse:
+    for ta_owner in ta_owners:
+        if not isinstance(ta_owner, DevTaOwner):
+            return RestfulResponse(
+                Note=f"{ta_owner} is not a DevTaOwner!", HttpStatusCode=422
+            )
+    for ta_owner in ta_owners:
+        rr = ta_owner.create_scada_g_node()
+        if rr.HttpStatusCode > 200:
+            for ta_owner in ta_owners:
+                ta_owner.stop()
+            return rr
+    return RestfulResponse(Note="Success with create_scadas")
 
 
 def enter_slas(ta_owners: List[DevTaOwner]) -> RestfulResponse:

@@ -305,24 +305,24 @@ class BaseGNode:
         - Alias must be a string of format LRD Alias
         - PrevAlias must be a string of format LRD Alias
         - GNodeId must be a string of format UuidCanoicalTextual
-        - OwnershipDeedNftId must be an integer,
+        - OwnershipDeedId must be an integer,
         - OwnershipDeedValidatorAddr must be a string of format AlgoAddressStringFormat
         - OwnerAddr must be a string of format AlgoAddressStringFormat
         - DaemonAddr must be a string of format AlgoAddressStringFormat
-        - TradingRightsNftId must be an integer"""
+        - TradingRightsId must be an integer"""
 
         g_node_registry_addr = attributes["g_node_registry_addr"]
         ownership_deed_nft_id = attributes["ownership_deed_nft_id"]
         ownership_deed_validator_addr = attributes["ownership_deed_validator_addr"]
         owner_addr = attributes["owner_addr"]
         daemon_addr = attributes["daemon_addr"]
-        trading_rights_nft_id = attributes["trading_rights_nft_id"]
-        if ownership_deed_nft_id:
+        trading_rights_id = attributes["trading_rights_id"]
+        if ownership_deed_id:
             if not isinstance(ownership_deed_nft_id, int):
-                raise DcError("Schema Axiom 2: OwnershipDeedNftId must be an integer")
-        if trading_rights_nft_id:
-            if not isinstance(trading_rights_nft_id, int):
-                raise DcError("Schema Axiom 2: TradingRightsNftId must be an integer ")
+                raise DcError("Schema Axiom 2: OwnershipDeedId must be an integer")
+        if trading_rights_id:
+            if not isinstance(trading_rights_id, int):
+                raise DcError("Schema Axiom 2: TradingRightsId must be an integer ")
         for addr in [
             ownership_deed_validator_addr,
             owner_addr,

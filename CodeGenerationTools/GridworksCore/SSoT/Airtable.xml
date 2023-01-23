@@ -759,6 +759,14 @@ by the concept of MarketType.</Description>
     <SchemaRoot>
       <SchemaRootId>recWnYsIlIcwBPwZY</SchemaRootId>
       <createdTime>2023-01-16T17:25:00Z</createdTime>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <SchemaRootscopy>recF9KonH58AltK0K</SchemaRootscopy>
+      <Status>Active</Status>
+      <AliasRoot>basegnode.scada.create</AliasRoot>
+      <Description>This is a payload designed to be sent from a TaOwner to the GNodeFactory. The TaOwner creates a private Algorand key and puts it on the Scada Device that will sense and control their TerminalAsset. The public address is associated with the Scada GNode by the GNodeFactory.</Description>
+      <Title>Scada BaseGNode Creation</Title>
+      <CurrentSemanticEnd>000</CurrentSemanticEnd>
+      <Alias>basegnode.scada.create</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
@@ -1264,6 +1272,19 @@ by the concept of MarketType.</Description>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
     <SchemaRoot>
+      <SchemaRootId>rectwW4fAko33gT7a</SchemaRootId>
+      <createdTime>2023-01-19T23:59:02Z</createdTime>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <SchemaRootscopy>recbrp6V9qD6J1NHb</SchemaRootscopy>
+      <Status>Active</Status>
+      <AliasRoot>scada.cert.transfer</AliasRoot>
+      <Description>This is a payload designed to be sent from a SCADA device to the GNodeFactory after the SCADA has opted into its certificate.</Description>
+      <Title>Scada Certificate Transfer</Title>
+      <CurrentSemanticEnd>000</CurrentSemanticEnd>
+      <Alias>scada.cert.transfer</Alias>
+      <ConsistencyCheck>1</ConsistencyCheck>
+    </SchemaRoot>
+    <SchemaRoot>
       <SchemaRootId>recu1iYKh47xRDEt9</SchemaRootId>
       <createdTime>2023-01-13T18:48:04Z</createdTime>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -1430,7 +1451,7 @@ by the concept of MarketType.</Description>
       <ProtocolCategory>Json</ProtocolCategory>
       <SchemaRootscopy>rec3kcgktiHCBYpA4</SchemaRootscopy>
       <Status>Active</Status>
-      <AliasRoot>dispatch.contract.confirmed</AliasRoot>
+      <AliasRoot>dispatch.contract.confirmed.heatpumpwithbooststore</AliasRoot>
       <Description>Paired with join.dispatch.contract. Sent from AtomicTNode back to SCADA
     once the AtomicTNode has successfully finished bootstrapping the Dispatch
     Contract and opted in. Once it has done this, the Dispatch Contract is ready
@@ -1439,9 +1460,10 @@ by the concept of MarketType.</Description>
     https://gridworks.readthedocs.io/en/latest/dispatch-contract.html</Description>
       <Title>Message sent from AtomicTNode back to SCADA via Rabbit </Title>
       <CurrentSemanticEnd>000</CurrentSemanticEnd>
-      <Alias>dispatch.contract.confirmed</Alias>
+      <Alias>dispatch.contract.confirmed.heatpumpwithbooststore</Alias>
       <ConsistencyCheck>1</ConsistencyCheck>
     </SchemaRoot>
+    <SchemaRoot>itrJPuZvZEBXWZT8i/reczIxfEiJFKQYsNw</SchemaRoot>
     <SchemaRoot>
       <SchemaRootId>reczYInsSYetUcVpZ</SchemaRootId>
       <createdTime>2022-09-20T12:14:51Z</createdTime>
@@ -1654,6 +1676,7 @@ by the concept of MarketType.</Description>
       <Description>Price unit assigned to MarketMaker MarketType</Description>
       <ProtocolEnums>rec8B7NqLQHwAZjcw</ProtocolEnums>
       <ProtocolEnums>recmNuAp0alwhubds</ProtocolEnums>
+      <ProtocolEnums>rec3OJ7Qnn65b8uug</ProtocolEnums>
       <Default>reczQc8UjfHLBjqBM</Default>
       <LocalName>market.price.unit</LocalName>
       <AliasRoot>market.price.unit</AliasRoot>
@@ -1763,6 +1786,7 @@ by the concept of MarketType.</Description>
       <ProtocolEnums>recVdbIqzBFT6Qpsd</ProtocolEnums>
       <ProtocolEnums>rechPYPk940Fi7Uud</ProtocolEnums>
       <ProtocolEnums>reck0WsxFdPOoe5ZM</ProtocolEnums>
+      <ProtocolEnums>recEAaklKzWgLdKio</ProtocolEnums>
       <Default>recdZoU45YlNxDBUe</Default>
       <LocalName>recognized.currency.unit</LocalName>
       <AliasRoot>recognized.currency.unit</AliasRoot>
@@ -2272,6 +2296,7 @@ by the concept of MarketType.</Description>
       <Description>Quantity unit assigned to MarketMaker MarketType</Description>
       <ProtocolEnums>recy37qKrW01vTt7S</ProtocolEnums>
       <ProtocolEnums>recGhJkY0Egp6jCRt</ProtocolEnums>
+      <ProtocolEnums>rectGOQvuxBQ1f8LZ</ProtocolEnums>
       <Default>recdMV7TkDw8zFcf9</Default>
       <LocalName>market.quantity.unit</LocalName>
       <AliasRoot>market.quantity.unit</AliasRoot>
@@ -3410,7 +3435,7 @@ by the concept of MarketType.</Description>
       <Enum>rec2HyLffy6QK9QId</Enum>
       <DisplayName>spaceheat.telemetry.name.000__WattHours</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrcpFMeza8PZte6f/recPV5eCtZVeT7zmX</EnumSymbol>
+    <EnumSymbol>itrsITBLPVb1mjHca/recPV5eCtZVeT7zmX</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>recPY9T9Npi1jCIVV</EnumSymbolId>
       <createdTime>2022-08-30T18:05:22Z</createdTime>
@@ -4358,7 +4383,7 @@ by the concept of MarketType.</Description>
       <LocalValue>Actuator</LocalValue>
       <DisplayName>__Actuator</DisplayName>
     </EnumSymbol>
-    <EnumSymbol>itrcpFMeza8PZte6f/recob3YuE614ND3hl</EnumSymbol>
+    <EnumSymbol>itrsITBLPVb1mjHca/recob3YuE614ND3hl</EnumSymbol>
     <EnumSymbol>
       <EnumSymbolId>reconXBspv9L7OQqS</EnumSymbolId>
       <createdTime>2022-08-01T12:19:26Z</createdTime>
@@ -4969,7 +4994,7 @@ by the concept of MarketType.</Description>
       <SchemaRoot>reczIxfEiJFKQYsNw</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recurndoUQt30tVFv</ProtocolTypes>
-      <Alias>dispatch.contract.confirmed.000</Alias>
+      <Alias>dispatch.contract.confirmed.heatpumpwithbooststore.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
       <MakeDataClass />
@@ -4982,7 +5007,7 @@ by the concept of MarketType.</Description>
      to collect audit information about heartbeats, dispatch, energy and power.
 
     https://gridworks.readthedocs.io/en/latest/dispatch-contract.html</Description>
-      <AliasRoot>dispatch.contract.confirmed</AliasRoot>
+      <AliasRoot>dispatch.contract.confirmed.heatpumpwithbooststore</AliasRoot>
       <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
       <IsCurrent>1</IsCurrent>
       <Status>Pending</Status>
@@ -5631,6 +5656,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enums>rec75xMuw0SMkzjVc</Enums>
       <Enums>recounhEj97w5SfDm</Enums>
       <Enums>recZmZP13YV9Rmbnw</Enums>
+      <ProtocolTypes>recSIwq3BdNSAxp2e</ProtocolTypes>
       <MultiPropertyAxioms>rec4x9sbCR3Q6Bwm8</MultiPropertyAxioms>
       <MultiPropertyAxioms>recQEk0lDO3sQJDyc</MultiPropertyAxioms>
       <UpdateDescription>BidList changed to PqPairs</UpdateDescription>
@@ -5648,6 +5674,39 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto />
       <Title>AtomicTNode bid sent to a MarketMaker</Title>
       <Url>https://gridworks.readthedocs.io/en/latest/market-bid.html</Url>
+    </Schema>
+    <Schema>
+      <SchemaId>recF9KonH58AltK0K</SchemaId>
+      <createdTime>2023-01-19T14:30:26Z</createdTime>
+      <SemanticEnd>000</SemanticEnd>
+      <SchemaAttributes>rec9PJA13l3jM7pJm</SchemaAttributes>
+      <SchemaAttributes>recZQKyBftNOGc46Z</SchemaAttributes>
+      <SchemaAttributes>recQOONbTZMocKXeg</SchemaAttributes>
+      <SchemaAttributes>recfm7YlkXDX6XQEU</SchemaAttributes>
+      <SchemaAttributes>recEG7l0wT1KjHSFs</SchemaAttributes>
+      <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
+      <PropertyFormatsUsed>recopFBsq4TmG87Op</PropertyFormatsUsed>
+      <PropertyFormatsUsed>recvbnpa4cX2nNp9p</PropertyFormatsUsed>
+      <SchemaRoot>recWnYsIlIcwBPwZY</SchemaRoot>
+      <PreStatus>Pending</PreStatus>
+      <ProtocolTypes>recaBlt54tM7DPjwR</ProtocolTypes>
+      <ProtocolTypes>recl7u8ZInYMFV7EC</ProtocolTypes>
+      <MultiPropertyAxioms>reczUIUpS1LU0Aw6d</MultiPropertyAxioms>
+      <MultiPropertyAxioms>recw40tHmgYZ9Jjrx</MultiPropertyAxioms>
+      <Alias>basegnode.scada.create.000</Alias>
+      <RootStatus>Active</RootStatus>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>This is a payload designed to be sent from a TaOwner to the GNodeFactory. The TaOwner creates a private Algorand key and puts it on the Scada Device that will sense and control their TerminalAsset. The public address is associated with the Scada GNode by the GNodeFactory.</Description>
+      <AliasRoot>basegnode.scada.create</AliasRoot>
+      <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
+      <IsCurrent>1</IsCurrent>
+      <Status>Pending</Status>
+      <InGwProto />
+      <Title>Scada BaseGNode Creation</Title>
     </Schema>
     <Schema>
       <SchemaId>recFrR35Q6mQhx1KM</SchemaId>
@@ -5724,7 +5783,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Enums>recounhEj97w5SfDm</Enums>
       <Enums>recZmZP13YV9Rmbnw</Enums>
       <ProtocolTypes>recSNej4i6EwucKbV</ProtocolTypes>
-      <ProtocolTypes>recSIwq3BdNSAxp2e</ProtocolTypes>
       <Alias>atn.bid.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -6719,6 +6777,34 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Title>MarketMaker's list of bids for a MarketSlot</Title>
     </Schema>
     <Schema>
+      <SchemaId>recbrp6V9qD6J1NHb</SchemaId>
+      <createdTime>2023-01-19T23:59:55Z</createdTime>
+      <SemanticEnd>000</SemanticEnd>
+      <SchemaAttributes>recmmOlM4okW6SVMc</SchemaAttributes>
+      <SchemaAttributes>recYFjgEXfTizyRiv</SchemaAttributes>
+      <PropertyFormatsUsed>recvbnpa4cX2nNp9p</PropertyFormatsUsed>
+      <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
+      <SchemaRoot>rectwW4fAko33gT7a</SchemaRoot>
+      <PreStatus>Pending</PreStatus>
+      <ProtocolTypes>recjvYtEfvMLsZJtV</ProtocolTypes>
+      <ProtocolTypes>recrpoQF951bAlwS5</ProtocolTypes>
+      <MultiPropertyAxioms>recWK98fj1fTua1k9</MultiPropertyAxioms>
+      <Alias>scada.cert.transfer.000</Alias>
+      <RootStatus>Active</RootStatus>
+      <ProtocolCategory>Json</ProtocolCategory>
+      <MakeDataClass />
+      <IsCac />
+      <IsComponent />
+      <ConsistencyCheck>1</ConsistencyCheck>
+      <Description>This is a payload designed to be sent from a SCADA device to the GNodeFactory after the SCADA has opted into its certificate.</Description>
+      <AliasRoot>scada.cert.transfer</AliasRoot>
+      <RootCurrentSemanticEnd>000</RootCurrentSemanticEnd>
+      <IsCurrent>1</IsCurrent>
+      <Status>Pending</Status>
+      <InGwProto />
+      <Title>Scada Certificate Transfer</Title>
+    </Schema>
+    <Schema>
       <SchemaId>recc2Km1jUViJqVeK</SchemaId>
       <createdTime>2022-11-08T03:22:46Z</createdTime>
       <SemanticEnd>001</SemanticEnd>
@@ -7091,6 +7177,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaAttributes>recwDJqmDK7sTdTTC</SchemaAttributes>
       <SchemaAttributes>recBw1TvOwQk1gM0K</SchemaAttributes>
       <SchemaAttributes>recTV2IpdZjy1gFiQ</SchemaAttributes>
+      <PropertyFormatsUsed>recb9fI4kRkTYXDzA</PropertyFormatsUsed>
+      <PropertyFormatsUsed>recdsSDIz6EmZCvr9</PropertyFormatsUsed>
       <SchemaRoot>recGf44plaa1jjiWQ</SchemaRoot>
       <PreStatus>Pending</PreStatus>
       <ProtocolTypes>recYts9GI3HDasco4</ProtocolTypes>
@@ -7581,7 +7669,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaRoot>recBr8F2Oy5JbxQGP</SchemaRoot>
       <RestfulPosts2>recg6kZdbgxDUXAAh</RestfulPosts2>
       <PreStatus>Pending</PreStatus>
-      <ProtocolTypes>recHI1eoqW0ZYKblM</ProtocolTypes>
       <Alias>bid.ack.000</Alias>
       <RootStatus>Active</RootStatus>
       <ProtocolCategory>Json</ProtocolCategory>
@@ -7597,6 +7684,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto />
       <Title>Bid ack</Title>
     </Schema>
+    <Schema>itrWnVhcc4RXmdgnI/recvGFiTtzXNrhLBm</Schema>
     <Schema>
       <SchemaId>recvWBuo1Ws1SIL4b</SchemaId>
       <createdTime>2022-11-03T14:31:01Z</createdTime>
@@ -7657,7 +7745,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <InGwProto />
       <Title>Used by world to seed a docker container with data needed to spawn and superviser GNodeInstances</Title>
     </Schema>
-    <Schema>itrzppk8qFgGcmqr5/recwp0F6Gdrg8qLwb</Schema>
     <Schema>
       <SchemaId>recwr8WwMjrVGNL7L</SchemaId>
       <createdTime>2022-06-23T18:37:48Z</createdTime>
@@ -8879,7 +8966,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsList>true</IsList>
       <Schema>recacY2b5R2bByiAQ</Schema>
       <SubTypeFormat>recsHXkpUxoOF9vYp</SubTypeFormat>
-      <Value>BidList</Value>
+      <Value>PqPairs</Value>
       <Idx>2</Idx>
       <SubMessageFormatAlias>price.quantity.unitless.000</SubMessageFormatAlias>
       <IsEnum>false</IsEnum>
@@ -9258,6 +9345,26 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>AlgoAddressStringFormat</Format>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>rec9PJA13l3jM7pJm</SchemaAttributeId>
+      <createdTime>2023-01-19T15:38:46Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recF9KonH58AltK0K</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>TaAlias</Value>
+      <Idx>0</Idx>
+      <Title>TerminalAsset Alias</Title>
+      <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
+      <TestValue>'d1.iso.me.ghm.orange.ta'</TestValue>
+      <Description>GNodeAlias of the TerminalAsset that will be controlled by the new SCADA GNode. The SCADA GNodeAlias will have '.scada' appended to this.</Description>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>LeftRightDot</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>rec9XARl8tvdTDGbm</SchemaAttributeId>
       <createdTime>2022-11-08T08:16:57Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -9374,16 +9481,16 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
     <SchemaAttribute>
       <SchemaAttributeId>recAw8J1ipB7Ef1SZ</SchemaAttributeId>
       <createdTime>2023-01-16T19:16:33Z</createdTime>
-      <IsType>true</IsType>
-      <IsEnum>false</IsEnum>
-      <TypeInPayload>atn.params.heatpumpwithbooststore.000</TypeInPayload>
-      <Schema>rec3kcgktiHCBYpA4</Schema>
       <IsRequired>true</IsRequired>
+      <Schema>rec3kcgktiHCBYpA4</Schema>
       <SubTypeFormat>recrZz3gmzl97POA1</SubTypeFormat>
-      <SubMessageFormatAliasRoot>atn.params.heatpumpwithbooststore</SubMessageFormatAliasRoot>
-      <SubMessageFormatAlias>atn.params.heatpumpwithbooststore.000</SubMessageFormatAlias>
       <Value>AtnParams</Value>
       <Idx>3</Idx>
+      <SubMessageFormatAlias>atn.params.heatpumpwithbooststore.000</SubMessageFormatAlias>
+      <IsEnum>false</IsEnum>
+      <IsType>true</IsType>
+      <SubMessageFormatAliasRoot>atn.params.heatpumpwithbooststore</SubMessageFormatAliasRoot>
+      <TypeInPayload>atn.params.heatpumpwithbooststore.000</TypeInPayload>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recAwWmnjxxgkF6fn</SchemaAttributeId>
@@ -9487,6 +9594,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
+    <SchemaAttribute>itrQ3JS7xt0mPNik1/recBYlRmPwCbVbTMn</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recBbPnDHgnSutafc</SchemaAttributeId>
       <createdTime>2022-11-08T05:03:26Z</createdTime>
@@ -9502,7 +9610,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr1EhPwgAwtGySB7/recBbPnDHgnSutafc</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recBje3quNXHrsP6j</SchemaAttributeId>
       <createdTime>2022-09-19T15:07:03Z</createdTime>
@@ -9908,6 +10015,25 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatFail1>"d4be12d5-33ba-4f1f-b9e5"</PrimitiveFormatFail1>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recEG7l0wT1KjHSFs</SchemaAttributeId>
+      <createdTime>2023-01-19T15:40:59Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recF9KonH58AltK0K</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>SignedProof</Value>
+      <Idx>4</Idx>
+      <Title>Recent transaction signed by the TaOwner</Title>
+      <PrimitiveFormatId>recvbnpa4cX2nNp9p</PrimitiveFormatId>
+      <TestValue>'gqNzaWfEQEnByoxlKKnRQkH9QErZguzPXwN9+2FiZNIHIewYLZdIWPQfBKwZxNzdfEc3hdzqPyEKLL/+NlvxL3zR+wGSdgajdHhuiaNhbXTNA+ijZmVlzQPoomZ2GKNnZW6qc2FuZG5ldC12MaJnaMQgfs7M6tXV9AWoJrX3HQ8Fr5ic/1d9kgRAEB7K6bygyJWibHbNBACjcmN2xCCLWHNvVZoPMX7bXlxHzGaJF9RAyueOoe1BXk+IUEBS2aNzbmTEIFXNPyURTCPDClL3PqXp0pKDnZZYSNF0kMAv55W3iS8GpHR5cGWjcGF5'</TestValue>
+      <Description>These will be replaced by composite transactions in next gen code.</Description>
+      <PrimitiveFormat>AlgoMsgPackEncoded</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>AlgoMsgPackEncoded</Format>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recEPPqtrPd0FeUOQ</SchemaAttributeId>
@@ -11057,6 +11183,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>Integer</TypeInPayload>
       <Format>ReasonableUnixTimeS</Format>
     </SchemaAttribute>
+    <SchemaAttribute>itrQ3JS7xt0mPNik1/recKC523HTZfmLKCA</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKFwLpMfoUPjFYI</SchemaAttributeId>
       <createdTime>2022-11-07T18:58:24Z</createdTime>
@@ -11086,7 +11213,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
     </SchemaAttribute>
-    <SchemaAttribute>itr1EhPwgAwtGySB7/recKHRoKKq8SU7w7S</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recKRNkuHxdnCTbXe</SchemaAttributeId>
       <createdTime>2023-01-13T21:24:05Z</createdTime>
@@ -11689,6 +11815,12 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>LeftRightDot</Format>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>recNpjYJoXLNoSoTT</SchemaAttributeId>
+      <createdTime>2023-01-20T00:01:22Z</createdTime>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>recNqFhtSr37sWhIY</SchemaAttributeId>
       <createdTime>2022-12-04T14:23:11Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -12102,6 +12234,25 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
       <TypeInPayload>String</TypeInPayload>
       <Format>LeftRightDot</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recQOONbTZMocKXeg</SchemaAttributeId>
+      <createdTime>2023-01-19T15:39:01Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recF9KonH58AltK0K</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>TaDaemonAddr</Value>
+      <Idx>2</Idx>
+      <Title>Algorand address of the associated TaDaemon</Title>
+      <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
+      <TestValue>"NZXUSTZACPVJBHRSSJ5KE3JUPCITK5P2O4FE67NYPXRDVCJA6ZX4AL62EA"</TestValue>
+      <Description>The TaDaemonAddr will have the TaDeed, and can be used to verify the public address of the TaOwner</Description>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>AlgoAddressStringFormat</Format>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recQduwtmVeYjXuQV</SchemaAttributeId>
@@ -12657,6 +12808,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>WorldInstanceNameFormat</Format>
     </SchemaAttribute>
+    <SchemaAttribute>itrQ3JS7xt0mPNik1/recTVpMk0yoQ95CTi</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recTddWiWf7lHIRR2</SchemaAttributeId>
       <createdTime>2022-12-04T14:20:45Z</createdTime>
@@ -12723,7 +12875,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>MarketSlotNameLrdFormat</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr1EhPwgAwtGySB7/recTov3rcOqhTWWcf</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recU5B4V3aPnvMPZf</SchemaAttributeId>
       <createdTime>2022-11-21T05:24:55Z</createdTime>
@@ -13382,6 +13533,25 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>LeftRightDot</Format>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>recYFjgEXfTizyRiv</SchemaAttributeId>
+      <createdTime>2023-01-20T00:01:05Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recbrp6V9qD6J1NHb</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>SignedProof</Value>
+      <Idx>1</Idx>
+      <Title>Signed Proof from the SCADA Actor</Title>
+      <PrimitiveFormatId>recvbnpa4cX2nNp9p</PrimitiveFormatId>
+      <TestValue>'gqNzaWfEQEnByoxlKKnRQkH9QErZguzPXwN9+2FiZNIHIewYLZdIWPQfBKwZxNzdfEc3hdzqPyEKLL/+NlvxL3zR+wGSdgajdHhuiaNhbXTNA+ijZmVlzQPoomZ2GKNnZW6qc2FuZG5ldC12MaJnaMQgfs7M6tXV9AWoJrX3HQ8Fr5ic/1d9kgRAEB7K6bygyJWibHbNBACjcmN2xCCLWHNvVZoPMX7bXlxHzGaJF9RAyueOoe1BXk+IUEBS2aNzbmTEIFXNPyURTCPDClL3PqXp0pKDnZZYSNF0kMAv55W3iS8GpHR5cGWjcGF5'</TestValue>
+      <Description>The Scada GNode has a ScadaAlgoAddr in the GNodeFactory database, and the identity of the SCADA actor can be verified by this.</Description>
+      <PrimitiveFormat>AlgoMsgPackEncoded</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>AlgoMsgPackEncoded</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>recYFsJii0BGiCmAH</SchemaAttributeId>
       <createdTime>2023-01-13T14:36:06Z</createdTime>
       <IsPrimitive>true</IsPrimitive>
@@ -13514,6 +13684,25 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>true</IsType>
       <SubMessageFormatAliasRoot>gt.sh.multipurpose.telemetry.status</SubMessageFormatAliasRoot>
       <TypeInPayload>gt.sh.multipurpose.telemetry.status.100</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recZQKyBftNOGc46Z</SchemaAttributeId>
+      <createdTime>2023-01-19T15:38:55Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recF9KonH58AltK0K</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>ScadaAddr</Value>
+      <Idx>1</Idx>
+      <Title>Algorand address for the SCADA</Title>
+      <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
+      <TestValue>'YY65A6V4DIJOV6QUBVNRSLBYF3BAJKE23QNMLLLCL6EK6U6PNGXZTVZVXU'</TestValue>
+      <Description>The TaOwner makes the corresponding private key, puts it on the SCADA device, and then sends this address to the GNodeFactory.</Description>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>AlgoAddressStringFormat</Format>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recZVxZMDqON9vDkN</SchemaAttributeId>
@@ -14215,6 +14404,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsType>false</IsType>
       <TypeInPayload>Boolean</TypeInPayload>
     </SchemaAttribute>
+    <SchemaAttribute>itrQ3JS7xt0mPNik1/recdSCNKICUvxsgAo</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recdUSog9bonuORLH</SchemaAttributeId>
       <createdTime>2022-11-17T06:21:39Z</createdTime>
@@ -14305,7 +14495,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr1EhPwgAwtGySB7/recdwjoLr6DQUc20I</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recdyA1ugrK3wpjRN</SchemaAttributeId>
       <createdTime>2023-01-13T21:23:59Z</createdTime>
@@ -14606,6 +14795,25 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
       <TypeInPayload>Integer</TypeInPayload>
+    </SchemaAttribute>
+    <SchemaAttribute>
+      <SchemaAttributeId>recfm7YlkXDX6XQEU</SchemaAttributeId>
+      <createdTime>2023-01-19T15:39:30Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recF9KonH58AltK0K</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>GNodeRegistryAddr</Value>
+      <Idx>3</Idx>
+      <Title>GNodeRegistry Algorand address</Title>
+      <PrimitiveFormatId>recopFBsq4TmG87Op</PrimitiveFormatId>
+      <TestValue>"X2ASUAUPK5ICMGDXQZQKBPSXWEJLBA4KKQ2TXW2KWO2JQTLY3J2Q4S33WE"</TestValue>
+      <Description>The GNodeRegistry that contains Make/Model information about the SCADA and TerminalAsset</Description>
+      <PrimitiveFormat>AlgoAddressStringFormat</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>AlgoAddressStringFormat</Format>
     </SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recfnCI6bJWG4n4xR</SchemaAttributeId>
@@ -15662,6 +15870,26 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Format>UuidCanonicalTextual</Format>
     </SchemaAttribute>
     <SchemaAttribute>
+      <SchemaAttributeId>recmmOlM4okW6SVMc</SchemaAttributeId>
+      <createdTime>2023-01-20T00:00:51Z</createdTime>
+      <IsRequired>true</IsRequired>
+      <IsPrimitive>true</IsPrimitive>
+      <Schema>recbrp6V9qD6J1NHb</Schema>
+      <PrimitiveType>String</PrimitiveType>
+      <Value>TaAlias</Value>
+      <Idx>0</Idx>
+      <Title>TerminalAsset Alias</Title>
+      <PrimitiveFormatId>recb9fI4kRkTYXDzA</PrimitiveFormatId>
+      <TestValue>'d1.iso.me.ghm.orange.ta'</TestValue>
+      <Description>GNodeAlias of the TerminalAsset for which the SCADA certificate is issued. The ScadaCert can be found from this.</Description>
+      <PrimitiveFormat>LeftRightDot</PrimitiveFormat>
+      <IsEnum>false</IsEnum>
+      <IsType>false</IsType>
+      <PrimitiveFormatFail1>"a.b-h"</PrimitiveFormatFail1>
+      <TypeInPayload>String</TypeInPayload>
+      <Format>LeftRightDot</Format>
+    </SchemaAttribute>
+    <SchemaAttribute>
       <SchemaAttributeId>recmqSV7XbS4h2ys6</SchemaAttributeId>
       <createdTime>2022-11-07T20:21:10Z</createdTime>
       <IsRequired>true</IsRequired>
@@ -15753,6 +15981,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
     </SchemaAttribute>
+    <SchemaAttribute>itrQ3JS7xt0mPNik1/recnTfzYOvNX100On</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recnVh3bX9GSsAkr3</SchemaAttributeId>
       <createdTime>2022-06-14T10:41:54Z</createdTime>
@@ -15876,7 +16105,6 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <TypeInPayload>String</TypeInPayload>
       <Format>AlgoMsgPackEncoded</Format>
     </SchemaAttribute>
-    <SchemaAttribute>itr1EhPwgAwtGySB7/reco2I4nYIwrUGv3C</SchemaAttribute>
     <SchemaAttribute>
       <SchemaAttributeId>recoDIFE4bNJi9OJW</SchemaAttributeId>
       <createdTime>2022-09-20T12:16:25Z</createdTime>
@@ -16290,6 +16518,7 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Idx>0</Idx>
       <Title>Tiny signed payment to DispatchContract to prove identity</Title>
       <PrimitiveFormatId>recvbnpa4cX2nNp9p</PrimitiveFormatId>
+      <Description>Can be a minimal payment, as long as it comes from the AtomicTNode or SCADA.</Description>
       <PrimitiveFormat>AlgoMsgPackEncoded</PrimitiveFormat>
       <IsEnum>false</IsEnum>
       <IsType>false</IsType>
@@ -17423,6 +17652,11 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <Type>atn.bid.001</Type>
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>rec52F9XVqpe5t6Cp</SchemaAxiomId>
+      <createdTime>2023-01-20T12:39:45Z</createdTime>
+      <Name> Type Axiom </Name>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>rec5VDuzpUgfcEkJx</SchemaAxiomId>
       <createdTime>2022-09-22T14:04:02Z</createdTime>
       <Description>The MultiSig must belong to the 2-sig Multi [Gnf Admin, payload.DeedValidatorAddr]</Description>
@@ -17814,6 +18048,17 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recWK98fj1fTua1k9</SchemaAxiomId>
+      <createdTime>2023-01-20T00:16:30Z</createdTime>
+      <Description>Axiom 1: Scada is SignedProof signer.
+        There is a ScadaCert created by the Gnf with this ta_alias, and  the txn is the OptIn.</Description>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>Scada is SignedProof signer</Title>
+      <MultiPropertyAxiom>recbrp6V9qD6J1NHb</MultiPropertyAxiom>
+      <Name>scada.cert.transfer.000 Type Axiom 1</Name>
+      <Type>scada.cert.transfer.000</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recY7qq8BPIydsNm8</SchemaAxiomId>
       <createdTime>2022-07-22T17:51:58Z</createdTime>
       <Description>All CurrentTransformer components must have a meter_idx, which is less than the max meter idx of its node's power meter's component's cac</Description>
@@ -17955,7 +18200,8 @@ CHANGE to TOPOLOGY Axiom (Joint Axiom 1)</UpdateDescription>
       <SchemaAxiomId>recj13iYXBkX5UZr3</SchemaAxiomId>
       <createdTime>2022-09-22T03:48:19Z</createdTime>
       <SinglePropertyAxiom>recBje3quNXHrsP6j</SinglePropertyAxiom>
-      <Description>ValidatorAddr must have enough Algos  to meet the GNodeFactory criterion.</Description>
+      <Description>MultiAccount [GnfAdminAddr, ValidatorAddr] must have enough Algos to meet
+        the GNodeFactory criterion.</Description>
       <AxiomNumber>4</AxiomNumber>
       <Title>TaValidator has sufficient Algos</Title>
       <Name>tavalidatorcert.algo.transfer.000 Type Axiom 4</Name>
@@ -18101,6 +18347,16 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MakeDataClass>true</MakeDataClass>
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recw40tHmgYZ9Jjrx</SchemaAxiomId>
+      <createdTime>2023-01-20T00:15:43Z</createdTime>
+      <Description>The TaDaemonAddr owns a TaDeed for the TaAlias.</Description>
+      <AxiomNumber>2</AxiomNumber>
+      <Title>TaAlias matches TaDeed</Title>
+      <MultiPropertyAxiom>recF9KonH58AltK0K</MultiPropertyAxiom>
+      <Name>basegnode.scada.create.000 Type Axiom 2</Name>
+      <Type>basegnode.scada.create.000</Type>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recwsWtIgu909pJm1</SchemaAxiomId>
       <createdTime>2022-09-22T01:27:09Z</createdTime>
       <Description>The asset-index of the new deed must be greater than the asset-index of the old deed</Description>
@@ -18121,9 +18377,25 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Type>tavalidatorcert.algo.create.000</Type>
     </SchemaAxiom>
     <SchemaAxiom>
+      <SchemaAxiomId>recytsVdwKmDj3uOJ</SchemaAxiomId>
+      <createdTime>2023-01-20T12:40:15Z</createdTime>
+      <Name> Type Axiom </Name>
+    </SchemaAxiom>
+    <SchemaAxiom>
       <SchemaAxiomId>recywlVemL8XK7bRG</SchemaAxiomId>
       <createdTime>2023-01-16T17:23:57Z</createdTime>
       <Name> Type Axiom </Name>
+    </SchemaAxiom>
+    <SchemaAxiom>
+      <SchemaAxiomId>reczUIUpS1LU0Aw6d</SchemaAxiomId>
+      <createdTime>2023-01-20T00:14:05Z</createdTime>
+      <Description>The TaDaemonAddr provides the public address for the TaOwner. This TaOwnerAddr must match
+        the signature on the SignedProof.</Description>
+      <AxiomNumber>1</AxiomNumber>
+      <Title>TaOwner is SignedProof signer</Title>
+      <MultiPropertyAxiom>recF9KonH58AltK0K</MultiPropertyAxiom>
+      <Name>basegnode.scada.create.000 Type Axiom 1</Name>
+      <Type>basegnode.scada.create.000</Type>
     </SchemaAxiom>
   </SchemaAxioms>
   <PropertyFormats>
@@ -18393,6 +18665,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>recCZdtLIakEf3fWh</MpSchemaAttributes>
       <MpSchemaAttributes>recxO0tKJ0Wp8B3pW</MpSchemaAttributes>
       <MpSchemaAttributes>reciX75GU6FOPxifV</MpSchemaAttributes>
+      <MpSchemaAttributes>rec9PJA13l3jM7pJm</MpSchemaAttributes>
+      <MpSchemaAttributes>recmmOlM4okW6SVMc</MpSchemaAttributes>
       <TypesThatUse>recc2Km1jUViJqVeK</TypesThatUse>
       <TypesThatUse>rec8uTC7GK5qgXzg9</TypesThatUse>
       <TypesThatUse>reczVqlxJInFWonml</TypesThatUse>
@@ -18429,6 +18703,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>rec9kYNek59Vqps4S</TypesThatUse>
       <TypesThatUse>recBEBBA0ctnOYQnC</TypesThatUse>
       <TypesThatUse>rec3kcgktiHCBYpA4</TypesThatUse>
+      <TypesThatUse>rechVGhiKUuIgoWYy</TypesThatUse>
+      <TypesThatUse>recF9KonH58AltK0K</TypesThatUse>
+      <TypesThatUse>recbrp6V9qD6J1NHb</TypesThatUse>
       <Example>dw1.isone.me.freedom.apple</Example>
       <Name>LeftRightDot</Name>
     </PropertyFormat>
@@ -18453,6 +18730,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>recvGFiTtzXNrhLBm</TypesThatUse>
       <TypesThatUse>recd5K0XiAzHsj2Pw</TypesThatUse>
       <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
+      <TypesThatUse>rechVGhiKUuIgoWYy</TypesThatUse>
       <Name>MarketSlotNameLrdFormat</Name>
     </PropertyFormat>
     <PropertyFormat>
@@ -18511,6 +18789,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>recmLRUnZxOfOmAt9</MpSchemaAttributes>
       <MpSchemaAttributes>recKVh2K6tmazsz4r</MpSchemaAttributes>
       <MpSchemaAttributes>recYFsJii0BGiCmAH</MpSchemaAttributes>
+      <MpSchemaAttributes>recZQKyBftNOGc46Z</MpSchemaAttributes>
+      <MpSchemaAttributes>recQOONbTZMocKXeg</MpSchemaAttributes>
+      <MpSchemaAttributes>recfm7YlkXDX6XQEU</MpSchemaAttributes>
       <TypesThatUse>rec8uTC7GK5qgXzg9</TypesThatUse>
       <TypesThatUse>rectayh08KEGGGcZc</TypesThatUse>
       <TypesThatUse>recV0KuDFayH4qGIl</TypesThatUse>
@@ -18530,6 +18811,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>recJH4tbXOqVJkMVW</TypesThatUse>
       <TypesThatUse>recazQb2vEXgbroHd</TypesThatUse>
       <TypesThatUse>recECSz5o4Z7NFjhG</TypesThatUse>
+      <TypesThatUse>recF9KonH58AltK0K</TypesThatUse>
       <Example>RNMHG32VTIHTC7W3LZOEPTDGREL5IQGK46HKD3KBLZHYQUCAKLMT4G5ALI</Example>
       <Name>AlgoAddressStringFormat</Name>
     </PropertyFormat>
@@ -18583,6 +18865,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <MpSchemaAttributes>recqXdxf3WK0BhhJo</MpSchemaAttributes>
       <MpSchemaAttributes>recqZpHzORTrCpcjl</MpSchemaAttributes>
       <MpSchemaAttributes>rec5xtm1Bu9kG4GaK</MpSchemaAttributes>
+      <MpSchemaAttributes>recEG7l0wT1KjHSFs</MpSchemaAttributes>
+      <MpSchemaAttributes>recYFjgEXfTizyRiv</MpSchemaAttributes>
       <TypesThatUse>reccFZLsGTVhuzGsn</TypesThatUse>
       <TypesThatUse>rec1SFXYQUXElpeJ9</TypesThatUse>
       <TypesThatUse>recO8OdobcISYms0B</TypesThatUse>
@@ -18596,6 +18880,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <TypesThatUse>rechKgkXf88R5dkGD</TypesThatUse>
       <TypesThatUse>recBEBBA0ctnOYQnC</TypesThatUse>
       <TypesThatUse>rec3kcgktiHCBYpA4</TypesThatUse>
+      <TypesThatUse>recF9KonH58AltK0K</TypesThatUse>
+      <TypesThatUse>recbrp6V9qD6J1NHb</TypesThatUse>
       <Example>gqRtc2lng6ZzdWJzaWeSgaJwa8Qgi1hzb1WaDzF+215cR8xmiRfUQMrnjqHtQV5PiFBAUtmConBrxCD8IT4Zu8vBAhRNsXoWF+2i6q2KyBZrPhmbDCKJD7rBBqFzxEAEp8UcTEJSyTmgw96/mCnNHKfhkdYMCD5jxWejHRmPCrR8U9z/FBVsoCGbjDTTk2L1k7n/eVlumEk/M1KSe48Jo3RocgKhdgGjdHhuiaRhcGFyhaJhbq9Nb2xseSBNZXRlcm1haWSiYXXZKWh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC9tb2xseWNvL3doby13ZS1hcmUvoW3EIItYc29Vmg8xftteXEfMZokX1EDK546h7UFeT4hQQFLZoXQBonVupVZMRFRSo2ZlZc0D6KJmdlGjZ2VuqnNhbmRuZXQtdjGiZ2jEIC/iF+bI4LU6UTgG4SIxyD10PS0/vNAEa93OC5SVRFn6omx2zQQ5pG5vdGXEK01vbGx5IEluYyBUZWxlbWV0cnkgU3VydmV5b3JzIGFuZCBQdXJ2ZXlvcnOjc25kxCDHZxhdCT2TxxxZlZ/H5mIku1s4ulDm3EmU6dYKXCWEB6R0eXBlpGFjZmc=</Example>
       <Name>AlgoMsgPackEncoded</Name>
     </PropertyFormat>
@@ -18636,7 +18922,6 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <createdTime>2022-11-16T19:07:38Z</createdTime>
       <ProtocolTypes>recwv4Bsb1NA1uZxn</ProtocolTypes>
       <ProtocolTypes>recSIwq3BdNSAxp2e</ProtocolTypes>
-      <ProtocolTypes>recHI1eoqW0ZYKblM</ProtocolTypes>
       <ProtocolTypes>recrWS8cReivzRx92</ProtocolTypes>
       <ProtocolTypes>rec1qAnTlin7a194M</ProtocolTypes>
       <ProtocolTypes>rec8cREVO03dOhbWy</ProtocolTypes>
@@ -18702,6 +18987,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolTypes>rec2ZUAEXRfDLAKh8</ProtocolTypes>
       <ProtocolTypes>recurndoUQt30tVFv</ProtocolTypes>
       <ProtocolTypes>recIX7Ev6QVM4jtwT</ProtocolTypes>
+      <ProtocolTypes>recaBlt54tM7DPjwR</ProtocolTypes>
+      <ProtocolTypes>recjvYtEfvMLsZJtV</ProtocolTypes>
       <Name>gwatn</Name>
       <ProtocolEnums>recLjDrJSnNnwWD54</ProtocolEnums>
       <ProtocolEnums>recRncRvdA6tysnAt</ProtocolEnums>
@@ -18792,6 +19079,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolTypes>recCLW1iXAhVHGoUm</ProtocolTypes>
       <ProtocolTypes>recmM5fq13YDWN7oc</ProtocolTypes>
       <ProtocolTypes>recKCYKKIRjtnFzdh</ProtocolTypes>
+      <ProtocolTypes>recl7u8ZInYMFV7EC</ProtocolTypes>
+      <ProtocolTypes>recrpoQF951bAlwS5</ProtocolTypes>
       <Name>gnf</Name>
       <ProtocolEnums>recX5VXrxWR81za5J</ProtocolEnums>
       <ProtocolEnums>recr9TyWTi2Ct7iKH</ProtocolEnums>
@@ -18879,6 +19168,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolEnums>recdz6xbHSpZlJDxe</ProtocolEnums>
       <ProtocolEnums>recLRAc86dtBYsogW</ProtocolEnums>
       <ProtocolEnums>rectmy7sSSaRVzm4x</ProtocolEnums>
+      <ProtocolEnums>rec3OJ7Qnn65b8uug</ProtocolEnums>
+      <ProtocolEnums>rectGOQvuxBQ1f8LZ</ProtocolEnums>
+      <ProtocolEnums>recEAaklKzWgLdKio</ProtocolEnums>
     </Protocol>
     <Protocol>
       <ProtocolId>recvaW2RuHMh5mwwR</ProtocolId>
@@ -18907,6 +19199,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr g.nodes.broadcast.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>g.nodes.broadcast.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec0Uk7vhJUpp68kq</ProtocolTypeId>
@@ -18916,6 +19209,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr basegnode.other.create.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>basegnode.other.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec0yahRyau7Mzmzk</ProtocolTypeId>
@@ -18925,6 +19219,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn price.quantity.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>price.quantity.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec1Kr8gSWyIe4lG2</ProtocolTypeId>
@@ -18934,6 +19229,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf basegnodes.broadcast.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>basegnodes.broadcast.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec1WZNSLK8X3RGoh</ProtocolTypeId>
@@ -18943,6 +19239,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada temp.sensor.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>temp.sensor.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec1nKwt8hPeDIqrE</ProtocolTypeId>
@@ -18952,6 +19249,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwtime resume.time.000</Name>
       <ProtocolName>gwtime</ProtocolName>
       <TypeName>resume.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec1qAnTlin7a194M</ProtocolTypeId>
@@ -18961,6 +19259,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm heartbeat.a.100</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec2D8QrI2Tps74Ce</ProtocolTypeId>
@@ -18970,6 +19269,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn electric.meter.cac.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>electric.meter.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec2Gvd8Nt7DvqTpf</ProtocolTypeId>
@@ -18979,6 +19279,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwtime ready.001</Name>
       <ProtocolName>gwtime</ProtocolName>
       <TypeName>ready.001</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec2QIaMX8gSssv7M</ProtocolTypeId>
@@ -18988,6 +19289,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf basegnodes.get.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>basegnodes.get.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec2ZUAEXRfDLAKh8</ProtocolTypeId>
@@ -18997,6 +19299,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn sim.scada.driver.report.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>sim.scada.driver.report.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec2a1O4X0TlMmhsW</ProtocolTypeId>
@@ -19006,6 +19309,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada snapshot.spaceheat.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>snapshot.spaceheat.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec3V5oWa4cyRtWNc</ProtocolTypeId>
@@ -19015,6 +19319,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf tavalidatorcert.algo.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>tavalidatorcert.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec48h8N51cFfC0Y2</ProtocolTypeId>
@@ -19024,6 +19329,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn heartbeat.algo.audit.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>heartbeat.algo.audit.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec49oZw87DHVaGGI</ProtocolTypeId>
@@ -19033,6 +19339,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks tavalidatorcert.algo.transfer.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>tavalidatorcert.algo.transfer.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>rec4If5Mc40py4RZn</ProtocolTypeId>
+      <createdTime>2023-01-19T20:14:04Z</createdTime>
+      <Name></Name>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec50dqlnp2l3PH7B</ProtocolTypeId>
@@ -19042,6 +19354,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks tavalidatorcert.algo.create.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>tavalidatorcert.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec5K84S2MN0iMNlE</ProtocolTypeId>
@@ -19051,6 +19364,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn terminalasset.certify.hack.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>terminalasset.certify.hack.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec5LcnUo5uGaILj6</ProtocolTypeId>
@@ -19060,6 +19374,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn tavalidatorcert.algo.create.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>tavalidatorcert.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec5dH5f6YcOKD0RU</ProtocolTypeId>
@@ -19069,6 +19384,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm price.quantity.unitless.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>price.quantity.unitless.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec5uG0IulOeg3qcr</ProtocolTypeId>
@@ -19078,6 +19394,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada gt.component.attribute.class.100</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>gt.component.attribute.class.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec86XZBf9WnCg5bX</ProtocolTypeId>
@@ -19087,6 +19404,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn snapshot.spaceheat.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>snapshot.spaceheat.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec8cREVO03dOhbWy</ProtocolTypeId>
@@ -19096,6 +19414,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm latest.price.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>latest.price.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec9HUzZ3tgJOalLk</ProtocolTypeId>
@@ -19105,6 +19424,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf new.tadeed.algo.optin.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>new.tadeed.algo.optin.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec9YccOK2FAjZ9dA</ProtocolTypeId>
@@ -19119,6 +19439,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn resistive.heater.component.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>resistive.heater.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rec9y2OWDqjR6vSAp</ProtocolTypeId>
@@ -19128,6 +19449,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld g.node.instance.gt.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>g.node.instance.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recA4Y7Iy3elTbyCB</ProtocolTypeId>
@@ -19137,6 +19459,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf basegnode.other.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>basegnode.other.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recAJ6AYNLdBZ7XfK</ProtocolTypeId>
@@ -19146,6 +19469,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf discoverycert.algo.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>discoverycert.algo.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recAKcZ5BDHN6JKil</ProtocolTypeId>
@@ -19155,6 +19479,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf heartbeat.a.100</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recAO8C6pnLKe00p1</ProtocolTypeId>
@@ -19164,6 +19489,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn new.tadeed.algo.optin.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>new.tadeed.algo.optin.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recASxd0yY7a1nWR4</ProtocolTypeId>
@@ -19173,6 +19499,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn heartbeat.a.100</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recArJ8vLyugTEdNj</ProtocolTypeId>
@@ -19182,6 +19509,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada pipe.flow.sensor.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>pipe.flow.sensor.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recB2fok3eH3LnZmw</ProtocolTypeId>
@@ -19191,6 +19519,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn ready.001</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>ready.001</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recB57YfEtBGpfH71</ProtocolTypeId>
@@ -19200,6 +19529,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn boolean.actuator.cac.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>boolean.actuator.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recBZVJVqK4DOb2JX</ProtocolTypeId>
@@ -19209,6 +19539,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks initial.tadeed.algo.transfer.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>initial.tadeed.algo.transfer.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recCLW1iXAhVHGoUm</ProtocolTypeId>
@@ -19218,6 +19549,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf sla.enter.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>sla.enter.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recCqC0KKS00693kw</ProtocolTypeId>
@@ -19227,6 +19559,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn initial.tadeed.algo.optin.002</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>initial.tadeed.algo.optin.002</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recCuch3XtEssNGuu</ProtocolTypeId>
@@ -19236,6 +19569,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada resistive.heater.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>resistive.heater.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recD3lLZaCPt9ehVW</ProtocolTypeId>
@@ -19245,6 +19579,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn initial.tadeed.algo.transfer.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>initial.tadeed.algo.transfer.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recD3ljiQIeTgIh7G</ProtocolTypeId>
@@ -19259,6 +19594,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr basegnode.marketmaker.create.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>basegnode.marketmaker.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recDST3lwGBFXqsz1</ProtocolTypeId>
@@ -19268,6 +19604,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn price.quantity.unitless.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>price.quantity.unitless.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recFnEf8eIe2zVWOY</ProtocolTypeId>
@@ -19277,6 +19614,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks ready.001</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>ready.001</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recFreOp8J4dIjXkD</ProtocolTypeId>
@@ -19286,6 +19624,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn tadeed.specs.hack.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>tadeed.specs.hack.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recFxZw9Lrr4wrO5U</ProtocolTypeId>
@@ -19300,6 +19639,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn atn.params.heatpumpwithbooststore.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>atn.params.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recGSPzbsyt0nPa5B</ProtocolTypeId>
@@ -19309,6 +19649,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn g.node.instance.gt.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>g.node.instance.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recGg8u1kDk0dEwT0</ProtocolTypeId>
@@ -19318,6 +19659,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn base.g.node.gt.002</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>base.g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recGk4c4hm4Ng97pB</ProtocolTypeId>
@@ -19327,6 +19669,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn gt.dispatch.boolean.100</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>gt.dispatch.boolean.100</TypeName>
+      <TypeStatus>Deprecated</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recGpv7lXS5nQj5jR</ProtocolTypeId>
@@ -19336,15 +19679,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn flo.params.heatpumpwithbooststore.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>flo.params.heatpumpwithbooststore.000</TypeName>
-    </ProtocolType>
-    <ProtocolType>
-      <ProtocolTypeId>recHI1eoqW0ZYKblM</ProtocolTypeId>
-      <createdTime>2022-11-16T19:17:01Z</createdTime>
-      <Protocol>rec3E1mvlkD3mlc6K</Protocol>
-      <Type>recvGFiTtzXNrhLBm</Type>
-      <Name>gwmm bid.ack.000</Name>
-      <ProtocolName>gwmm</ProtocolName>
-      <TypeName>bid.ack.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recHxMHk1Q13AGxQT</ProtocolTypeId>
@@ -19354,6 +19689,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr base.g.node.gt.002</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>base.g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recI3qMEZNOVje6qG</ProtocolTypeId>
@@ -19363,6 +19699,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld debug.tc.reinitialize.time.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>debug.tc.reinitialize.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recIX7Ev6QVM4jtwT</ProtocolTypeId>
@@ -19372,6 +19709,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn join.dispatch.contract.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>join.dispatch.contract.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recJbB2aEPqgo0e6D</ProtocolTypeId>
@@ -19381,6 +19719,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks supervisor.container.gt.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>supervisor.container.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recJqKGuHpco4ynvW</ProtocolTypeId>
@@ -19390,6 +19729,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks gw.cert.id.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>gw.cert.id.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recJyGiKdNEsSmseU</ProtocolTypeId>
@@ -19404,6 +19744,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf gw.cert.id.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>gw.cert.id.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recKSUPYQMWtLJ9Tz</ProtocolTypeId>
@@ -19418,6 +19759,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn accepted.bid.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>accepted.bid.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recLBYNcGvIrpb1nX</ProtocolTypeId>
@@ -19427,6 +19769,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn market.slot.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>market.slot.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recM6At5qFrk4dsir</ProtocolTypeId>
@@ -19436,6 +19779,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn snapshot.heatpumpwithbooststore.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>snapshot.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recM8DeGDMOPo9ezd</ProtocolTypeId>
@@ -19445,6 +19789,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr basegnode.terminalasset.create.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>basegnode.terminalasset.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recMWNrvkQjOIdOjQ</ProtocolTypeId>
@@ -19454,6 +19799,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada boolean.actuator.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>boolean.actuator.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recMiJmpBdJWV7BmB</ProtocolTypeId>
@@ -19463,6 +19809,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada telemetry.snapshot.spaceheat.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>telemetry.snapshot.spaceheat.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recMvuzDPwhs257Bs</ProtocolTypeId>
@@ -19472,6 +19819,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm market.type.gt.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>market.type.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recNjwSbImYz0D7wU</ProtocolTypeId>
@@ -19481,6 +19829,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada resistive.heater.component.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>resistive.heater.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recOEHxBFFDNPACx1</ProtocolTypeId>
@@ -19490,6 +19839,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwtime pause.time.000</Name>
       <ProtocolName>gwtime</ProtocolName>
       <TypeName>pause.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recOVsu1AQ1nyhMTN</ProtocolTypeId>
@@ -19499,6 +19849,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm sim.timestep.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>sim.timestep.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recOq6H5IW6gkmww6</ProtocolTypeId>
@@ -19508,6 +19859,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada sensor.reporting.config.100</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>sensor.reporting.config.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recPRrjd1GyqOVHIZ</ProtocolTypeId>
@@ -19517,6 +19869,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf old.tadeed.algo.return.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>old.tadeed.algo.return.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recPkFr8lDBRTXq08</ProtocolTypeId>
@@ -19526,6 +19879,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm market.price.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>market.price.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recQ8RJQmoquLGcuB</ProtocolTypeId>
+      <createdTime>2023-01-19T20:14:19Z</createdTime>
+      <Name></Name>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recQDvrJAF4lWWp1l</ProtocolTypeId>
@@ -19535,6 +19894,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada heartbeat.a.100</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recQItJExa3ZiV3Jh</ProtocolTypeId>
@@ -19544,6 +19904,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf new.tadeed.send.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>new.tadeed.send.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recR0I6YDYPnvPeTV</ProtocolTypeId>
@@ -19558,6 +19919,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr basegnodes.broadcast.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>basegnodes.broadcast.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recSENoEtLHiKubGR</ProtocolTypeId>
@@ -19567,6 +19929,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn telemetry.snapshot.spaceheat.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>telemetry.snapshot.spaceheat.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recSEzthAkF4L0on3</ProtocolTypeId>
@@ -19577,10 +19940,11 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <ProtocolTypeId>recSIwq3BdNSAxp2e</ProtocolTypeId>
       <createdTime>2022-11-16T19:16:46Z</createdTime>
       <Protocol>rec3E1mvlkD3mlc6K</Protocol>
-      <Type>recH9GUDdSB7SiwNG</Type>
-      <Name>gwmm atn.bid.000</Name>
+      <Type>recECSz5o4Z7NFjhG</Type>
+      <Name>gwmm atn.bid.001</Name>
       <ProtocolName>gwmm</ProtocolName>
-      <TypeName>atn.bid.000</TypeName>
+      <TypeName>atn.bid.001</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recSNej4i6EwucKbV</ProtocolTypeId>
@@ -19590,6 +19954,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn atn.bid.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>atn.bid.000</TypeName>
+      <TypeStatus>Deprecated</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recSxY4F5Ewetp9tW</ProtocolTypeId>
@@ -19599,6 +19964,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn super.starter.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>super.starter.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recTvm4cpEzdavk6J</ProtocolTypeId>
@@ -19608,6 +19974,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld resume.time.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>resume.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recV4C9AdgfbBen2y</ProtocolTypeId>
@@ -19617,6 +19984,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada electric.meter.component.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>electric.meter.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recVQ3e3vgtZiDbe0</ProtocolTypeId>
@@ -19626,6 +19994,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwtime debug.tc.reinitialize.time.000</Name>
       <ProtocolName>gwtime</ProtocolName>
       <TypeName>debug.tc.reinitialize.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recVyJz6EmMdwDjYy</ProtocolTypeId>
@@ -19635,6 +20004,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr basegnode.ctn.create.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>basegnode.ctn.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recWQ4qoe36jdvDDu</ProtocolTypeId>
@@ -19644,6 +20014,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn electric.meter.component.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>electric.meter.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recWaQL9LKI0BTilC</ProtocolTypeId>
@@ -19653,6 +20024,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn initial.tadeed.algo.create.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>initial.tadeed.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recWbhB62TTgTQUtI</ProtocolTypeId>
@@ -19662,6 +20034,12 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn gw.cert.id.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>gw.cert.id.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recXAkU0k4d7PcCW0</ProtocolTypeId>
+      <createdTime>2023-01-18T21:40:46Z</createdTime>
+      <Name></Name>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recXyL1DvYY5MfEmR</ProtocolTypeId>
@@ -19676,6 +20054,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf resume.time.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>resume.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recY5s5LoUEwNBowT</ProtocolTypeId>
@@ -19685,6 +20064,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf basegnode.ctn.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>basegnode.ctn.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recYSfcJBIVxFIWCZ</ProtocolTypeId>
@@ -19694,6 +20074,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf initial.tadeed.algo.optin.002</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>initial.tadeed.algo.optin.002</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recYXSUnBW9DHXJWw</ProtocolTypeId>
@@ -19703,6 +20084,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn gt.dispatch.boolean.110</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>gt.dispatch.boolean.110</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recYbrmOJrNmUO4pd</ProtocolTypeId>
@@ -19717,6 +20099,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm market.maker.info.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>market.maker.info.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZBrVC3qx5dJ9B0</ProtocolTypeId>
@@ -19726,6 +20109,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn boolean.actuator.component.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>boolean.actuator.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZCRfLe9nDmrRAU</ProtocolTypeId>
@@ -19735,6 +20119,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf pause.time.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>pause.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZZqjz8vL6Dj548</ProtocolTypeId>
@@ -19744,7 +20129,9 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn sla.enter.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>sla.enter.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
+    <ProtocolType>itrOWlklMet6hzDlz/recZZqjz8vL6Dj548</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recZiKOMXJ8UCneY9</ProtocolTypeId>
       <createdTime>2022-10-31T20:32:12Z</createdTime>
@@ -19753,6 +20140,17 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf basegnode.terminalasset.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>basegnode.terminalasset.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recaBlt54tM7DPjwR</ProtocolTypeId>
+      <createdTime>2023-01-19T20:14:06Z</createdTime>
+      <Protocol>rec3nJaxOMLIKJoNY</Protocol>
+      <Type>recF9KonH58AltK0K</Type>
+      <Name>gwatn basegnode.scada.create.000</Name>
+      <ProtocolName>gwatn</ProtocolName>
+      <TypeName>basegnode.scada.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recaT1SF8nRebYo7G</ProtocolTypeId>
@@ -19762,8 +20160,8 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks initial.tadeed.algo.create.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>initial.tadeed.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
-    <ProtocolType>itr6Ohp8NzAIuMde5/recaT1SF8nRebYo7G</ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recanqppJwatq7fmU</ProtocolTypeId>
       <createdTime>2022-11-08T08:14:57Z</createdTime>
@@ -19772,6 +20170,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn latest.price.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>latest.price.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbN7L6MH925xDby</ProtocolTypeId>
@@ -19781,6 +20180,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn old.tadeed.algo.return.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>old.tadeed.algo.return.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbV3eBvST23mHgN</ProtocolTypeId>
@@ -19790,6 +20190,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm accepted.bid.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>accepted.bid.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recbuSNZg3DwAGxys</ProtocolTypeId>
@@ -19799,6 +20200,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld supervisor.container.gt.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>supervisor.container.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recc24iKFupSXBEgQ</ProtocolTypeId>
@@ -19808,6 +20210,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks g.node.instance.gt.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>g.node.instance.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reccEMLYgCyyYLPr2</ProtocolTypeId>
@@ -19817,6 +20220,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf terminalasset.certify.hack.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>terminalasset.certify.hack.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reccfgO8fAUzT3J2W</ProtocolTypeId>
@@ -19826,6 +20230,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf basegnode.marketmaker.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>basegnode.marketmaker.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reccq15mpDgpXGekn</ProtocolTypeId>
@@ -19835,6 +20240,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf base.g.node.gt.002</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>base.g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reccuFJPlMliv6yW8</ProtocolTypeId>
@@ -19844,6 +20250,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwtime sim.timestep.000</Name>
       <ProtocolName>gwtime</ProtocolName>
       <TypeName>sim.timestep.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rece0jNAI2D1qrYj7</ProtocolTypeId>
@@ -19853,6 +20260,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn pipe.flow.sensor.component.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>pipe.flow.sensor.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recfLzamGrtSF52cT</ProtocolTypeId>
@@ -19862,6 +20270,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn supervisor.container.gt.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>supervisor.container.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recfdC5aUpHXgXtON</ProtocolTypeId>
@@ -19871,6 +20280,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr g.node.gt.002</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recfsDYNRW0af16Ol</ProtocolTypeId>
@@ -19880,6 +20290,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn atn.params.report.heatpumpwithbooststore.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>atn.params.report.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recg3ZHFD17mRWVDL</ProtocolTypeId>
@@ -19889,6 +20300,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf tatradingrights.algo.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>tatradingrights.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recgroRYrhO8lRT9B</ProtocolTypeId>
@@ -19898,6 +20310,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn heartbeat.b.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>heartbeat.b.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rechF5mJ2nH8ZB9Vn</ProtocolTypeId>
@@ -19907,6 +20320,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada electric.meter.cac.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>electric.meter.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reci2IGqh2kbuZxSa</ProtocolTypeId>
@@ -19916,6 +20330,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada electrical.quantity.reporting.config.100</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>electrical.quantity.reporting.config.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reciQYtVczpDGsA1n</ProtocolTypeId>
@@ -19925,6 +20340,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada temp.sensor.component.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>temp.sensor.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reciUjZq6Ym3P59mT</ProtocolTypeId>
@@ -19934,6 +20350,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf tadeed.specs.hack.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>tadeed.specs.hack.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reciXeCa9g1WrIc02</ProtocolTypeId>
@@ -19943,6 +20360,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld sim.timestep.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>sim.timestep.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recianedmKDqWVh0O</ProtocolTypeId>
@@ -19952,6 +20370,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld heartbeat.a.100</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recjg4AvSyxIiItff</ProtocolTypeId>
@@ -19961,6 +20380,17 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn pipe.flow.sensor.cac.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>pipe.flow.sensor.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recjvYtEfvMLsZJtV</ProtocolTypeId>
+      <createdTime>2023-01-20T00:21:28Z</createdTime>
+      <Protocol>rec3nJaxOMLIKJoNY</Protocol>
+      <Type>recbrp6V9qD6J1NHb</Type>
+      <Name>gwatn scada.cert.transfer.000</Name>
+      <ProtocolName>gwatn</ProtocolName>
+      <TypeName>scada.cert.transfer.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reckr1EbtWVGkY1KM</ProtocolTypeId>
@@ -19970,6 +20400,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks super.starter.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>super.starter.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>reckwTitpkjc24FAx</ProtocolTypeId>
@@ -19979,6 +20410,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn new.tadeed.send.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>new.tadeed.send.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recl5eLv36HJnILWJ</ProtocolTypeId>
@@ -19988,6 +20420,17 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld pause.time.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>pause.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recl7u8ZInYMFV7EC</ProtocolTypeId>
+      <createdTime>2023-01-19T20:14:21Z</createdTime>
+      <Protocol>recXaQaXNNDyxIlT7</Protocol>
+      <Type>recF9KonH58AltK0K</Type>
+      <Name>gnf basegnode.scada.create.000</Name>
+      <ProtocolName>gnf</ProtocolName>
+      <TypeName>basegnode.scada.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recleupDcbcVTVRQ9</ProtocolTypeId>
@@ -19997,6 +20440,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm market.slot.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>market.slot.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recmM5fq13YDWN7oc</ProtocolTypeId>
@@ -20006,6 +20450,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf debug.tc.reinitialize.time.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>debug.tc.reinitialize.time.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recmXImdzdJvIhwRj</ProtocolTypeId>
@@ -20015,6 +20460,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn g.node.gt.002</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnBbGAlK4U8sngT</ProtocolTypeId>
@@ -20024,6 +20470,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwtime heartbeat.a.100</Name>
       <ProtocolName>gwtime</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnode9jR9HdGfcE</ProtocolTypeId>
@@ -20033,6 +20480,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada gt.component.100</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>gt.component.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnvClBEU4WU5lOe</ProtocolTypeId>
@@ -20042,6 +20490,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn tavalidatorcert.algo.transfer.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>tavalidatorcert.algo.transfer.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recnwesXAnDk54IJt</ProtocolTypeId>
@@ -20051,6 +20500,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld g.node.gt.002</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recoU7QvP85rZrZ70</ProtocolTypeId>
@@ -20065,6 +20515,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks sim.timestep.000</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>sim.timestep.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recrWS8cReivzRx92</ProtocolTypeId>
@@ -20074,6 +20525,17 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm g.node.gt.002</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
+    </ProtocolType>
+    <ProtocolType>
+      <ProtocolTypeId>recrpoQF951bAlwS5</ProtocolTypeId>
+      <createdTime>2023-01-20T00:21:40Z</createdTime>
+      <Protocol>recXaQaXNNDyxIlT7</Protocol>
+      <Type>recbrp6V9qD6J1NHb</Type>
+      <Name>gnf scada.cert.transfer.000</Name>
+      <ProtocolName>gnf</ProtocolName>
+      <TypeName>scada.cert.transfer.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recs6Jf8auLqC5z1T</ProtocolTypeId>
@@ -20083,6 +20545,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn discoverycert.algo.create.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>discoverycert.algo.create.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recs8N9wVyonAKE8y</ProtocolTypeId>
@@ -20092,6 +20555,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr basegnodes.get.000</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>basegnodes.get.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recsRFfTXSym7gX54</ProtocolTypeId>
@@ -20101,6 +20565,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf initial.tadeed.algo.transfer.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>initial.tadeed.algo.transfer.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recsqbuLwrgitVmoY</ProtocolTypeId>
@@ -20110,6 +20575,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks heartbeat.a.100</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rect3RqANsPtjXr8a</ProtocolTypeId>
@@ -20119,6 +20585,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks g.node.gt.002</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>g.node.gt.002</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rect61DlS8mCPHnUL</ProtocolTypeId>
@@ -20128,6 +20595,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf initial.tadeed.algo.create.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>initial.tadeed.algo.create.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rectD1KxAzqJILPfu</ProtocolTypeId>
@@ -20137,6 +20605,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn market.type.gt.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>market.type.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>rectUrkJtiUPjNn5q</ProtocolTypeId>
@@ -20146,6 +20615,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf discoverycert.algo.transfer.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>discoverycert.algo.transfer.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recuRXwHhLfdx259p</ProtocolTypeId>
@@ -20155,6 +20625,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada pipe.flow.sensor.component.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>pipe.flow.sensor.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recuetPMCxsDyU0R4</ProtocolTypeId>
@@ -20164,6 +20635,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwatn sim.timestep.000</Name>
       <ProtocolName>gwatn</ProtocolName>
       <TypeName>sim.timestep.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recuqYXBpW9rcXrKC</ProtocolTypeId>
@@ -20173,15 +20645,17 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn resistive.heater.cac.gt.000</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>resistive.heater.cac.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recurndoUQt30tVFv</ProtocolTypeId>
       <createdTime>2023-01-16T17:35:57Z</createdTime>
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
       <Type>rec3kcgktiHCBYpA4</Type>
-      <Name>gwatn dispatch.contract.confirmed.000</Name>
+      <Name>gwatn dispatch.contract.confirmed.heatpumpwithbooststore.000</Name>
       <ProtocolName>gwatn</ProtocolName>
-      <TypeName>dispatch.contract.confirmed.000</TypeName>
+      <TypeName>dispatch.contract.confirmed.heatpumpwithbooststore.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recuxGhKEXF5Edw2W</ProtocolTypeId>
@@ -20191,6 +20665,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>newatn gt.sh.cli.atn.cmd.110</Name>
       <ProtocolName>newatn</ProtocolName>
       <TypeName>gt.sh.cli.atn.cmd.110</TypeName>
+      <TypeStatus />
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recvb41OOfKOcXySK</ProtocolTypeId>
@@ -20200,6 +20675,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada spaceheat.node.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>spaceheat.node.gt.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recvpIR8rXsHiuLTP</ProtocolTypeId>
@@ -20209,6 +20685,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm market.book.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>market.book.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recwv4Bsb1NA1uZxn</ProtocolTypeId>
@@ -20218,6 +20695,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm price.quantity.000</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>price.quantity.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recx1ZcM9hO3GKRkp</ProtocolTypeId>
@@ -20227,6 +20705,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gworld super.starter.000</Name>
       <ProtocolName>gworld</ProtocolName>
       <TypeName>super.starter.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recx5JlRHk2l9zzQK</ProtocolTypeId>
@@ -20236,6 +20715,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gwmm ready.001</Name>
       <ProtocolName>gwmm</ProtocolName>
       <TypeName>ready.001</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recxelQn6OCbkk5A5</ProtocolTypeId>
@@ -20245,6 +20725,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada boolean.actuator.component.gt.000</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>boolean.actuator.component.gt.000</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recxtr4LhX2Ixojmg</ProtocolTypeId>
@@ -20254,6 +20735,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnf tavalidatorcert.algo.transfer.000</Name>
       <ProtocolName>gnf</ProtocolName>
       <TypeName>tavalidatorcert.algo.transfer.000</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recyENjaG4Mi1n27B</ProtocolTypeId>
@@ -20263,6 +20745,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gnr heartbeat.a.100</Name>
       <ProtocolName>gnr</ProtocolName>
       <TypeName>heartbeat.a.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recyzaIpCoUsKpVbL</ProtocolTypeId>
@@ -20272,6 +20755,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>gridworks initial.tadeed.algo.optin.002</Name>
       <ProtocolName>gridworks</ProtocolName>
       <TypeName>initial.tadeed.algo.optin.002</TypeName>
+      <TypeStatus>Active</TypeStatus>
     </ProtocolType>
     <ProtocolType>
       <ProtocolTypeId>recz78SwKCn46A2sz</ProtocolTypeId>
@@ -20286,6 +20770,7 @@ AtomicMeteringNode can turn into AtomicTNode and vice versa</Description>
       <Name>scada powermeter.reporting.config.100</Name>
       <ProtocolName>scada</ProtocolName>
       <TypeName>powermeter.reporting.config.100</TypeName>
+      <TypeStatus>Pending</TypeStatus>
     </ProtocolType>
   </ProtocolTypes>
   <GNodeRoles>
@@ -20582,6 +21067,14 @@ characterized electrical device, using the meter described, at the location desc
       <EnumName>spaceheat.node.role.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
+      <ProtocolEnumId>rec3OJ7Qnn65b8uug</ProtocolEnumId>
+      <createdTime>2023-01-18T21:33:12Z</createdTime>
+      <Enum>rec75xMuw0SMkzjVc</Enum>
+      <Protocol>rect1hCTZjieEGxgr</Protocol>
+      <ProtocolName>gridworks</ProtocolName>
+      <EnumName>market.price.unit.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
       <ProtocolEnumId>rec3aEohPrsl8Z6M3</ProtocolEnumId>
       <createdTime>2022-11-29T13:53:22Z</createdTime>
       <Enum>recdH9n0oS3nRRWON</Enum>
@@ -20737,6 +21230,14 @@ characterized electrical device, using the meter described, at the location desc
       <Protocol>rec3nJaxOMLIKJoNY</Protocol>
       <ProtocolName>gwatn</ProtocolName>
       <EnumName>spaceheat.make.model.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
+      <ProtocolEnumId>recEAaklKzWgLdKio</ProtocolEnumId>
+      <createdTime>2023-01-18T21:33:35Z</createdTime>
+      <Enum>recA15Ak50x6bNMx1</Enum>
+      <Protocol>rect1hCTZjieEGxgr</Protocol>
+      <ProtocolName>gridworks</ProtocolName>
+      <EnumName>recognized.currency.unit.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
       <ProtocolEnumId>recFcFz3hJ9GJbVDh</ProtocolEnumId>
@@ -21169,6 +21670,14 @@ characterized electrical device, using the meter described, at the location desc
       <Protocol>rec3E1mvlkD3mlc6K</Protocol>
       <ProtocolName>gwmm</ProtocolName>
       <EnumName>g.node.role.000</EnumName>
+    </ProtocolEnum>
+    <ProtocolEnum>
+      <ProtocolEnumId>rectGOQvuxBQ1f8LZ</ProtocolEnumId>
+      <createdTime>2023-01-18T21:33:26Z</createdTime>
+      <Enum>recounhEj97w5SfDm</Enum>
+      <Protocol>rect1hCTZjieEGxgr</Protocol>
+      <ProtocolName>gridworks</ProtocolName>
+      <EnumName>market.quantity.unit.000</EnumName>
     </ProtocolEnum>
     <ProtocolEnum>
       <ProtocolEnumId>rectmy7sSSaRVzm4x</ProtocolEnumId>

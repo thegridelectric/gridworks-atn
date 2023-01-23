@@ -16,10 +16,16 @@ from gwatn.types.atn_params_report_heatpumpwithbooststore import (
 )
 from gwatn.types.base_g_node_gt import BaseGNodeGt
 from gwatn.types.base_g_node_gt import BaseGNodeGt_Maker
+from gwatn.types.basegnode_scada_create import BasegnodeScadaCreate
+from gwatn.types.basegnode_scada_create import BasegnodeScadaCreate_Maker
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate_Maker
-from gwatn.types.dispatch_contract_confirmed import DispatchContractConfirmed
-from gwatn.types.dispatch_contract_confirmed import DispatchContractConfirmed_Maker
+from gwatn.types.dispatch_contract_confirmed_heatpumpwithbooststore import (
+    DispatchContractConfirmedHeatpumpwithbooststore,
+)
+from gwatn.types.dispatch_contract_confirmed_heatpumpwithbooststore import (
+    DispatchContractConfirmedHeatpumpwithbooststore_Maker,
+)
 from gwatn.types.flo_params_heatpumpwithbooststore import (
     FloParamsHeatpumpwithbooststore,
 )
@@ -66,6 +72,8 @@ from gwatn.types.price_quantity_unitless import PriceQuantityUnitless
 from gwatn.types.price_quantity_unitless import PriceQuantityUnitless_Maker
 from gwatn.types.ready import Ready
 from gwatn.types.ready import Ready_Maker
+from gwatn.types.scada_cert_transfer import ScadaCertTransfer
+from gwatn.types.scada_cert_transfer import ScadaCertTransfer_Maker
 from gwatn.types.sim_scada_driver_report import SimScadaDriverReport
 from gwatn.types.sim_scada_driver_report import SimScadaDriverReport_Maker
 from gwatn.types.sim_timestep import SimTimestep
@@ -141,6 +149,8 @@ __all__ = [
     "GtDispatchBoolean_Maker",
     "SlaEnter",
     "SlaEnter_Maker",
+    "BasegnodeScadaCreate",
+    "BasegnodeScadaCreate_Maker",
     "LatestPrice",
     "LatestPrice_Maker",
     "OldTadeedAlgoReturn",
@@ -151,6 +161,8 @@ __all__ = [
     "AtnParamsReportHeatpumpwithbooststore_Maker",
     "HeartbeatB",
     "HeartbeatB_Maker",
+    "ScadaCertTransfer",
+    "ScadaCertTransfer_Maker",
     "NewTadeedSend",
     "NewTadeedSend_Maker",
     "GNodeGt",
@@ -163,6 +175,6 @@ __all__ = [
     "MarketTypeGt_Maker",
     "SimTimestep",
     "SimTimestep_Maker",
-    "DispatchContractConfirmed",
-    "DispatchContractConfirmed_Maker",
+    "DispatchContractConfirmedHeatpumpwithbooststore",
+    "DispatchContractConfirmedHeatpumpwithbooststore_Maker",
 ]
