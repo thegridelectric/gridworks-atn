@@ -19,6 +19,7 @@ forth between type instances and Python objects.
    :caption: TYPE SDKS
 
     AcceptedBid  <types/accepted-bid>
+    AtnBid  <types/atn-bid>
     AtnParamsHeatpumpwithbooststore  <types/atn-params-heatpumpwithbooststore>
     AtnParamsReportHeatpumpwithbooststore  <types/atn-params-report-heatpumpwithbooststore>
     BaseGNodeGt  <types/base-g-node-gt>

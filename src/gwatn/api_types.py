@@ -4,6 +4,7 @@ from typing import List
 from typing import no_type_check
 
 from gwatn.types import AcceptedBid_Maker
+from gwatn.types import AtnBid_Maker
 from gwatn.types import AtnParamsHeatpumpwithbooststore_Maker
 from gwatn.types import AtnParamsReportHeatpumpwithbooststore_Maker
 from gwatn.types import BaseGNodeGt_Maker
@@ -51,6 +52,7 @@ TypeMakerByName: Dict[str, HeartbeatA_Maker] = {}
 def type_makers() -> List[HeartbeatA_Maker]:
     return [
         AcceptedBid_Maker,
+        AtnBid_Maker,
         AtnParamsHeatpumpwithbooststore_Maker,
         AtnParamsReportHeatpumpwithbooststore_Maker,
         BaseGNodeGt_Maker,
@@ -104,6 +106,7 @@ def version_by_type_name() -> Dict[str, str]:
 
     v: Dict[str, str] = {
         "accepted.bid": "000",
+        "atn.bid": "001",
         "atn.params.heatpumpwithbooststore": "000",
         "atn.params.report.heatpumpwithbooststore": "000",
         "base.g.node.gt": "002",
@@ -155,6 +158,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
 
     v: Dict[str, str] = {
         "accepted.bid.000": "Pending",
+        "atn.bid.001": "Pending",
         "atn.params.heatpumpwithbooststore.000": "Active",
         "atn.params.report.heatpumpwithbooststore.000": "Pending",
         "base.g.node.gt.002": "Pending",
