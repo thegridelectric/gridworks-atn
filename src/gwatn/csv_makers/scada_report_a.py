@@ -48,8 +48,6 @@ class SnapshotWithSendTime(BaseModel):
 
 
 class ScadaReportA_Maker:
-    ATN_ALIAS_LIST = ["hw1.isone.ct.newhaven.orange1"]
-
     def __init__(self, out_stub=OUT_STUB):
         self.s3 = boto3.client("s3")
         self.aws_bucket_name = "gwdev"
@@ -287,13 +285,6 @@ class ScadaReportA_Maker:
         self, start_time_unix_ms: int, duration_hrs: int, atn_alias: str
     ) -> List[StatusOutputRow]:
         g_node_alias_list = [atn_alias, atn_alias + ".ta.scada"]
-        hack_list = [
-            "a.garage.temp1",
-            "a.tank.out.temp1",
-            "a.tank.in.temp1",
-            "a.tank.temp0",
-        ]
-        g_node_alias_list += hack_list
         start_time_utc = pendulum.from_timestamp(start_time_unix_ms / 1000)
         end_time_utc = start_time_utc + pendulum.duration(hours=duration_hrs)
         end_time_unix_ms = end_time_utc.int_timestamp * 1000
@@ -317,12 +308,6 @@ class ScadaReportA_Maker:
             elif fn.PayloadTypeName == SnapshotSpaceheat_Maker.type_alias:
                 payload = self.get_payload_from_s3(fn)
                 rows += self.get_status_rows_from_snapshot(payload)
-            elif fn.PayloadTypeName == GtTelemetry_Maker.type_alias:
-                payload = self.get_payload_from_s3(fn)
-                rows += self.get_status_rows_from_telemetry(
-                    from_sh_node_alias=fn.FromGNodeAlias,
-                    payload=payload,
-                )
 
         rows = sorted(rows, key=lambda x: x.TimeUnixMs)
         return rows

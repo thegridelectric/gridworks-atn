@@ -110,6 +110,18 @@ class AtnActorBase(TwoChannelActorBase):
         LOGGER.info(
             f"Queue {self.queue_name} bound to timecoordinatormic_tx with {binding} "
         )
+        pong = HeartbeatA_Maker(
+            my_hex=str(random.choice("0123456789abcdef")), your_last_hex="0"
+        ).tuple
+        self.send_message(
+            payload=pong,
+            to_role=GNodeRole.Supervisor,
+            to_g_node_alias=self.settings.my_super_alias,
+        )
+        d = pendulum.from_timestamp(time.time())
+        LOGGER.warning(
+            f"[{self.short_alias}] Sent first heartbeat to super: {d.minute}:{d.second}.{d.microsecond}"
+        )
         self.strategy_rabbit_startup()
 
     def strategy_rabbit_startup(self) -> None:
@@ -221,7 +233,7 @@ class AtnActorBase(TwoChannelActorBase):
         self.hb_status.LastHeartbeatReceivedMs = int(time.time() * 1000)
         self.hb_status.ScadaLastHex = ping.MyHex
         self.hb_status.AtnLastHex = str(random.choice("0123456789abcdef"))
-
+        LOGGER(f"Got {ping.MyHex}")
         # Does not send back. Atn waits for the DispatchContract's expected
         # one minute before sending.
         print(f"Got heartbeat from scada: {ping}")
@@ -246,12 +258,12 @@ class AtnActorBase(TwoChannelActorBase):
         )
         LOGGER.info(f"Sent hb {ping}")
         # report to DispatchContract
-        # ptxn = PaymentTxn(self.acct.addr, self.sp, self.dc_client.app_addr, 1000)
-        # self.dc_client.call(
-        #     DispatchContract.heartbeat_algo_audit,
-        #     signed_proof=TransactionWithSigner(ptxn, self.acct.as_signer()),
-        #     heartbeat = ping.as_dict()
-        # )
+        ptxn = PaymentTxn(self.acct.addr, self.sp, self.dc_client.app_addr, 1000)
+        self.dc_client.call(
+            DispatchContract.heartbeat_algo_audit,
+            signed_proof=TransactionWithSigner(ptxn, self.acct.as_signer()),
+            heartbeat=ping.as_dict(),
+        )
 
     def check_for_dispatch_contract(self):
         """Upon startup, see if already party of a dispatch contract,

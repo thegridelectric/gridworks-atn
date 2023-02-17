@@ -255,7 +255,7 @@ class ScadaActor(ActorBase):
 
         """
         self.ping = ping
-        print(f"GOT {ping}")
+
         received_ms = int(time.time() * 1000)
         if not self.in_dispatch_contract():
             LOGGER.info(f"Not in Dispatch Contract. Ignoring")
@@ -268,6 +268,7 @@ class ScadaActor(ActorBase):
         self.atn_hb_status.LastHeartbeatReceivedMs = int(time.time() * 1000)
         self.atn_hb_status.AtnLastHex = ping.MyHex
         self.atn_hb_status.ScadaLastHex = str(random.choice("0123456789abcdef"))
+        LOGGER.info(f"Got {ping.MyHex}. Sending {self.atn_hb_status.ScadaLastHex}")
         pong = HeartbeatB_Maker(
             from_g_node_alias=self.alias,
             from_g_node_instance_id=self.g_node_instance_id,
@@ -280,12 +281,12 @@ class ScadaActor(ActorBase):
             payload=pong, to_role=GNodeRole.AtomicTNode, to_g_node_alias=self.atn_alias
         )
         # Report to DispatchContract with heartbeat.algo.audit
-        # ptxn = PaymentTxn(self.acct.addr, self.sp, self.dc_client.app_addr, 1000)
-        # self.dc_client.call(
-        #     DispatchContract.heartbeat_algo_audit,
-        #     signed_proof=TransactionWithSigner(ptxn, self.acct.as_signer()),
-        #     heartbeat=pong.as_dict()
-        # )
+        ptxn = PaymentTxn(self.acct.addr, self.sp, self.dc_client.app_addr, 1000)
+        self.dc_client.call(
+            DispatchContract.heartbeat_algo_audit,
+            signed_proof=TransactionWithSigner(ptxn, self.acct.as_signer()),
+            heartbeat=pong.as_dict(),
+        )
 
     def heartbeat_from_super(self, from_alias: str, ping: HeartbeatA) -> None:
         pong = HeartbeatA_Maker(
