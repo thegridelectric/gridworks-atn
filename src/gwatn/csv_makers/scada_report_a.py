@@ -1,23 +1,38 @@
 import json
+import typing
+from typing import Any
 from typing import List
 from typing import Optional
 
 import boto3
 import pendulum
+from gwproto import Message
 from gwproto.messages import GtDispatchBoolean
 from gwproto.messages import GtDispatchBoolean_Maker
 from gwproto.messages import GtShStatus
 from gwproto.messages import GtShStatus_Maker
+from gwproto.messages import GtShStatusEvent
 from gwproto.messages import GtTelemetry
 from gwproto.messages import GtTelemetry_Maker
 from gwproto.messages import SnapshotSpaceheat
 from gwproto.messages import SnapshotSpaceheat_Maker
+from gwproto.messages import SnapshotSpaceheatEvent
 from pydantic import BaseModel
 
 from gwatn.api_types_hack import HackTypeMakerByName
+from gwatn.csv_makers.codec import S3MQTTCodec
 
 
 OUT_STUB = "output_data/scada_report_a"
+
+DOWNLOADED_FILE_TYPES = [
+    GtDispatchBoolean_Maker.type_alias,
+    GtShStatus_Maker.type_alias,
+    SnapshotSpaceheat_Maker.type_alias,
+    GtTelemetry_Maker.type_alias,
+    SnapshotSpaceheatEvent.__fields__["TypeName"].default,
+    GtShStatusEvent.__fields__["TypeName"].default,
+]
 
 
 class FileNameMeta(BaseModel):
@@ -59,8 +74,8 @@ class ScadaReportA_Maker:
         self.latest_status_list: List[GtShStatus] = []
         self.latest_snapshot_list: List[SnapshotSpaceheat] = []
         self.latest_dispatch_list: List[GtDispatchBoolean] = []
-
         self.status_rows_to_write: List[StatusOutputRow] = []
+        self.mqtt_codec = S3MQTTCodec()
         print(f"Initialized {self.__class__}")
 
     def on_gw_message(self, from_g_node_alias: str, payload):
@@ -184,22 +199,24 @@ class ScadaReportA_Maker:
                 rows.append(row)
         return rows
 
-    def get_payload_from_s3(self, file_name_meta: FileNameMeta) -> GtShStatus:
+    def get_message_from_s3(self, file_name_meta: FileNameMeta) -> Message:
         s3_object = self.s3.get_object(
             Bucket=self.aws_bucket_name, Key=file_name_meta.FileName
         )
-        gw_type = s3_object["Body"].read()
-        try:
-            payload_as_dict = json.loads(gw_type)["Payload"]
-        except:
-            payload_as_dict = json.loads(gw_type)
-        maker = HackTypeMakerByName[file_name_meta.PayloadTypeName]
-        payload = maker.dict_to_tuple(payload_as_dict)
-        if maker.type_alias == SnapshotSpaceheat_Maker.type_alias:
-            payload = SnapshotWithSendTime(
-                SendTimeUnixMs=file_name_meta.UnixTimeMs, Snapshot=payload
-            )
-        return payload
+        message = typing.cast(
+            Message, self.mqtt_codec.decode("gw", s3_object["Body"].read())
+        )
+        match message.Payload:
+            case SnapshotSpaceheat():
+                message.Payload = SnapshotWithSendTime(
+                    SendTimeUnixMs=file_name_meta.UnixTimeMs, Snapshot=message.Payload
+                )
+            case SnapshotSpaceheatEvent():
+                message.Payload = SnapshotWithSendTime(
+                    SendTimeUnixMs=file_name_meta.UnixTimeMs,
+                    Snapshot=message.Payload.snap,
+                )
+        return message
 
     def has_this_days_folder(self, time_s: int) -> bool:
         d = pendulum.from_timestamp(time_s)
@@ -244,8 +261,10 @@ class ScadaReportA_Maker:
         end_time_unix_ms: int,
         date_folder_list: List[str],
         g_node_alias_list: List[str],
-        type_name_list: List[str] = list(HackTypeMakerByName.keys()),
+        type_name_list: Optional[List[str]] = None,
     ):
+        if type_name_list is None:
+            type_name_list = DOWNLOADED_FILE_TYPES
         fn_list: List[FileNameMeta] = []
         for date_folder in date_folder_list:
             prefix = f"{self.world_instance_name}/eventstore/{date_folder}/"
@@ -284,7 +303,7 @@ class ScadaReportA_Maker:
     def get_csv_rows(
         self, start_time_unix_ms: int, duration_hrs: int, atn_alias: str
     ) -> List[StatusOutputRow]:
-        g_node_alias_list = [atn_alias, atn_alias + ".ta.scada"]
+        g_node_alias_list = [atn_alias, atn_alias + ".ta.scada", atn_alias + ".scada"]
         start_time_utc = pendulum.from_timestamp(start_time_unix_ms / 1000)
         end_time_utc = start_time_utc + pendulum.duration(hours=duration_hrs)
         end_time_unix_ms = end_time_utc.int_timestamp * 1000
@@ -299,16 +318,16 @@ class ScadaReportA_Maker:
         rows: List[StatusOutputRow] = []
         for i in range(len(fn_list)):
             fn = fn_list[i]
-            if fn.PayloadTypeName == GtDispatchBoolean_Maker.type_alias:
-                payload = self.get_payload_from_s3(fn)
-                rows += self.get_status_rows_from_dispatch(payload)
-            elif fn.PayloadTypeName == GtShStatus_Maker.type_alias:
-                payload = self.get_payload_from_s3(fn)
-                rows += self.get_status_rows_from_status(payload)
-            elif fn.PayloadTypeName == SnapshotSpaceheat_Maker.type_alias:
-                payload = self.get_payload_from_s3(fn)
-                rows += self.get_status_rows_from_snapshot(payload)
-
+            message = self.get_message_from_s3(fn)
+            match message.Payload:
+                case GtDispatchBoolean():
+                    rows += self.get_status_rows_from_dispatch(message.Payload)
+                case GtShStatus():
+                    rows += self.get_status_rows_from_status(message.Payload)
+                case GtShStatusEvent():
+                    rows += self.get_status_rows_from_status(message.Payload.status)
+                case SnapshotWithSendTime():
+                    rows += self.get_status_rows_from_snapshot(message.Payload)
         rows = sorted(rows, key=lambda x: x.TimeUnixMs)
         return rows
 
