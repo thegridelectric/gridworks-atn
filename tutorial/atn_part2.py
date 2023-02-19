@@ -1,10 +1,10 @@
 from algosdk.atomic_transaction_composer import TransactionWithSigner
 from algosdk.future.transaction import *
+from atn_actor import AtnActor
 from beaker.client import ApplicationClient
 from gridworks.dev_utils.algo_setup import dev_fund_to_min
 
 import gwatn.config as config
-from atn_actor import AtnActor
 from gwatn import DispatchContract
 
 

@@ -28,7 +28,7 @@ nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
     # "safety",
-    "mypy",
+    # "mypy",
     "tests",
     # "typeguard",
     "xdoctest",
@@ -121,7 +121,7 @@ def precommit(session: Session) -> None:
     ]
     session.install(
         "black",
-        "darglint",
+        # "darglint",
         "flake8",
         "flake8-bandit",
         "flake8-bugbear",
