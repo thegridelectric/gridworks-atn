@@ -383,28 +383,28 @@ def cert_creation(sim_size: int) -> List[DevTaOwner]:
     print("")
     time.sleep(2)
 
-    print("")
-    print("")
-    print("Starting up Molly Metermaid's Validator API")
-    print("")
-    print("")
-    time.sleep(2)
-    cmd = "docker compose -f docker-api.yml up -d"
-    subprocess.run(cmd.split())
+    # print("")
+    # print("")
+    # print("Starting up Molly Metermaid's Validator API")
+    # print("")
+    # print("")
+    # time.sleep(2)
+    # cmd = "docker compose -f docker-api.yml up -d"
+    # subprocess.run(cmd.split())
 
-    print("Verify that it works by inspecting http://localhost:8001/docs")
-    print("")
-    print("")
+    # print("Verify that it works by inspecting http://localhost:8001/docs")
+    # print("")
+    # print("")
 
-    time.sleep(2)
-    print("This also started up the API half of the MarketMaker.")
-    print("Verify that it is working:")
+    # time.sleep(2)
+    # print("This also started up the API half of the MarketMaker.")
+    # print("Verify that it is working:")
 
-    print("- http://localhost:7997/ shows market maker information")
-    print(
-        "- http://localhost:7997/get-time/, which should be 0 unix time, but will show the time"
-    )
-    print(" of the simulation once that starts")
+    # print("- http://localhost:7997/ shows market maker information")
+    # print(
+    #     "- http://localhost:7997/get-time/, which should be 0 unix time, but will show the time"
+    # )
+    # print(" of the simulation once that starts")
 
     rr = certify_molly_metermaid()
 
