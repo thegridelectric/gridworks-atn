@@ -303,7 +303,7 @@ class ScadaReportA_Maker:
     def get_csv_rows(
         self, start_time_unix_ms: int, duration_hrs: int, atn_alias: str
     ) -> List[StatusOutputRow]:
-        g_node_alias_list = [atn_alias, atn_alias + ".ta.scada", atn_alias + ".scada"]
+        g_node_alias_list = [atn_alias, atn_alias + ".scada", atn_alias + ".scada"]
         start_time_utc = pendulum.from_timestamp(start_time_unix_ms / 1000)
         end_time_utc = start_time_utc + pendulum.duration(hours=duration_hrs)
         end_time_unix_ms = end_time_utc.int_timestamp * 1000

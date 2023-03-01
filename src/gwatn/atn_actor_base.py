@@ -120,7 +120,7 @@ class AtnActorBase(TwoChannelActorBase):
         )
         d = pendulum.from_timestamp(time.time())
         LOGGER.warning(
-            f"[{self.short_alias}] Sent first heartbeat to super: {d.minute}:{d.second}.{d.microsecond}"
+            f"[{self.alias}] Sent first heartbeat to super: {d.minute}:{d.second}.{d.microsecond}"
         )
         self.strategy_rabbit_startup()
 
@@ -233,7 +233,7 @@ class AtnActorBase(TwoChannelActorBase):
         self.hb_status.LastHeartbeatReceivedMs = int(time.time() * 1000)
         self.hb_status.ScadaLastHex = ping.MyHex
         self.hb_status.AtnLastHex = str(random.choice("0123456789abcdef"))
-        LOGGER(f"Got {ping.MyHex}")
+        LOGGER.info(f"Got {ping.MyHex}")
         # Does not send back. Atn waits for the DispatchContract's expected
         # one minute before sending.
         print(f"Got heartbeat from scada: {ping}")
@@ -417,8 +417,8 @@ class AtnActorBase(TwoChannelActorBase):
 
     @property
     def scada_alias(self):
-        """Add `ta.scada` from the end of the Atn's's GNodeAlias"""
-        return self.alias + ".ta.scada"
+        """Add `scada` from the end of the Atn's's GNodeAlias"""
+        return self.alias + ".scada"
 
     def in_dispatch_contract(self) -> bool:
         """Checks that bootstrap 2 was completed w addition of ta_trading_rights_idx,
