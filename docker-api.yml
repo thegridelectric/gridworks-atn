@@ -1,12 +1,12 @@
 version: "3.5"
 
 services:
-  marketmaker:
-    container_name: mm
-    hostname: marketmaker
-    image: "jessmillar/marketmaker:chaos__947e33e__20221125"
-    ports:
-      - 7997:8000
+  # marketmaker:
+  #   container_name: mm
+  #   hostname: marketmaker
+  #   image: "jessmillar/marketmaker:chaos__947e33e__20221125"
+  #   ports:
+  #     - 7997:8000
   dev-validator:
     container_name: molly
     image: "jessmillar/ta-validator:latest"

@@ -383,14 +383,14 @@ def cert_creation(sim_size: int) -> List[DevTaOwner]:
     print("")
     time.sleep(2)
 
-    print("")
-    print("")
-    print("Starting up Molly Metermaid's Validator API")
-    print("")
-    print("")
-    time.sleep(2)
-    cmd = "docker compose -f docker-api.yml up -d"
-    subprocess.run(cmd.split())
+    # print("")
+    # print("")
+    # print("Starting up Molly Metermaid's Validator API")
+    # print("")
+    # print("")
+    # time.sleep(2)
+    # cmd = "docker compose -f docker-api.yml up -d"
+    # subprocess.run(cmd.split())
 
     print("Verify that it works by inspecting http://localhost:8001/docs")
     print("")

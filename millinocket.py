@@ -227,8 +227,8 @@ print("with a report of the heartbeat they just sent")
 
 input("HIT RETURN TO STOP SIMULATION")
 
-cmd = "docker compose -f docker-api.yml down"
-subprocess.run(cmd.split())
+# cmd = "docker compose -f docker-api.yml down"
+# subprocess.run(cmd.split())
 
 atn.stop()
 scada.stop()
