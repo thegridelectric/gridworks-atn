@@ -1,5 +1,6 @@
 import logging
 import subprocess
+from typing import Optional
 
 import gridworks.algo_utils as algo_utils
 import gridworks.dev_utils.algo_setup as algo_setup
@@ -104,16 +105,16 @@ class DevTaOwner:
         cmd = f"docker rm {self.short_alias}-scada"
         subprocess.run(cmd.split())
 
-    def start_scada_actor(self, scada_cert_idx: int) -> subprocess.Popen:
-        LOGGER.info(f"Starting ScadaActor with SCADA CERT {scada_cert_idx}")
-        ta_alias = self.settings.initial_ta_alias
-        scada_alias = ta_alias + ".scada"
-        scada_sk = self.scada_sk_by_ta_alias[ta_alias]
-        cmd = f"docker run  -e SCADA_CERT_IDX={scada_cert_idx} -e SCADA_G_NODE_ALIAS={scada_alias} -e SCADA_SK={scada_sk} --name {self.short_alias}-scada jessmillar/scada:latest"
-        pr = subprocess.Popen(
-            cmd.split(),
-        )
-        return pr
+    def start_scada_actor(self, scada_cert_idx: int) -> Optional[subprocess.Popen]:
+        return None
+        # ta_alias = self.settings.initial_ta_alias
+        # scada_alias = ".".join(ta_alias.split(".")[:-1]) + '.scada'
+        # scada_sk = self.scada_sk_by_ta_alias[ta_alias]
+        # cmd = f"docker run  -e SCADA_G_NODE_ALIAS={scada_alias} -e SCADA_SK={scada_sk} --name {self.short_alias}-scada jessmillar/scada:latest"
+        # pr = subprocess.Popen(
+        #     cmd.split(),
+        # )
+        # return pr
 
     def start_ta_daemon(self) -> subprocess.Popen:
         LOGGER.info("Starting TaDaemon")

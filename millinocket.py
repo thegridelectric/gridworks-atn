@@ -1,240 +1,189 @@
 import subprocess
-import sys
 import time
 
 import gridworks.algo_utils as algo_utils
-import gridworks.dev_utils.algo_setup as algo_setup
 import gridworks.gw_config as config
-import requests
 from rich.pretty import pprint
 
 import gwatn.demo_methods as demo_methods
-from gwatn.dev_utils.dev_ta_owner import DevTaOwner
-from gwatn.dev_utils.dev_validator import DevValidator
+from gwatn import DispatchContract
+from gwatn.scada_actor import ScadaActor
+from gwatn.simple_atn_actor import SimpleAtnActor as Atn
 
 
 sim_size = 1
-full_plant_names = demo_methods.demo_plant_names
-plant_names = full_plant_names[0:sim_size]
+ta_owners = []
 
-if sim_size == 0:
-    raise Exception("No simulated TerminalAssets. Stopping")
-elif sim_size == 1:
-    print(f"Running simulation for 1 TerminalAsset (holly.ta)")
-else:
-    print(f"Running simulation for {sim_size} TerminalAssets")
-time.sleep(2)
-print("")
+try:
+    scada = ScadaActor()
+except:
+    print("Setting up certs")
+    ta_owners = demo_methods.cert_creation(sim_size=sim_size)
+    scada = ScadaActor()
 
-print("")
-print("")
-print("Funding GNodeFactory")
+input("Hit return to see ScadaCertId")
+pprint(scada.cert_id)
 
-algo_setup.dev_fund_to_min(config.Public().gnf_admin_addr, 25)
-algo_setup.dev_fund_to_min(config.Public().gnf_graveyard_addr, 1)
-
+input("SCADA: Hit return to see scada account info")
+pprint(scada.client.account_info(scada.acct.addr))
 
 print("")
-print("")
-print("Funding 4 Atn accts")
-print("")
-print("")
 
+print(f"Note that the SCADA owns one asset, an NFT with id {scada.cert_id.Idx}")
+print(f"The SCADA has created one app, with id {scada.dc_app_id}")
+if not scada.in_dispatch_contract():
+    print("SCADA  has not yet opted into that app")
+print("")
+print("")
+input(f"Hit return to inspect the ASA {scada.cert_id.Idx}")
+pprint(scada.client.asset_info(scada.cert_id.Idx))
 
-atn_address_list = [
-    "4JHRDNY4F6RCVGPALZULZWZNVP3OKT3DATEOLINCGILVPGHUOFY7KCHVIQ",
-    "YL3MAWSIST2DWX5GOTZYVX74GNSAVMX52RKSEDT4KIO644JCCRFTFKM5UM",
-    "CWOLXCXZKLYLORBQQCI4AUHA5CLOLUXRDZEJZI4S3F6WUNVIAF4MX5EW4U",
-    "R3PKD54UOAOW6MTPO7ECZ6YX4COQWN5BJM4OZIHYWFVVGAITM53RGUF6LI",
-]
+input("SCADA: Hit return to see application state for the DispatchContract")
+pprint(scada.dc_client.get_application_state())
+print("")
+print(
+    "When the SCADA called the bootstrap1 method of the DispatchContract, it provided"
+)
+print(
+    "its address (as governor), the ta_alias, and the scada_cert_idx. It also funded the contract "
+)
+print("")
+input("SCADA: Hit return to call the hello method of the DispatchContract")
 
-for addr in atn_address_list:
-    algo_setup.dev_fund_to_min(addr=addr, min_algos=25)
+hello_method_result = scada.dc_client.call(
+    DispatchContract.hello,
+    name="DispatchContract",
+).return_value
 
-addr = atn_address_list[0]
-print("")
-print("")
-print("Certifying MollyMetermaid as a TaValidator")
-print("")
-print("")
-time.sleep(2)
-
-rr = demo_methods.certify_molly_metermaid()
-
-
-pprint(rr)
-if rr.HttpStatusCode > 200:
-    raise Exception("Stopping demo due to errors")
-
-print("")
-print("")
-print(f"Creating {sim_size} TaOwners")
-print("")
-print("")
-time.sleep(2)
-ta_owners = demo_methods.create_ta_owners(plant_names)
-print("")
-print("")
-print(f"Creating {sim_size} TaDaemons")
-print("")
-print("")
-time.sleep(2)
-demo_methods.start_ta_owners(ta_owners)
-
-print("")
-print("")
-print("TaDaemons are now running, each with their own RestAPI.")
-print("")
-print("")
-time.sleep(2)
-print("Any TaDeeds they own will show up at the following endpoints:")
-print("")
-print("")
-for owner in ta_owners:
-    print(
-        f"Inspect {owner}'s deeds at http://localhost:{owner.settings.ta_daemon_api_port}/owned-tadeeds/"
-    )
+pprint(hello_method_result)
 
 print("")
 print("")
 time.sleep(2)
-print("They do not yet own any TaDeeds.")
+print(
+    "Starting SCADA actor. Check http://0.0.0.0:15672/#/queues for d1.isone.ver.keene.holly.scada.F-xxx"
+)
+scada.start()
+
+print("")
+print("")
+input("Hit return to initialize AtomicTNode actor")
+atn = Atn()
+
+print("")
+print("")
+input("ATN: Hit return to see Atn's TradingRightsId")
+pprint(atn.trading_rights_id)
+
+input("ATN: Hit return to see atn's account info")
+pprint(atn.client.account_info(atn.acct.addr))
+
+print(f"Note that the Atn owns one asset, an NFT with id {atn.trading_rights_id.Idx}")
+print("")
+print("")
+input(f"Hit return to inspect the ASA {atn.trading_rights_id.Idx}")
+pprint(atn.client.asset_info(atn.trading_rights_id.Idx))
+
+
 print("")
 print("")
 time.sleep(2)
-input("HIT RETURN TO CONTINUE")
+print(
+    "Starting SCADA actor. Check http://0.0.0.0:15672/#/queues for d1.isone.ver.keene.holly.F-xxx"
+)
+atn.start()
 
 print("")
 print("")
-print(f"Creating {sim_size} TerminalAssets")
+print(
+    "The SCADA will now send the Atn a 'join.dispatch.contract' message over RabbitMq"
+)
+print("API for `join.dispatch.contract`:")
+print(
+    "https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#joindispatchcontract"
+)
+print("SDK docs for `join.dispatch.contract`:")
+print(
+    "https://gridworks-atn.readthedocs.io/en/latest/types/join-dispatch-contract.html"
+)
 print("")
 print("")
-time.sleep(2)
+print(
+    "When the AtomicTNode gets this message, it will finish bootstrapping the DispatchContract, "
+)
+print(
+    "opt into the DispatchContract, and send a `dispatch.contract.confirmed.heatpumpwithbooststore`"
+)
+print("message over RabbitMq back to the Scada")
+print(
+    "https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#dispatchcontractconfirmedheatpumpwithbooststore"
+)
+print("SDK docs for `join.dispatch.contract`:")
+print(
+    "https://gridworks-atn.readthedocs.io/en/latest/types/dispatch-contract-confirmed-heatpumpwithbooststore.html"
+)
+print("")
+print("")
+print("When the SCADA receives this message, it completes the contract initialization")
+print("process by opting into the DispatchContract")
+print("")
+print("")
+time.sleep(4)
+print("At this point, the SCADA will accept dispatch commands from the AtomicTNode,")
+print("the Atn and SCADA begin heartbeating, and they also begin sending their")
+print("heart beats to the DispatchContract")
+print("")
+print("")
+if not scada.in_dispatch_contract():
+    input("Hit return to run scada.initialize_dispatch_contract()")
+    scada.initialize_dispatch_contract()
 
-rr = demo_methods.create_terminal_assets(ta_owners)
 
+input("SCADA: Hit return to see application state for the DispatchContract")
+print("")
+pprint(scada.dc_client.get_application_state())
+print("")
+print("The application state now includes the ta_trading_rights_idx")
 
-if rr.HttpStatusCode == 200:
-    print("Success!")
-    print("")
-    print("")
-    time.sleep(2)
-    print("TaDaemon Algorand addresses now hold TaDeeds on behalf of their TaOwners")
-    print("")
-    print("")
-    time.sleep(2)
-    print("Inspect them at:")
+input("SCADA: Hit return to see scada account info")
+print("")
+pprint(scada.client.account_info(scada.acct.addr))
 
-    for owner in ta_owners:
-        print(
-            f"Inspect {owner}'s deeds at http://localhost:{owner.settings.ta_daemon_api_port}/owned-tadeeds/"
-        )
+print("")
+print(
+    f"The SCADA has opted into the Dispatch Contract (apps-local-state includes {scada.dc_app_id})"
+)
 
-else:
-    for ta_owner in ta_owners:
-        ta_owner.stop()  # Does the same
-    raise Exception(
-        f"Something went wrong creating TerminalAssets: {rr.HttpStatusCode}, {rr.Note}"
-    )
+input("ATN: Hit return to see atn's account info")
+pprint(atn.client.account_info(atn.acct.addr))
 
+print("")
+print(f"The Atn has also opted into the Dispatch Contract")
 
-# print("")
-# print("")
-# print(
-#     "The AtomicTNodes do not yet own trading rights. Inspect trading right owners at:"
-# )
-# for owner in ta_owners:
-#     print(
-#         f"Inspect {owner}'s deeds at http://localhost:{owner.settings.ta_daemon_api_port}/trading-rights/"
-#     )
+print("")
+print(f"scada.in_dispatch_contract(): {scada.in_dispatch_contract()} ")
+print("")
+print("The AtomicTNode sends a heartbeat once a minute, and the Scada responds ASAP")
+print("We can run this manually before starting simulated time")
+print("")
+print("")
+input("Hit return to run atn.hb_to_scada()")
+
+atn.hb_to_scada()
+
+print("")
+print("")
+print("")
+print("After sending the heartbeat over rabbit, both the Atn and Scada")
+print("called the heartbeat_algo_audit method of the DispatchContract")
+print("with a report of the heartbeat they just sent")
+
+# api_endpoint = f"http://0.0.0.0:8000/pause-time/"
+# r = requests.post(url=api_endpoint)
 #
-# print("")
-# print("")
 #
-#
-# time.sleep(2)
-# input("HIT RETURN TO CONTINUE")
-# print("")
-# print("")
-# print(
-#     "In fact the AtomicTNodes do not exist yet. Go to http://d1-1.electricity.works:15672/#/queues"
-# )
-# print("")
-# print("")
-# time.sleep(1)
-# print("Username and password are the same:")
-# print("")
-# print("smqPublic")
-# print("")
-# print("")
-# time.sleep(1)
-# print(
-#     "You will only see the dummy queues, the world d1-Fxxx, and the market maker ...keene.F-xxx"
-# )
-# input("To start the atn actors (and time coordinator) in a docker instance, HIT RETURN")
-#
-# cmd = "docker compose -f docker-actor.yml up -d"
+# cmd = "docker compose -f docker-api.yml down"
 # subprocess.run(cmd.split())
-# time.sleep(2)
-# print("")
-# print("")
-# print("It takes about 5 seconds for them to shop up. Look for them at")
-# print("http://d1-1.electricity.works:15672/#/queues")
-# print(
-#     "Once their queues exist they ready to enter their Service Level Agreements and get their trading rights"
-# )
-# input("HIT RETURN TO CONTINUE")
-rr = demo_methods.enter_slas(ta_owners)
-
-if rr.HttpStatusCode == 200:
-    print("")
-    print("")
-    time.sleep(2)
-    print(
-        "Daemons have transferred TradingRights to their AtomicTNodes. Inspect at above pages"
-    )
-    print("")
-    print("")
-else:
-    cmd = "docker compose -f docker-actor.yml down"
-    subprocess.run(cmd.split())
-    raise Exception("Something went wrong entering Service Level Agreements")
-
-
-print("")
-print("")
-print(f"Creating {sim_size} Scadas")
-print("")
-print("")
-time.sleep(2)
-
-holly = ta_owners[0]
-
-rr = demo_methods.create_scadas(ta_owners)
-
-
-# if rr.HttpStatusCode == 200:
-#     print("Success!")
-#     print("")
-#     print("")
-#     time.sleep(2)
-#     print("Scada Actors have now started, funded, own their ScadaCerts")
-#     print("The Scada and Atns now have the authority to enter into a DispatchContract")
-#     print("As soon as time starts running in simulation, they will do that")
-#     print("")
-#     print("")
-
-# else:
-#     for ta_owner in ta_owners:
-#         ta_owner.stop()  # Does the same
-#     raise Exception(
-#         f"Something went wrong creating TerminalAssets: {rr.HttpStatusCode}, {rr.Note}"
-#     )
-
-#     print("")
-#     print("")
-#     time.sleep(2)
-
 
 # print("")
 # print("")
@@ -275,14 +224,14 @@ rr = demo_methods.create_scadas(ta_owners)
 # print("")
 # time.sleep(2)
 
-# input("HIT RETURN TO STOP SIMULATION AND TEAR DOWN TADAEMON DOCKER INSTANCES")
 
-# api_endpoint = f"http://0.0.0.0:8000/pause-time/"
-# r = requests.post(url=api_endpoint)
+input("HIT RETURN TO STOP SIMULATION")
 
+cmd = "docker compose -f docker-api.yml down"
+subprocess.run(cmd.split())
 
-# cmd = "docker compose -f docker-actor.yml down"
-# subprocess.run(cmd.split())
+atn.stop()
+scada.stop()
 
-# for ta_owner in ta_owners:
-#     ta_owner.stop()  # Does the same
+for ta_owner in ta_owners:
+    ta_owner.stop()

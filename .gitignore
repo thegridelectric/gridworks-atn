@@ -37,3 +37,5 @@ htmlcov
 output_data/**
 !output_data/**/
 !output_data/**/__init__.py
+
+hacking

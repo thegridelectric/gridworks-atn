@@ -42,7 +42,8 @@ class SimpleAtnActor(AtnActorBase):
         """Set to work with a timestep per minute"""
 
         # sends a hb to Scada every minute for DispatchContract
-        self.hb_to_scada()
+        if self.in_dispatch_contract():
+            self.hb_to_scada()
 
     def repeat_timestep(self, payload: SimTimestep) -> None:
         pass

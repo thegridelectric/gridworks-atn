@@ -11,7 +11,7 @@ from gwatn.types import GtDispatchBoolean_Maker as Maker
 def test_gt_dispatch_boolean_generated() -> None:
     d = {
         "AboutNodeName": "a.elt1.relay",
-        "ToGNodeAlias": "dwtest.isone.ct.newhaven.orange1.ta.scada",
+        "ToGNodeAlias": "dwtest.isone.ct.newhaven.orange1.scada",
         "FromGNodeAlias": "dwtest.isone.ct.newhaven.orange1",
         "FromGNodeInstanceId": "e7f7d6cc-08b0-4b36-bbbb-0a1f8447fd32",
         "RelayState": 0,

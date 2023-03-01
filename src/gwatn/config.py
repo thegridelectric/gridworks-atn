@@ -101,11 +101,7 @@ class TaDaemonSettings(BaseSettings):
 
 class ScadaSettings(GNodeSettings):
     cert_type_value: str = "ASA"
-    # cert_idx must be in .env file if type_value is ASA. Otherwise scada_cert_addr must
-    # be in .env
-    cert_idx: Optional[int] = -1
-    cert_addr: Optional[str] = None
-    g_node_alias: str = "d1.isone.ver.keene.holly.ta.scada"
+    g_node_alias: str = "d1.isone.ver.keene.holly.scada"
     g_node_role_value: str = "Scada"
     my_super_alias: str = "d1.super1"
     g_node_id: str = "282b2121-ec42-44e0-99fe-d77c40f64ac0"

@@ -1,8 +1,12 @@
 import json
 import logging
+import subprocess
+import sys
+import time
 from typing import List
 
 import gridworks.api_utils as api_utils
+import gridworks.dev_utils.algo_setup as algo_setup
 from gridworks.algo_utils import BasicAccount
 from gridworks.utils import RestfulResponse
 from pydantic import SecretStr
@@ -332,3 +336,231 @@ demo_plant_names: List[str] = [
     "spruce",
     "camellia",
 ]
+
+
+def cert_creation(sim_size: int) -> List[DevTaOwner]:
+    plant_names = demo_plant_names[0:sim_size]
+    if sim_size == 0:
+        raise Exception("No simulated TerminalAssets. Stopping")
+    elif sim_size == 1:
+        print(f"Running simulation for 1 TerminalAsset (holly.ta)")
+    elif sim_size > 4:
+        raise Exception("Please choose between 1 and 4 TerminalAssets")
+    else:
+        print(f"Running simulation for {sim_size} TerminalAssets")
+    time.sleep(2)
+    print("")
+
+    print("")
+    print("")
+    print("Funding GNodeFactory")
+
+    algo_setup.dev_fund_to_min(config.Public().gnf_admin_addr, 25)
+    algo_setup.dev_fund_to_min(config.Public().gnf_graveyard_addr, 1)
+
+    print("")
+    print("")
+    print(f"Funding {sim_size} Atn accts")
+    print("")
+    print("")
+
+    atn_address_list = [
+        "4JHRDNY4F6RCVGPALZULZWZNVP3OKT3DATEOLINCGILVPGHUOFY7KCHVIQ",
+        "YL3MAWSIST2DWX5GOTZYVX74GNSAVMX52RKSEDT4KIO644JCCRFTFKM5UM",
+        "CWOLXCXZKLYLORBQQCI4AUHA5CLOLUXRDZEJZI4S3F6WUNVIAF4MX5EW4U",
+        "R3PKD54UOAOW6MTPO7ECZ6YX4COQWN5BJM4OZIHYWFVVGAITM53RGUF6LI",
+    ]
+
+    for i in range(sim_size):
+        addr = atn_address_list[i]
+        algo_setup.dev_fund_to_min(addr=addr, min_algos=25)
+
+    addr = atn_address_list[0]
+    print("")
+    print("")
+    print("Certifying MollyMetermaid as a TaValidator")
+    print("")
+    print("")
+    time.sleep(2)
+
+    print("")
+    print("")
+    print("Starting up Molly Metermaid's Validator API")
+    print("")
+    print("")
+    time.sleep(2)
+    cmd = "docker compose -f docker-api.yml up -d"
+    subprocess.run(cmd.split())
+
+    print("Verify that it works by inspecting http://localhost:8001/docs")
+    print("")
+    print("")
+
+    time.sleep(2)
+    print("This also started up the API half of the MarketMaker.")
+    print("Verify that it is working:")
+
+    print("- http://localhost:7997/ shows market maker information")
+    print(
+        "- http://localhost:7997/get-time/, which should be 0 unix time, but will show the time"
+    )
+    print(" of the simulation once that starts")
+
+    rr = certify_molly_metermaid()
+
+    pprint(rr)
+    if rr.HttpStatusCode > 200:
+        raise Exception("Stopping demo due to errors")
+
+    print("")
+    print("")
+    print(f"Creating {sim_size} TaOwners")
+    print("")
+    print("")
+    time.sleep(2)
+    ta_owners = create_ta_owners(plant_names)
+    print("")
+    print("")
+    print(f"Creating {sim_size} TaDaemons")
+    print("")
+    print("")
+    time.sleep(2)
+    start_ta_owners(ta_owners)
+
+    print("")
+    print("")
+    print("TaDaemons are now running, each with their own RestAPI.")
+    print("")
+    print("")
+    time.sleep(2)
+    print("Any TaDeeds they own will show up at the following endpoints:")
+    print("")
+    print("")
+    for owner in ta_owners:
+        print(
+            f"Inspect {owner}'s deeds at http://localhost:{owner.settings.ta_daemon_api_port}/owned-tadeeds/"
+        )
+
+    print("")
+    print("")
+    time.sleep(2)
+    print("They do not yet own any TaDeeds.")
+    print("")
+    print("")
+    time.sleep(2)
+    input("HIT RETURN TO CONTINUE")
+
+    print("")
+    print("")
+    print(f"Creating {sim_size} TerminalAssets")
+    print("")
+    print("")
+    time.sleep(2)
+
+    rr = create_terminal_assets(ta_owners)
+
+    if rr.HttpStatusCode == 200:
+        print("Success!")
+        print("")
+        print("")
+        time.sleep(2)
+        print(
+            "TaDaemon Algorand addresses now hold TaDeeds on behalf of their TaOwners"
+        )
+        print("")
+        print("")
+        time.sleep(2)
+        print("Inspect them at:")
+
+        for owner in ta_owners:
+            print(
+                f"Inspect {owner}'s deeds at http://localhost:{owner.settings.ta_daemon_api_port}/owned-tadeeds/"
+            )
+
+    else:
+        for ta_owner in ta_owners:
+            ta_owner.stop()  # Does the same
+        raise Exception(
+            f"Something went wrong creating TerminalAssets: {rr.HttpStatusCode}, {rr.Note}"
+        )
+
+    print("")
+    print("")
+    print(
+        "The AtomicTNodes do not yet own trading rights. Inspect trading right owners at:"
+    )
+    for owner in ta_owners:
+        print(
+            f"Inspect {owner}'s deeds at http://localhost:{owner.settings.ta_daemon_api_port}/trading-rights/"
+        )
+
+    print("")
+    print("")
+    time.sleep(2)
+    input("HIT RETURN TO CONTINUE")
+    print("")
+    print("")
+    print(
+        "In fact the AtomicTNodes do not exist yet. Go to http://d1-1.electricity.works:15672/#/queues"
+    )
+    print("")
+    print("")
+    time.sleep(1)
+    print("Username and password are the same:")
+    print("")
+    print("smqPublic")
+    print("")
+    print("")
+    time.sleep(1)
+    print(
+        "You will only see the dummy queues, the world d1-Fxxx, and the market maker ...keene.F-xxx"
+    )
+    # input("To start the atn actors (and time coordinator) in a docker instance, HIT RETURN")
+    # )
+    # print("")
+    # print("")
+    # print("It takes about 5 seconds for them to shop up. Look for them at")
+    # print("http://d1-1.electricity.works:15672/#/queues")
+    # print(
+    #     "Once their queues exist they ready to enter their Service Level Agreements and get their trading rights"
+    # )
+    # input("HIT RETURN TO CONTINUE")
+    rr = enter_slas(ta_owners)
+
+    if rr.HttpStatusCode == 200:
+        print("")
+        print("")
+        time.sleep(2)
+        print(
+            "Daemons have transferred TradingRights to their AtomicTNodes. Inspect at above pages"
+        )
+        print("")
+        print("")
+    else:
+        cmd = "docker compose -f docker-actor.yml down"
+        subprocess.run(cmd.split())
+        raise Exception("Something went wrong entering Service Level Agreements")
+
+    print("")
+    print("")
+    print(f"Getting SCADA Certs for {sim_size} Scada")
+    print("")
+    print("")
+    time.sleep(2)
+
+    rr = create_scadas(ta_owners)
+
+    if rr.HttpStatusCode == 200:
+        print("Success!")
+        print("")
+        print("")
+        time.sleep(2)
+        print("Scada accounts are funded, and Scada Certs are created")
+
+    else:
+        for ta_owner in ta_owners:
+            ta_owner.stop()  # Does the same
+        raise Exception(
+            f"Something went wrong creating TerminalAssets: {rr.HttpStatusCode}, {rr.Note}"
+        )
+    return ta_owners
