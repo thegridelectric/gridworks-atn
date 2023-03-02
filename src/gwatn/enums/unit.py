@@ -16,9 +16,10 @@ class Unit(StrEnum):
       * Celcius:
       * Fahrenheit:
       * Gpm:
-      * Wh:
+      * WattHours:
       * AmpsRms:
       * VoltsRms:
+      * Gallons:
     """
 
     Unknown = auto()
@@ -27,9 +28,10 @@ class Unit(StrEnum):
     Celcius = auto()
     Fahrenheit = auto()
     Gpm = auto()
-    Wh = auto()
+    WattHours = auto()
     AmpsRms = auto()
     VoltsRms = auto()
+    Gallons = auto()
 
     @classmethod
     def default(cls) -> "Unit":

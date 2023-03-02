@@ -236,7 +236,7 @@ class AtnActorBase(TwoChannelActorBase):
         LOGGER.info(f"Got {ping.MyHex}")
         # Does not send back. Atn waits for the DispatchContract's expected
         # one minute before sending.
-        print(f"Got heartbeat from scada: {ping}")
+        # print(f"Got heartbeat from scada: {ping}")
 
     def hb_to_scada(self):
         """Checks that Atn is in Dispatch Contract, sends a HeartbeatB to Scada,
@@ -256,7 +256,7 @@ class AtnActorBase(TwoChannelActorBase):
             to_role=GNodeRole.Scada,
             to_g_node_alias=self.scada_alias,
         )
-        LOGGER.info(f"Sent hb {ping}")
+        LOGGER.info(f"Sent  {ping.MyHex}")
         # report to DispatchContract
         ptxn = PaymentTxn(self.acct.addr, self.sp, self.dc_client.app_addr, 1000)
         self.dc_client.call(
@@ -317,10 +317,8 @@ class AtnActorBase(TwoChannelActorBase):
                 f"Ignoring JoinDispatchContract - already in dispatch contract {self.dc_app_id}"
             )
             return
-        self.g_node_instance_id = str(uuid.uuid4())
         self.scada_gni_id = payload.FromGNodeInstanceId
         with open(".env", "a") as file:
-            file.write(f'ATN_G_NODE_INSTANCE_ID="{self.g_node_instance_id}"\n')
             file.write(f'ATN_SCADA_GNI_ID="{payload.FromGNodeInstanceId}"\n')
         self.dc_client = ApplicationClient(
             client=self.client,

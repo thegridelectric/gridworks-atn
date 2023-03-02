@@ -4,22 +4,20 @@ from gwatn.enums import MakeModel
 
 def test_make_model() -> None:
     assert set(MakeModel.values()) == {
-        "FREEDOM__RELAY",
-        "OMEGAEZO__FTB800FLO",
         "UNKNOWNMAKE__UNKNOWNMODEL",
-        "GRIDWORKS__SIMBOOL30AMPRELAY",
+        "EGAUGE__4030",
         "MAGNELAB__SCT0300050",
         "YMDC__SCT013100",
-        "G1__NCD_ADS1115__TEWA_NTC_10K_A",
-        "G1__NCD_ADS1115__AMPH_NTC_10K_A",
-        "GRIDWORKS__SIMPM1",
-        "GRIDWORKS__WATERTEMPHIGHPRECISION",
+        "GRIDWORKS__SIMTSNAP1",
+        "ATLAS__EZFLO",
         "NCD__PR814SPST",
         "ADAFRUIT__642",
+        "GRIDWORKS__TSNAP1",
+        "GRIDWORKS__WATERTEMPHIGHPRECISION",
+        "GRIDWORKS__SIMPM1",
         "SCHNEIDERELECTRIC__IEM3455",
+        "GRIDWORKS__SIMBOOL30AMPRELAY",
         "OPENENERGY__EMONPI",
-        "EGAUGE__3010",
-        "RHEEM__XE50T10H45U0",
     }
 
     assert MakeModel.default() == MakeModel.UNKNOWNMAKE__UNKNOWNMODEL

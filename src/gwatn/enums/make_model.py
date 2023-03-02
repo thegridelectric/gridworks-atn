@@ -10,40 +10,36 @@ class MakeModel(StrEnum):
 
     Choices and descriptions:
 
-      * Freedom__Relay:
-      * OmegaEzo__Ftb800Flo:
       * UnknownMake__UnknownModel:
-      * GridWorks__SimBool30AmpRelay:
-      * Gridworks__SimPm1:
-      * GridWorks__WaterTempHighPrecision:
+      * Egauge__4030:
       * NCD__PR8-14-SPST:
       * Adafruit__642:
+      * GridWorks__TSnap1:
+      * GridWorks__WaterTempHighPrecision:
+      * Gridworks__SimPm1:
       * SchneiderElectric__Iem3455:
+      * GridWorks__SimBool30AmpRelay:
       * OpenEnergy__EmonPi:
-      * Egauge__3010:
-      * Rheem__XE50T10H45U0:
       * Magnelab__SCT-0300-050:
       * YMDC__SCT013-100:
-      * G1__NCD_ADS1115__TEWA_NTC_10K_A: 4.6 kOhm 5% accuracy voltage divider resistor, NCD ADS1115 i2c 16 bit resolution chip, Tewa TT0P-10KC3-T105 -1500 pipe measurement NTC 10K thermistor.
-      * G1__NCD_ADS1115__AMPH_NTC_10K_A: 4.6 kOhm 5% accuracy voltage divider resistor, NCD ADS1115 i2c 16 bit resolution chip, Amphenol MA100GG103BN thermistor
+      * GridWorks__SimTSnap1:
+      * Atlas__EzFlo:
     """
 
-    FREEDOM__RELAY = auto()
-    OMEGAEZO__FTB800FLO = auto()
     UNKNOWNMAKE__UNKNOWNMODEL = auto()
-    GRIDWORKS__SIMBOOL30AMPRELAY = auto()
+    EGAUGE__4030 = auto()
     MAGNELAB__SCT0300050 = auto()
     YMDC__SCT013100 = auto()
-    G1__NCD_ADS1115__TEWA_NTC_10K_A = auto()
-    G1__NCD_ADS1115__AMPH_NTC_10K_A = auto()
-    GRIDWORKS__SIMPM1 = auto()
-    GRIDWORKS__WATERTEMPHIGHPRECISION = auto()
+    GRIDWORKS__SIMTSNAP1 = auto()
+    ATLAS__EZFLO = auto()
     NCD__PR814SPST = auto()
     ADAFRUIT__642 = auto()
+    GRIDWORKS__TSNAP1 = auto()
+    GRIDWORKS__WATERTEMPHIGHPRECISION = auto()
+    GRIDWORKS__SIMPM1 = auto()
     SCHNEIDERELECTRIC__IEM3455 = auto()
+    GRIDWORKS__SIMBOOL30AMPRELAY = auto()
     OPENENERGY__EMONPI = auto()
-    EGAUGE__3010 = auto()
-    RHEEM__XE50T10H45U0 = auto()
 
     @classmethod
     def default(cls) -> "MakeModel":
