@@ -501,7 +501,7 @@ def cert_creation(sim_size: int) -> List[DevTaOwner]:
     print("")
     print("")
     print(
-        "In fact the AtomicTNodes do not exist yet. Go to http://d1-1.electricity.works:15672/#/queues"
+        "In fact the AtomicTNodes and SCADAS do not exist yet. Go to http://d1-1.electricity.works:15672/#/queues"
     )
     print("")
     print("")
@@ -512,9 +512,7 @@ def cert_creation(sim_size: int) -> List[DevTaOwner]:
     print("")
     print("")
     time.sleep(1)
-    print(
-        "You will only see the dummy queues, the world d1-Fxxx, and the market maker ...keene.F-xxx"
-    )
+    print("When they do, you will see queues representing AtomicTNodes and SCADAS ")
     # input("To start the atn actors (and time coordinator) in a docker instance, HIT RETURN")
     # )
     # print("")
