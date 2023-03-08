@@ -54,6 +54,11 @@ class HbStatus(BaseModel):
     LastHeartbeatReceivedMs: int
     AtnLastHex: str = "0"
     ScadaLastHex: str = "0"
+    # To see beaker issue an ABI complaint:
+    # ScadaLastHex: Optional[str] = None
+    #
+    # This will create an HbStatus with ScadaLastHex of None
+    # when the Atn is initialized.
 
 
 def dummy_atn_params() -> AtnParams:
