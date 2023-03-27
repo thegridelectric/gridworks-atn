@@ -56,6 +56,11 @@ class StatusOutputRow(BaseModel):
     TypeName: str = "ui.status.output.row.000"
 
 
+def channel_time(row: StatusOutputRow) -> str:
+    time_unix_ms = row.IntTimeUnixS * 1000 + row.Milliseconds
+    return f"{row.AboutShNode}{time_unix_ms}"
+
+
 class SnapshotWithSendTime(BaseModel):
     SendTimeUnixMs: int
     Snapshot: SnapshotSpaceheat
@@ -347,11 +352,12 @@ class ScadaReportA_Maker:
             duration_hrs=duration_hrs,
             atn_alias=atn_alias,
         )
+        sorted_rows = sorted(rows, key=lambda row: channel_time(row))
         lines = [
-            "TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode, DispatchCmd\n"
+            "Channel&Time, TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode, DispatchCmd\n"
         ]
-        for row in rows:
-            line = f"{row.TimeUtc}, {row.IntTimeUnixS}, {row.Milliseconds}"
+        for row in sorted_rows:
+            line = f"{channel_time(row)},{row.TimeUtc}, {row.IntTimeUnixS}, {row.Milliseconds}"
             if row.Value is None:
                 line += ", "
             else:
