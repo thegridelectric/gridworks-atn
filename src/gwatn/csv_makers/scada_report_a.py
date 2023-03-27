@@ -26,10 +26,10 @@ from gwatn.csv_makers.codec import S3MQTTCodec
 OUT_STUB = "output_data/scada_report_a"
 
 DOWNLOADED_FILE_TYPES = [
-    GtDispatchBoolean_Maker.type_alias,
-    GtShStatus_Maker.type_alias,
-    SnapshotSpaceheat_Maker.type_alias,
-    GtTelemetry_Maker.type_alias,
+    GtDispatchBoolean_Maker.type_name,
+    GtShStatus_Maker.type_name,
+    SnapshotSpaceheat_Maker.type_name,
+    GtTelemetry_Maker.type_name,
     SnapshotSpaceheatEvent.__fields__["TypeName"].default,
     GtShStatusEvent.__fields__["TypeName"].default,
 ]
@@ -54,6 +54,11 @@ class StatusOutputRow(BaseModel):
     FromShNode: Optional[str]
     DispatchCmd: Optional[int]
     TypeName: str = "ui.status.output.row.000"
+
+
+def channel_time(row: StatusOutputRow) -> str:
+    time_unix_ms = row.IntTimeUnixS * 1000 + row.Milliseconds
+    return f"{row.AboutShNode}{time_unix_ms}"
 
 
 class SnapshotWithSendTime(BaseModel):
@@ -120,7 +125,7 @@ class ScadaReportA_Maker:
             IntTimeUnixS=int(time_unix_ms / 1000),
             Milliseconds=int(time_unix_ms) % 1000,
             TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-            AboutShNode=payload.AboutNodeAlias,
+            AboutShNode=payload.AboutNodeName,
             FromShNode=payload.FromGNodeAlias,
             DispatchCmd=payload.RelayState,
         )
@@ -303,7 +308,7 @@ class ScadaReportA_Maker:
     def get_csv_rows(
         self, start_time_unix_ms: int, duration_hrs: int, atn_alias: str
     ) -> List[StatusOutputRow]:
-        g_node_alias_list = [atn_alias, atn_alias + ".scada", atn_alias + ".scada"]
+        g_node_alias_list = [atn_alias, atn_alias + ".scada"]
         start_time_utc = pendulum.from_timestamp(start_time_unix_ms / 1000)
         end_time_utc = start_time_utc + pendulum.duration(hours=duration_hrs)
         end_time_unix_ms = end_time_utc.int_timestamp * 1000
@@ -347,11 +352,12 @@ class ScadaReportA_Maker:
             duration_hrs=duration_hrs,
             atn_alias=atn_alias,
         )
+        sorted_rows = sorted(rows, key=lambda row: channel_time(row))
         lines = [
-            "TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode, DispatchCmd\n"
+            "Channel&Time, TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode, DispatchCmd\n"
         ]
-        for row in rows:
-            line = f"{row.TimeUtc}, {row.IntTimeUnixS}, {row.Milliseconds}"
+        for row in sorted_rows:
+            line = f"{channel_time(row)},{row.TimeUtc}, {row.IntTimeUnixS}, {row.Milliseconds}"
             if row.Value is None:
                 line += ", "
             else:
