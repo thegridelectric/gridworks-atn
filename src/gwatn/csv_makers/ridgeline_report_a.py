@@ -91,7 +91,7 @@ GLYCOL_FLOW = DataChannel(
 
 def export_excel(
     start_s: int, channels: List[DataChannel], sync_rows: List[RidgelineOutputRow]
-) -> None:
+) -> str:
     duration_hrs = 24
     start_utc = pendulum.from_timestamp(start_s)
     start_local = start_utc.in_timezone(timezone_string)
@@ -197,11 +197,12 @@ def export_excel(
     glycol_chart.set_size({"width": 720, "height": 432})
     w.insert_chart("I28", glycol_chart)
     workbook.close()
+    return file_name
 
 
 def make_spreadsheet(
     start_s: Optional[int] = None,
-):
+) -> str:
     atn_alias = "hw1.isone.me.freedom.apple"
     if start_s is None:
         t = time.time()
@@ -320,7 +321,7 @@ def make_spreadsheet(
                 # GlycolFlowGpm=8.2
             )
         )
-    export_excel(start_s, channels, sync_rows)
+    return export_excel(start_s, channels, sync_rows)
 
 
 # ch = DIST_FLOW
