@@ -9,12 +9,10 @@ from gwproto.enums import TelemetryName
 from pydantic import BaseModel
 
 from gwatn.csv_makers.scada_report_a import ScadaReportA_Maker
-from gwatn.csv_makers.scada_report_a import StatusOutputRow
 from gwatn.enums import Unit
 
 
 OUT_STUB = "output_data/freedom_flow"
-
 timezone_string = "US/Eastern"
 
 
@@ -100,7 +98,8 @@ def export_excel(
     start_local = start_utc.in_timezone(timezone_string)
     start_local.strftime("%Y/%m/%d %H:%M:%S")
     file_name = f"{OUT_STUB}/{start_local.strftime('%Y%m%d')}_freedom_flow.xlsx"
-
+    print(f"Will attempt to write to {file_name}")
+    return
     workbook = xlsxwriter.Workbook(file_name)
     w = workbook.add_worksheet()
     w.freeze_panes(3, 0)
