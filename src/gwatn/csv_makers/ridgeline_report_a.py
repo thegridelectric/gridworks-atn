@@ -93,13 +93,11 @@ def export_excel(
     start_s: int, channels: List[DataChannel], sync_rows: List[RidgelineOutputRow]
 ) -> None:
     duration_hrs = 24
-
     start_utc = pendulum.from_timestamp(start_s)
     start_local = start_utc.in_timezone(timezone_string)
     start_local.strftime("%Y/%m/%d %H:%M:%S")
     file_name = f"{OUT_STUB}/{start_local.strftime('%Y%m%d')}_freedom_flow.xlsx"
     print(f"Will attempt to write to {file_name}")
-    return
     workbook = xlsxwriter.Workbook(file_name)
     w = workbook.add_worksheet()
     w.freeze_panes(3, 0)
