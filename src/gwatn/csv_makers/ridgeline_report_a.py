@@ -92,19 +92,18 @@ GLYCOL_FLOW = DataChannel(
 def export_excel(
     start_s: int, channels: List[DataChannel], sync_rows: List[RidgelineOutputRow]
 ) -> str:
-    duration_hrs = 24
     start_utc = pendulum.from_timestamp(start_s)
     start_local = start_utc.in_timezone(timezone_string)
     start_local.strftime("%Y/%m/%d %H:%M:%S")
     file_name = f"{OUT_STUB}/{start_local.strftime('%Y%m%d')}_freedom_flow.xlsx"
     print(f"Will attempt to write to {file_name}")
     workbook = xlsxwriter.Workbook(file_name)
-    w = workbook.add_worksheet()
+    w = workbook.add_worksheet("1-minute")
     w.freeze_panes(3, 0)
     header_format = workbook.add_format({"bg_color": "#E6F4D8", "align": "right"})
     data_format = workbook.add_format({"bg_color": "#E6F4D8"})
-    date_width = 13
-    channel_width = 13
+    date_width = 15
+    channel_width = 11
     w.set_column("A:A", date_width)
     w.set_column("B:B", date_width)
     w.set_column("C:C", channel_width)
@@ -115,7 +114,9 @@ def export_excel(
     w.set_column("H:H", 5)
     w.write(0, 0, "Start Date (ET)", header_format)
     w.write(1, 0, start_local.strftime("%Y/%m/%d"), header_format)
-    w.write(0, 8, "Data for Millinocket pilot first house (Freedom), from GridWorks")
+    w.write(0, 8, "csv.freedom.flow version 001")
+    w.write(1, 8, "Data for Millinocket pilot first house (Freedom), from GridWorks")
+
     w.write(2, 0, "Eastern Time", header_format)
 
     for i in range(len(channels)):
@@ -138,29 +139,31 @@ def export_excel(
     dist_chart = workbook.add_chart({"type": "line"})
     dist_chart.add_series(
         {
-            "name": f"Sheet1!$B$3",
-            "categories": f"Sheet1!$A$4:$A${end}",
-            "values": f"=Sheet1!$B$4:$B${end}",
+            "name": f"1-minute!$B$3",
+            "categories": f"1-minute!$A$4:$A${end}",
+            "values": f"=1-minute!$B$4:$B${end}",
             "line": {"color": "red"},
         }
     )
     dist_chart.add_series(
         {
-            "name": f"Sheet1!$C$3",
-            "values": f"=Sheet1!$C$4:$C${end}",
+            "name": f"1-minute!$C$3",
+            "values": f"=1-minute!$C$4:$C${end}",
             "line": {"color": "blue"},
         }
     )
     dist_chart.add_series(
         {
-            "name": f"Sheet1!$D$3",
-            "values": f"=Sheet1!$D$4:$D${end}",
+            "name": f"1-minute!$D$3",
+            "values": f"=1-minute!$D$4:$D${end}",
             "y2_axis": True,
             "line": {"color": "orange"},
         }
     )
     dist_chart.set_y_axis({"name": "Deg F", "min": 90})
-    dist_chart.set_y2_axis({"name": "Gpm", "max": 12})
+    # dist_flow_max = max(list(map(lambda x: x.DistFlowGpm, sync_rows)))
+    dist_flow_max = 8
+    dist_chart.set_y2_axis({"name": "Gpm", "max": 3 * dist_flow_max})
     dist_chart.set_title(
         {"name": f'Distribution Loop {start_local.strftime("%m/%d/%Y")}'}
     )
@@ -170,23 +173,23 @@ def export_excel(
     glycol_chart = workbook.add_chart({"type": "line"})
     glycol_chart.add_series(
         {
-            "name": f"Sheet1!$E$3",
-            "categories": f"Sheet1!$A$4:$A${end}",
-            "values": f"=Sheet1!$E$4:$E${end}",
+            "name": f"1-minute!$E$3",
+            "categories": f"1-minute!$A$4:$A${end}",
+            "values": f"=1-minute!$E$4:$E${end}",
             "line": {"color": "red"},
         }
     )
     glycol_chart.add_series(
         {
-            "name": f"Sheet1!$F$3",
-            "values": f"=Sheet1!$F$4:$F${end}",
+            "name": f"1-minute!$F$3",
+            "values": f"=1-minute!$F$4:$F${end}",
             "line": {"color": "blue"},
         }
     )
     glycol_chart.add_series(
         {
-            "name": f"Sheet1!$G3",
-            "values": f"=Sheet1!$G$4:$G${end}",
+            "name": f"1-minute!$G3",
+            "values": f"=1-minute!$G$4:$G${end}",
             "y2_axis": True,
             "line": {"color": "orange"},
         }
@@ -196,22 +199,123 @@ def export_excel(
     glycol_chart.set_title({"name": f'Glycol Loop {start_local.strftime("%m/%d/%Y")}'})
     glycol_chart.set_size({"width": 720, "height": 432})
     w.insert_chart("I28", glycol_chart)
+
+    w2 = workbook.add_worksheet("zoom")
+    w2.set_column("A:A", date_width)
+    w2.set_column("B:B", channel_width)
+    w2.set_column("C:C", channel_width)
+    w2.set_column("D:D", channel_width)
+    w2.set_column("E:E", channel_width)
+    w2.set_column("F:F", channel_width)
+    w2.set_column("G:G", channel_width)
+    w2.set_column("H:H", 5)
+
+    highlight_format = workbook.add_format({"bg_color": "yellow", "align": "right"})
+    time_format = workbook.add_format({"num_format": "hh:mm:SS", "align": "right"})
+
+    w2.write(0, 0, "Start Time (HH:MM)")
+    w2.write(0, 1, "00:00", highlight_format)
+    w2.write(1, 0, "Duration (Hrs)")
+    w2.write(1, 1, "6", highlight_format)
+
+    for i in range(len(channels)):
+        ch = channels[i]
+        w2.write(3, 1 + i, ch.OutUnits.value, header_format)
+        w2.write(4, 1 + i, ch.DaveName, header_format)
+
+    w2.write("A6", "=B1", time_format)
+    w2.write("B6", "=OFFSET('1-minute'!B$4,$A6*24*60,0)")
+    w2.write("C6", "=OFFSET('1-minute'!C$4,$A6*24*60,0)")
+    w2.write("D6", "=OFFSET('1-minute'!D$4,$A6*24*60,0)")
+    w2.write("E6", "=OFFSET('1-minute'!E$4,$A6*24*60,0)")
+    w2.write("F6", "=OFFSET('1-minute'!F$4,$A6*24*60,0)")
+    w2.write("G6", "=OFFSET('1-minute'!G$4,$A6*24*60,0)")
+
+    for i in range(1, len(sync_rows)):
+        w2.write(f"A{i + 6}", f"=A{i + 6 - 1} + $B$2/24/24/60", time_format)
+        w2.write(f"B{i + 6}", f"=OFFSET('1-minute'!B$4,$A{i + 6}*24*60,0)")
+        w2.write(f"C{i + 6}", f"=OFFSET('1-minute'!C$4,$A{i + 6}*24*60,0)")
+        w2.write(f"D{i + 6}", f"=OFFSET('1-minute'!D$4,$A{i + 6}*24*60,0)")
+        w2.write(f"E{i + 6}", f"=OFFSET('1-minute'!E$4,$A{i + 6}*24*60,0)")
+        w2.write(f"F{i + 6}", f"=OFFSET('1-minute'!F$4,$A{i + 6}*24*60,0)")
+        w2.write(f"G{i + 6}", f"=OFFSET('1-minute'!G$4,$A{i + 6}*24*60,0)")
+
+    end2 = len(sync_rows) + 5
+    dist_chart2 = workbook.add_chart({"type": "line"})
+    dist_chart2.add_series(
+        {
+            "name": f"zoom!$B$5",
+            "categories": f"zoom!$A$6:$A${end}",
+            "values": f"=zoom!$B$6:$B${end}",
+            "line": {"color": "red"},
+        }
+    )
+    dist_chart2.add_series(
+        {
+            "name": f"zoom!$C$5",
+            "values": f"=zoom!$C$6:$C${end}",
+            "line": {"color": "blue"},
+        }
+    )
+    dist_chart2.add_series(
+        {
+            "name": f"zoom!$D$5",
+            "values": f"=zoom!$D$6:$D${end}",
+            "y2_axis": True,
+            "line": {"color": "orange"},
+        }
+    )
+    dist_chart2.set_y_axis({"name": "Deg F", "min": 90})
+    dist_chart2.set_y2_axis({"name": "Gpm", "max": 3 * dist_flow_max})
+    dist_chart2.set_title(
+        {"name": f'Distribution Loop {start_local.strftime("%m/%d/%Y")}'}
+    )
+    dist_chart2.set_size({"width": 720, "height": 432})
+    w2.insert_chart("I4", dist_chart2)
+
+    glycol_chart2 = workbook.add_chart({"type": "line"})
+    glycol_chart2.add_series(
+        {
+            "name": f"zoom!$E$5",
+            "categories": f"zoom!$A$6:$A${end2}",
+            "values": f"=zoom!$E$6:$E${end2}",
+            "line": {"color": "red"},
+        }
+    )
+    glycol_chart2.add_series(
+        {
+            "name": f"zoom!$F$5",
+            "values": f"=zoom!$F$6:$F${end2}",
+            "line": {"color": "blue"},
+        }
+    )
+    glycol_chart2.add_series(
+        {
+            "name": f"zoom!$G5",
+            "values": f"=zoom!$G$6:$G${end2}",
+            "y2_axis": True,
+            "line": {"color": "orange"},
+        }
+    )
+    glycol_chart2.set_y_axis({"name": "Deg F", "min": 90})
+    glycol_chart2.set_y2_axis({"name": "Gpm", "max": 24})
+    glycol_chart2.set_title({"name": f'Glycol Loop {start_local.strftime("%m/%d/%Y")}'})
+    glycol_chart2.set_size({"width": 720, "height": 432})
+    w2.insert_chart("I28", glycol_chart2)
+
     workbook.close()
     return file_name
 
 
-def make_spreadsheet(
-    start_s: Optional[int] = None,
-) -> str:
+def make_spreadsheet() -> str:
     atn_alias = "hw1.isone.me.freedom.apple"
-    if start_s is None:
-        t = time.time()
-        time_utc = pendulum.from_timestamp(t)
+    t = time.time()
+    time_utc = pendulum.from_timestamp(t)
 
-        last_utc_midnight_unix_s = t - (t % (3600 * 24))
-        start_s = last_utc_midnight_unix_s + 3600 * (
-            time_utc.hour - time_utc.in_timezone(timezone_string).hour
-        )
+    last_utc_midnight_unix_s = t - (t % (3600 * 24))
+    start_s = last_utc_midnight_unix_s + 3600 * (
+        time_utc.hour - time_utc.in_timezone(timezone_string).hour
+    )
     start_time_unix_ms = int(start_s * 1000)
     duration_hrs = 24
     maker = ScadaReportA_Maker()
