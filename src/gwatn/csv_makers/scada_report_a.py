@@ -20,6 +20,7 @@ from gwproto.messages import SnapshotSpaceheat_Maker
 from gwproto.messages import SnapshotSpaceheatEvent
 from pydantic import BaseModel
 
+import gwatn.csv_makers.csv_utils as csv_utils
 from gwatn.api_types_hack import HackTypeMakerByName
 from gwatn.csv_makers.codec import S3MQTTCodec
 
@@ -202,6 +203,11 @@ class ScadaReportA_Maker:
         s3_object = self.s3.get_object(
             Bucket=self.aws_bucket_name, Key=file_name_meta.FileName
         )
+        kafka_topic = csv_utils.kafka_topic_from_s3_filename(file_name_meta.FileName)
+        type_name = csv_utils.type_name_from_kafka_topic(kafka_topic)
+
+        msg = s3_object["Body"].read()
+
         message = typing.cast(
             Message, self.mqtt_codec.decode("gw", s3_object["Body"].read())
         )
