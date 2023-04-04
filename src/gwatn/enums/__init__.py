@@ -1,4 +1,6 @@
 """ GwSchema Enums used in gwatn """
+from gwproto.enums import TelemetryName
+
 from gwatn.enums.actor_class import ActorClass
 from gwatn.enums.algo_cert_type import AlgoCertType
 from gwatn.enums.atn_spaceheat_strategy_name import AtnSpaceheatStrategyName
@@ -22,7 +24,6 @@ from gwatn.enums.recognized_temperature_unit import RecognizedTemperatureUnit
 from gwatn.enums.role import Role
 from gwatn.enums.strategy_name import StrategyName
 from gwatn.enums.supervisor_container_status import SupervisorContainerStatus
-from gwatn.enums.telemetry_name import TelemetryName
 from gwatn.enums.unit import Unit
 from gwatn.enums.universe_type import UniverseType
 
