@@ -7,6 +7,7 @@ from typing import Optional
 import boto3
 import pendulum
 from gwproto import Message
+from gwproto.enums import TelemetryName
 from gwproto.messages import GtDispatchBoolean
 from gwproto.messages import GtDispatchBoolean_Maker
 from gwproto.messages import GtShStatus
@@ -83,20 +84,6 @@ class ScadaReportA_Maker:
         self.mqtt_codec = S3MQTTCodec()
         print(f"Initialized {self.__class__}")
 
-    def on_gw_message(self, from_g_node_alias: str, payload):
-        if from_g_node_alias not in self.ATN_ALIAS_LIST:
-            print(f"Does not record {from_g_node_alias}.")
-        else:
-            if isinstance(payload, GtShStatus):
-                self.latest_status_list.append(payload)
-
-    def get_atn_alias_from_alias(self, alias: str):
-        x = alias.split(".")
-        if x[-1] == "scada":
-            return ".".join(x[:-2])
-        else:
-            return alias
-
     def get_status_rows_from_telemetry(
         self, from_sh_node_alias: str, payload: GtTelemetry
     ) -> List[StatusOutputRow]:
@@ -140,18 +127,25 @@ class ScadaReportA_Maker:
         snapshot = payload.Snapshot.Snapshot
         time_unix_ms = payload.SendTimeUnixMs
         time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
+        tns_to_use = [TelemetryName.RelayState, TelemetryName.PowerW]
         for i in range(len(snapshot.ValueList)):
-            row = StatusOutputRow(
-                TimeUnixMs=time_unix_ms,
-                IntTimeUnixS=int(time_unix_ms / 1000),
-                Milliseconds=int(time_unix_ms) % 1000,
-                TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-                Value=snapshot.ValueList[i],
-                TelemetryName=snapshot.TelemetryNameList[i].value,
-                AboutShNode=snapshot.AboutNodeAliasList[i],
-                FromShNode=from_g_node_alias,
-            )
-            rows.append(row)
+            tn = snapshot.TelemetryNameList[i]
+            if tn in tns_to_use:
+                if tn == TelemetryName.RelayState:
+                    from_sh_node = snapshot.AboutNodeAliasList[i]
+                else:
+                    from_sh_node = "a.m"
+                row = StatusOutputRow(
+                    TimeUnixMs=time_unix_ms,
+                    IntTimeUnixS=int(time_unix_ms / 1000),
+                    Milliseconds=int(time_unix_ms) % 1000,
+                    TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
+                    Value=snapshot.ValueList[i],
+                    TelemetryName=snapshot.TelemetryNameList[i].value,
+                    AboutShNode=snapshot.AboutNodeAliasList[i],
+                    FromShNode=from_sh_node,
+                )
+                rows.append(row)
         return rows
 
     def get_status_rows_from_status(self, payload: GtShStatus) -> List[StatusOutputRow]:
