@@ -13,18 +13,22 @@ from gwproto.messages import GtDispatchBoolean_Maker
 from gwproto.messages import GtShStatus
 from gwproto.messages import GtShStatus_Maker
 from gwproto.messages import GtShStatusEvent
-from gwproto.messages import GtTelemetry
 from gwproto.messages import GtTelemetry_Maker
 from gwproto.messages import SnapshotSpaceheat
 from gwproto.messages import SnapshotSpaceheat_Maker
 from gwproto.messages import SnapshotSpaceheatEvent
 from pydantic import BaseModel
 
+import gwatn.csv_makers.csv_utils as csv_utils
 from gwatn.api_types_hack import HackTypeMakerByName
 from gwatn.csv_makers.codec import S3MQTTCodec
+from gwatn.csv_makers.csv_utils import ChannelReading
+from gwatn.types.data_channel import DataChannel
 
 
 OUT_STUB = "output_data/scada_report_a"
+
+MIN_FLOW_CALC_SECONDS = 30
 
 DOWNLOADED_FILE_TYPES = [
     GtDispatchBoolean_Maker.type_name,
@@ -44,22 +48,8 @@ class FileNameMeta(BaseModel):
     TypeName: str = "file.name.meta.000"
 
 
-class StatusOutputRow(BaseModel):
-    TimeUnixMs: int
-    IntTimeUnixS: int
-    Milliseconds: int
-    TimeUtc: str
-    Value: Optional[int]
-    TelemetryName: Optional[str]
-    AboutShNode: str
-    FromShNode: Optional[str]
-    DispatchCmd: Optional[int]
-    TypeName: str = "ui.status.output.row.000"
-
-
-def channel_time(row: StatusOutputRow) -> str:
-    time_unix_ms = row.IntTimeUnixS * 1000 + row.Milliseconds
-    return f"{row.AboutShNode}{time_unix_ms}"
+def channel_time(reading: ChannelReading) -> str:
+    return f"{reading.Channel.DisplayName}_{reading.TimeUnixMs}"
 
 
 class SnapshotWithSendTime(BaseModel):
@@ -80,142 +70,121 @@ class ScadaReportA_Maker:
         self.latest_status_list: List[GtShStatus] = []
         self.latest_snapshot_list: List[SnapshotSpaceheat] = []
         self.latest_dispatch_list: List[GtDispatchBoolean] = []
-        self.status_rows_to_write: List[StatusOutputRow] = []
+        self.status_readings_to_write: List[ChannelReading] = []
         self.mqtt_codec = S3MQTTCodec()
         print(f"Initialized {self.__class__}")
 
-    def get_status_rows_from_telemetry(
-        self, from_sh_node_alias: str, payload: GtTelemetry
-    ) -> List[StatusOutputRow]:
-        time_unix_ms = payload.ScadaReadTimeUnixMs
-        time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
-        row = StatusOutputRow(
-            TimeUnixMs=time_unix_ms,
-            IntTimeUnixS=int(time_unix_ms / 1000),
-            Milliseconds=int(time_unix_ms) % 1000,
-            TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-            Value=payload.Value,
-            TelemetryName=payload.Name.value,
-            AboutShNode=from_sh_node_alias,
-            FromShNode=from_sh_node_alias,
+    def get_readings_from_dispatch_cmds(
+        self,
+        payload: GtDispatchBoolean,
+        atn_alias: str,
+    ) -> List[ChannelReading]:
+        channel = csv_utils.get_channel(
+            atn_alias=atn_alias,
+            from_name=payload.FromGNodeAlias,
+            about_name=payload.AboutNodeName,
+            telemetry_name=TelemetryName.RelayState,
         )
-        return [row]
+        return [
+            ChannelReading(
+                Channel=channel,
+                TimeUnixMs=payload.SendTimeUnixMs,
+                IntValue=payload.RelayState,
+            )
+        ]
 
-    def get_status_rows_from_dispatch(
-        self, payload: GtDispatchBoolean
-    ) -> List[StatusOutputRow]:
-        rows = []
-        time_unix_ms = payload.SendTimeUnixMs
-        time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
-        row = StatusOutputRow(
-            TimeUnixMs=time_unix_ms,
-            IntTimeUnixS=int(time_unix_ms / 1000),
-            Milliseconds=int(time_unix_ms) % 1000,
-            TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-            AboutShNode=payload.AboutNodeName,
-            FromShNode=payload.FromGNodeAlias,
-            DispatchCmd=payload.RelayState,
-        )
-        rows.append(row)
-        return rows
+    def get_readings_from_snapshot_messages(
+        self, payload: SnapshotSpaceheatEvent, atn_alias: str
+    ) -> List[ChannelReading]:
+        readings = []
+        snapshot = payload.snap.Snapshot
 
-    def get_status_rows_from_snapshot(
-        self, payload: SnapshotWithSendTime
-    ) -> List[StatusOutputRow]:
-        rows = []
-        from_g_node_alias = payload.Snapshot.FromGNodeAlias
-        snapshot = payload.Snapshot.Snapshot
-        time_unix_ms = payload.SendTimeUnixMs
-        time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
+        time_unix_ms = snapshot.ReportTimeUnixMs
         tns_to_use = [TelemetryName.RelayState, TelemetryName.PowerW]
         for i in range(len(snapshot.ValueList)):
             tn = snapshot.TelemetryNameList[i]
             if tn in tns_to_use:
                 if tn == TelemetryName.RelayState:
-                    from_sh_node = snapshot.AboutNodeAliasList[i]
+                    channel = csv_utils.get_channel(
+                        atn_alias=atn_alias,
+                        from_name=snapshot.AboutNodeAliasList[i],
+                        about_name=snapshot.AboutNodeAliasList[i],
+                        telemetry_name=snapshot.TelemetryNameList[i],
+                    )
                 else:
-                    from_sh_node = "a.m"
-                row = StatusOutputRow(
+                    # WARNING: a.m should be replaced by the scada's power meter
+                    # but this requires access to the hardware layout
+                    channel = csv_utils.get_channel(
+                        atn_alias=atn_alias,
+                        from_name="a.m",
+                        about_name=snapshot.AboutNodeAliasList[i],
+                        telemetry_name=snapshot.TelemetryNameList[i],
+                    )
+                reading = ChannelReading(
+                    Channel=channel,
                     TimeUnixMs=time_unix_ms,
-                    IntTimeUnixS=int(time_unix_ms / 1000),
-                    Milliseconds=int(time_unix_ms) % 1000,
-                    TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-                    Value=snapshot.ValueList[i],
-                    TelemetryName=snapshot.TelemetryNameList[i].value,
-                    AboutShNode=snapshot.AboutNodeAliasList[i],
-                    FromShNode=from_sh_node,
+                    IntValue=snapshot.ValueList[i],
                 )
-                rows.append(row)
-        return rows
+                readings.append(reading)
+        return readings
 
-    def get_status_rows_from_status(self, payload: GtShStatus) -> List[StatusOutputRow]:
-        rows: List[StatusOutputRow] = []
-        for single in payload.SimpleTelemetryList:
+    def get_readings_from_status_messages(
+        self, payload: GtShStatusEvent, atn_alias: str
+    ) -> List[ChannelReading]:
+        status = payload.status
+        readings: List[ChannelReading] = []
+        for single in status.SimpleTelemetryList:
             for i in range(len(single.ValueList)):
-                time_unix_ms = single.ReadTimeUnixMsList[i]
-                time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
-                row = StatusOutputRow(
-                    TimeUnixMs=time_unix_ms,
-                    IntTimeUnixS=int(time_unix_ms / 1000),
-                    Milliseconds=int(time_unix_ms) % 1000,
-                    TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-                    Value=single.ValueList[i],
-                    TelemetryName=single.TelemetryName.value,
-                    AboutShNode=single.ShNodeAlias,
-                    FromShNode=single.ShNodeAlias,
+                channel = csv_utils.get_channel(
+                    atn_alias=atn_alias,
+                    from_name=single.ShNodeAlias,
+                    about_name=single.ShNodeAlias,
+                    telemetry_name=single.TelemetryName,
                 )
-                rows.append(row)
+                reading = ChannelReading(
+                    Channel=channel,
+                    TimeUnixMs=single.ReadTimeUnixMsList[i],
+                    IntValue=single.ValueList[i],
+                )
+                readings.append(reading)
 
-        for cmd in payload.BooleanactuatorCmdList:
-            about_node_alias = cmd.ShNodeAlias
+        for cmd in status.BooleanactuatorCmdList:
             for i in range(len(cmd.RelayStateCommandList)):
-                time_unix_ms = cmd.CommandTimeUnixMsList[i]
-                time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
-                row = StatusOutputRow(
-                    TimeUnixMs=time_unix_ms,
-                    IntTimeUnixS=int(time_unix_ms / 1000),
-                    Milliseconds=int(time_unix_ms) % 1000,
-                    TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-                    AboutShNode=about_node_alias,
-                    DispatchCmd=cmd.RelayStateCommandList[i],
+                channel = csv_utils.get_channel(
+                    atn_alias=atn_alias,
+                    from_name="a.s",
+                    about_name=cmd.ShNodeAlias,
+                    telemetry_name=TelemetryName.RelayState,
                 )
-                rows.append(row)
+                reading = ChannelReading(
+                    Channel=channel,
+                    TimeUnixMs=cmd.CommandTimeUnixMsList[i],
+                    IntValue=cmd.RelayStateCommandList[i],
+                )
+                readings.append(reading)
 
-        for multi in payload.MultipurposeTelemetryList:
+        for multi in status.MultipurposeTelemetryList:
             for i in range(len(multi.ValueList)):
-                time_unix_ms = multi.ReadTimeUnixMsList[i]
-                time_utc = pendulum.from_timestamp(time_unix_ms / 1000)
-                row = StatusOutputRow(
-                    TimeUnixMs=time_unix_ms,
-                    IntTimeUnixS=int(time_unix_ms / 1000),
-                    Milliseconds=int(time_unix_ms) % 1000,
-                    TimeUtc=time_utc.strftime("%Y-%m-%d %H:%M:%S"),
-                    Value=multi.ValueList[i],
-                    TelemetryName=multi.TelemetryName.value,
-                    AboutShNode=multi.AboutNodeAlias,
-                    FromShNode=multi.SensorNodeAlias,
+                channel = csv_utils.get_channel(
+                    atn_alias=atn_alias,
+                    from_name=multi.SensorNodeAlias,
+                    about_name=multi.AboutNodeAlias,
+                    telemetry_name=multi.TelemetryName,
                 )
-                rows.append(row)
-        return rows
+                reading = ChannelReading(
+                    Channel=channel,
+                    TimeUnixMs=multi.ReadTimeUnixMsList[i],
+                    IntValue=multi.ValueList[i],
+                )
+                readings.append(reading)
+        return readings
 
-    def get_message_from_s3(self, file_name_meta: FileNameMeta) -> Message:
+    def get_message_bytes(self, file_name_meta: FileNameMeta) -> bytes:
         s3_object = self.s3.get_object(
             Bucket=self.aws_bucket_name, Key=file_name_meta.FileName
         )
-        message = typing.cast(
-            Message, self.mqtt_codec.decode("gw", s3_object["Body"].read())
-        )
-        match message.Payload:
-            case SnapshotSpaceheat():
-                message.Payload = SnapshotWithSendTime(
-                    SendTimeUnixMs=file_name_meta.UnixTimeMs, Snapshot=message.Payload
-                )
-            case SnapshotSpaceheatEvent():
-                message.Payload = SnapshotWithSendTime(
-                    SendTimeUnixMs=file_name_meta.UnixTimeMs,
-                    Snapshot=message.Payload.snap,
-                )
-        return message
+        msg_as_bytes = s3_object["Body"].read()
+        return msg_as_bytes
 
     def has_this_days_folder(self, time_s: int) -> bool:
         d = pendulum.from_timestamp(time_s)
@@ -241,7 +210,7 @@ class ScadaReportA_Maker:
                 found_latest_earlier = True
             i += 1
 
-        if self.has_this_days_folder(start_s):
+        if self.has_this_days_folder(int(start_s)):
             folder_list.append(pendulum.from_timestamp(start_s).strftime("%Y%m%d"))
 
         add_hrs = 0
@@ -299,9 +268,9 @@ class ScadaReportA_Maker:
 
         return fn_list
 
-    def get_csv_rows(
+    def get_readings(
         self, start_time_unix_ms: int, duration_hrs: int, atn_alias: str
-    ) -> List[StatusOutputRow]:
+    ) -> List[ChannelReading]:
         g_node_alias_list = [atn_alias, atn_alias + ".scada"]
         start_time_utc = pendulum.from_timestamp(start_time_unix_ms / 1000)
         end_time_utc = start_time_utc + pendulum.duration(hours=duration_hrs)
@@ -314,21 +283,46 @@ class ScadaReportA_Maker:
             g_node_alias_list=g_node_alias_list,
         )
 
-        rows: List[StatusOutputRow] = []
+        readings: List[ChannelReading] = []
         for i in range(len(fn_list)):
             fn = fn_list[i]
-            message = self.get_message_from_s3(fn)
+            message_bytes = self.get_message_bytes(fn)
+            kafka_topic = csv_utils.kafka_topic_from_s3_filename(fn.FileName)
+            type_name = csv_utils.type_name_from_kafka_topic(kafka_topic)
+
+            # TODO: add gw to kafka topics where message_bytes TypeName is gw, and
+            # the type_name refers to the Payload
+
+            message = typing.cast(Message, self.mqtt_codec.decode("gw", message_bytes))
             match message.Payload:
                 case GtDispatchBoolean():
-                    rows += self.get_status_rows_from_dispatch(message.Payload)
-                case GtShStatus():
-                    rows += self.get_status_rows_from_status(message.Payload)
+                    readings += self.get_readings_from_dispatch_cmds(
+                        message.Payload, atn_alias
+                    )
                 case GtShStatusEvent():
-                    rows += self.get_status_rows_from_status(message.Payload.status)
-                case SnapshotWithSendTime():
-                    rows += self.get_status_rows_from_snapshot(message.Payload)
-        rows = sorted(rows, key=lambda x: x.TimeUnixMs)
-        return rows
+                    readings += self.get_readings_from_status_messages(
+                        message.Payload, atn_alias
+                    )
+                case SnapshotSpaceheatEvent():
+                    readings += self.get_readings_from_snapshot_messages(
+                        message.Payload, atn_alias
+                    )
+        channels = list(set(map(lambda x: x.Channel, readings)))
+        gallon_channels = list(
+            filter(lambda x: x.TelemetryName == TelemetryName.GallonsTimes100, channels)
+        )
+        for gallon_ch in gallon_channels:
+            gallon_readings = sorted(
+                list(filter(lambda x: x.Channel == gallon_ch, readings)),
+                key=lambda reading: channel_time(reading),
+            )
+            readings += csv_utils.get_flow_readings(
+                gallon_readings=gallon_readings,
+                gallon_ch=gallon_ch,
+                atn_alias=atn_alias,
+                add_smoothing=True,
+            )
+        return readings
 
     def make_csv(
         self,
@@ -341,34 +335,28 @@ class ScadaReportA_Maker:
         print(f"starting at {start_time_utc.strftime('%Y-%m-%d %H:%M')}")
         start_time_unix_ms = s * 1000
 
-        rows = self.get_csv_rows(
+        readings = self.get_readings(
             start_time_unix_ms=start_time_unix_ms,
             duration_hrs=duration_hrs,
             atn_alias=atn_alias,
         )
-        sorted_rows = sorted(rows, key=lambda row: channel_time(row))
+        sorted_readings = sorted(readings, key=lambda reading: channel_time(reading))
         lines = [
-            "Channel&Time, TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode, DispatchCmd\n"
+            "Channel&Time, TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode\n"
         ]
-        for row in sorted_rows:
-            line = f"{channel_time(row)},{row.TimeUtc}, {row.IntTimeUnixS}, {row.Milliseconds}"
-            if row.Value is None:
-                line += ", "
-            else:
-                line += f",{row.Value}"
-            if row.TelemetryName is None:
-                line += ", "
-            else:
-                line += f", {row.TelemetryName}"
-            line += f", {row.AboutShNode}"
-            if row.FromShNode is None:
-                line += ", "
-            else:
-                line += f", {row.FromShNode}"
-            if row.DispatchCmd is None:
-                line += ", \n"
-            else:
-                line += f", {row.DispatchCmd} \n"
+        for reading in sorted_readings:
+            time_utc_str = pendulum.from_timestamp(reading.TimeUnixMs / 1000).strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )
+            milliseconds = reading.TimeUnixMs % 1000
+            line = f"{channel_time(reading)},{time_utc_str}, {int(reading.TimeUnixMs/1000)}, {milliseconds}"
+            value = reading.IntValue
+            if reading.FloatValue is not None:
+                value = reading.FloatValue
+            line += f",{value}"
+            line += f", {reading.Channel.TelemetryName.value}"
+            line += f", {reading.Channel.AboutName}"
+            line += f", {reading.Channel.FromName}\n"
             lines.append(line)
 
         atn_end = atn_alias.split(".")[-1]
