@@ -8,12 +8,16 @@ import xlsxwriter
 from gwproto.enums import TelemetryName
 from pydantic import BaseModel
 
+import gwatn.csv_makers.csv_utils as csv_utils
+from gwatn.csv_makers.csv_utils import ChannelReading
 from gwatn.csv_makers.scada_report_a import ScadaReportA_Maker
 from gwatn.enums import Unit
+from gwatn.types.data_channel import DataChannel
 
 
 OUT_STUB = "output_data/freedom_flow"
 timezone_string = "US/Eastern"
+APPLE_ATN_ALIAS = "hw1.isone.me.freedom.apple"
 
 
 def c_to_f(temp_c: float) -> float:
@@ -31,66 +35,88 @@ class RidgelineOutputRow(BaseModel):
     GlycolFlowGpm: Optional[float]
 
 
-class DataChannel(NamedTuple):
-    AboutShNodeName: str
+class RidgelineChannel(NamedTuple):
+    Channel: DataChannel
     DaveName: str
-    InTelemetryName: TelemetryName
     OutUnits: Unit
 
 
-class DataChannelItem(BaseModel):
-    Channel: DataChannel
-    TimeUnixMs: int
-    TimeUtc: str
-    Value: float
-
-
-DIST_SWT = DataChannel(
-    AboutShNodeName="a.distsourcewater.temp",
-    DaveName="Dist SWT",
-    InTelemetryName=TelemetryName.WaterTempCTimes1000,
-    OutUnits=Unit.Fahrenheit,
+dist_swt_channel = csv_utils.get_channel(
+    atn_alias=APPLE_ATN_ALIAS,
+    from_name="a.s.analog.temp",
+    about_name="a.distsourcewater.temp",
+    telemetry_name=TelemetryName.WaterTempCTimes1000,
+)
+DIST_SWT = RidgelineChannel(
+    Channel=dist_swt_channel, DaveName="Dist SWT", OutUnits=Unit.Fahrenheit
 )
 
-DIST_RWT = DataChannel(
-    AboutShNodeName="a.distreturnwater.temp",
+dist_rwt_channel = csv_utils.get_channel(
+    atn_alias=APPLE_ATN_ALIAS,
+    from_name="a.s.analog.temp",
+    about_name="a.distreturnwater.temp",
+    telemetry_name=TelemetryName.WaterTempCTimes1000,
+)
+DIST_RWT = RidgelineChannel(
+    Channel=dist_rwt_channel,
     DaveName="Dist RWT",
-    InTelemetryName=TelemetryName.WaterTempCTimes1000,
     OutUnits=Unit.Fahrenheit,
 )
 
-DIST_FLOW = DataChannel(
-    AboutShNodeName="a.distsourcewater.pump.flowmeter",
+dist_gallons_channel = csv_utils.get_channel(
+    atn_alias=APPLE_ATN_ALIAS,
+    from_name="a.distsourcewater.pump.flowmeter",
+    about_name="a.distsourcewater.pump.flowmeter",
+    telemetry_name=TelemetryName.GallonsTimes100,
+)
+DIST_FLOW = RidgelineChannel(
+    Channel=dist_gallons_channel,
     DaveName="Dist Flow",
-    InTelemetryName=TelemetryName.GallonsTimes100,
     OutUnits=Unit.Gpm,
 )
 
+glycol_swt_channel = csv_utils.get_channel(
+    atn_alias=APPLE_ATN_ALIAS,
+    from_name="a.s.analog.temp",
+    about_name="a.heatpump.condensorloopsource.temp",
+    telemetry_name=TelemetryName.WaterTempCTimes1000,
+)
 
-GLYCOL_SWT = DataChannel(
-    AboutShNodeName="a.heatpump.condensorloopsource.temp",
+GLYCOL_SWT = RidgelineChannel(
+    Channel=glycol_swt_channel,
     DaveName="Glycol SWT",
-    InTelemetryName=TelemetryName.WaterTempCTimes1000,
     OutUnits=Unit.Fahrenheit,
 )
 
-GLYCOL_RWT = DataChannel(
-    AboutShNodeName="a.heatpump.condensorloopreturn.temp",
+glycol_rwt_channel = csv_utils.get_channel(
+    atn_alias=APPLE_ATN_ALIAS,
+    from_name="a.s.analog.temp",
+    about_name="a.heatpump.condensorloopreturn.temp",
+    telemetry_name=TelemetryName.WaterTempCTimes1000,
+)
+
+GLYCOL_RWT = RidgelineChannel(
+    Channel=glycol_rwt_channel,
     DaveName="Glycol RWT",
-    InTelemetryName=TelemetryName.WaterTempCTimes1000,
     OutUnits=Unit.Fahrenheit,
 )
 
-GLYCOL_FLOW = DataChannel(
-    AboutShNodeName="a.heatpump.condensorloopsource.pump.flowmeter",
+glycol_gallons_channel = csv_utils.get_channel(
+    atn_alias=APPLE_ATN_ALIAS,
+    from_name="a.heatpump.condensorloopsource.pump.flowmeter",
+    about_name="a.heatpump.condensorloopsource.pump.flowmeter",
+    telemetry_name=TelemetryName.GallonsTimes100,
+)
+
+GLYCOL_FLOW = RidgelineChannel(
+    Channel=glycol_gallons_channel,
     DaveName="Glycol Flow",
-    InTelemetryName=TelemetryName.GallonsTimes100,
     OutUnits=Unit.Gpm,
 )
 
 
 def export_excel(
-    start_s: int, channels: List[DataChannel], sync_rows: List[RidgelineOutputRow]
+    start_s: int, channels: List[RidgelineChannel], sync_rows: List[RidgelineOutputRow]
 ) -> str:
     start_utc = pendulum.from_timestamp(start_s)
     start_local = start_utc.in_timezone(timezone_string)
@@ -98,151 +124,88 @@ def export_excel(
     file_name = f"{OUT_STUB}/{start_local.strftime('%Y%m%d')}_freedom_flow.xlsx"
     print(f"Will attempt to write to {file_name}")
     workbook = xlsxwriter.Workbook(file_name)
-    w = workbook.add_worksheet("1-minute")
-    w.freeze_panes(3, 0)
+    w_zoom = workbook.add_worksheet("zoom")
+    w_min = workbook.add_worksheet("1-minute")
+    w_min.freeze_panes(3, 0)
     header_format = workbook.add_format({"bg_color": "#E6F4D8", "align": "right"})
     data_format = workbook.add_format({"bg_color": "#E6F4D8"})
     date_width = 15
     channel_width = 11
-    w.set_column("A:A", date_width)
-    w.set_column("B:B", date_width)
-    w.set_column("C:C", channel_width)
-    w.set_column("D:D", channel_width)
-    w.set_column("E:E", channel_width)
-    w.set_column("F:F", channel_width)
-    w.set_column("G:G", channel_width)
-    w.set_column("H:H", 5)
-    w.write(0, 0, "Start Date (ET)", header_format)
-    w.write(1, 0, start_local.strftime("%Y/%m/%d"), header_format)
-    w.write(0, 8, "csv.freedom.flow version 001")
-    w.write(1, 8, "Data for Millinocket pilot first house (Freedom), from GridWorks")
+    w_min.set_column("A:A", date_width)
+    w_min.set_column("B:B", date_width)
+    w_min.set_column("C:C", channel_width)
+    w_min.set_column("D:D", channel_width)
+    w_min.set_column("E:E", channel_width)
+    w_min.set_column("F:F", channel_width)
+    w_min.set_column("G:G", channel_width)
+    w_min.set_column("H:H", 5)
+    w_min.write(0, 0, "Start Date (ET)", header_format)
+    w_min.write(1, 0, start_local.strftime("%Y/%m/%d"), header_format)
+    w_min.write(0, 8, "csv.freedom.flow version 001")
+    w_min.write(
+        1, 8, "Data for Millinocket pilot first house (Freedom), from GridWorks"
+    )
 
-    w.write(2, 0, "Eastern Time", header_format)
+    w_min.write(2, 0, "Eastern Time", header_format)
 
     for i in range(len(channels)):
         ch = channels[i]
-        w.write(0, 1 + i, ch.AboutShNodeName, header_format)
-        w.write(1, 1 + i, ch.OutUnits.value, header_format)
-        w.write(2, 1 + i, ch.DaveName, header_format)
+        w_min.write(0, 1 + i, ch.Channel.AboutName, header_format)
+        w_min.write(1, 1 + i, ch.OutUnits.value, header_format)
+        w_min.write(2, 1 + i, ch.DaveName, header_format)
 
     for i in range(len(sync_rows)):
         row = sync_rows[i]
-        w.write(3 + i, 0, row.TimeEastern, data_format)
-        w.write(3 + i, 1, row.DistSwtTempF, data_format)
-        w.write(3 + i, 2, row.DistRwtTempF, data_format)
-        w.write(3 + i, 3, row.DistFlowGpm, data_format)
-        w.write(3 + i, 4, row.GlycolSwtTempF, data_format)
-        w.write(3 + i, 5, row.GlycolRwtTempF, data_format)
-        w.write(3 + i, 6, row.GlycolFlowGpm, data_format)
+        w_min.write(3 + i, 0, row.TimeEastern, data_format)
+        w_min.write(3 + i, 1, row.DistSwtTempF, data_format)
+        w_min.write(3 + i, 2, row.DistRwtTempF, data_format)
+        w_min.write(3 + i, 3, row.DistFlowGpm, data_format)
+        w_min.write(3 + i, 4, row.GlycolSwtTempF, data_format)
+        w_min.write(3 + i, 5, row.GlycolRwtTempF, data_format)
+        w_min.write(3 + i, 6, row.GlycolFlowGpm, data_format)
 
-    end = len(sync_rows) + 3
-    dist_chart = workbook.add_chart({"type": "line"})
-    dist_chart.add_series(
-        {
-            "name": f"1-minute!$B$3",
-            "categories": f"1-minute!$A$4:$A${end}",
-            "values": f"=1-minute!$B$4:$B${end}",
-            "line": {"color": "red"},
-        }
-    )
-    dist_chart.add_series(
-        {
-            "name": f"1-minute!$C$3",
-            "values": f"=1-minute!$C$4:$C${end}",
-            "line": {"color": "blue"},
-        }
-    )
-    dist_chart.add_series(
-        {
-            "name": f"1-minute!$D$3",
-            "values": f"=1-minute!$D$4:$D${end}",
-            "y2_axis": True,
-            "line": {"color": "orange"},
-        }
-    )
-    dist_chart.set_y_axis({"name": "Deg F", "min": 90})
-    # dist_flow_max = max(list(map(lambda x: x.DistFlowGpm, sync_rows)))
-    dist_flow_max = 8
-    dist_chart.set_y2_axis({"name": "Gpm", "max": 3 * dist_flow_max})
-    dist_chart.set_title(
-        {"name": f'Distribution Loop {start_local.strftime("%m/%d/%Y")}'}
-    )
-    dist_chart.set_size({"width": 720, "height": 432})
-    w.insert_chart("I4", dist_chart)
-
-    glycol_chart = workbook.add_chart({"type": "line"})
-    glycol_chart.add_series(
-        {
-            "name": f"1-minute!$E$3",
-            "categories": f"1-minute!$A$4:$A${end}",
-            "values": f"=1-minute!$E$4:$E${end}",
-            "line": {"color": "red"},
-        }
-    )
-    glycol_chart.add_series(
-        {
-            "name": f"1-minute!$F$3",
-            "values": f"=1-minute!$F$4:$F${end}",
-            "line": {"color": "blue"},
-        }
-    )
-    glycol_chart.add_series(
-        {
-            "name": f"1-minute!$G3",
-            "values": f"=1-minute!$G$4:$G${end}",
-            "y2_axis": True,
-            "line": {"color": "orange"},
-        }
-    )
-    glycol_chart.set_y_axis({"name": "Deg F", "min": 90})
-    glycol_chart.set_y2_axis({"name": "Gpm", "max": 24})
-    glycol_chart.set_title({"name": f'Glycol Loop {start_local.strftime("%m/%d/%Y")}'})
-    glycol_chart.set_size({"width": 720, "height": 432})
-    w.insert_chart("I28", glycol_chart)
-
-    w2 = workbook.add_worksheet("zoom")
-    w2.set_column("A:A", date_width)
-    w2.set_column("B:B", channel_width)
-    w2.set_column("C:C", channel_width)
-    w2.set_column("D:D", channel_width)
-    w2.set_column("E:E", channel_width)
-    w2.set_column("F:F", channel_width)
-    w2.set_column("G:G", channel_width)
-    w2.set_column("H:H", 5)
+    w_zoom.set_column("A:A", date_width)
+    w_zoom.set_column("B:B", channel_width)
+    w_zoom.set_column("C:C", channel_width)
+    w_zoom.set_column("D:D", channel_width)
+    w_zoom.set_column("E:E", channel_width)
+    w_zoom.set_column("F:F", channel_width)
+    w_zoom.set_column("G:G", channel_width)
+    w_zoom.set_column("H:H", 5)
 
     highlight_format = workbook.add_format({"bg_color": "yellow", "align": "right"})
     time_format = workbook.add_format({"num_format": "hh:mm:SS", "align": "right"})
 
-    w2.write(0, 0, "Start Time (HH:MM)")
-    w2.write(0, 1, "00:00", highlight_format)
-    w2.write(1, 0, "Duration (Hrs)")
-    w2.write(1, 1, "6", highlight_format)
+    w_zoom.write(0, 0, "Start Time (HH:MM)")
+    w_zoom.write(0, 1, "00:00", highlight_format)
+    w_zoom.write(1, 0, "Duration (Hrs)")
+    w_zoom.write(1, 1, "6", highlight_format)
 
     for i in range(len(channels)):
         ch = channels[i]
-        w2.write(3, 1 + i, ch.OutUnits.value, header_format)
-        w2.write(4, 1 + i, ch.DaveName, header_format)
+        w_zoom.write(3, 1 + i, ch.OutUnits.value, header_format)
+        w_zoom.write(4, 1 + i, ch.DaveName, header_format)
 
-    w2.write("A6", "=B1", time_format)
-    w2.write("B6", "=OFFSET('1-minute'!B$4,$A6*24*60,0)")
-    w2.write("C6", "=OFFSET('1-minute'!C$4,$A6*24*60,0)")
-    w2.write("D6", "=OFFSET('1-minute'!D$4,$A6*24*60,0)")
-    w2.write("E6", "=OFFSET('1-minute'!E$4,$A6*24*60,0)")
-    w2.write("F6", "=OFFSET('1-minute'!F$4,$A6*24*60,0)")
-    w2.write("G6", "=OFFSET('1-minute'!G$4,$A6*24*60,0)")
+    w_zoom.write("A6", "=B1", time_format)
+    w_zoom.write("B6", "=OFFSET('1-minute'!B$4,$A6*24*60,0)")
+    w_zoom.write("C6", "=OFFSET('1-minute'!C$4,$A6*24*60,0)")
+    w_zoom.write("D6", "=OFFSET('1-minute'!D$4,$A6*24*60,0)")
+    w_zoom.write("E6", "=OFFSET('1-minute'!E$4,$A6*24*60,0)")
+    w_zoom.write("F6", "=OFFSET('1-minute'!F$4,$A6*24*60,0)")
+    w_zoom.write("G6", "=OFFSET('1-minute'!G$4,$A6*24*60,0)")
 
     for i in range(1, len(sync_rows)):
-        w2.write(f"A{i + 6}", f"=A{i + 6 - 1} + $B$2/24/24/60", time_format)
-        w2.write(f"B{i + 6}", f"=OFFSET('1-minute'!B$4,$A{i + 6}*24*60,0)")
-        w2.write(f"C{i + 6}", f"=OFFSET('1-minute'!C$4,$A{i + 6}*24*60,0)")
-        w2.write(f"D{i + 6}", f"=OFFSET('1-minute'!D$4,$A{i + 6}*24*60,0)")
-        w2.write(f"E{i + 6}", f"=OFFSET('1-minute'!E$4,$A{i + 6}*24*60,0)")
-        w2.write(f"F{i + 6}", f"=OFFSET('1-minute'!F$4,$A{i + 6}*24*60,0)")
-        w2.write(f"G{i + 6}", f"=OFFSET('1-minute'!G$4,$A{i + 6}*24*60,0)")
+        w_zoom.write(f"A{i + 6}", f"=A{i + 6 - 1} + $B$2/24/24/60", time_format)
+        w_zoom.write(f"B{i + 6}", f"=OFFSET('1-minute'!B$4,$A{i + 6}*24*60,0)")
+        w_zoom.write(f"C{i + 6}", f"=OFFSET('1-minute'!C$4,$A{i + 6}*24*60,0)")
+        w_zoom.write(f"D{i + 6}", f"=OFFSET('1-minute'!D$4,$A{i + 6}*24*60,0)")
+        w_zoom.write(f"E{i + 6}", f"=OFFSET('1-minute'!E$4,$A{i + 6}*24*60,0)")
+        w_zoom.write(f"F{i + 6}", f"=OFFSET('1-minute'!F$4,$A{i + 6}*24*60,0)")
+        w_zoom.write(f"G{i + 6}", f"=OFFSET('1-minute'!G$4,$A{i + 6}*24*60,0)")
 
-    end2 = len(sync_rows) + 5
-    dist_chart2 = workbook.add_chart({"type": "line"})
-    dist_chart2.add_series(
+    end = len(sync_rows) + 5
+    dist_chart = workbook.add_chart({"type": "line"})
+    dist_chart.add_series(
         {
             "name": f"zoom!$B$5",
             "categories": f"zoom!$A$6:$A${end}",
@@ -250,76 +213,78 @@ def export_excel(
             "line": {"color": "red"},
         }
     )
-    dist_chart2.add_series(
+    dist_chart.add_series(
         {
             "name": f"zoom!$C$5",
             "values": f"=zoom!$C$6:$C${end}",
             "line": {"color": "blue"},
         }
     )
-    dist_chart2.add_series(
+    dist_chart.add_series(
         {
             "name": f"zoom!$D$5",
             "values": f"=zoom!$D$6:$D${end}",
             "y2_axis": True,
-            "line": {"color": "orange"},
+            "line": {"color": "green"},
         }
     )
-    dist_chart2.set_y_axis({"name": "Deg F", "min": 90})
-    dist_chart2.set_y2_axis({"name": "Gpm", "max": 3 * dist_flow_max})
-    dist_chart2.set_title(
+    dist_flow_max = max(list(map(lambda x: x.DistFlowGpm, sync_rows)))
+    dist_chart.set_y_axis({"name": "Deg F", "min": 90})
+    dist_chart.set_y2_axis({"name": "Gpm", "max": 3 * dist_flow_max})
+    dist_chart.set_title(
         {"name": f'Distribution Loop {start_local.strftime("%m/%d/%Y")}'}
     )
-    dist_chart2.set_size({"width": 720, "height": 432})
-    w2.insert_chart("I4", dist_chart2)
+    dist_chart.set_size({"width": 720, "height": 432})
+    w_zoom.insert_chart("I4", dist_chart)
 
-    glycol_chart2 = workbook.add_chart({"type": "line"})
-    glycol_chart2.add_series(
+    glycol_chart = workbook.add_chart({"type": "line"})
+    glycol_chart.add_series(
         {
             "name": f"zoom!$E$5",
-            "categories": f"zoom!$A$6:$A${end2}",
-            "values": f"=zoom!$E$6:$E${end2}",
+            "categories": f"zoom!$A$6:$A${end}",
+            "values": f"=zoom!$E$6:$E${end}",
             "line": {"color": "red"},
         }
     )
-    glycol_chart2.add_series(
+    glycol_chart.add_series(
         {
             "name": f"zoom!$F$5",
-            "values": f"=zoom!$F$6:$F${end2}",
+            "values": f"=zoom!$F$6:$F${end}",
             "line": {"color": "blue"},
         }
     )
-    glycol_chart2.add_series(
+    glycol_chart.add_series(
         {
             "name": f"zoom!$G5",
-            "values": f"=zoom!$G$6:$G${end2}",
+            "values": f"=zoom!$G$6:$G${end}",
             "y2_axis": True,
-            "line": {"color": "orange"},
+            "line": {"color": "green"},
         }
     )
-    glycol_chart2.set_y_axis({"name": "Deg F", "min": 90})
-    glycol_chart2.set_y2_axis({"name": "Gpm", "max": 24})
-    glycol_chart2.set_title({"name": f'Glycol Loop {start_local.strftime("%m/%d/%Y")}'})
-    glycol_chart2.set_size({"width": 720, "height": 432})
-    w2.insert_chart("I28", glycol_chart2)
+    glycol_chart.set_y_axis({"name": "Deg F", "min": 90})
+    glycol_chart.set_y2_axis({"name": "Gpm", "max": 24})
+    glycol_chart.set_title({"name": f'Glycol Loop {start_local.strftime("%m/%d/%Y")}'})
+    glycol_chart.set_size({"width": 720, "height": 432})
+    w_zoom.insert_chart("I28", glycol_chart)
 
     workbook.close()
     return file_name
 
 
-def make_spreadsheet() -> str:
-    atn_alias = "hw1.isone.me.freedom.apple"
+def make_spreadsheet(add_smoothing: bool = True) -> str:
+    atn_alias = APPLE_ATN_ALIAS
     t = time.time()
     time_utc = pendulum.from_timestamp(t)
 
     last_utc_midnight_unix_s = t - (t % (3600 * 24))
-    start_s = last_utc_midnight_unix_s + 3600 * (
-        time_utc.hour - time_utc.in_timezone(timezone_string).hour
+    start_s = int(
+        last_utc_midnight_unix_s
+        + 3600 * (time_utc.hour - time_utc.in_timezone(timezone_string).hour)
     )
     start_time_unix_ms = int(start_s * 1000)
     duration_hrs = 24
     maker = ScadaReportA_Maker()
-    rows = maker.get_csv_rows(
+    rows = maker.get_readings(
         start_time_unix_ms=start_time_unix_ms,
         duration_hrs=duration_hrs,
         atn_alias=atn_alias,
@@ -330,13 +295,11 @@ def make_spreadsheet() -> str:
     channels = [DIST_SWT, DIST_RWT, DIST_FLOW, GLYCOL_SWT, GLYCOL_RWT, GLYCOL_FLOW]
 
     readings = {}
-    scada_alias = atn_alias + ".scada"
     for ch in channels:
         readings[ch] = sorted(
             list(
                 filter(
-                    lambda x: x.AboutShNode == ch.AboutShNodeName
-                    and x.FromShNode != scada_alias,
+                    lambda x: x.Channel == ch.Channel,
                     rows,
                 )
             ),
@@ -345,30 +308,19 @@ def make_spreadsheet() -> str:
 
     ridgeline_readings = {}
     for ch in flow_channels:
+        flow_readings = csv_utils.get_flow_readings(
+            gallon_readings=readings[ch],
+            gallon_ch=ch.Channel,
+            atn_alias=atn_alias,
+            add_smoothing=add_smoothing,
+        )
         dc_list = []
-        for i in range(1, len(readings[ch])):
-            prev_flow_gallons_times_100 = readings[ch][i - 1].Value
-            this_flow_gallons_times_100 = readings[ch][i].Value
-            delta_gallons = (
-                this_flow_gallons_times_100 - prev_flow_gallons_times_100
-            ) / 100
-            prev_s = readings[ch][i - 1].IntTimeUnixS
-            this_s = readings[ch][i].IntTimeUnixS
-            if this_s == prev_s:
-                flow_gpm = None
-                print("duplicate times!")
-                print(f"i is {i}")
-                print(f"readings[ch][i-1] is {readings[ch][i-1]}")
-                print(f"readings[ch][i] is {readings[ch][i]}")
-            else:
-                delta_min = (this_s - prev_s) / 60
-                flow_gpm = delta_gallons / delta_min
+        for i in range(len(flow_readings)):
             dc_list.append(
-                DataChannelItem(
-                    Channel=ch,
+                ChannelReading(
+                    Channel=ch.Channel,
                     TimeUnixMs=readings[ch][i].TimeUnixMs,
-                    TimeUtc=readings[ch][i].TimeUtc,
-                    Value=round(flow_gpm, 1),
+                    FloatValue=round(flow_readings[i].IntValue / 100, 1),
                 )
             )
         ridgeline_readings[ch] = dc_list
@@ -376,14 +328,13 @@ def make_spreadsheet() -> str:
     for ch in temp_channels:
         dc_list = []
         for i in range(0, len(readings[ch])):
-            temp_c = readings[ch][i].Value / 1000
+            temp_c = readings[ch][i].IntValue / 1000
             temp_f = round(c_to_f(temp_c), 2)
             dc_list.append(
-                DataChannelItem(
-                    Channel=ch,
+                ChannelReading(
+                    Channel=ch.Channel,
                     TimeUnixMs=readings[ch][i].TimeUnixMs,
-                    TimeUtc=readings[ch][i].TimeUtc,
-                    Value=temp_f,
+                    FloatValue=temp_f,
                 )
             )
         ridgeline_readings[ch] = dc_list
@@ -407,7 +358,7 @@ def make_spreadsheet() -> str:
             if len(before) == 0:
                 vals[ch] = None
             else:
-                vals[ch] = before[0].Value
+                vals[ch] = before[0].FloatValue
 
         sync_rows.append(
             RidgelineOutputRow(

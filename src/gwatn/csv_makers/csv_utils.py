@@ -54,9 +54,18 @@ def get_named_channels(
         channels.append(
             DataChannel(
                 DisplayName="Dist_Gallons",
-                AboutName="a.distreturnwater.pump.flowmeter",
-                FromName="a.distreturnwater.pump.flowmeter",
+                AboutName="a.distsourcewater.pump.flowmeter",
+                FromName="a.distsourcewater.pump.flowmeter",
                 TelemetryName=TelemetryName.GallonsTimes100,
+            )
+        )
+        channels.append(
+            DataChannel(
+                DisplayName="Dist_Gpm",
+                AboutName="a.distsourcewater.pump.flowmeter",
+                FromName="derived.gpm.expsmooth.000",
+                TelemetryName=TelemetryName.GpmTimes100,
+                ExpectedMaxValue=600,
             )
         )
         channels.append(
@@ -101,6 +110,15 @@ def get_named_channels(
         )
         channels.append(
             DataChannel(
+                DisplayName="Glycol_Gpm",
+                AboutName="a.heatpump.condensorloopsource.pump.flowmeter",
+                FromName="derived.gpm.expsmooth.000",
+                TelemetryName=TelemetryName.GpmTimes100,
+                ExpectedMaxValue=600,
+            )
+        )
+        channels.append(
+            DataChannel(
                 DisplayName="Glycol_SWT",
                 AboutName="a.heatpump.condensorloopsource.temp",
                 FromName="a.s.analog.temp",
@@ -109,7 +127,7 @@ def get_named_channels(
         )
         channels.append(
             DataChannel(
-                DisplayName="Hot_Store_In",
+                DisplayName="HotStoreIn_Temp",
                 AboutName="a.hotstore.in.temp",
                 FromName="a.s.analog.temp",
                 TelemetryName=TelemetryName.WaterTempCTimes1000,
@@ -117,7 +135,7 @@ def get_named_channels(
         )
         channels.append(
             DataChannel(
-                DisplayName="Hot_Store_Out_Gallons",
+                DisplayName="HotStoreOut_Gallons",
                 AboutName="a.hotstore.out.flowmeter",
                 FromName="a.hotstore.out.flowmeter",
                 TelemetryName=TelemetryName.GallonsTimes100,
@@ -125,7 +143,15 @@ def get_named_channels(
         )
         channels.append(
             DataChannel(
-                DisplayName="Hot_Store_Out",
+                DisplayName="HotStoreOut_Gpm",
+                AboutName="a.hotstore.out.flowmeter",
+                FromName="derived.gpm.expsmooth.000",
+                TelemetryName=TelemetryName.GpmTimes100,
+            )
+        )
+        channels.append(
+            DataChannel(
+                DisplayName="HotStoreOut_Temp",
                 AboutName="a.hotstore.out.temp",
                 FromName="a.s.analog.temp",
                 TelemetryName=TelemetryName.WaterTempCTimes1000,
@@ -270,3 +296,98 @@ def kafka_topic_from_s3_filename(s3_filename: str) -> str:
     except:
         raise Exception(f"Failure getting kafka topic from type name")
     return topic
+
+
+def get_flow_readings(
+    gallon_readings: List[ChannelReading],
+    gallon_ch: DataChannel,
+    atn_alias: str,
+    add_smoothing: bool = False,
+    exp_minute_weight: float = 0.5,
+) -> List[ChannelReading]:
+    """
+    This function applies the `derived.gpm.simple.000` or `derived.gpm.expsmooth.000` transformation,
+    depending on whether add_smoothin is true or false
+
+    It takes as input a DataChannel (and related readings) whose TelemetryName is GallonsTimes100,
+    and returns a DataChannel whose source is derived.gpm.expsmooth.000, whose TelemetryName is
+    GallonsGpm
+
+    Args:
+        gallon_readings:
+        gallon_ch:
+
+    Returns:
+        List of channel readings (todo: turn this into an object, so it doesn't have to repeat the DataChannel
+        in each individual reading)
+
+    Raises: exception if the inbound Telemetry is not GallonsTimes100 or if AboutName = FromName
+    for inbound DataChannel
+    """
+    if add_smoothing:
+        transform_name = "derived.gpm.expsmooth.000"
+    else:
+        transform_name = "derived.gpm.simple.000"
+    MIN_FLOW_CALC_SECONDS = 30
+    DELTA_MAX_TRIGGER = 0.2
+    if gallon_ch.TelemetryName != TelemetryName.GallonsTimes100:
+        raise Exception(
+            f"get_flow_reading requires an input DataChannel in GallonsTimes100!"
+        )
+
+    if gallon_ch.AboutName != gallon_ch.FromName:
+        raise Exception(
+            f"get_flow_reading requires an input DataChannel of raw data created"
+            f"directly by the channel itself (i.e. AboutName = FromName)"
+        )
+
+    flow_channel = get_channel(
+        atn_alias=atn_alias,
+        about_name=gallon_ch.AboutName,
+        from_name=transform_name,
+        telemetry_name=TelemetryName.GpmTimes100,
+    )
+
+    new_readings = []
+    prev_idx = 0
+    prev_reading = gallon_readings[0]
+    prev_time_s = prev_reading.TimeUnixMs / 1000
+    prev_flow_gpm: Optional[float] = None
+    idx = 1
+    while idx < len(gallon_readings):
+        time_s = gallon_readings[idx].TimeUnixMs / 1000
+        while (time_s - prev_time_s < MIN_FLOW_CALC_SECONDS) and idx < (
+            len(gallon_readings) - 1
+        ):
+            idx += 1
+            time_s = gallon_readings[idx].TimeUnixMs / 1000
+        prev_gallons_times_100 = gallon_readings[prev_idx].IntValue
+        this_gallons_times_100 = gallon_readings[idx].IntValue
+        delta_gallons = (this_gallons_times_100 - prev_gallons_times_100) / 100
+        delta_min = (time_s - prev_time_s) / 60
+
+        latest_flow_gpm = delta_gallons / delta_min
+        flow_gpm = latest_flow_gpm
+        if prev_flow_gpm is not None and flow_channel.ExpectedMaxValue is not None:
+            if flow_channel.ExpectedMaxValue == 0:
+                raise Exception(
+                    f"Flow Channel {flow_channel} has an ExpectedMaxValue of 0 - should not happen"
+                )
+            expected_max_gpm = flow_channel.ExpectedMaxValue / 100
+            if abs((flow_gpm - prev_flow_gpm) / expected_max_gpm) < DELTA_MAX_TRIGGER:
+                alpha = exp_minute_weight * delta_min
+                flow_gpm = alpha * latest_flow_gpm + (1 - alpha) * prev_flow_gpm
+
+        new_readings.append(
+            ChannelReading(
+                Channel=flow_channel,
+                TimeUnixMs=gallon_readings[idx].TimeUnixMs,
+                IntValue=int(flow_gpm * 100),
+            )
+        )
+        prev_time_s = time_s
+        prev_flow_gpm = flow_gpm
+        prev_idx = idx
+        idx += 1
+
+    return new_readings

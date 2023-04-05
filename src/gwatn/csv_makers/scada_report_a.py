@@ -23,9 +23,12 @@ import gwatn.csv_makers.csv_utils as csv_utils
 from gwatn.api_types_hack import HackTypeMakerByName
 from gwatn.csv_makers.codec import S3MQTTCodec
 from gwatn.csv_makers.csv_utils import ChannelReading
+from gwatn.types.data_channel import DataChannel
 
 
 OUT_STUB = "output_data/scada_report_a"
+
+MIN_FLOW_CALC_SECONDS = 30
 
 DOWNLOADED_FILE_TYPES = [
     GtDispatchBoolean_Maker.type_name,
@@ -304,7 +307,21 @@ class ScadaReportA_Maker:
                     readings += self.get_readings_from_snapshot_messages(
                         message.Payload, atn_alias
                     )
-        readings = sorted(readings, key=lambda x: x.TimeUnixMs)
+        channels = list(set(map(lambda x: x.Channel, readings)))
+        gallon_channels = list(
+            filter(lambda x: x.TelemetryName == TelemetryName.GallonsTimes100, channels)
+        )
+        for gallon_ch in gallon_channels:
+            gallon_readings = sorted(
+                list(filter(lambda x: x.Channel == gallon_ch, readings)),
+                key=lambda reading: channel_time(reading),
+            )
+            readings += csv_utils.get_flow_readings(
+                gallon_readings=gallon_readings,
+                gallon_ch=gallon_ch,
+                atn_alias=atn_alias,
+                add_smoothing=True,
+            )
         return readings
 
     def make_csv(
