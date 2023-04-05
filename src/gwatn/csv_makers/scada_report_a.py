@@ -26,6 +26,7 @@ from gwatn.csv_makers.csv_utils import ChannelReading
 from gwatn.types.data_channel import DataChannel
 
 
+REPORT_TYPE_NAME = "scada.report.a.001"
 OUT_STUB = "output_data/scada_report_a"
 
 MIN_FLOW_CALC_SECONDS = 30
@@ -255,7 +256,7 @@ class ScadaReportA_Maker:
                     from_g_node_alias in g_node_alias_list
                     and payload_type_name in type_name_list
                     and payload_unix_time_ms > start_time_unix_ms - 300_000
-                    and payload_unix_time_ms < end_time_unix_ms
+                    and payload_unix_time_ms < end_time_unix_ms + 600_000
                 ):
                     fn_list.append(
                         FileNameMeta(
@@ -276,6 +277,7 @@ class ScadaReportA_Maker:
         end_time_utc = start_time_utc + pendulum.duration(hours=duration_hrs)
         end_time_unix_ms = end_time_utc.int_timestamp * 1000
         date_folder_list = self.get_date_folder_list(start_time_unix_ms, duration_hrs)
+        print(f"Got date_folder_list: {date_folder_list}")
         fn_list = self.get_file_name_meta_list(
             start_time_unix_ms=start_time_unix_ms,
             end_time_unix_ms=end_time_unix_ms,
@@ -342,14 +344,15 @@ class ScadaReportA_Maker:
         )
         sorted_readings = sorted(readings, key=lambda reading: channel_time(reading))
         lines = [
-            "Channel&Time, TimeUtc, TimeUnixS, Ms, Value, TelemetryName, AboutShNode, FromShNode\n"
+            f"AtomicTNode:, {atn_alias}\n",
+            f"ReportTypeName:, scada.report.a.001\n"
+            "Channel&Time, TimeUtc, Channel, TimeUnixMs, Value, TelemetryName, AboutShNode, FromShNode\n",
         ]
         for reading in sorted_readings:
             time_utc_str = pendulum.from_timestamp(reading.TimeUnixMs / 1000).strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
-            milliseconds = reading.TimeUnixMs % 1000
-            line = f"{channel_time(reading)},{time_utc_str}, {int(reading.TimeUnixMs/1000)}, {milliseconds}"
+            line = f"{channel_time(reading)},{time_utc_str},{reading.Channel.DisplayName}, {reading.TimeUnixMs}"
             value = reading.IntValue
             if reading.FloatValue is not None:
                 value = reading.FloatValue
@@ -360,7 +363,7 @@ class ScadaReportA_Maker:
             lines.append(line)
 
         atn_end = atn_alias.split(".")[-1]
-        file_name = f"{self.out_stub}/{atn_end}-{start_time_utc.strftime('%Y%m%d-%H%M')}-{duration_hrs}-{atn_alias}.csv"
+        file_name = f"{self.out_stub}/{atn_end}-{start_time_utc.strftime('%Y%m%d-%H%M')}-{duration_hrs}-{atn_alias}-{REPORT_TYPE_NAME}.csv"
         print(f"Writing {file_name}")
         with open(file_name, "w") as outfile:
             outfile.writelines(lines)

@@ -63,14 +63,14 @@ DIST_RWT = RidgelineChannel(
     OutUnits=Unit.Fahrenheit,
 )
 
-dist_gallons_channel = csv_utils.get_channel(
+dist_gpm = csv_utils.get_channel(
     atn_alias=APPLE_ATN_ALIAS,
-    from_name="a.distsourcewater.pump.flowmeter",
+    from_name="derived.gpm.expsmooth.000",
     about_name="a.distsourcewater.pump.flowmeter",
-    telemetry_name=TelemetryName.GallonsTimes100,
+    telemetry_name=TelemetryName.GpmTimes100,
 )
 DIST_FLOW = RidgelineChannel(
-    Channel=dist_gallons_channel,
+    Channel=dist_gpm,
     DaveName="Dist Flow",
     OutUnits=Unit.Gpm,
 )
@@ -101,15 +101,15 @@ GLYCOL_RWT = RidgelineChannel(
     OutUnits=Unit.Fahrenheit,
 )
 
-glycol_gallons_channel = csv_utils.get_channel(
+glycol_gpm_channel = csv_utils.get_channel(
     atn_alias=APPLE_ATN_ALIAS,
-    from_name="a.heatpump.condensorloopsource.pump.flowmeter",
+    from_name="derived.gpm.expsmooth.000",
     about_name="a.heatpump.condensorloopsource.pump.flowmeter",
-    telemetry_name=TelemetryName.GallonsTimes100,
+    telemetry_name=TelemetryName.GpmTimes100,
 )
 
 GLYCOL_FLOW = RidgelineChannel(
-    Channel=glycol_gallons_channel,
+    Channel=glycol_gpm_channel,
     DaveName="Glycol Flow",
     OutUnits=Unit.Gpm,
 )
@@ -308,19 +308,14 @@ def make_spreadsheet(add_smoothing: bool = True) -> str:
 
     ridgeline_readings = {}
     for ch in flow_channels:
-        flow_readings = csv_utils.get_flow_readings(
-            gallon_readings=readings[ch],
-            gallon_ch=ch.Channel,
-            atn_alias=atn_alias,
-            add_smoothing=add_smoothing,
-        )
         dc_list = []
-        for i in range(len(flow_readings)):
+        for i in range(len(readings[ch])):
+            flow_gpm = round(readings[ch][i].IntValue / 100, 1)
             dc_list.append(
                 ChannelReading(
                     Channel=ch.Channel,
                     TimeUnixMs=readings[ch][i].TimeUnixMs,
-                    FloatValue=round(flow_readings[i].IntValue / 100, 1),
+                    FloatValue=flow_gpm,
                 )
             )
         ridgeline_readings[ch] = dc_list
