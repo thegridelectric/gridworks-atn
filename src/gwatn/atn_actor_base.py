@@ -115,6 +115,13 @@ class AtnActorBase(TwoChannelActorBase):
         LOGGER.info(
             f"Queue {self.queue_name} bound to timecoordinatormic_tx with {binding} "
         )
+        scada_alias_lrh = self.scada_alias.replace(".", "-")
+        binding = f"gw.{scada_alias_lrh}.#"
+        cb = functools.partial(self.on_scada_bindok, binding=binding)
+        self._consume_channel.queue_bind(
+            self.queue_name, "amq.topic", routing_key=binding, callback=cb
+        )
+        LOGGER.info(f"Queue {self.queue_name} bound to amq.topic with {binding} ")
         pong = HeartbeatA_Maker(
             my_hex=str(random.choice("0123456789abcdef")), your_last_hex="0"
         ).tuple
@@ -134,6 +141,10 @@ class AtnActorBase(TwoChannelActorBase):
 
     @no_type_check
     def on_timecoordinator_bindok(self, _unused_frame, binding) -> None:
+        LOGGER.info(f"Queue {self.queue_name} bound with {binding}")
+
+    @no_type_check
+    def on_scada_bindok(self, _unused_frame, binding) -> None:
         LOGGER.info(f"Queue {self.queue_name} bound with {binding}")
 
     def time(self) -> float:

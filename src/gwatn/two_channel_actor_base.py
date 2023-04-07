@@ -17,6 +17,8 @@ import pika  # type: ignore
 from fastapi_utils.enums import StrEnum
 from gridworks.enums import GNodeRole
 from gridworks.errors import SchemaError
+from gwproto import Decoders
+from gwproto import MQTTCodec
 
 import gwatn.api_types as api_types
 from gwatn.config import AtnSettings
@@ -103,6 +105,7 @@ class TwoChannelActorBase(ABC):
         self.rabbit_role: RabbitRole = RabbitRolebyRole[self.g_node_role]
         self.universe_type: UniverseType = UniverseType(settings.universe_type_value)
         self.actor_main_stopped: bool = False
+        self.payload_bytes = None
 
         adder = "-F" + str(uuid.uuid4()).split("-")[0][0:3]
         self.queue_name: str = self.alias + adder
@@ -192,10 +195,15 @@ class TwoChannelActorBase(ABC):
         :param bytes body: The message body
         """
         self.latest_routing_key = basic_deliver.routing_key
-        LOGGER.debug(
+        self.payload_bytes = body
+        routing_key: str = basic_deliver.routing_key
+
+        LOGGER.info(
             f"{self.alias}: Got {basic_deliver.routing_key} with delivery tag {basic_deliver.delivery_tag}"
         )
         self.acknowledge_message(basic_deliver.delivery_tag)
+        msg_category = self.message_category_from_routing_key(routing_key)
+
         try:
             type_name = self.get_payload_type_name(basic_deliver)
         except SchemaError:
@@ -219,8 +227,6 @@ class TwoChannelActorBase(ABC):
             )
             return
 
-        routing_key: str = basic_deliver.routing_key
-
         try:
             from_alias = self.from_alias_from_routing_key(routing_key)
         except SchemaError as e:
@@ -231,6 +237,11 @@ class TwoChannelActorBase(ABC):
                 f"IGNORING MESSAGE. {self._latest_on_message_diagnostic}: {e}"
             )
             return
+
+        if msg_category == MessageCategory.MqttJsonBroadcast:
+            self.route_mqtt_message(from_alias=from_alias, payload=payload)
+            return
+
         try:
             from_role = self.from_role_from_routing_key(routing_key)
         except SchemaError as e:
@@ -256,6 +267,10 @@ class TwoChannelActorBase(ABC):
         self, from_alias: str, from_role: GNodeRole, payload: HeartbeatA
     ) -> None:
         raise NotImplementedError
+
+    def route_mqtt_message(self, from_alias: str, payload: HeartbeatA) -> None:
+        """This router should be overwritten by derived class"""
+        ...
 
     @no_type_check
     def send_message(
@@ -293,6 +308,14 @@ class TwoChannelActorBase(ABC):
         else:
             correlation_id = str(uuid.uuid4())
 
+        properties = pika.BasicProperties(
+            reply_to=self.queue_name,
+            app_id=self.alias,
+            type=message_category,
+            correlation_id=correlation_id,
+        )
+
+        publish_exchange = self._publish_exchange
         if message_category is MessageCategory.RabbitJsonDirect:
             if not isinstance(to_role, GNodeRole):
                 raise Exception("Must include to_role for a direct message")
@@ -306,12 +329,6 @@ class TwoChannelActorBase(ABC):
                 to_g_node_alias=to_g_node_alias,
             )
 
-            properties = pika.BasicProperties(
-                reply_to=self.queue_name,
-                app_id=self.alias,
-                type=message_category.RabbitJsonDirect,
-                correlation_id=correlation_id,
-            )
         elif message_category is MessageCategory.RabbitJsonBroadcast:
             routing_key = self.broadcast_routing_key(
                 payload=payload, radio_channel=radio_channel
@@ -322,6 +339,11 @@ class TwoChannelActorBase(ABC):
                 type=message_category.RabbitJsonBroadcast,
                 correlation_id=correlation_id,
             )
+        elif message_category is MessageCategory.MqttJsonBroadcast:
+            routing_key = self.scada_routing_key(
+                payload=payload, to_g_node_alias=to_g_node_alias
+            )
+            publish_exchange = "amq.topic"
         else:
             raise Exception(f"Does not handle MessageCategory {message_category}")
 
@@ -334,7 +356,7 @@ class TwoChannelActorBase(ABC):
 
         try:
             self._publish_channel.basic_publish(
-                exchange=self._publish_exchange,
+                exchange=publish_exchange,
                 routing_key=routing_key,
                 body=payload.as_type(),
                 properties=properties,
@@ -927,6 +949,16 @@ class TwoChannelActorBase(ABC):
                 )
             return f"{msg_type}.{from_alias_lrh}.{from_role}.{type_name_lrh}.{radio_channel}"
 
+    def scada_routing_key(self, payload: HeartbeatA, to_g_node_alias: str) -> str:
+        if self.g_node_role != GNodeRole.AtomicTNode:
+            raise Exception(f"Only send messages to SCADA if role is AtomicTNode!")
+        msg_type = MessageCategorySymbol.gw.value
+        from_alias_lrh = self.alias.replace(".", "-")
+        type_name_lrh = payload.TypeName.replace(".", "-")
+
+        scada_routing_key = f"{msg_type}.{from_alias_lrh}.{type_name_lrh}"
+        return scada_routing_key
+
     def direct_routing_key(
         self, to_role: GNodeRole, payload: HeartbeatA, to_g_node_alias: str
     ) -> str:
@@ -940,39 +972,20 @@ class TwoChannelActorBase(ABC):
         direct_routing_key = f"{msg_type}.{from_lrh_alias}.{from_role}.{type_name_lrh}.{to_role_val}.{to_lrh_alias}"
         return direct_routing_key
 
-    def type_name_from_routing_key(
-        self,
-        routing_key: str,
-    ) -> str:
-        """Returns the type alias of the message given the routing key. Raises a SchemaError
-        exception if there is a problem decoding the type alias, or if it does not have
-        the appropriate left-right-dot format.
+    def message_category_from_routing_key(self, routing_key: str) -> MessageCategory:
+        """Returns the MessageCategory of the message given the routing key.
 
-        For all the GNode Registry messages, this involves json dumping the payload
-        and looking for the TypeName dict key. However, in GridWorks World registries
-        where the participating entities represent TerminalAssets, AtomicTNodes, and
-        other operational actors in the electric grid model, there are a couple edge patterns
-        of routing key where the TypeName is a substring of the routing key itself.
-
-        The decision to embed the routing key INSIDE the body for the main set of
-        messages has to do with the length limit of 255 for rabbit routing keys, and
-        the desire to include both the FromGNodeAlias and the ToGNodeAlias in that key.
+        Raises a SchemaError exception if there is a problem decoding the MessageCategory
 
         Args:
-            routing_key (str): This is the basic_deliver.routing_key string
-            in a rabbit message
+           routing_key (str): This is the basic_deliver.routing_key string
+           in a rabbit message
 
         Returns:
-            str: the TypeName of the payload, in Lrd format
+           MessageCategory: the MessageCategory, as enum
         """
         routing_key_words = routing_key.split(".")
-        if len(routing_key_words) < 4:
-            self._latest_on_message_diagnostic = (
-                OnReceiveMessageDiagnostic.UNKNOWN_ROUTING_KEY_TYPE
-            )
-            raise SchemaError(f"Routing key {routing_key} must have at least 3 words!")
         msg_category_symbol_value = routing_key_words[0]
-        type_name_lrh = routing_key_words[3]
 
         try:
             msg_category_symbol = MessageCategorySymbol(msg_category_symbol_value)
@@ -996,6 +1009,29 @@ class TwoChannelActorBase(ABC):
             raise SchemaError(
                 f"Rabbit messages do not handle {msg_category_symbol.value}"
             )
+        return msg_category
+
+    def type_name_from_routing_key(
+        self,
+        routing_key: str,
+    ) -> str:
+        """Returns the TypeName of the message given the routing key. Raises a SchemaError
+        exception if there is a problem decoding the TypeName, or if it does not have
+        the appropriate left-right-dot format.
+
+        Args:
+            routing_key (str): This is the basic_deliver.routing_key string
+            in a rabbit message
+
+        Returns:
+            str: the TypeName of the payload, in Lrd format
+        """
+        routing_key_words = routing_key.split(".")
+        msg_category = self.message_category_from_routing_key(routing_key)
+        if msg_category == MessageCategory.MqttJsonBroadcast:
+            type_name_lrh = routing_key_words[2]
+        else:
+            type_name_lrh = routing_key_words[3]
 
         if not property_format.is_lrh_alias_format(type_name_lrh):
             self._latest_on_message_diagnostic = (
@@ -1040,6 +1076,11 @@ class TwoChannelActorBase(ABC):
         Returns:
             GNodeRole: GNodeRole of the actor that sent the message
         """
+        msg_category = self.message_category_from_routing_key(routing_key)
+        if msg_category == MessageCategory.MqttJsonBroadcast:
+            raise Exception(
+                "MqttJsonBroadcast does not contain FromRole in routing key"
+            )
         routing_key_words = routing_key.split(".")
         try:
             from_g_node_rabbit_role = routing_key_words[2]
