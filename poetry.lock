@@ -213,14 +213,14 @@ pyteal = ">=0.20.1,<0.21.0"
 
 [[package]]
 name = "beautifulsoup4"
-version = "4.12.1"
+version = "4.12.2"
 description = "Screen-scraping library"
 category = "dev"
 optional = false
 python-versions = ">=3.6.0"
 files = [
-    {file = "beautifulsoup4-4.12.1-py3-none-any.whl", hash = "sha256:e44795bb4f156d94abb5fbc56efff871c1045bfef72e9efe77558db9f9616ac3"},
-    {file = "beautifulsoup4-4.12.1.tar.gz", hash = "sha256:c7bdbfb20a0dbe09518b96a809d93351b2e2bcb8046c0809466fa6632a10c257"},
+    {file = "beautifulsoup4-4.12.2-py3-none-any.whl", hash = "sha256:bd2520ca0d9d7d12694a53d44ac482d181b4ec1888909b035a3dbf40d0f57d4a"},
+    {file = "beautifulsoup4-4.12.2.tar.gz", hash = "sha256:492bbc69dca35d12daac71c4db1bfff0c876c00ef4a2ffacce226d4638eb72da"},
 ]
 
 [package.dependencies]
@@ -281,18 +281,18 @@ uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "boto3"
-version = "1.26.108"
+version = "1.26.110"
 description = "The AWS SDK for Python"
 category = "main"
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "boto3-1.26.108-py3-none-any.whl", hash = "sha256:27fd0fedfdcab0bbb672b0dd18844049b86de15dccf042488c6420f1101e8a10"},
-    {file = "boto3-1.26.108.tar.gz", hash = "sha256:22bb45185eaf0e4548a08d35ec11b910d55fa14f5ccd1048d1b95c8615afcc53"},
+    {file = "boto3-1.26.110-py3-none-any.whl", hash = "sha256:8972a5e0a04ea6f477c41e390765a46ec7bcffb62f99d4a0774ce70fb87bea59"},
+    {file = "boto3-1.26.110.tar.gz", hash = "sha256:97d942d958cac28687187b89ee88ac760e0fa3007094cb1d6b16e241144306f3"},
 ]
 
 [package.dependencies]
-botocore = ">=1.29.108,<1.30.0"
+botocore = ">=1.29.110,<1.30.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.6.0,<0.7.0"
 
@@ -301,14 +301,14 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.29.108"
+version = "1.29.110"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.29.108-py3-none-any.whl", hash = "sha256:e5df8bd26971d6b257d9af2ec923548856decd9ff47bea1ab2736a4231bddac2"},
-    {file = "botocore-1.29.108.tar.gz", hash = "sha256:e62154af6771690e4833f6102a5e31fcc3687449e6110ae32919d134394a29ea"},
+    {file = "botocore-1.29.110-py3-none-any.whl", hash = "sha256:39879fcc3d263513f9ba92cc5060b5a4dbe54f758a917be29c7a71132e34f399"},
+    {file = "botocore-1.29.110.tar.gz", hash = "sha256:9d5054159782b19f27bff3e5a65bc494dc323255e889ea3abec002711a1fb0c0"},
 ]
 
 [package.dependencies]
@@ -1083,14 +1083,14 @@ uvicorn = {version = ">=0.19.0,<0.20.0", extras = ["standard"]}
 
 [[package]]
 name = "gridworks-proactor"
-version = "0.1.5"
+version = "0.1.7"
 description = "Gridworks Proactor"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks_proactor-0.1.5-py3-none-any.whl", hash = "sha256:71aeafe61d528cbd85e89604b528823884b4040075a0d5d8103dcec04d657304"},
-    {file = "gridworks_proactor-0.1.5.tar.gz", hash = "sha256:553c379d3e2ecda5a1c2c1f26f578ace8a22c314da6490277014f69c38c6d96e"},
+    {file = "gridworks_proactor-0.1.7-py3-none-any.whl", hash = "sha256:f106f46b08cfc85aef7d65b87ed505447c3194f66f761365ce161edb8742f767"},
+    {file = "gridworks_proactor-0.1.7.tar.gz", hash = "sha256:5144fc052a9d0624b11f3c9cf053c6a722545e113c34360d1c6f1e64852fd22a"},
 ]
 
 [package.dependencies]
@@ -1107,14 +1107,14 @@ tests = ["pytest (>=7.2.0,<8.0.0)", "pytest-asyncio (>=0.20.3,<0.21.0)"]
 
 [[package]]
 name = "gridworks-protocol"
-version = "0.4.1"
+version = "0.4.5"
 description = "Gridworks Protocol"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks_protocol-0.4.1-py3-none-any.whl", hash = "sha256:8552173c6744591268897633f5cdf6708dda6f093bb58b300d3074138adc8e83"},
-    {file = "gridworks_protocol-0.4.1.tar.gz", hash = "sha256:97fa7d38251d4c87f7761067df96babe1298f44a5ca278616d677d859382002b"},
+    {file = "gridworks_protocol-0.4.5-py3-none-any.whl", hash = "sha256:879150725ed532157ad5743c277fd230cde35be18b0e57fc5781b706bb2f4c83"},
+    {file = "gridworks_protocol-0.4.5.tar.gz", hash = "sha256:0f0e3faf64e5107a2451df477371f9ff3b84355f5f472cc6fc845b2cfac5b78a"},
 ]
 
 [package.dependencies]
@@ -2445,14 +2445,14 @@ files = [
 
 [[package]]
 name = "pygments"
-version = "2.14.0"
+version = "2.15.0"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 files = [
-    {file = "Pygments-2.14.0-py3-none-any.whl", hash = "sha256:fa7bd7bd2771287c0de303af8bfdfc731f51bd2c6a47ab69d117138893b82717"},
-    {file = "Pygments-2.14.0.tar.gz", hash = "sha256:b3ed06a9e8ac9a9aae5a6f5dbe78a8a58655d17b43b93c078f094ddc476ae297"},
+    {file = "Pygments-2.15.0-py3-none-any.whl", hash = "sha256:77a3299119af881904cd5ecd1ac6a66214b6e9bed1f2db16993b54adede64094"},
+    {file = "Pygments-2.15.0.tar.gz", hash = "sha256:f7e36cffc4c517fbc252861b9a6e4644ca0e5abadf9a113c72d1358ad09b9500"},
 ]
 
 [package.extras]
@@ -2504,18 +2504,17 @@ semantic-version = ">=2.9.0,<3.0.0"
 
 [[package]]
 name = "pytest"
-version = "7.2.2"
+version = "7.3.0"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-7.2.2-py3-none-any.whl", hash = "sha256:130328f552dcfac0b1cec75c12e3f005619dc5f874f0a06e8ff7263f0ee6225e"},
-    {file = "pytest-7.2.2.tar.gz", hash = "sha256:c99ab0c73aceb050f68929bc93af19ab6db0558791c6a0715723abe9d0ade9d4"},
+    {file = "pytest-7.3.0-py3-none-any.whl", hash = "sha256:933051fa1bfbd38a21e73c3960cebdad4cf59483ddba7696c48509727e17f201"},
+    {file = "pytest-7.3.0.tar.gz", hash = "sha256:58ecc27ebf0ea643ebfdf7fb1249335da761a00c9f955bcd922349bcb68ee57d"},
 ]
 
 [package.dependencies]
-attrs = ">=19.2.0"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 iniconfig = "*"
@@ -2524,7 +2523,7 @@ pluggy = ">=0.12,<2.0"
 tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
-testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
+testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
 name = "python-dateutil"
@@ -3828,4 +3827,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "3280a74672725f577282662440f05bad9bad77484fed69158687b4991a6e9417"
+content-hash = "0c7d2c00afad25dfd539b674b41f1a16c49704fda19f1bc18322e952d1b93bd2"

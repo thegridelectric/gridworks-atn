@@ -9,6 +9,7 @@ from abc import abstractmethod
 from enum import auto
 from typing import Dict
 from typing import Optional
+from typing import TypeVar
 from typing import no_type_check
 
 import gridworks.property_format as property_format
@@ -17,16 +18,21 @@ import pika  # type: ignore
 from fastapi_utils.enums import StrEnum
 from gridworks.enums import GNodeRole
 from gridworks.errors import SchemaError
-from gwproto import Decoders
-from gwproto import MQTTCodec
+from gwproto.message import Message as ScadaMessage
+from gwproto.messages import Ack
+from pydantic import ValidationError
 
 import gwatn.api_types as api_types
 from gwatn.config import AtnSettings
 from gwatn.enums import MessageCategory
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
+from gwatn.scada_codec import ScadaCodec
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
+
+
+PayloadT = TypeVar("PayloadT")
 
 
 class RabbitRole(StrEnum):
@@ -75,6 +81,7 @@ class OnReceiveMessageDiagnostic(enum.Enum):
     FROM_GNODE_DECODING_PROBLEM = "FromGNodeDecodingProblem"
     UNKONWN_GNODE = "UnknownGNode"
     TO_DIRECT_ROUTING = "ToDirectRouting"
+    GWPROTO_DECODING_PROBLEM = "GwprotoDecodingProblem"
 
 
 BACKOFF_NUMBER = 16
@@ -87,6 +94,17 @@ LOGGER = logging.getLogger(__name__)
 
 LOGGER.setLevel(logging.WARNING)
 
+import json
+from typing import List
+
+from pydantic import BaseModel
+
+
+class DbgMsg(BaseModel):
+    RoutingKey: str
+    MessageType: bytes
+    MessageTuple: ScadaMessage
+
 
 class TwoChannelActorBase(ABC):
     SHUTDOWN_INTERVAL = 0.1
@@ -96,6 +114,8 @@ class TwoChannelActorBase(ABC):
         settings: AtnSettings,
         api_type_maker_by_name: Dict[str, HeartbeatA_Maker] = api_types.TypeMakerByName,
     ):
+        self.scada_codec = ScadaCodec()
+        self.dbg_messages: List[DbgMsg] = []
         self.api_type_maker_by_name = api_type_maker_by_name
         self.latest_routing_key: Optional[str] = None
         self.shutting_down: bool = False
@@ -105,7 +125,6 @@ class TwoChannelActorBase(ABC):
         self.rabbit_role: RabbitRole = RabbitRolebyRole[self.g_node_role]
         self.universe_type: UniverseType = UniverseType(settings.universe_type_value)
         self.actor_main_stopped: bool = False
-        self.payload_bytes = None
 
         adder = "-F" + str(uuid.uuid4()).split("-")[0][0:3]
         self.queue_name: str = self.alias + adder
@@ -195,7 +214,6 @@ class TwoChannelActorBase(ABC):
         :param bytes body: The message body
         """
         self.latest_routing_key = basic_deliver.routing_key
-        self.payload_bytes = body
         routing_key: str = basic_deliver.routing_key
 
         LOGGER.info(
@@ -203,6 +221,38 @@ class TwoChannelActorBase(ABC):
         )
         self.acknowledge_message(basic_deliver.delivery_tag)
         msg_category = self.message_category_from_routing_key(routing_key)
+
+        try:
+            from_alias = self.from_alias_from_routing_key(routing_key)
+        except SchemaError as e:
+            self._latest_on_message_diagnostic = (
+                OnReceiveMessageDiagnostic.FROM_GNODE_DECODING_PROBLEM
+            )
+            LOGGER.warning(
+                f"IGNORING MESSAGE. {self._latest_on_message_diagnostic}: {e}"
+            )
+            return
+
+        if msg_category == MessageCategory.MqttJsonBroadcast:
+            try:
+                message = self.scada_codec.decode(topic="gw", payload=body)
+            except ValidationError as e:
+                self._latest_on_message_diagnostic = (
+                    OnReceiveMessageDiagnostic.GWPROTO_DECODING_PROBLEM
+                )
+                LOGGER.warning(
+                    f"IGNORING MESSAGE. {self._latest_on_message_diagnostic}: {e}"
+                )
+                return
+            self.dbg_messages.append(
+                DbgMsg(
+                    RoutingKey=basic_deliver.routing_key,
+                    MessageType=body,
+                    MessageTuple=message,
+                )
+            )
+            self.route_scada_message(from_alias=from_alias, message=message)
+            return
 
         try:
             type_name = self.get_payload_type_name(basic_deliver)
@@ -225,21 +275,6 @@ class TwoChannelActorBase(ABC):
             LOGGER.warning(
                 f"TypeName for incoming message claimed to be {type_name}, but was not true! Failed to make a {self.api_type_maker_by_name[type_name].tuple}"
             )
-            return
-
-        try:
-            from_alias = self.from_alias_from_routing_key(routing_key)
-        except SchemaError as e:
-            self._latest_on_message_diagnostic = (
-                OnReceiveMessageDiagnostic.FROM_GNODE_DECODING_PROBLEM
-            )
-            LOGGER.warning(
-                f"IGNORING MESSAGE. {self._latest_on_message_diagnostic}: {e}"
-            )
-            return
-
-        if msg_category == MessageCategory.MqttJsonBroadcast:
-            self.route_mqtt_message(from_alias=from_alias, payload=payload)
             return
 
         try:
@@ -268,9 +303,47 @@ class TwoChannelActorBase(ABC):
     ) -> None:
         raise NotImplementedError
 
-    def route_mqtt_message(self, from_alias: str, payload: HeartbeatA) -> None:
+    def route_scada_message(self, from_alias: str, message: ScadaMessage) -> None:
         """This router should be overwritten by derived class"""
         ...
+
+    @no_type_check
+    def send_scada_message(
+        self, payload: PayloadT, ack_required: bool = False
+    ) -> OnSendMessageDiagnostic:
+        """Publish an MqttBroadcast message to the SCADA partner
+
+        Args: message: A ScadaMessage (TypeName gw)
+        """
+        message_id = str(uuid.uuid4())
+        message = ScadaMessage(
+            Src=self.alias,
+            Payload=payload,
+            AckRequired=ack_required,
+            MessageId=message_id,
+        )
+        message_as_type = self.scada_codec.encode(message)
+        routing_key = self.scada_routing_key(payload=payload)
+        publish_exchange = "amq.topic"
+        properties = pika.BasicProperties(
+            reply_to=self.queue_name,
+            app_id=self.alias,
+            type=MessageCategory.MqttJsonBroadcast,
+            correlation_id=message_id,
+        )
+
+        try:
+            self._publish_channel.basic_publish(
+                exchange=publish_exchange,
+                routing_key=routing_key,
+                body=message_as_type,
+                properties=properties,
+            )
+            LOGGER.info(f" [x] Sent {payload.TypeName} w routing key {routing_key}")
+            return OnSendMessageDiagnostic.MESSAGE_SENT
+        except BaseException:
+            LOGGER.exception("Problem publishing scada message")
+            return OnSendMessageDiagnostic.UNKNOWN_ERROR
 
     @no_type_check
     def send_message(
@@ -302,6 +375,11 @@ class TwoChannelActorBase(ABC):
             return OnSendMessageDiagnostic.STOPPING_SO_NOT_SENDING
         if self._stopped:
             return OnSendMessageDiagnostic.STOPPED_SO_NOT_SENDING
+
+        if message_category == MessageCategory.MqttJsonBroadcast:
+            raise Exception(
+                f"Use send_scada_message to send messages to SCADA: {payload}"
+            )
 
         if "MessageId" in payload.as_dict():
             correlation_id = payload.MessageId
@@ -339,11 +417,6 @@ class TwoChannelActorBase(ABC):
                 type=message_category.RabbitJsonBroadcast,
                 correlation_id=correlation_id,
             )
-        elif message_category is MessageCategory.MqttJsonBroadcast:
-            routing_key = self.scada_routing_key(
-                payload=payload, to_g_node_alias=to_g_node_alias
-            )
-            publish_exchange = "amq.topic"
         else:
             raise Exception(f"Does not handle MessageCategory {message_category}")
 
@@ -949,7 +1022,7 @@ class TwoChannelActorBase(ABC):
                 )
             return f"{msg_type}.{from_alias_lrh}.{from_role}.{type_name_lrh}.{radio_channel}"
 
-    def scada_routing_key(self, payload: HeartbeatA, to_g_node_alias: str) -> str:
+    def scada_routing_key(self, payload: Ack) -> str:
         if self.g_node_role != GNodeRole.AtomicTNode:
             raise Exception(f"Only send messages to SCADA if role is AtomicTNode!")
         msg_type = MessageCategorySymbol.gw.value

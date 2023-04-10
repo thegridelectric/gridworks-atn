@@ -6,6 +6,7 @@ import time
 import uuid
 from abc import abstractmethod
 from typing import Optional
+from typing import cast
 from typing import no_type_check
 
 import gridworks.algo_utils as algo_utils
@@ -17,6 +18,12 @@ from beaker.client import ApplicationClient
 from gridworks.algo_utils import BasicAccount
 from gridworks.enums import GNodeRole
 from gridworks.message import as_enum
+from gwproto.message import Message as ScadaMessage
+from gwproto.messages import Ack
+from gwproto.messages import GtShStatusEvent
+from gwproto.messages import PeerActiveEvent
+from gwproto.messages import Ping as GridworksPing
+from gwproto.messages import SnapshotSpaceheatEvent
 from pydantic import BaseModel
 
 from gwatn.config import AtnSettings
@@ -29,6 +36,7 @@ from gwatn.types import AtnParamsHeatpumpwithbooststore as AtnParams
 from gwatn.types import (
     DispatchContractConfirmedHeatpumpwithbooststore_Maker as DispatchContractConfirmed_Maker,
 )
+from gwatn.types import GtShStatus
 from gwatn.types import GwCertId
 from gwatn.types import GwCertId_Maker
 from gwatn.types import HeartbeatA
@@ -39,8 +47,10 @@ from gwatn.types import JoinDispatchContract
 from gwatn.types import JoinDispatchContract_Maker
 from gwatn.types import LatestPrice
 from gwatn.types import LatestPrice_Maker
+from gwatn.types import PowerWatts
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
+from gwatn.types import SnapshotSpaceheat
 
 
 LOG_FORMAT = (
@@ -73,35 +83,37 @@ def dummy_atn_params() -> AtnParams:
 
 
 class AtnActorBase(TwoChannelActorBase):
-    def __init__(self, settings: AtnSettings):
+    def __init__(self, settings: AtnSettings, use_algo: bool = False):
         super().__init__(settings=settings)
         self.settings: AtnSettings = settings
         self.scada_gni_id = settings.scada_gni_id
-        self.acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
-        self.client: AlgodClient = AlgodClient(
-            settings.algo_api_secrets.algod_token.get_secret_value(),
-            settings.public.algod_address,
-        )
-        if algo_utils.algos(self.acct.addr) < 5:
-            raise Exception(
-                f"Insufficiently funded. Make sure atn has at least 5 algos"
-            )
-        # TODO: move this into spaceheat along with join_dispatch_contract_received
-        self.atn_params: AtnParams = dummy_atn_params()
-        self.sp = self.client.suggested_params()
-        self.sp.flat_fee = True
-        self.sp.fee = 2000
-        # this is initialized with the AppId provided by the SCADA
-        self.dc_app_id: Optional[int] = None
-        self.dc_client: Optional[ApplicationClient] = None
-        self.check_for_dispatch_contract()
-        self.universe_type = as_enum(
-            self.settings.universe_type_value, UniverseType, UniverseType.default()
-        )
-        self.trading_rights_id: Optional[GwCertId] = None
-        self.update_trading_rights()
-        self.hb_status = HbStatus(LastHeartbeatReceivedMs=int(time.time() * 1000))
         self._time: float = self.get_initial_time_s()
+
+        if use_algo is True:
+            self.acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
+            self.client: AlgodClient = AlgodClient(
+                settings.algo_api_secrets.algod_token.get_secret_value(),
+                settings.public.algod_address,
+            )
+            if algo_utils.algos(self.acct.addr) < 5:
+                raise Exception(
+                    f"Insufficiently funded. Make sure atn has at least 5 algos"
+                )
+            # TODO: move this into spaceheat along with join_dispatch_contract_received
+            self.atn_params: AtnParams = dummy_atn_params()
+            self.sp = self.client.suggested_params()
+            self.sp.flat_fee = True
+            self.sp.fee = 2000
+            # this is initialized with the AppId provided by the SCADA
+            self.dc_app_id: Optional[int] = None
+            self.dc_client: Optional[ApplicationClient] = None
+            self.check_for_dispatch_contract()
+            self.universe_type = as_enum(
+                self.settings.universe_type_value, UniverseType, UniverseType.default()
+            )
+            self.trading_rights_id: Optional[GwCertId] = None
+            self.update_trading_rights()
+            self.hb_status = HbStatus(LastHeartbeatReceivedMs=int(time.time() * 1000))
 
     def local_rabbit_startup(self) -> None:
         rjb = MessageCategorySymbol.rjb.value
@@ -165,6 +177,82 @@ class AtnActorBase(TwoChannelActorBase):
     ########################
     ## Receives
     ########################
+
+    def route_scada_message(self, from_alias: str, message: ScadaMessage) -> None:
+        """Routes messages from the SCADA to methods that should be overwritten
+        in derived class"""
+
+        if message.Header.Src != self.scada_alias:
+            LOGGER.info(
+                f"Ignoring scada message from {message.Header.Src}. My scada is {self.scada_alias}"
+            )
+            return
+        if message.Header.AckRequired == True:
+            payload = Ack(AckMessageID=message.Header.MessageId)
+            self.send_scada_message(payload)
+
+        path_dbg = 0
+        match message.Payload:
+            case GridworksPing():
+                self._process_gridworks_ping_from_scada(
+                    cast(GridworksPing, message.Payload)
+                )
+            case GtShStatusEvent():
+                self._process_gt_sh_status_event_from_scada(
+                    cast(GtShStatusEvent, message.Payload)
+                )
+            case PeerActiveEvent():
+                self._process_peer_active_event_from_scada(
+                    cast(PeerActiveEvent, message.Payload)
+                )
+            case SnapshotSpaceheatEvent():
+                self._process_snapshot_spaceheat_event_from_scada(
+                    cast(SnapshotSpaceheatEvent, message.Payload)
+                )
+            case PowerWatts():
+                self._process_power_watts_from_scada(cast(PowerWatts, message.Payload))
+
+            case SnapshotSpaceheat():
+                self._process_snapshot_spaceheat_from_scada(
+                    cast(SnapshotSpaceheat, message.Payload)
+                )
+
+    @abstractmethod
+    def _process_gridworks_ping_from_scada(self, payload: GridworksPing) -> None:
+        """Atn has received gridworks.ping message from its SCADA"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def _process_peer_active_event_from_scada(self, payload: PeerActiveEvent) -> None:
+        """Atn has received gridworks.event.comm.peer.active message from its SCADA"""
+        raise NotImplementedError
+
+    def _process_gt_sh_status_event_from_scada(self, payload: GtShStatusEvent) -> None:
+        """Atn has received gridworks.event.gt.sh.status message from its SCADA"""
+        gt_sh_status = payload.status
+        self._process_gt_sh_status_from_scada(payload=gt_sh_status)
+
+    def _process_snapshot_spaceheat_event_from_scada(
+        self, payload: SnapshotSpaceheatEvent
+    ) -> None:
+        """Atn has received  gridworks.event.snapshot.spaceheat message from its SCADA"""
+        snapshot_spaceheat = payload.snap
+        self._process_snapshot_spaceheat_from_scada(payload=snapshot_spaceheat)
+
+    @abstractmethod
+    def _process_gt_sh_status_from_scada(self, payload: GtShStatus) -> None:
+        """Atn has received gt.sh.status message from its SCADA"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def _process_power_watts_from_scada(self, payload: PowerWatts) -> None:
+        """Atn has received power.watts message from its SCADA"""
+        raise NotImplementedError
+
+    @abstractmethod
+    def _process_snapshot_spaceheat_from_scada(self, payload: SnapshotSpaceheat):
+        """Atn has received a snapshot.sspaceheat message from the SCADA"""
+        raise NotImplementedError
 
     def route_message(
         self, from_alias: str, from_role: GNodeRole, payload: HeartbeatA

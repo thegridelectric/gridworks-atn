@@ -3,17 +3,22 @@ import time
 from typing import Optional
 
 import dotenv
-import gridworks.algo_utils as algo_utils
-from algosdk.v2client.algod import AlgodClient
-from beaker.client import ApplicationClient
-from gridworks.algo_utils import BasicAccount
-from gridworks.enums import GNodeRole
+import rich
+from gwproto.messages import PeerActiveEvent
+from gwproto.messages import Ping as GridworksPing
+from gwproto.messages import SnapshotSpaceheatEvent
+from pydantic import BaseModel
 
 import gwatn.config as config
-from gwatn import DispatchContract
 from gwatn.atn_actor_base import AtnActorBase
+from gwatn.enums import TelemetryName
+from gwatn.types import GtDispatchBoolean_Maker
+from gwatn.types import GtShCliAtnCmd_Maker
+from gwatn.types import GtShStatus
 from gwatn.types import LatestPrice
+from gwatn.types import PowerWatts
 from gwatn.types import SimTimestep
+from gwatn.types import SnapshotSpaceheat
 
 
 LOG_FORMAT = (
@@ -33,7 +38,11 @@ class SimpleAtnActor(AtnActorBase):
         ),
     ):
         super().__init__(settings=settings)
+        self._power_watts: int = 0
         LOGGER.info("Simple Atn Initialized")
+        self.latest_pump_gpm: Optional[float] = None
+        self.latest_pump_gallons: Optional[float] = None
+        self.latest_pump_read_time_s: Optional[int] = None
 
     def latest_price_from_market_maker(self, payload: LatestPrice) -> None:
         pass
@@ -47,3 +56,83 @@ class SimpleAtnActor(AtnActorBase):
 
     def repeat_timestep(self, payload: SimTimestep) -> None:
         pass
+
+    ##################
+    # Sent to SCADA
+    ##################
+
+    def snap(self):
+        self.send_scada_message(
+            payload=GtShCliAtnCmd_Maker(
+                from_g_node_alias=self.alias,
+                from_g_node_id=self.g_node_instance_id,
+                send_snapshot=True,
+            ).tuple
+        )
+
+    def turn_on(self, relay_node_name: str) -> None:
+        self.send_scada_message(
+            payload=GtDispatchBoolean_Maker(
+                about_node_name=relay_node_name,
+                to_g_node_alias=self.scada_alias,
+                from_g_node_alias=self.alias,
+                from_g_node_instance_id=self.g_node_instance_id,
+                relay_state=1,
+                send_time_unix_ms=int(time.time() * 1000),
+            ).tuple
+        )
+
+    def turn_off(self, relay_node_name: str) -> None:
+        self.send_scada_message(
+            payload=GtDispatchBoolean_Maker(
+                about_node_name=relay_node_name,
+                to_g_node_alias=self.scada_alias,
+                from_g_node_alias=self.alias,
+                from_g_node_instance_id=self.g_node_instance_id,
+                relay_state=0,
+                send_time_unix_ms=int(time.time() * 1000),
+            ).tuple
+        )
+
+    ######################
+    # Received from SCADA
+    #####################
+    def _process_gridworks_ping_from_scada(self, payload: GridworksPing) -> None:
+        """Atn has received gridworks.ping message from its SCADA"""
+        LOGGER.info(f"_process_gridworks_ping_from_scada: {payload}")
+
+    def _process_peer_active_event_from_scada(self, payload: PeerActiveEvent) -> None:
+        """Atn has received gridworks.event.comm.peer.active message from its SCADA"""
+        LOGGER.info(f"_process_peer_active_event_from_scada: {payload}")
+
+    def _process_gt_sh_status_from_scada(self, payload: GtShStatus) -> None:
+        """Atn has received gt.sh.status message from its SCADA"""
+        self.latest_status = payload
+        LOGGER.info(f"_process_gt_sh_status_from_scada")
+
+    def _process_power_watts_from_scada(self, payload: PowerWatts) -> None:
+        """Atn has received power.watts message from its SCADA"""
+        rich.print(f"Agg Power{payload.Watts} W (previously {self._power_watts} W)")
+        self._power_watts = payload.Watts
+
+    def _process_snapshot_spaceheat_from_scada(
+        self, payload: SnapshotSpaceheat
+    ) -> None:
+        """Atn has received gridworks.event.snapshot.spaceheat message from its SCADA"""
+        s = "\n\nSnapshot received:\n"
+        for i in range(len(payload.Snapshot.AboutNodeAliasList)):
+            telemetry_name = payload.Snapshot.TelemetryNameList[i]
+            if telemetry_name == TelemetryName.WaterTempCTimes1000:
+                centigrade = payload.Snapshot.ValueList[i] / 1000
+                fahrenheit = (centigrade * 9 / 5) + 32
+                extra = f"{fahrenheit:5.2f} F"
+            elif telemetry_name == TelemetryName.WaterTempFTimes1000:
+                fahrenheit = payload.Snapshot.ValueList[i] / 1000
+                extra = f"{fahrenheit:5.2f} F"
+            else:
+                extra = (
+                    f"{payload.Snapshot.ValueList[i]} "
+                    f"{payload.Snapshot.TelemetryNameList[i].value}"
+                )
+            s += f"  {payload.Snapshot.AboutNodeAliasList[i]}: {extra}\n"
+        LOGGER.warning(s)
