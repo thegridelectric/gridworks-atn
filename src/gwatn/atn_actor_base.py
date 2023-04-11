@@ -186,6 +186,7 @@ class AtnActorBase(TwoChannelActorBase):
             LOGGER.info(
                 f"Ignoring scada message from {message.Header.Src}. My scada is {self.scada_alias}"
             )
+            LOGGER.info(f"OK. message is {message}")
             return
         if message.Header.AckRequired == True:
             payload = Ack(AckMessageID=message.Header.MessageId)
