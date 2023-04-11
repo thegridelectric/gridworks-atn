@@ -125,12 +125,8 @@ class SimpleAtnActor(AtnActorBase):
         delta_gallons = self.latest_gallons - prev_gallons
         delta_minutes = (self.latest_pump_read_time_s - prev_read_s) / 60
         exp_minute_weight = 0.5
-        alpha = exp_minute_weight * delta_minutes
-        this_gpm = delta_gallons / delta_minutes
-        if self.latest_gpm is None:
-            self.latest_gpm = this_gpm
-        else:
-            self.latest_gpm = alpha * this_gpm + (1 - alpha) * self.latest_gpm
+        self.latest_gpm = delta_gallons / delta_minutes
+
         LOGGER.info(f"{round(self.latest_gpm, 2)} GPM")
         LOGGER.info(
             f"delta_minutes {round(delta_minutes,1)}, prev gallons: {prev_gallons}, latest gallons: {self.latest_gallons}"
@@ -176,4 +172,6 @@ class SimpleAtnActor(AtnActorBase):
                     f"{payload.Snapshot.TelemetryNameList[i].value}"
                 )
             s += f"  {payload.Snapshot.AboutNodeAliasList[i]}: {extra}\n"
+        if self.latest_gpm:
+            s += f" a.distsourcewater.pump.flowmeter: {round(self.latest_gpm, 2)} GPM"
         LOGGER.warning(s)
