@@ -12,10 +12,6 @@ from gwproto.types import EgaugeRegisterConfig
 from gwproto.types import EgaugeRegisterConfig_Maker
 from gwproto.types import ElectricMeterCacGt
 from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import GtBooleanActuatorCac
-from gwproto.types import GtBooleanActuatorCac_Maker
-from gwproto.types import GtBooleanActuatorComponent
-from gwproto.types import GtBooleanActuatorComponent_Maker
 from gwproto.types import GtDispatchBoolean
 from gwproto.types import GtDispatchBoolean_Maker
 from gwproto.types import GtDispatchBooleanLocal
@@ -46,6 +42,10 @@ from gwproto.types import PipeFlowSensorComponentGt
 from gwproto.types import PipeFlowSensorComponentGt_Maker
 from gwproto.types import PowerWatts
 from gwproto.types import PowerWatts_Maker
+from gwproto.types import RelayCacGt
+from gwproto.types import RelayCacGt_Maker
+from gwproto.types import RelayComponentGt
+from gwproto.types import RelayComponentGt_Maker
 from gwproto.types import ResistiveHeaterCacGt
 from gwproto.types import ResistiveHeaterCacGt_Maker
 from gwproto.types import ResistiveHeaterComponentGt
@@ -207,10 +207,6 @@ __all__ = [
     "GNodeGt_Maker",
     "GNodeInstanceGt",
     "GNodeInstanceGt_Maker",
-    "GtBooleanActuatorCac",
-    "GtBooleanActuatorCac_Maker",
-    "GtBooleanActuatorComponent",
-    "GtBooleanActuatorComponent_Maker",
     "GtDispatchBoolean",
     "GtDispatchBoolean_Maker",
     "GtDispatchBoolean",
@@ -279,6 +275,10 @@ __all__ = [
     "PriceQuantityUnitless_Maker",
     "Ready",
     "Ready_Maker",
+    "RelayCacGt",
+    "RelayCacGt_Maker",
+    "RelayComponentGt",
+    "RelayComponentGt_Maker",
     "ResistiveHeaterCacGt",
     "ResistiveHeaterCacGt_Maker",
     "ResistiveHeaterComponentGt",

@@ -40,9 +40,10 @@ class SimpleAtnActor(AtnActorBase):
         super().__init__(settings=settings)
         self._power_watts: int = 0
         LOGGER.info("Simple Atn Initialized")
-        self.latest_pump_gpm: Optional[float] = None
-        self.latest_pump_gallons: Optional[float] = None
+        self.latest_gpm: Optional[float] = None
+        self.latest_gallons: Optional[float] = None
         self.latest_pump_read_time_s: Optional[int] = None
+        self.hp_allowed: bool = True
 
     def latest_price_from_market_maker(self, payload: LatestPrice) -> None:
         pass
@@ -99,20 +100,60 @@ class SimpleAtnActor(AtnActorBase):
     #####################
     def _process_gridworks_ping_from_scada(self, payload: GridworksPing) -> None:
         """Atn has received gridworks.ping message from its SCADA"""
-        LOGGER.info(f"_process_gridworks_ping_from_scada: {payload}")
+        ...
+        LOGGER.debug(f"_process_gridworks_ping_from_scada: {payload}")
 
     def _process_peer_active_event_from_scada(self, payload: PeerActiveEvent) -> None:
         """Atn has received gridworks.event.comm.peer.active message from its SCADA"""
-        LOGGER.info(f"_process_peer_active_event_from_scada: {payload}")
+        LOGGER.debug(f"_process_peer_active_event_from_scada: {payload}")
 
     def _process_gt_sh_status_from_scada(self, payload: GtShStatus) -> None:
         """Atn has received gt.sh.status message from its SCADA"""
         self.latest_status = payload
-        LOGGER.info(f"_process_gt_sh_status_from_scada")
+        gallon_list = list(
+            filter(
+                lambda x: x.ShNodeAlias == "a.distsourcewater.pump.flowmeter",
+                payload.SimpleTelemetryList,
+            )
+        )[0]
+        prev_read_s = self.latest_pump_read_time_s
+        self.latest_pump_read_time_s = gallon_list.ReadTimeUnixMsList[-1] / 1000
+        prev_gallons = self.latest_gallons
+        self.latest_gallons = gallon_list.ValueList[-1] / 100
+        if prev_gallons is None:
+            return
+        delta_gallons = self.latest_gallons - prev_gallons
+        delta_minutes = (self.latest_pump_read_time_s - prev_read_s) / 60
+        exp_minute_weight = 0.5
+        alpha = exp_minute_weight * delta_minutes
+        this_gpm = delta_gallons / delta_minutes
+        if self.latest_gpm is None:
+            self.latest_gpm = this_gpm
+        else:
+            self.latest_gpm = alpha * this_gpm + (1 - alpha) * self.latest_gpm
+        LOGGER.info(f"{round(self.latest_gpm, 2)} GPM")
+        LOGGER.info(
+            f"delta_minutes {round(delta_minutes,1)}, prev gallons: {prev_gallons}, latest gallons: {self.latest_gallons}"
+        )
+
+        if self.hp_allowed:
+            if self.latest_gpm < 2:
+                self.hp_allowed = False
+                self.turn_off("a.heatpump.relay")
+                LOGGER.info(
+                    f"gpm {round(self.latest_gpm,2)} below 2, turning off heat pump relay"
+                )
+        else:
+            if self.latest_gpm > 2.5:
+                self.hp_allowed = True
+                self.turn_on("a.heatpump.relay")
+                LOGGER.info(
+                    f"gpm {round(self.latest_gpm,2)} above 2.5, turning on heat pump relay"
+                )
 
     def _process_power_watts_from_scada(self, payload: PowerWatts) -> None:
         """Atn has received power.watts message from its SCADA"""
-        rich.print(f"Agg Power{payload.Watts} W (previously {self._power_watts} W)")
+        rich.print(f"Agg Power {payload.Watts} W")
         self._power_watts = payload.Watts
 
     def _process_snapshot_spaceheat_from_scada(
