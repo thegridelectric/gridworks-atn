@@ -182,12 +182,12 @@ class AtnActorBase(TwoChannelActorBase):
         """Routes messages from the SCADA to methods that should be overwritten
         in derived class"""
 
-        if message.Header.Src != self.scada_alias:
-            LOGGER.info(
-                f"Ignoring scada message from {message.Header.Src}. My scada is {self.scada_alias}"
-            )
-            LOGGER.info(f"{message}")
-            return
+        # if message.Header.Src != self.scada_alias:
+        #     LOGGER.info(
+        #         f"Ignoring scada message from {message.Header.Src}. My scada is {self.scada_alias}"
+        #     )
+        #     LOGGER.info(f"{message}")
+        #     return
         if message.Header.AckRequired == True:
             payload = Ack(AckMessageID=message.Header.MessageId)
             self.send_scada_message(payload)
