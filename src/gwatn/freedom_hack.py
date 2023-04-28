@@ -28,7 +28,7 @@ LOG_FORMAT = (
 LOGGER = logging.getLogger(__name__)
 
 
-class SimpleAtnActor(AtnActorBase):
+class FreedomHackAtn(AtnActorBase):
     """Simple implementation of an AtnActor, for testing purposes"""
 
     def __init__(
