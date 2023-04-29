@@ -1,4 +1,4 @@
-"""Tests heartbeat.b type, version 000"""
+"""Tests heartbeat.b type, version 001"""
 import json
 
 import pytest
@@ -17,7 +17,7 @@ def test_heartbeat_b_generated() -> None:
         "LastReceivedTimeUnixMs": 1673635764282,
         "SendTimeUnixMs": 1673635765317,
         "TypeName": "heartbeat.b",
-        "Version": "000",
+        "Version": "001",
     }
 
     with pytest.raises(SchemaError):
@@ -69,11 +69,6 @@ def test_heartbeat_b_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["YourLastHex"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
     del d2["LastReceivedTimeUnixMs"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -82,6 +77,15 @@ def test_heartbeat_b_generated() -> None:
     del d2["SendTimeUnixMs"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
+
+    ######################################
+    # Optional attributes can be removed from type
+    ######################################
+
+    d2 = dict(d)
+    if "YourLastHex" in d2.keys():
+        del d2["YourLastHex"]
+    Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types

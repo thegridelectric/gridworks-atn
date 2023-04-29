@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-atn"
-version = "0.2.3"
+version = "0.2.4"
 description = "Gridworks Atn Spaceheat"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "None"
@@ -20,9 +20,9 @@ Changelog = "https://github.com/thegridelectric/gridworks-atn/releases"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-gridworks = "^0.1.4"
-gridworks-protocol = "^0.2.6"
-boto3 = "^1.26.3"
+gridworks = "^0.2.1"
+gridworks-protocol = "^0.4.5"
+gridworks-proactor = "^0.1.8"
 paho-mqtt = "^1.6.1"
 
 types-requests = "^2.28.11.2"
@@ -55,6 +55,7 @@ sphinx-click = ">=3.0.2"
 typeguard = ">=2.13.3"
 xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
+xlsxwriter = "^3.0.9"
 
 [tool.poetry.scripts]
 gridworks-atn = "gwatn.__main__:main"

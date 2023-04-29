@@ -18,7 +18,7 @@ Python pydantic class corresponding to  json type ```heartbeat.b```.
     - Format: HexChar
 
 **YourLastHex**:
-    - Description: Last hex character received from heartbeat partner
+    - Description: Last hex character received from heartbeat partner. If the heartbeat initiator wants to start the sequence over, it does not include this.
     - Format: HexChar
 
 **LastReceivedTimeUnixMs**:

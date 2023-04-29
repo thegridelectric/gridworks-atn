@@ -17,6 +17,7 @@ __pycache__/
 
 # Ignore env file
 .env
+venv
 
 # scratch files and folders
 scratch*

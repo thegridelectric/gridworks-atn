@@ -6,15 +6,16 @@ def test_telemetry_name() -> None:
     assert set(TelemetryName.values()) == {
         "Unknown",
         "PowerW",
-        "PhaseAngleDegreesTimes10",
-        "WattHours",
+        "MilliWattHours",
+        "FrequencyMicroHz",
+        "AirTempCTimes1000",
+        "AirTempFTimes1000",
         "RelayState",
         "WaterTempCTimes1000",
         "WaterTempFTimes1000",
-        "WaterFlowGpmTimes100",
+        "GpmTimes100",
         "CurrentRmsMicroAmps",
-        "GallonsPerMinuteTimes10",
-        "CurrentRmsMilliAmps",
+        "GallonsTimes100",
         "VoltageRmsMilliVolts",
     }
 

@@ -10,9 +10,10 @@ def test_unit() -> None:
         "Celcius",
         "Fahrenheit",
         "Gpm",
-        "Wh",
+        "WattHours",
         "AmpsRms",
         "VoltsRms",
+        "Gallons",
     }
 
     assert Unit.default() == Unit.Unknown
