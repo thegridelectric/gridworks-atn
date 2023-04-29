@@ -20,10 +20,8 @@ from gwproto.messages import SnapshotSpaceheatEvent
 from pydantic import BaseModel
 
 import gwatn.csv_makers.csv_utils as csv_utils
-from gwatn.api_types_hack import HackTypeMakerByName
 from gwatn.csv_makers.codec import S3MQTTCodec
 from gwatn.csv_makers.csv_utils import ChannelReading
-from gwatn.types.data_channel import DataChannel
 
 
 REPORT_TYPE_NAME = "scada.report.a.001"
