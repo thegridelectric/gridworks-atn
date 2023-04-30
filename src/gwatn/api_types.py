@@ -1,17 +1,14 @@
-""" List of all the types used"""
+""" List of all the types used - TODO: use this or not?? Currently does NOT have gwproto types"""
+
 from typing import Dict
 from typing import List
 from typing import no_type_check
 
 from gwatn.types import AcceptedBid_Maker
 from gwatn.types import AtnBid_Maker
-from gwatn.types import AtnParamsHeatpumpwithbooststore_Maker
-from gwatn.types import AtnParamsReportHeatpumpwithbooststore_Maker
 from gwatn.types import BaseGNodeGt_Maker
 from gwatn.types import BasegnodeScadaCreate_Maker
 from gwatn.types import DiscoverycertAlgoCreate_Maker
-from gwatn.types import DispatchContractConfirmedHeatpumpwithbooststore_Maker
-from gwatn.types import FloParamsHeatpumpwithbooststore_Maker
 from gwatn.types import GNodeGt_Maker
 from gwatn.types import GNodeInstanceGt_Maker
 from gwatn.types import GtDispatchBoolean_Maker
@@ -36,7 +33,6 @@ from gwatn.types import ScadaCertTransfer_Maker
 from gwatn.types import SimScadaDriverReport_Maker
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SlaEnter_Maker
-from gwatn.types import SnapshotHeatpumpwithbooststore_Maker
 from gwatn.types import SuperStarter_Maker
 from gwatn.types import SupervisorContainerGt_Maker
 from gwatn.types import TadeedSpecsHack_Maker
@@ -53,13 +49,9 @@ def type_makers() -> List[HeartbeatA_Maker]:
     return [
         AcceptedBid_Maker,
         AtnBid_Maker,
-        AtnParamsHeatpumpwithbooststore_Maker,
-        AtnParamsReportHeatpumpwithbooststore_Maker,
         BaseGNodeGt_Maker,
         BasegnodeScadaCreate_Maker,
         DiscoverycertAlgoCreate_Maker,
-        DispatchContractConfirmedHeatpumpwithbooststore_Maker,
-        FloParamsHeatpumpwithbooststore_Maker,
         GNodeGt_Maker,
         GNodeInstanceGt_Maker,
         GtDispatchBoolean_Maker,
@@ -84,7 +76,6 @@ def type_makers() -> List[HeartbeatA_Maker]:
         SimScadaDriverReport_Maker,
         SimTimestep_Maker,
         SlaEnter_Maker,
-        SnapshotHeatpumpwithbooststore_Maker,
         SuperStarter_Maker,
         SupervisorContainerGt_Maker,
         TadeedSpecsHack_Maker,
