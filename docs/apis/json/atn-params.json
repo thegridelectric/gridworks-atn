@@ -1,0 +1,36 @@
+{
+  "gwapi": "001",
+  "type_name": "atn.params",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Generic AtnParams. This is a partial type, which is expected to be satisfied by all types starting with atn.params (like atn.params.heatpumpwithbooststore). It is used to describe the generic info required for configuring an AtomicTNode.",
+  "properties": {
+    "GNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "HomeCity": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "TimezoneString": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "atn.params.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

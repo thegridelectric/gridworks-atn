@@ -10,13 +10,9 @@ AtnBid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-bid.json
 
-AtnParamsHeatpumpwithbooststore
+AtnParams
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/atn-params-heatpumpwithbooststore.json
-
-AtnParamsReportHeatpumpwithbooststore
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/atn-params-report-heatpumpwithbooststore.json
+.. literalinclude:: json/atn-params.json
 
 BaseGNodeGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -29,14 +25,6 @@ BasegnodeScadaCreate
 DiscoverycertAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/discoverycert-algo-create.json
-
-DispatchContractConfirmedHeatpumpwithbooststore
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/dispatch-contract-confirmed-heatpumpwithbooststore.json
-
-FloParamsHeatpumpwithbooststore
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/flo-params-heatpumpwithbooststore.json
 
 GNodeGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -133,10 +121,6 @@ SimTimestep
 SlaEnter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sla-enter.json
-
-SnapshotHeatpumpwithbooststore
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/snapshot-heatpumpwithbooststore.json
 
 SuperStarter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

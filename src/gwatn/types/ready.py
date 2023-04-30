@@ -115,6 +115,9 @@ class Ready(BaseModel):
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
 
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
+
 
 class Ready_Maker:
     type_name = "ready"
