@@ -26,6 +26,10 @@ DiscoverycertAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/discoverycert-algo-create.json
 
+DispatchContractConfirmed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/dispatch-contract-confirmed.json
+
 GNodeGt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/g-node-gt.json

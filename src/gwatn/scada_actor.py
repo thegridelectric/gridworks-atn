@@ -27,13 +27,9 @@ from gwatn import DispatchContract
 from gwatn.enums import AlgoCertType
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
-from gwatn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from gwatn.types import (
-    DispatchContractConfirmedHeatpumpwithbooststore as DispatchContractConfirmed,
-)
-from gwatn.types import (
-    DispatchContractConfirmedHeatpumpwithbooststore_Maker as DispatchContractConfirmed_Maker,
-)
+from gwatn.types import AtnParams
+from gwatn.types import DispatchContractConfirmed
+from gwatn.types import DispatchContractConfirmed_Maker
 from gwatn.types import GtDispatchBoolean
 from gwatn.types import GtDispatchBoolean_Maker
 from gwatn.types import GwCertId

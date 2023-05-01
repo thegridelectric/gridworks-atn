@@ -74,7 +74,13 @@ from typing import Literal</xsl:text>
 from typing import Optional</xsl:text>
 </xsl:if>
 <xsl:text>
-from pydantic import BaseModel
+from pydantic import BaseModel</xsl:text>
+<xsl:if test="ExtraAllowed='true'">
+    <xsl:text>
+from pydantic import Extra
+    </xsl:text>
+</xsl:if>
+<xsl:text>
 from pydantic import Field</xsl:text>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[Schema = $schema-id and (IsOptional='true') or (IsEnum='true' or (IsList='true' and (IsType = 'true' or (IsPrimitive='true'  and normalize-space(PrimitiveFormat) != '') )))]) > 0">
 <xsl:text>
@@ -711,6 +717,12 @@ class </xsl:text>
     </xsl:text>
 <xsl:text>Version: str = "</xsl:text>
 <xsl:value-of select="SemanticEnd"/><xsl:text>"</xsl:text>
+<xsl:if test="ExtraAllowed='true'"><xsl:text>
+
+    class Config:
+        extra = Extra.allow</xsl:text>
+</xsl:if>
+
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
     <xsl:sort select="Idx" data-type="number"/>
     <xsl:variable name="property-id" select="SchemaAttributeId" />

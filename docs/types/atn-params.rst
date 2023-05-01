@@ -15,5 +15,9 @@ Python pydantic class corresponding to  json type ```atn.params```.
 **TimezoneString**:
     - Description:
 
+.. autoclass:: gwatn.types.atn_params.check_is_left_right_dot
+    :members:
+
+
 .. autoclass:: gwatn.types.AtnParams_Maker
     :members:

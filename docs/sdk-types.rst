@@ -24,6 +24,7 @@ forth between type instances and Python objects.
     BaseGNodeGt  <types/base-g-node-gt>
     BasegnodeScadaCreate  <types/basegnode-scada-create>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
+    DispatchContractConfirmed  <types/dispatch-contract-confirmed>
     GNodeGt  <types/g-node-gt>
     GNodeInstanceGt  <types/g-node-instance-gt>
     GtDispatchBoolean  <types/gt-dispatch-boolean>

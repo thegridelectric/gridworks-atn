@@ -116,7 +116,7 @@ print(
 )
 print("message over RabbitMq back to the Scada")
 print(
-    "https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#dispatchcontractconfirmedheatpumpwithbooststore"
+    "https://gridworks-atn.readthedocs.io/en/latest/apis/types.html#dispatchcontractconfirmed"
 )
 print("SDK docs for `join.dispatch.contract`:")
 print(

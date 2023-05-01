@@ -4,6 +4,13 @@
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "Generic AtnParams. This is a partial type, which is expected to be satisfied by all types starting with atn.params (like atn.params.heatpumpwithbooststore). It is used to describe the generic info required for configuring an AtomicTNode.",
+  "formats": {
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  },
   "properties": {
     "GNodeAlias": {
       "type": "string",

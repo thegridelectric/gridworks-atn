@@ -74,12 +74,16 @@ from gwatn.types.accepted_bid import AcceptedBid
 from gwatn.types.accepted_bid import AcceptedBid_Maker
 from gwatn.types.atn_bid import AtnBid
 from gwatn.types.atn_bid import AtnBid_Maker
+from gwatn.types.atn_params import AtnParams
+from gwatn.types.atn_params import AtnParams_Maker
 from gwatn.types.base_g_node_gt import BaseGNodeGt
 from gwatn.types.base_g_node_gt import BaseGNodeGt_Maker
 from gwatn.types.basegnode_scada_create import BasegnodeScadaCreate
 from gwatn.types.basegnode_scada_create import BasegnodeScadaCreate_Maker
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate_Maker
+from gwatn.types.dispatch_contract_confirmed import DispatchContractConfirmed
+from gwatn.types.dispatch_contract_confirmed import DispatchContractConfirmed_Maker
 from gwatn.types.g_node_gt import GNodeGt
 from gwatn.types.g_node_gt import GNodeGt_Maker
 from gwatn.types.g_node_instance_gt import GNodeInstanceGt
@@ -128,6 +132,10 @@ from gwatn.types.sim_timestep import SimTimestep
 from gwatn.types.sim_timestep import SimTimestep_Maker
 from gwatn.types.sla_enter import SlaEnter
 from gwatn.types.sla_enter import SlaEnter_Maker
+from gwatn.types.snapshot_heatpumpwithbooststore import SnapshotHeatpumpwithbooststore
+from gwatn.types.snapshot_heatpumpwithbooststore import (
+    SnapshotHeatpumpwithbooststore_Maker,
+)
 from gwatn.types.super_starter import SuperStarter
 from gwatn.types.super_starter import SuperStarter_Maker
 from gwatn.types.supervisor_container_gt import SupervisorContainerGt
@@ -147,6 +155,8 @@ __all__ = [
     "AcceptedBid_Maker",
     "AtnBid",
     "AtnBid_Maker",
+    "AtnParams",
+    "AtnParams_Maker",
     "BaseGNodeGt",
     "BaseGNodeGt_Maker",
     "BasegnodeScadaCreate",
@@ -159,6 +169,8 @@ __all__ = [
     "DataChannel_Maker",
     "DiscoverycertAlgoCreate",
     "DiscoverycertAlgoCreate_Maker",
+    "DispatchContractConfirmed",
+    "DispatchContractConfirmed_Maker",
     "EgaugeIo",
     "EgaugeIo_Maker",
     "EgaugeRegisterConfig",
@@ -259,6 +271,8 @@ __all__ = [
     "SimpleTempSensorComponentGt_Maker",
     "SlaEnter",
     "SlaEnter_Maker",
+    "SnapshotHeatpumpwithbooststore",
+    "SnapshotHeatpumpwithbooststore_Maker",
     "SnapshotSpaceheat",
     "SnapshotSpaceheat_Maker",
     "SpaceheatNodeGt",
