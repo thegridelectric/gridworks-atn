@@ -48,8 +48,10 @@ forth between type instances and Python objects.
     PriceQuantityUnitless  <types/price-quantity-unitless>
     Ready  <types/ready>
     ScadaCertTransfer  <types/scada-cert-transfer>
-    SimScadaDriverReportBsh  <types/sim-scada-driver-report-bsh>
     SimTimestep  <types/sim-timestep>
+    SimplesimDriverData  <types/simplesim-driver-data>
+    SimplesimDriverDataBsh  <types/simplesim-driver-data-bsh>
+    SimplesimDriverReport  <types/simplesim-driver-report>
     SlaEnter  <types/sla-enter>
     SnapshotBrickstorageheater  <types/snapshot-brickstorageheater>
     SuperStarter  <types/super-starter>

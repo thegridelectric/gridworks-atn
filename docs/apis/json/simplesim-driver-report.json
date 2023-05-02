@@ -1,6 +1,6 @@
 {
   "gwapi": "001",
-  "type_name": "sim.scada.driver.report.bsh",
+  "type_name": "simplesim.driver.report",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
   "description": "",
@@ -23,30 +23,26 @@
       "title": "",
       "required": true
     },
-    "FromGNodeInstanceId": {
+    "FromGNodeInstanecId": {
       "type": "string",
       "format": "UuidCanonicalTextual",
       "title": "",
       "required": true
     },
-    "PowerWatts": {
-      "type": "integer",
+    "DriverDataTypeName": {
+      "type": "string",
+      "format": "LeftRightDot",
       "title": "",
       "required": true
     },
-    "StoreKwh": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "MaxStoreKwh": {
-      "type": "integer",
+    "DriverData": {
+      "type": "simplesim.driver.data.000",
       "title": "",
       "required": true
     },
     "TypeName": {
       "type": "string",
-      "value": "sim.scada.driver.report.bsh.000",
+      "value": "simplesim.driver.report.000",
       "title": "The type name"
     },
     "Version": {

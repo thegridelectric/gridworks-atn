@@ -25,7 +25,7 @@ def test_atn_params_brickstorageheater_generated() -> None:
         "MaxBrickTempC": 190,
         "RatedMaxPowerKw": 13.5,
         "C": 200,
-        "ROff": 0.09,
+        "ROff": 0.08,
         "ROn": 0.15,
         "RoomTempF": 70,
         "Alpha": 158,

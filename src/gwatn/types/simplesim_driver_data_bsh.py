@@ -1,4 +1,4 @@
-"""Type sim.scada.driver.report.bsh, version 000"""
+"""Type simplesim.driver.data.bsh, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -8,37 +8,6 @@ from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
-
-def check_is_uuid_canonical_textual(v: str) -> None:
-    """
-    UuidCanonicalTextual format:  A string of hex words separated by hyphens
-    of length 8-4-4-4-12.
-
-    Raises:
-        ValueError: if not UuidCanonicalTextual format
-    """
-    try:
-        x = v.split("-")
-    except AttributeError as e:
-        raise ValueError(f"Failed to split on -: {e}")
-    if len(x) != 5:
-        raise ValueError(f"{v} split by '-' did not have 5 words")
-    for hex_word in x:
-        try:
-            int(hex_word, 16)
-        except ValueError:
-            raise ValueError(f"Words of {v} are not all hex")
-    if len(x[0]) != 8:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[1]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[2]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[3]) != 4:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
-    if len(x[4]) != 12:
-        raise ValueError(f"{v} word lengths not 8-4-4-4-12")
 
 
 def check_is_left_right_dot(v: str) -> None:
@@ -66,14 +35,11 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-class SimScadaDriverReportBsh(BaseModel):
+class SimplesimDriverDataBsh(BaseModel):
     """ """
 
     FromGNodeAlias: str = Field(
         title="FromGNodeAlias",
-    )
-    FromGNodeInstanceId: str = Field(
-        title="FromGNodeInstanceId",
     )
     PowerWatts: int = Field(
         title="PowerWatts",
@@ -84,7 +50,7 @@ class SimScadaDriverReportBsh(BaseModel):
     MaxStoreKwh: int = Field(
         title="MaxStoreKwh",
     )
-    TypeName: Literal["sim.scada.driver.report.bsh"] = "sim.scada.driver.report.bsh"
+    TypeName: Literal["simplesim.driver.data.bsh"] = "simplesim.driver.data.bsh"
     Version: str = "000"
 
     @validator("FromGNodeAlias")
@@ -94,16 +60,6 @@ class SimScadaDriverReportBsh(BaseModel):
         except ValueError as e:
             raise ValueError(
                 f"FromGNodeAlias failed LeftRightDot format validation: {e}"
-            )
-        return v
-
-    @validator("FromGNodeInstanceId")
-    def _check_from_g_node_instance_id(cls, v: str) -> str:
-        try:
-            check_is_uuid_canonical_textual(v)
-        except ValueError as e:
-            raise ValueError(
-                f"FromGNodeInstanceId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
@@ -118,21 +74,19 @@ class SimScadaDriverReportBsh(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class SimScadaDriverReportBsh_Maker:
-    type_name = "sim.scada.driver.report.bsh"
+class SimplesimDriverDataBsh_Maker:
+    type_name = "simplesim.driver.data.bsh"
     version = "000"
 
     def __init__(
         self,
         from_g_node_alias: str,
-        from_g_node_instance_id: str,
         power_watts: int,
         store_kwh: int,
         max_store_kwh: int,
     ):
-        self.tuple = SimScadaDriverReportBsh(
+        self.tuple = SimplesimDriverDataBsh(
             FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
             PowerWatts=power_watts,
             StoreKwh=store_kwh,
             MaxStoreKwh=max_store_kwh,
@@ -140,14 +94,14 @@ class SimScadaDriverReportBsh_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: SimScadaDriverReportBsh) -> str:
+    def tuple_to_type(cls, tuple: SimplesimDriverDataBsh) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> SimScadaDriverReportBsh:
+    def type_to_tuple(cls, t: str) -> SimplesimDriverDataBsh:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -160,12 +114,10 @@ class SimScadaDriverReportBsh_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> SimScadaDriverReportBsh:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SimplesimDriverDataBsh:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeAlias")
-        if "FromGNodeInstanceId" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "PowerWatts" not in d2.keys():
             raise SchemaError(f"dict {d2} missing PowerWatts")
         if "StoreKwh" not in d2.keys():
@@ -175,9 +127,8 @@ class SimScadaDriverReportBsh_Maker:
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return SimScadaDriverReportBsh(
+        return SimplesimDriverDataBsh(
             FromGNodeAlias=d2["FromGNodeAlias"],
-            FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             PowerWatts=d2["PowerWatts"],
             StoreKwh=d2["StoreKwh"],
             MaxStoreKwh=d2["MaxStoreKwh"],

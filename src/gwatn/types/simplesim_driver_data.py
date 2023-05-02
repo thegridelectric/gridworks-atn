@@ -1,4 +1,4 @@
-"""Type atn.params, version 000"""
+"""Type simplesim.driver.data, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -36,37 +36,26 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-class AtnParams(BaseModel):
-    """Generic AtnParams.
+class SimplesimDriverData(BaseModel):
+    """Generic driver report for a simple Scada Simulation"""
 
-    This is a partial type, which is expected to be satisfied by all types starting with
-    atn.params (like atn.params.heatpumpwithbooststore). It is used to describe the generic info
-    required for configuring an AtomicTNode.
-    """
-
-    GNodeAlias: str = Field(
-        title="GNodeAlias",
+    FromGNodeAlias: str = Field(
+        title="FromGNodeAlias",
     )
-    HomeCity: str = Field(
-        title="HomeCity",
-        default="MILLINOCKET_ME",
-    )
-    TimezoneString: str = Field(
-        title="TimezoneString",
-        default="US/Eastern",
-    )
-    TypeName: Literal["atn.params"] = "atn.params"
+    TypeName: Literal["simplesim.driver.data"] = "simplesim.driver.data"
     Version: str = "000"
 
     class Config:
         extra = Extra.allow
 
-    @validator("GNodeAlias")
-    def _check_g_node_alias(cls, v: str) -> str:
+    @validator("FromGNodeAlias")
+    def _check_from_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
         except ValueError as e:
-            raise ValueError(f"GNodeAlias failed LeftRightDot format validation: {e}")
+            raise ValueError(
+                f"FromGNodeAlias failed LeftRightDot format validation: {e}"
+            )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -80,27 +69,25 @@ class AtnParams(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class AtnParams_Maker:
-    type_name = "atn.params"
+class SimplesimDriverData_Maker:
+    type_name = "simplesim.driver.data"
     version = "000"
 
-    def __init__(self, g_node_alias: str, home_city: str, timezone_string: str):
-        self.tuple = AtnParams(
-            GNodeAlias=g_node_alias,
-            HomeCity=home_city,
-            TimezoneString=timezone_string,
+    def __init__(self, from_g_node_alias: str):
+        self.tuple = SimplesimDriverData(
+            FromGNodeAlias=from_g_node_alias,
             #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: AtnParams) -> str:
+    def tuple_to_type(cls, tuple: SimplesimDriverData) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> AtnParams:
+    def type_to_tuple(cls, t: str) -> SimplesimDriverData:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -113,21 +100,15 @@ class AtnParams_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> AtnParams:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SimplesimDriverData:
         d2 = dict(d)
-        if "GNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing GNodeAlias")
-        if "HomeCity" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing HomeCity")
-        if "TimezoneString" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing TimezoneString")
+        if "FromGNodeAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return AtnParams(
-            GNodeAlias=d2["GNodeAlias"],
-            HomeCity=d2["HomeCity"],
-            TimezoneString=d2["TimezoneString"],
+        return SimplesimDriverData(
+            FromGNodeAlias=d2["FromGNodeAlias"],
             TypeName=d2["TypeName"],
             Version="000",
         )

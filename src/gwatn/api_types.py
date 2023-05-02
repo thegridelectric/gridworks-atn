@@ -33,7 +33,9 @@ from gwatn.types import PriceQuantity_Maker
 from gwatn.types import PriceQuantityUnitless_Maker
 from gwatn.types import Ready_Maker
 from gwatn.types import ScadaCertTransfer_Maker
-from gwatn.types import SimScadaDriverReportBsh_Maker
+from gwatn.types import SimplesimDriverData_Maker
+from gwatn.types import SimplesimDriverDataBsh_Maker
+from gwatn.types import SimplesimDriverReport_Maker
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SlaEnter_Maker
 from gwatn.types import SnapshotBrickstorageheater_Maker
@@ -81,8 +83,10 @@ def type_makers() -> List[HeartbeatA_Maker]:
         PriceQuantityUnitless_Maker,
         Ready_Maker,
         ScadaCertTransfer_Maker,
-        SimScadaDriverReportBsh_Maker,
         SimTimestep_Maker,
+        SimplesimDriverData_Maker,
+        SimplesimDriverDataBsh_Maker,
+        SimplesimDriverReport_Maker,
         SlaEnter_Maker,
         SnapshotBrickstorageheater_Maker,
         SuperStarter_Maker,
@@ -135,8 +139,10 @@ def version_by_type_name() -> Dict[str, str]:
         "price.quantity.unitless": "000",
         "ready": "001",
         "scada.cert.transfer": "000",
-        "sim.scada.driver.report.bsh": "000",
         "sim.timestep": "000",
+        "simplesim.driver.data": "000",
+        "simplesim.driver.data.bsh": "000",
+        "simplesim.driver.report": "000",
         "sla.enter": "000",
         "snapshot.brickstorageheater": "000",
         "super.starter": "000",
@@ -159,9 +165,9 @@ def status_by_versioned_type_name() -> Dict[str, str]:
     v: Dict[str, str] = {
         "accepted.bid.000": "Pending",
         "atn.bid.001": "Pending",
-        "atn.params.000": "Pending",
+        "atn.params.000": "Active",
         "atn.params.brickstorageheater.000": "Pending",
-        "atn.params.report.000": "Pending",
+        "atn.params.report.000": "Active",
         "base.g.node.gt.002": "Pending",
         "basegnode.scada.create.000": "Pending",
         "discoverycert.algo.create.000": "Pending",
@@ -187,8 +193,10 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "price.quantity.unitless.000": "Pending",
         "ready.001": "Pending",
         "scada.cert.transfer.000": "Pending",
-        "sim.scada.driver.report.bsh.000": "Pending",
         "sim.timestep.000": "Pending",
+        "simplesim.driver.data.000": "Pending",
+        "simplesim.driver.data.bsh.000": "Pending",
+        "simplesim.driver.report.000": "Pending",
         "sla.enter.000": "Pending",
         "snapshot.brickstorageheater.000": "Pending",
         "super.starter.000": "Pending",

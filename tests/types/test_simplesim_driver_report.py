@@ -1,21 +1,27 @@
-"""Tests sim.scada.driver.report.bsh type, version 000"""
+"""Tests simplesim.driver.report type, version 000"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.types import SimScadaDriverReportBsh_Maker as Maker
+from gwatn.types import SimplesimDriverReport_Maker as Maker
 
 
-def test_sim_scada_driver_report_bsh_generated() -> None:
+def test_simplesim_driver_report_generated() -> None:
     d = {
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
-        "FromGNodeInstanceId": "60e5c73a-77e1-4c01-8b78-02c92d20f18a",
-        "PowerWatts": 12000,
-        "StoreKwh": 40000,
-        "MaxStoreKwh": 80000,
-        "TypeName": "sim.scada.driver.report.bsh",
+        "FromGNodeInstanecId": "c0cd37c4-d4ae-46d7-baff-af705ea6871a",
+        "DriverDataTypeName": "simplesim.driver.data.bsh",
+        "DriverData": {
+            "FromGNodeAlias": "d1.isone.ver.keene.holly",
+            "PowerWatts": 3000,
+            "StoreKwh": 5,
+            "MaxStoreKwh": 12,
+            "TypeName": "simplesim.driver.data.bsh",
+            "Version": "000",
+        },
+        "TypeName": "simplesim.driver.report",
         "Version": "000",
     }
 
@@ -35,10 +41,9 @@ def test_sim_scada_driver_report_bsh_generated() -> None:
     # test Maker init
     t = Maker(
         from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
-        power_watts=gtuple.PowerWatts,
-        store_kwh=gtuple.StoreKwh,
-        max_store_kwh=gtuple.MaxStoreKwh,
+        from_g_node_instanec_id=gtuple.FromGNodeInstanecId,
+        driver_data_type_name=gtuple.DriverDataTypeName,
+        driver_data=gtuple.DriverData,
     ).tuple
     assert t == gtuple
 
@@ -57,40 +62,23 @@ def test_sim_scada_driver_report_bsh_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromGNodeInstanceId"]
+    del d2["FromGNodeInstanecId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["PowerWatts"]
+    del d2["DriverDataTypeName"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["StoreKwh"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["MaxStoreKwh"]
+    del d2["DriverData"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
     ######################################
-
-    d2 = dict(d, PowerWatts="12000.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, StoreKwh="40000.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, MaxStoreKwh="80000.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect
@@ -108,7 +96,11 @@ def test_sim_scada_driver_report_bsh_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FromGNodeInstanceId="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, FromGNodeInstanecId="d4be12d5-33ba-4f1f-b9e5")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, DriverDataTypeName="a.b-h")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
