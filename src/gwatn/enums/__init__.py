@@ -1,4 +1,11 @@
 """ GwSchema Enums used in gwatn """
+from gwproto.enums import ActorClass
+from gwproto.enums import LocalCommInterface
+from gwproto.enums import MakeModel
+from gwproto.enums import Role
+from gwproto.enums import TelemetryName
+from gwproto.enums import Unit
+
 from gwatn.enums.algo_cert_type import AlgoCertType
 from gwatn.enums.atn_spaceheat_strategy_name import AtnSpaceheatStrategyName
 from gwatn.enums.core_g_node_role import CoreGNodeRole
@@ -28,6 +35,7 @@ __all__ = [
     "GNodeRole",
     "GNodeStatus",
     "GniStatus",
+    "LocalCommInterface",
     "MarketPriceUnit",
     "MarketQuantityUnit",
     "MarketTypeName",
@@ -35,6 +43,11 @@ __all__ = [
     "MessageCategorySymbol",
     "RecognizedCurrencyUnit",
     "RecognizedTemperatureUnit",
+    "ActorClass",
+    "MakeModel",
+    "Role",
+    "TelemetryName",
+    "Unit",
     "StrategyName",
     "SupervisorContainerStatus",
     "UniverseType",
