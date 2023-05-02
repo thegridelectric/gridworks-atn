@@ -1,17 +1,32 @@
-"""Type dispatch.contract.confirmed, version 000"""
+"""Type atn.params.report, version 000"""
 import json
 from typing import Any
 from typing import Dict
 from typing import Literal
+from typing import Optional
 
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
-from pydantic import root_validator
 from pydantic import validator
 
 from gwatn.types.atn_params import AtnParams
 from gwatn.types.atn_params import AtnParams_Maker
+
+
+def check_is_reasonable_unix_time_s(v: int) -> None:
+    """
+    ReasonableUnixTimeS format: time in unix seconds between Jan 1 2000 and Jan 1 3000
+
+    Raises:
+        ValueError: if not ReasonableUnixTimeS format
+    """
+    import pendulum
+
+    if pendulum.parse("2000-01-01T00:00:00Z").int_timestamp > v:  # type: ignore[attr-defined]
+        raise ValueError(f"{v} must be after Jan 1 2000")
+    if pendulum.parse("3000-01-01T00:00:00Z").int_timestamp < v:  # type: ignore[attr-defined]
+        raise ValueError(f"{v} must be before Jan 1 3000")
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
@@ -70,68 +85,49 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-def check_is_algo_msg_pack_encoded(v: str) -> None:
-    """
-    AlgoMSgPackEncoded format: the format of an  transaction sent to
-    the Algorand blockchain.
+class AtnParamsReport(BaseModel):
+    """AtomicTNode reporting its AtnParams.
 
-    Raises:
-        ValueError: if not AlgoMSgPackEncoded  format
-    """
-    import algosdk
-
-    try:
-        algosdk.encoding.future_msgpack_decode(v)
-    except Exception as e:
-        raise ValueError(f"Not AlgoMsgPackEncoded format: {e}")
-
-
-class DispatchContractConfirmed(BaseModel):
-    """Message sent from AtomicTNode back to SCADA via Rabbit .
-
-    Paired with join.dispatch.contract. Sent from AtomicTNode back to SCADA
-    once the AtomicTNode has successfully finished bootstrapping the Dispatch
-    Contract and opted in. Once it has done this, the Dispatch Contract is ready
-     to collect audit information about heartbeats, dispatch, energy and power.
-
-    https://gridworks.readthedocs.io/en/latest/dispatch-contract.html
+    Parameters like the size of the thermal store.
     """
 
-    FromGNodeAlias: str = Field(
-        title="FromGNodeAlias",
+    GNodeAlias: str = Field(
+        title="GNodeAlias",
     )
-    FromGNodeInstanceId: str = Field(
-        title="FromGNodeInstanceId",
+    GNodeInstanceId: str = Field(
+        title="GNodeInstanceId",
     )
     AtnParamsTypeName: str = Field(
         title="AtnParamsTypeName",
     )
-    SignedProof: str = Field(
-        title="SignedProof",
+    TimeUnixS: int = Field(
+        title="TimeUnixS",
+    )
+    IrlTimeUnixS: Optional[int] = Field(
+        title="IrlTimeUnixS",
+        default=None,
     )
     Params: AtnParams = Field(
         title="Params",
     )
-    TypeName: Literal["dispatch.contract.confirmed"] = "dispatch.contract.confirmed"
+    TypeName: Literal["atn.params.report"] = "atn.params.report"
     Version: str = "000"
 
-    @validator("FromGNodeAlias")
-    def _check_from_g_node_alias(cls, v: str) -> str:
+    @validator("GNodeAlias")
+    def _check_g_node_alias(cls, v: str) -> str:
         try:
             check_is_left_right_dot(v)
         except ValueError as e:
-            raise ValueError(
-                f"FromGNodeAlias failed LeftRightDot format validation: {e}"
-            )
+            raise ValueError(f"GNodeAlias failed LeftRightDot format validation: {e}")
         return v
 
-    @validator("FromGNodeInstanceId")
-    def _check_from_g_node_instance_id(cls, v: str) -> str:
+    @validator("GNodeInstanceId")
+    def _check_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"FromGNodeInstanceId failed UuidCanonicalTextual format validation: {e}"
+                f"GNodeInstanceId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
@@ -145,27 +141,32 @@ class DispatchContractConfirmed(BaseModel):
             )
         return v
 
-    @validator("SignedProof")
-    def _check_signed_proof(cls, v: str) -> str:
+    @validator("TimeUnixS")
+    def _check_time_unix_s(cls, v: int) -> int:
         try:
-            check_is_algo_msg_pack_encoded(v)
+            check_is_reasonable_unix_time_s(v)
         except ValueError as e:
             raise ValueError(
-                f"SignedProof failed AlgoMsgPackEncoded format validation: {e}"
+                f"TimeUnixS failed ReasonableUnixTimeS format validation: {e}"
             )
         return v
 
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
-        """
-        Axiom 1: AtnParamsTypeName matches AtnParams.
-        AtnParams must have
-        """
-        # TODO: Implement check for axiom 1"
+    @validator("IrlTimeUnixS")
+    def _check_irl_time_unix_s(cls, v: Optional[int]) -> Optional[int]:
+        if v is None:
+            return v
+        try:
+            check_is_reasonable_unix_time_s(v)
+        except ValueError as e:
+            raise ValueError(
+                f"IrlTimeUnixS failed ReasonableUnixTimeS format validation: {e}"
+            )
         return v
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
+        if d["IrlTimeUnixS"] is None:
+            del d["IrlTimeUnixS"]
         d["Params"] = self.Params.as_dict()
         return d
 
@@ -176,36 +177,38 @@ class DispatchContractConfirmed(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class DispatchContractConfirmed_Maker:
-    type_name = "dispatch.contract.confirmed"
+class AtnParamsReport_Maker:
+    type_name = "atn.params.report"
     version = "000"
 
     def __init__(
         self,
-        from_g_node_alias: str,
-        from_g_node_instance_id: str,
+        g_node_alias: str,
+        g_node_instance_id: str,
         atn_params_type_name: str,
-        signed_proof: str,
+        time_unix_s: int,
+        irl_time_unix_s: Optional[int],
         params: AtnParams,
     ):
-        self.tuple = DispatchContractConfirmed(
-            FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanceId=from_g_node_instance_id,
+        self.tuple = AtnParamsReport(
+            GNodeAlias=g_node_alias,
+            GNodeInstanceId=g_node_instance_id,
             AtnParamsTypeName=atn_params_type_name,
-            SignedProof=signed_proof,
+            TimeUnixS=time_unix_s,
+            IrlTimeUnixS=irl_time_unix_s,
             Params=params,
             #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: DispatchContractConfirmed) -> str:
+    def tuple_to_type(cls, tuple: AtnParamsReport) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> DispatchContractConfirmed:
+    def type_to_tuple(cls, t: str) -> AtnParamsReport:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -218,16 +221,18 @@ class DispatchContractConfirmed_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> DispatchContractConfirmed:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> AtnParamsReport:
         d2 = dict(d)
-        if "FromGNodeAlias" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FromGNodeAlias")
-        if "FromGNodeInstanceId" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
+        if "GNodeAlias" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing GNodeAlias")
+        if "GNodeInstanceId" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing GNodeInstanceId")
         if "AtnParamsTypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing AtnParamsTypeName")
-        if "SignedProof" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing SignedProof")
+        if "TimeUnixS" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TimeUnixS")
+        if "IrlTimeUnixS" not in d2.keys():
+            d2["IrlTimeUnixS"] = None
         if "Params" not in d2.keys():
             raise SchemaError(f"dict {d2} missing Params")
         if not isinstance(d2["Params"], dict):
@@ -237,11 +242,12 @@ class DispatchContractConfirmed_Maker:
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return DispatchContractConfirmed(
-            FromGNodeAlias=d2["FromGNodeAlias"],
-            FromGNodeInstanceId=d2["FromGNodeInstanceId"],
+        return AtnParamsReport(
+            GNodeAlias=d2["GNodeAlias"],
+            GNodeInstanceId=d2["GNodeInstanceId"],
             AtnParamsTypeName=d2["AtnParamsTypeName"],
-            SignedProof=d2["SignedProof"],
+            TimeUnixS=d2["TimeUnixS"],
+            IrlTimeUnixS=d2["IrlTimeUnixS"],
             Params=d2["Params"],
             TypeName=d2["TypeName"],
             Version="000",

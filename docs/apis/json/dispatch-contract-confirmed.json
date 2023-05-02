@@ -46,7 +46,7 @@
       "title": "",
       "required": true
     },
-    "AtnParams": {
+    "Params": {
       "type": "atn.params.000",
       "title": "",
       "required": true

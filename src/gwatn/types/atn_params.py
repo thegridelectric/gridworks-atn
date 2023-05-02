@@ -53,11 +53,20 @@ class AtnParams(BaseModel):
         title="TimezoneString",
         default="US/Eastern",
     )
-    TypeName: Literal["atn.params"] = "atn.params"
+    TypeName: str = Field(
+        title="TypeName",
+        default="atn.params",
+    )
     Version: str = "000"
 
     class Config:
         extra = Extra.allow
+
+    @validator("TypeName")
+    def _check_type_name(cls, v: str) -> str:
+        if not v.startswith("atn.params"):
+            raise ValueError(f"TypeName {v} must start with 'atn.params'")
+        return v
 
     @validator("GNodeAlias")
     def _check_g_node_alias(cls, v: str) -> str:

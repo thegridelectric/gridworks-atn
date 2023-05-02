@@ -1,4 +1,4 @@
-"""Type dispatch.contract.confirmed, version 000"""
+"""Type sim.scada.driver.report.bsh, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -7,11 +7,7 @@ from typing import Literal
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
-from pydantic import root_validator
 from pydantic import validator
-
-from gwatn.types.atn_params import AtnParams
-from gwatn.types.atn_params import AtnParams_Maker
 
 
 def check_is_uuid_canonical_textual(v: str) -> None:
@@ -70,32 +66,8 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-def check_is_algo_msg_pack_encoded(v: str) -> None:
-    """
-    AlgoMSgPackEncoded format: the format of an  transaction sent to
-    the Algorand blockchain.
-
-    Raises:
-        ValueError: if not AlgoMSgPackEncoded  format
-    """
-    import algosdk
-
-    try:
-        algosdk.encoding.future_msgpack_decode(v)
-    except Exception as e:
-        raise ValueError(f"Not AlgoMsgPackEncoded format: {e}")
-
-
-class DispatchContractConfirmed(BaseModel):
-    """Message sent from AtomicTNode back to SCADA via Rabbit .
-
-    Paired with join.dispatch.contract. Sent from AtomicTNode back to SCADA
-    once the AtomicTNode has successfully finished bootstrapping the Dispatch
-    Contract and opted in. Once it has done this, the Dispatch Contract is ready
-     to collect audit information about heartbeats, dispatch, energy and power.
-
-    https://gridworks.readthedocs.io/en/latest/dispatch-contract.html
-    """
+class SimScadaDriverReportBsh(BaseModel):
+    """ """
 
     FromGNodeAlias: str = Field(
         title="FromGNodeAlias",
@@ -103,16 +75,16 @@ class DispatchContractConfirmed(BaseModel):
     FromGNodeInstanceId: str = Field(
         title="FromGNodeInstanceId",
     )
-    AtnParamsTypeName: str = Field(
-        title="AtnParamsTypeName",
+    PowerWatts: int = Field(
+        title="PowerWatts",
     )
-    SignedProof: str = Field(
-        title="SignedProof",
+    StoreKwh: int = Field(
+        title="StoreKwh",
     )
-    Params: AtnParams = Field(
-        title="Params",
+    MaxStoreKwh: int = Field(
+        title="MaxStoreKwh",
     )
-    TypeName: Literal["dispatch.contract.confirmed"] = "dispatch.contract.confirmed"
+    TypeName: Literal["sim.scada.driver.report.bsh"] = "sim.scada.driver.report.bsh"
     Version: str = "000"
 
     @validator("FromGNodeAlias")
@@ -135,38 +107,8 @@ class DispatchContractConfirmed(BaseModel):
             )
         return v
 
-    @validator("AtnParamsTypeName")
-    def _check_atn_params_type_name(cls, v: str) -> str:
-        try:
-            check_is_left_right_dot(v)
-        except ValueError as e:
-            raise ValueError(
-                f"AtnParamsTypeName failed LeftRightDot format validation: {e}"
-            )
-        return v
-
-    @validator("SignedProof")
-    def _check_signed_proof(cls, v: str) -> str:
-        try:
-            check_is_algo_msg_pack_encoded(v)
-        except ValueError as e:
-            raise ValueError(
-                f"SignedProof failed AlgoMsgPackEncoded format validation: {e}"
-            )
-        return v
-
-    @root_validator
-    def check_axiom_1(cls, v: dict) -> dict:
-        """
-        Axiom 1: AtnParamsTypeName matches AtnParams.
-        AtnParams must have
-        """
-        # TODO: Implement check for axiom 1"
-        return v
-
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
-        d["Params"] = self.Params.as_dict()
         return d
 
     def as_type(self) -> str:
@@ -176,36 +118,36 @@ class DispatchContractConfirmed(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class DispatchContractConfirmed_Maker:
-    type_name = "dispatch.contract.confirmed"
+class SimScadaDriverReportBsh_Maker:
+    type_name = "sim.scada.driver.report.bsh"
     version = "000"
 
     def __init__(
         self,
         from_g_node_alias: str,
         from_g_node_instance_id: str,
-        atn_params_type_name: str,
-        signed_proof: str,
-        params: AtnParams,
+        power_watts: int,
+        store_kwh: int,
+        max_store_kwh: int,
     ):
-        self.tuple = DispatchContractConfirmed(
+        self.tuple = SimScadaDriverReportBsh(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
-            AtnParamsTypeName=atn_params_type_name,
-            SignedProof=signed_proof,
-            Params=params,
+            PowerWatts=power_watts,
+            StoreKwh=store_kwh,
+            MaxStoreKwh=max_store_kwh,
             #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: DispatchContractConfirmed) -> str:
+    def tuple_to_type(cls, tuple: SimScadaDriverReportBsh) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> DispatchContractConfirmed:
+    def type_to_tuple(cls, t: str) -> SimScadaDriverReportBsh:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -218,31 +160,27 @@ class DispatchContractConfirmed_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> DispatchContractConfirmed:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SimScadaDriverReportBsh:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeAlias")
         if "FromGNodeInstanceId" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
-        if "AtnParamsTypeName" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing AtnParamsTypeName")
-        if "SignedProof" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing SignedProof")
-        if "Params" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing Params")
-        if not isinstance(d2["Params"], dict):
-            raise SchemaError(f"d['Params'] {d2['Params']} must be a AtnParams!")
-        params = AtnParams_Maker.dict_to_tuple(d2["Params"])
-        d2["Params"] = params
+        if "PowerWatts" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing PowerWatts")
+        if "StoreKwh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StoreKwh")
+        if "MaxStoreKwh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing MaxStoreKwh")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return DispatchContractConfirmed(
+        return SimScadaDriverReportBsh(
             FromGNodeAlias=d2["FromGNodeAlias"],
             FromGNodeInstanceId=d2["FromGNodeInstanceId"],
-            AtnParamsTypeName=d2["AtnParamsTypeName"],
-            SignedProof=d2["SignedProof"],
-            Params=d2["Params"],
+            PowerWatts=d2["PowerWatts"],
+            StoreKwh=d2["StoreKwh"],
+            MaxStoreKwh=d2["MaxStoreKwh"],
             TypeName=d2["TypeName"],
             Version="000",
         )

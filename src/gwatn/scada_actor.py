@@ -8,7 +8,6 @@ from typing import no_type_check
 
 import dotenv
 import gridworks.algo_utils as algo_utils
-import gridworks.conversion_factors as cf
 import pendulum
 import requests
 from algosdk.atomic_transaction_composer import TransactionWithSigner
@@ -27,7 +26,7 @@ from gwatn import DispatchContract
 from gwatn.enums import AlgoCertType
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
-from gwatn.types import AtnParams
+from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 from gwatn.types import DispatchContractConfirmed
 from gwatn.types import DispatchContractConfirmed_Maker
 from gwatn.types import GtDispatchBoolean
@@ -40,11 +39,11 @@ from gwatn.types import HeartbeatB
 from gwatn.types import HeartbeatB_Maker
 from gwatn.types import JoinDispatchContract_Maker
 from gwatn.types import ScadaCertTransfer_Maker
-from gwatn.types import SimScadaDriverReport
-from gwatn.types import SimScadaDriverReport_Maker
+from gwatn.types import SimScadaDriverReportBsh as SimScadaDriverReport
+from gwatn.types import SimScadaDriverReportBsh_Maker as SimScadaDriverReport_Maker
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
-from gwatn.types import SnapshotHeatpumpwithbooststore
+from gwatn.types import SnapshotBrickstorageheater as Snapshot
 
 
 DISPATCH_CONTRACT_REPORTING_ALGOS = 5
@@ -59,11 +58,8 @@ LOGGER.setLevel(logging.INFO)
 
 
 def get_max_store_kwh_th(params: AtnParams) -> float:
-    return (
-        cf.KWH_TH_PER_GALLON_PER_DEG_F
-        * params.StoreSizeGallons
-        * (params.MaxStoreTempF - params.ZeroPotentialEnergyWaterTempF)
-    )
+    room_temp_c = (params.RoomTempF - 32) * 5 / 9
+    return params.C * (params.MaxBrickTempC - room_temp_c)
 
 
 class AtnHbStatus(BaseModel):
@@ -90,7 +86,7 @@ class ScadaActor(ActorBase):
             settings.algo_api_secrets.algod_token.get_secret_value(),
             settings.public.algod_address,
         )
-
+        self.atn_params_type_name: str = "atn.params.brickstorageheater"
         self.sp = self.client.suggested_params()
         self.cert_id: Optional[GwCertId] = None
         self.talking_with: bool = False
@@ -107,7 +103,7 @@ class ScadaActor(ActorBase):
         self._time: float = self.get_initial_time_s()
 
         self.boost_power_kw: float = 0
-        self.heatpump_power_kw: float = 0
+        self.power_watts: float = 0
         self.cop: float = 0
         self.store_kwh: int = 0
         self.max_store_kwh: int = 0
@@ -519,13 +515,19 @@ class ScadaActor(ActorBase):
             )
             return
 
+        if payload.AtnParamsTypeName != self.atn_params_type_name:
+            LOGGER.info(
+                f"Unexpected AtnParamsTypeName {payload.AtnParamsTypeName}. Expects {self.atn_params_type_name}"
+            )
+            return
+        self.atn_params = payload.Params
         app_state = self.dc_client.get_application_state()
         if "ta_trading_rights_idx" not in app_state.keys():
             LOGGER.warning(f"Atn bootstrap is not finished. Ignoring")
             return
 
         self.atn_gni_id = payload.FromGNodeInstanceId
-        self.atn_params = payload.AtnParams
+
         with open(".env", "a") as file:
             file.write(f'SCADA_ATN_GNI_ID="{payload.FromGNodeInstanceId}"\n')
         self.dc_client.opt_in()
@@ -541,9 +543,7 @@ class ScadaActor(ActorBase):
         AtomicTNode)."""
         if payload.FromGNodeInstanceId != self.atn_gni_id:
             LOGGER.info(f"Igoring {payload} - incorrect GNodeInstanceId")
-        self.boost_power_kw = payload.BoostPowerKwTimes1000 / 1000
-        self.heatpump_power_kw = payload.HeatpumpPowerKwTimes1000 / 1000
-        self.cop = payload.CopTimes10 / 10
+        self.power_watts = payload.PowerWatts
         self.store_kwh = payload.StoreKwh
         self.max_store_kwh = payload.MaxStoreKwh
         self.send_snapshot()
@@ -553,12 +553,11 @@ class ScadaActor(ActorBase):
         This is done every hour, and also on sensed power change."""
         if self.atn_params is None:
             return
-        report_payload = SnapshotHeatpumpwithbooststore(
+        report_payload = Snapshot(
             FromGNodeAlias=self.alias,
             FromGNodeInstanceId=self.g_node_instance_id,
-            BoostPowerKwTimes1000=int(1000 * self.boost_power_kw),
-            HeatpumpPowerKwTimes1000=int(1000 * self.heatpump_power_kw),
-            CopTimes10=int(10 * self.cop),
+            PowerWatts=self.power_watts,
+            StoreKwh=self.store_kwh,
             MaxStoreKwh=get_max_store_kwh_th(self.atn_params),
             AboutTerminalAssetAlias=self.ta_alias,
         )
@@ -576,7 +575,7 @@ class ScadaActor(ActorBase):
         AtomicTNode and that we have a dispatch contract
           - Sets talking_with to true
           - Follows instructions (turns on or turns off). Will turn on or
-          off boost unless AboutNodeName is "a.heatpump"
+          off boost unless AboutNodeName is "a.element"
 
         For hourly sim:
           - Updatespower
@@ -587,22 +586,14 @@ class ScadaActor(ActorBase):
         if payload.FromGNodeInstanceId != self.atn_gni_id:
             LOGGER.info(f"Igoring {payload}, not my Atn's GNodeInstanceId")
         self.talking_with = True
-        if payload.AboutNodeName == "a.heatpump":
+        if payload.AboutNodeName == "a.elements":
             # Making the grossly simplifying assumption that the heat pump turns on immediately
             if payload.RelayState == 1:
-                new_heatpump_power_kw = self.atn_params.RatedHeatpumpElectricityKw
+                new_power_watts = self.atn_params.RatedMaxPowerKw * 1000
             else:
-                new_heatpump_power_kw = 0
-            if self.heatpump_power_kw != new_heatpump_power_kw:
-                self.heatpump_power_kw = new_heatpump_power_kw
-                self.send_snapshot()
-        else:
-            if payload.RelayState == 1:
-                new_boost_power_kw = self.atn_params.StoreMaxPowerKw
-            else:
-                new_boost_power_kw = 0
-            if self.boost_power_kw != new_boost_power_kw:
-                self.boost_power_kw = new_boost_power_kw
+                new_power_watts = 0
+            if self.power_watts != new_power_watts:
+                self.power_watts = new_power_watts
                 self.send_snapshot()
 
     def new_timestep(self, payload: SimTimestep) -> None:

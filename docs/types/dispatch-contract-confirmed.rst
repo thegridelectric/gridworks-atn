@@ -21,7 +21,7 @@ Python pydantic class corresponding to  json type ```dispatch.contract.confirmed
     - Description:
     - Format: AlgoMsgPackEncoded
 
-**AtnParams**:
+**Params**:
     - Description:
 
 .. autoclass:: gwatn.types.dispatch_contract_confirmed.check_is_uuid_canonical_textual

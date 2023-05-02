@@ -21,6 +21,8 @@ forth between type instances and Python objects.
     AcceptedBid  <types/accepted-bid>
     AtnBid  <types/atn-bid>
     AtnParams  <types/atn-params>
+    AtnParamsBrickstorageheater  <types/atn-params-brickstorageheater>
+    AtnParamsReport  <types/atn-params-report>
     BaseGNodeGt  <types/base-g-node-gt>
     BasegnodeScadaCreate  <types/basegnode-scada-create>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
@@ -46,9 +48,10 @@ forth between type instances and Python objects.
     PriceQuantityUnitless  <types/price-quantity-unitless>
     Ready  <types/ready>
     ScadaCertTransfer  <types/scada-cert-transfer>
-    SimScadaDriverReport  <types/sim-scada-driver-report>
+    SimScadaDriverReportBsh  <types/sim-scada-driver-report-bsh>
     SimTimestep  <types/sim-timestep>
     SlaEnter  <types/sla-enter>
+    SnapshotBrickstorageheater  <types/snapshot-brickstorageheater>
     SuperStarter  <types/super-starter>
     SupervisorContainerGt  <types/supervisor-container-gt>
     TadeedSpecsHack  <types/tadeed-specs-hack>
