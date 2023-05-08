@@ -1,14 +1,14 @@
-"""Tests snapshot.brickstorageheater type, version 000"""
+"""Tests simplesim.snapshot.brickstorageheater type, version 000"""
 import json
 
 import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
-from gwatn.types import SnapshotBrickstorageheater_Maker as Maker
+from gwatn.types import SimplesimSnapshotBrickstorageheater_Maker as Maker
 
 
-def test_snapshot_brickstorageheater_generated() -> None:
+def test_simplesim_snapshot_brickstorageheater_generated() -> None:
     d = {
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
         "FromGNodeInstanceId": "d4057686-c199-4274-b595-f7e39ce863e2",
@@ -16,7 +16,7 @@ def test_snapshot_brickstorageheater_generated() -> None:
         "StoreKwh": 50,
         "MaxStoreKwh": 80,
         "AboutTerminalAssetAlias": "d1.isone.ver.keene.holly.ta",
-        "TypeName": "snapshot.brickstorageheater",
+        "TypeName": "simplesim.snapshot.brickstorageheater",
         "Version": "000",
     }
 

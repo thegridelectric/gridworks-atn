@@ -6,14 +6,23 @@ Python pydantic class corresponding to  json type ```atn.params.brickstorageheat
     :members:
 
 **GNodeAlias**:
-    - Description:
+    - Description: GNode Alias
     - Format: LeftRightDot
 
 **HomeCity**:
-    - Description:
+    - Description: Home City
 
 **TimezoneString**:
-    - Description:
+    - Description: Timezone String
+
+**StorageSteps**:
+    - Description: Storage Steps. The number of nodes in each TimeSlice for the Dijkstra graph.
+
+**FloSlices**:
+    - Description: . The number of nodes for each storage level in the Dijstra graph.
+
+**SliceDurationMinutes**:
+    - Description: . The length of
 
 **CurrencyUnit**:
     - Description:

@@ -138,13 +138,13 @@ SimplesimDriverReport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/simplesim-driver-report.json
 
+SimplesimSnapshotBrickstorageheater
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/simplesim-snapshot-brickstorageheater.json
+
 SlaEnter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sla-enter.json
-
-SnapshotBrickstorageheater
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/snapshot-brickstorageheater.json
 
 SuperStarter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

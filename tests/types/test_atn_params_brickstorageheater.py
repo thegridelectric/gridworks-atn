@@ -17,6 +17,9 @@ def test_atn_params_brickstorageheater_generated() -> None:
         "GNodeAlias": "d1.isone.ver.keene.holly",
         "HomeCity": "MILLINOCKET_ME",
         "TimezoneString": "US/Eastern",
+        "StorageSteps": 100,
+        "FloSlices": 48,
+        "SliceDurationMinutes": 60,
         "CurrencyUnitGtEnumSymbol": "e57c5143",
         "TariffGtEnumSymbol": "2127aba6",
         "EnergyTypeGtEnumSymbol": "e9dc99a6",
@@ -53,6 +56,9 @@ def test_atn_params_brickstorageheater_generated() -> None:
         g_node_alias=gtuple.GNodeAlias,
         home_city=gtuple.HomeCity,
         timezone_string=gtuple.TimezoneString,
+        storage_steps=gtuple.StorageSteps,
+        flo_slices=gtuple.FloSlices,
+        slice_duration_minutes=gtuple.SliceDurationMinutes,
         currency_unit=gtuple.CurrencyUnit,
         tariff=gtuple.Tariff,
         energy_type=gtuple.EnergyType,
@@ -95,6 +101,21 @@ def test_atn_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["StorageSteps"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["FloSlices"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["SliceDurationMinutes"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["CurrencyUnitGtEnumSymbol"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -130,11 +151,6 @@ def test_atn_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["C"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
     del d2["ROff"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -165,8 +181,29 @@ def test_atn_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     ######################################
+    # Optional attributes can be removed from type
+    ######################################
+
+    d2 = dict(d)
+    if "C" in d2.keys():
+        del d2["C"]
+    Maker.dict_to_tuple(d2)
+
+    ######################################
     # Behavior on incorrect types
     ######################################
+
+    d2 = dict(d, StorageSteps="100.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, FloSlices="48.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, SliceDurationMinutes="60.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d, CurrencyUnitGtEnumSymbol="hi")
     Maker.dict_to_tuple(d2).CurrencyUnit = RecognizedCurrencyUnit.default()

@@ -20,7 +20,6 @@ import dotenv
 import gridworks.algo_utils as algo_utils
 import pendulum
 import requests
-import satn.config as config
 import satn.strategies.heatpumpwithbooststore.atn_utils as atn_utils
 import satn.strategies.heatpumpwithbooststore.dev_io as dev_io
 from algosdk import encoding
@@ -28,7 +27,6 @@ from algosdk.future import transaction
 from algosdk.v2client.algod import AlgodClient
 from gridworks.algo_utils import BasicAccount
 from gridworks.utils import RestfulResponse
-from rich.pretty import pprint
 from satn.strategies.heatpumpwithbooststore.atn_utils import SlotStuff
 from satn.strategies.heatpumpwithbooststore.edge import (
     Edge__SpaceHeat__Water_HeatPumpAndBoost__Alpha as Edge,
@@ -37,6 +35,7 @@ from satn.strategies.heatpumpwithbooststore.flo import (
     HeatPumpWithBoostStore__Flo as Flo,
 )
 
+import gwatn.config as config
 from gwatn.atn_actor_base import AtnActorBase
 from gwatn.data_classes.market_type import Rt60Gate30B
 from gwatn.enums import GNodeRole
@@ -44,10 +43,8 @@ from gwatn.enums import MessageCategory
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.types import AcceptedBid_Maker
-from gwatn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from gwatn.types import (
-    AtnParamsReportHeatpumpwithbooststore_Maker as AtnParamsReport_Maker,
-)
+from gwatn.types import AtnParamsBrickstorageheater as AtnParams
+from gwatn.types import AtnParamsReport_Maker
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
 from gwatn.types import LatestPrice
@@ -56,8 +53,8 @@ from gwatn.types import MarketTypeGt
 from gwatn.types import MarketTypeGt_Maker
 from gwatn.types import PriceQuantityUnitless
 from gwatn.types import Ready_Maker
+from gwatn.types import SimplesimSnapshotBrickstorageheater_Maker as Snapshot_Maker
 from gwatn.types import SimTimestep
-from gwatn.types import SnapshotHeatpumpwithbooststore_Maker as Snapshot_Maker
 
 
 LOG_FORMAT = (
@@ -69,7 +66,7 @@ LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.WARNING)
 
 
-class Atn__HeatPumpWithBoostStore(AtnActorBase):
+class Atn__BrickStorageHeater(AtnActorBase):
     """AtomicTNode HeatPumpWithBoostStore strategy for thermal storage heat pump
     space heating system"""
 

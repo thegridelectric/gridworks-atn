@@ -5,6 +5,7 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
+from typing import Optional
 
 from fastapi_utils.enums import StrEnum
 from gridworks.errors import SchemaError
@@ -301,18 +302,39 @@ def check_is_left_right_dot(v: str) -> None:
 
 
 class AtnParamsBrickstorageheater(BaseModel):
-    """Params for a BrickStorageHeater Atn Strategy"""
+    """Params for a BrickStorageHeater Atn Strategy.
+
+    Parameters for a model of a ceramic brick thermal storage room unit,
+    using a two-dimensional Dijstra graph parameterized by 'fullness of the thermal
+    battery' and time.
+    [More info](https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html).
+    """
 
     GNodeAlias: str = Field(
-        title="GNodeAlias",
+        title="GNode Alias",
     )
     HomeCity: str = Field(
-        title="HomeCity",
+        title="Home City",
         default="MILLINOCKET_ME",
     )
     TimezoneString: str = Field(
-        title="TimezoneString",
+        title="Timezone String",
         default="US/Eastern",
+    )
+    StorageSteps: int = Field(
+        title="Storage Steps",
+        description="The number of nodes in each TimeSlice for the Dijkstra graph.",
+        default=100,
+    )
+    FloSlices: int = Field(
+        title="FloSlices",
+        description="The number of nodes for each storage level in the Dijstra graph.",
+        default=48,
+    )
+    SliceDurationMinutes: int = Field(
+        title="SliceDurationMinutes",
+        description="The length of",
+        default=60,
     )
     CurrencyUnit: RecognizedCurrencyUnit = Field(
         title="CurrencyUnit",
@@ -342,17 +364,17 @@ class AtnParamsBrickstorageheater(BaseModel):
         title="RatedMaxPowerKw",
         default=13.5,
     )
-    C: float = Field(
+    C: Optional[float] = Field(
         title="C",
-        default=0.001,
+        default=200,
     )
     ROff: float = Field(
         title="ROff",
-        default=0.001,
+        default=0.08,
     )
     ROn: float = Field(
         title="ROn",
-        default=0.001,
+        default=0.15,
     )
     RoomTempF: int = Field(
         title="RoomTempF",
@@ -416,6 +438,8 @@ class AtnParamsBrickstorageheater(BaseModel):
             self.EnergyType, EnergySupplyType, EnergySupplyType.default()
         )
         d["EnergyTypeGtEnumSymbol"] = EnergySupplyTypeMap.local_to_type(EnergyType)
+        if d["C"] is None:
+            del d["C"]
         del d["TempUnit"]
         TempUnit = as_enum(
             self.TempUnit,
@@ -441,6 +465,9 @@ class AtnParamsBrickstorageheater_Maker:
         g_node_alias: str,
         home_city: str,
         timezone_string: str,
+        storage_steps: int,
+        flo_slices: int,
+        slice_duration_minutes: int,
         currency_unit: RecognizedCurrencyUnit,
         tariff: DistributionTariff,
         energy_type: EnergySupplyType,
@@ -448,7 +475,7 @@ class AtnParamsBrickstorageheater_Maker:
         distribution_tariff_dollars_per_mwh: int,
         max_brick_temp_c: int,
         rated_max_power_kw: float,
-        c: float,
+        c: Optional[float],
         r_off: float,
         r_on: float,
         room_temp_f: int,
@@ -460,6 +487,9 @@ class AtnParamsBrickstorageheater_Maker:
             GNodeAlias=g_node_alias,
             HomeCity=home_city,
             TimezoneString=timezone_string,
+            StorageSteps=storage_steps,
+            FloSlices=flo_slices,
+            SliceDurationMinutes=slice_duration_minutes,
             CurrencyUnit=currency_unit,
             Tariff=tariff,
             EnergyType=energy_type,
@@ -506,6 +536,12 @@ class AtnParamsBrickstorageheater_Maker:
             raise SchemaError(f"dict {d2} missing HomeCity")
         if "TimezoneString" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TimezoneString")
+        if "StorageSteps" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StorageSteps")
+        if "FloSlices" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing FloSlices")
+        if "SliceDurationMinutes" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing SliceDurationMinutes")
         if "CurrencyUnitGtEnumSymbol" not in d2.keys():
             raise SchemaError(f"dict {d2} missing CurrencyUnitGtEnumSymbol")
         if (
@@ -540,7 +576,7 @@ class AtnParamsBrickstorageheater_Maker:
         if "RatedMaxPowerKw" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RatedMaxPowerKw")
         if "C" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing C")
+            d2["C"] = None
         if "ROff" not in d2.keys():
             raise SchemaError(f"dict {d2} missing ROff")
         if "ROn" not in d2.keys():
@@ -566,6 +602,9 @@ class AtnParamsBrickstorageheater_Maker:
             GNodeAlias=d2["GNodeAlias"],
             HomeCity=d2["HomeCity"],
             TimezoneString=d2["TimezoneString"],
+            StorageSteps=d2["StorageSteps"],
+            FloSlices=d2["FloSlices"],
+            SliceDurationMinutes=d2["SliceDurationMinutes"],
             CurrencyUnit=d2["CurrencyUnit"],
             Tariff=d2["Tariff"],
             EnergyType=d2["EnergyType"],

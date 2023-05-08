@@ -36,9 +36,9 @@ from gwatn.types import ScadaCertTransfer_Maker
 from gwatn.types import SimplesimDriverData_Maker
 from gwatn.types import SimplesimDriverDataBsh_Maker
 from gwatn.types import SimplesimDriverReport_Maker
+from gwatn.types import SimplesimSnapshotBrickstorageheater_Maker
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SlaEnter_Maker
-from gwatn.types import SnapshotBrickstorageheater_Maker
 from gwatn.types import SuperStarter_Maker
 from gwatn.types import SupervisorContainerGt_Maker
 from gwatn.types import TadeedSpecsHack_Maker
@@ -87,8 +87,8 @@ def type_makers() -> List[HeartbeatA_Maker]:
         SimplesimDriverData_Maker,
         SimplesimDriverDataBsh_Maker,
         SimplesimDriverReport_Maker,
+        SimplesimSnapshotBrickstorageheater_Maker,
         SlaEnter_Maker,
-        SnapshotBrickstorageheater_Maker,
         SuperStarter_Maker,
         SupervisorContainerGt_Maker,
         TadeedSpecsHack_Maker,
@@ -143,8 +143,8 @@ def version_by_type_name() -> Dict[str, str]:
         "simplesim.driver.data": "000",
         "simplesim.driver.data.bsh": "000",
         "simplesim.driver.report": "000",
+        "simplesim.snapshot.brickstorageheater": "000",
         "sla.enter": "000",
-        "snapshot.brickstorageheater": "000",
         "super.starter": "000",
         "supervisor.container.gt": "000",
         "tadeed.specs.hack": "000",
@@ -197,8 +197,8 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "simplesim.driver.data.000": "Pending",
         "simplesim.driver.data.bsh.000": "Pending",
         "simplesim.driver.report.000": "Pending",
+        "simplesim.snapshot.brickstorageheater.000": "Pending",
         "sla.enter.000": "Pending",
-        "snapshot.brickstorageheater.000": "Pending",
         "super.starter.000": "Pending",
         "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",

@@ -138,10 +138,14 @@ from gwatn.types.simplesim_driver_data_bsh import SimplesimDriverDataBsh
 from gwatn.types.simplesim_driver_data_bsh import SimplesimDriverDataBsh_Maker
 from gwatn.types.simplesim_driver_report import SimplesimDriverReport
 from gwatn.types.simplesim_driver_report import SimplesimDriverReport_Maker
+from gwatn.types.simplesim_snapshot_brickstorageheater import (
+    SimplesimSnapshotBrickstorageheater,
+)
+from gwatn.types.simplesim_snapshot_brickstorageheater import (
+    SimplesimSnapshotBrickstorageheater_Maker,
+)
 from gwatn.types.sla_enter import SlaEnter
 from gwatn.types.sla_enter import SlaEnter_Maker
-from gwatn.types.snapshot_brickstorageheater import SnapshotBrickstorageheater
-from gwatn.types.snapshot_brickstorageheater import SnapshotBrickstorageheater_Maker
 from gwatn.types.super_starter import SuperStarter
 from gwatn.types.super_starter import SuperStarter_Maker
 from gwatn.types.supervisor_container_gt import SupervisorContainerGt
@@ -283,10 +287,10 @@ __all__ = [
     "SimplesimDriverDataBsh_Maker",
     "SimplesimDriverReport",
     "SimplesimDriverReport_Maker",
+    "SimplesimSnapshotBrickstorageheater",
+    "SimplesimSnapshotBrickstorageheater_Maker",
     "SlaEnter",
     "SlaEnter_Maker",
-    "SnapshotBrickstorageheater",
-    "SnapshotBrickstorageheater_Maker",
     "SnapshotSpaceheat",
     "SnapshotSpaceheat_Maker",
     "SpaceheatNodeGt",

@@ -3,7 +3,8 @@
   "type_name": "atn.params.brickstorageheater",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "Params for a BrickStorageHeater Atn Strategy",
+  "description": "Params for a BrickStorageHeater Atn Strategy. Parameters for a model of a ceramic brick thermal storage room unit, using a two-dimensional Dijstra graph parameterized by 'fullness of the thermal battery' and time.",
+  "url": "https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html",
   "formats": {
     "LeftRightDot": {
       "type": "string",
@@ -100,17 +101,35 @@
     "GNodeAlias": {
       "type": "string",
       "format": "LeftRightDot",
-      "title": "",
+      "title": "GNode Alias",
       "required": true
     },
     "HomeCity": {
       "type": "string",
-      "title": "",
+      "title": "Home City",
       "required": true
     },
     "TimezoneString": {
       "type": "string",
+      "title": "Timezone String",
+      "required": true
+    },
+    "StorageSteps": {
+      "type": "integer",
+      "title": "Storage Steps",
+      "description": "The number of nodes in each TimeSlice for the Dijkstra graph.",
+      "required": true
+    },
+    "FloSlices": {
+      "type": "integer",
       "title": "",
+      "description": "The number of nodes for each storage level in the Dijstra graph.",
+      "required": true
+    },
+    "SliceDurationMinutes": {
+      "type": "integer",
+      "title": "",
+      "description": "The length of",
       "required": true
     },
     "CurrencyUnit": {
@@ -154,7 +173,7 @@
     "C": {
       "type": "number",
       "title": "",
-      "required": true
+      "required": false
     },
     "ROff": {
       "type": "number",

@@ -712,15 +712,31 @@ class </xsl:text>
 
 </xsl:for-each>
 
-
+<xsl:if test="ExtraAllowed='true'">
+<xsl:text>TypeName: str = Field(
+        title="TypeName",
+        default="</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>",
+    )
+    </xsl:text>
+</xsl:if>
+<xsl:if test="not(ExtraAllowed='true')">
 <xsl:text>TypeName: Literal["</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"] = "</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"
     </xsl:text>
+</xsl:if>
 <xsl:text>Version: str = "</xsl:text>
 <xsl:value-of select="SemanticEnd"/><xsl:text>"</xsl:text>
 <xsl:if test="ExtraAllowed='true'"><xsl:text>
 
     class Config:
-        extra = Extra.allow</xsl:text>
+        extra = Extra.allow
+
+    @validator("TypeName")
+    def _check_type_name(cls, v: str) -> str:
+        if not v.startswith("</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"):
+            raise ValueError(f"TypeName {v} must start with '</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>'")
+        return v</xsl:text>
+
+
 </xsl:if>
 
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">

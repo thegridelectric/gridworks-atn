@@ -52,8 +52,8 @@ forth between type instances and Python objects.
     SimplesimDriverData  <types/simplesim-driver-data>
     SimplesimDriverDataBsh  <types/simplesim-driver-data-bsh>
     SimplesimDriverReport  <types/simplesim-driver-report>
+    SimplesimSnapshotBrickstorageheater  <types/simplesim-snapshot-brickstorageheater>
     SlaEnter  <types/sla-enter>
-    SnapshotBrickstorageheater  <types/snapshot-brickstorageheater>
     SuperStarter  <types/super-starter>
     SupervisorContainerGt  <types/supervisor-container-gt>
     TadeedSpecsHack  <types/tadeed-specs-hack>

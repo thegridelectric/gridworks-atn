@@ -1,4 +1,4 @@
-"""Type snapshot.brickstorageheater, version 000"""
+"""Type simplesim.snapshot.brickstorageheater, version 000"""
 import json
 from typing import Any
 from typing import Dict
@@ -66,7 +66,7 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-class SnapshotBrickstorageheater(BaseModel):
+class SimplesimSnapshotBrickstorageheater(BaseModel):
     """ """
 
     FromGNodeAlias: str = Field(
@@ -87,7 +87,9 @@ class SnapshotBrickstorageheater(BaseModel):
     AboutTerminalAssetAlias: str = Field(
         title="AboutTerminalAssetAlias",
     )
-    TypeName: Literal["snapshot.brickstorageheater"] = "snapshot.brickstorageheater"
+    TypeName: Literal[
+        "simplesim.snapshot.brickstorageheater"
+    ] = "simplesim.snapshot.brickstorageheater"
     Version: str = "000"
 
     @validator("FromGNodeAlias")
@@ -131,8 +133,8 @@ class SnapshotBrickstorageheater(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class SnapshotBrickstorageheater_Maker:
-    type_name = "snapshot.brickstorageheater"
+class SimplesimSnapshotBrickstorageheater_Maker:
+    type_name = "simplesim.snapshot.brickstorageheater"
     version = "000"
 
     def __init__(
@@ -144,7 +146,7 @@ class SnapshotBrickstorageheater_Maker:
         max_store_kwh: int,
         about_terminal_asset_alias: str,
     ):
-        self.tuple = SnapshotBrickstorageheater(
+        self.tuple = SimplesimSnapshotBrickstorageheater(
             FromGNodeAlias=from_g_node_alias,
             FromGNodeInstanceId=from_g_node_instance_id,
             PowerWatts=power_watts,
@@ -155,14 +157,14 @@ class SnapshotBrickstorageheater_Maker:
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: SnapshotBrickstorageheater) -> str:
+    def tuple_to_type(cls, tuple: SimplesimSnapshotBrickstorageheater) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> SnapshotBrickstorageheater:
+    def type_to_tuple(cls, t: str) -> SimplesimSnapshotBrickstorageheater:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -175,7 +177,7 @@ class SnapshotBrickstorageheater_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> SnapshotBrickstorageheater:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> SimplesimSnapshotBrickstorageheater:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeAlias")
@@ -192,7 +194,7 @@ class SnapshotBrickstorageheater_Maker:
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return SnapshotBrickstorageheater(
+        return SimplesimSnapshotBrickstorageheater(
             FromGNodeAlias=d2["FromGNodeAlias"],
             FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             PowerWatts=d2["PowerWatts"],

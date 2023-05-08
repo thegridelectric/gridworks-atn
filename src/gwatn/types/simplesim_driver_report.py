@@ -179,8 +179,6 @@ class SimplesimDriverReport_Maker:
             raise SchemaError(f"dict {d2} missing DriverDataTypeName")
         if "DriverData" not in d2.keys():
             raise SchemaError(f"dict {d2} missing DriverData")
-        if "DriverData" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing DriverData")
         if not isinstance(d2["DriverData"], dict):
             raise SchemaError(
                 f"d['DriverData'] {d2['DriverData']} must be a SimplesimDriverData!"

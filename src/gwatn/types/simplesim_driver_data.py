@@ -42,11 +42,20 @@ class SimplesimDriverData(BaseModel):
     FromGNodeAlias: str = Field(
         title="FromGNodeAlias",
     )
-    TypeName: Literal["simplesim.driver.data"] = "simplesim.driver.data"
+    TypeName: str = Field(
+        title="TypeName",
+        default="simplesim.driver.data",
+    )
     Version: str = "000"
 
     class Config:
         extra = Extra.allow
+
+    @validator("TypeName")
+    def _check_type_name(cls, v: str) -> str:
+        if not v.startswith("simplesim.driver.data"):
+            raise ValueError(f"TypeName {v} must start with 'simplesim.driver.data'")
+        return v
 
     @validator("FromGNodeAlias")
     def _check_from_g_node_alias(cls, v: str) -> str:
