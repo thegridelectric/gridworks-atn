@@ -71,7 +71,9 @@ def name_from_market_slot(slot: MarketSlot) -> str:
 
 def market_slot_from_name(market_slot_name: str) -> MarketSlot:
     """rt60gate30b.d1.isone.ver.keene.1577836800"""
-    if not property_format.is_market_slot_name_lrd_format(market_slot_name):
+    try:
+        property_format.check_is_market_slot_name_lrd_format(market_slot_name)
+    except ValueError as e:
         raise Exception(
             f"market slot alias {market_slot_name} does not have market"
             " slot alias lrd format!"

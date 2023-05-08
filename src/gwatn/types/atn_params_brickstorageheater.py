@@ -304,9 +304,9 @@ def check_is_left_right_dot(v: str) -> None:
 class AtnParamsBrickstorageheater(BaseModel):
     """Params for a BrickStorageHeater Atn Strategy.
 
-    Parameters for a model of a ceramic brick thermal storage room unit,
-    using a two-dimensional Dijstra graph parameterized by 'fullness of the thermal
-    battery' and time.
+    Parameters for a model of a ceramic brick thermal storage room unit, using a
+    two-dimensional Dijstra graph parameterized by 'fullness of the thermal battery'
+    and time.
     [More info](https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html).
     """
 
