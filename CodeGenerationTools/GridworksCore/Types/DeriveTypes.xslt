@@ -103,11 +103,7 @@ from fastapi_utils.enums import StrEnum</xsl:text>
 <xsl:if test="MakeDataClass='true'">
 <xsl:if test="not(IsComponent = 'true') and not(IsCac = 'true')">
 <xsl:text>
-from gwatn.data_classes.</xsl:text>
-<xsl:call-template name="python-case">
-    <xsl:with-param name="camel-case-text" select="translate(DataClass,'.','_')"  />
-</xsl:call-template>
-<xsl:text> import </xsl:text><xsl:value-of select="DataClass"/>
+from gwatn.data_classes import </xsl:text><xsl:value-of select="DataClass"/>
 
 </xsl:if>
 </xsl:if>
@@ -346,7 +342,7 @@ def check_is_market_slot_name_lrd_format(v: str) -> None:
     Example: rt60gate5.d1.isone.ver.keene.1673539200
 
     """
-    from gwatn.data_classes.market_type import MarketType
+    from gwatn.data_classes import MarketType
     try:
         x = v.split(".")
     except AttributeError:

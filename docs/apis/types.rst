@@ -22,10 +22,6 @@ AtnParamsReport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-params-report.json
 
-BaseGNodeGt
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/base-g-node-gt.json
-
 BasegnodeScadaCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/basegnode-scada-create.json
@@ -38,29 +34,21 @@ DispatchContractConfirmed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/dispatch-contract-confirmed.json
 
-GNodeGt
+FloParams
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/g-node-gt.json
+.. literalinclude:: json/flo-params.json
 
-GNodeInstanceGt
+FloParamsBrickstorageheater
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/g-node-instance-gt.json
+.. literalinclude:: json/flo-params-brickstorageheater.json
+
+FloParamsReport
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/flo-params-report.json
 
 GtDispatchBoolean
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/gt-dispatch-boolean.json
-
-GwCertId
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gw-cert-id.json
-
-HeartbeatA
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/heartbeat-a.json
-
-HeartbeatAlgoAudit
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/heartbeat-algo-audit.json
 
 HeartbeatB
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -114,17 +102,9 @@ PriceQuantityUnitless
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/price-quantity-unitless.json
 
-Ready
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/ready.json
-
 ScadaCertTransfer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/scada-cert-transfer.json
-
-SimTimestep
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/sim-timestep.json
 
 SimplesimDriverData
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -145,14 +125,6 @@ SimplesimSnapshotBrickstorageheater
 SlaEnter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/sla-enter.json
-
-SuperStarter
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/super-starter.json
-
-SupervisorContainerGt
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/supervisor-container-gt.json
 
 TadeedSpecsHack
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

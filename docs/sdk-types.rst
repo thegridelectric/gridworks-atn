@@ -23,16 +23,13 @@ forth between type instances and Python objects.
     AtnParams  <types/atn-params>
     AtnParamsBrickstorageheater  <types/atn-params-brickstorageheater>
     AtnParamsReport  <types/atn-params-report>
-    BaseGNodeGt  <types/base-g-node-gt>
     BasegnodeScadaCreate  <types/basegnode-scada-create>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
     DispatchContractConfirmed  <types/dispatch-contract-confirmed>
-    GNodeGt  <types/g-node-gt>
-    GNodeInstanceGt  <types/g-node-instance-gt>
+    FloParams  <types/flo-params>
+    FloParamsBrickstorageheater  <types/flo-params-brickstorageheater>
+    FloParamsReport  <types/flo-params-report>
     GtDispatchBoolean  <types/gt-dispatch-boolean>
-    GwCertId  <types/gw-cert-id>
-    HeartbeatA  <types/heartbeat-a>
-    HeartbeatAlgoAudit  <types/heartbeat-algo-audit>
     HeartbeatB  <types/heartbeat-b>
     InitialTadeedAlgoCreate  <types/initial-tadeed-algo-create>
     InitialTadeedAlgoOptin  <types/initial-tadeed-algo-optin>
@@ -46,16 +43,12 @@ forth between type instances and Python objects.
     OldTadeedAlgoReturn  <types/old-tadeed-algo-return>
     PriceQuantity  <types/price-quantity>
     PriceQuantityUnitless  <types/price-quantity-unitless>
-    Ready  <types/ready>
     ScadaCertTransfer  <types/scada-cert-transfer>
-    SimTimestep  <types/sim-timestep>
     SimplesimDriverData  <types/simplesim-driver-data>
     SimplesimDriverDataBsh  <types/simplesim-driver-data-bsh>
     SimplesimDriverReport  <types/simplesim-driver-report>
     SimplesimSnapshotBrickstorageheater  <types/simplesim-snapshot-brickstorageheater>
     SlaEnter  <types/sla-enter>
-    SuperStarter  <types/super-starter>
-    SupervisorContainerGt  <types/supervisor-container-gt>
     TadeedSpecsHack  <types/tadeed-specs-hack>
     TavalidatorcertAlgoCreate  <types/tavalidatorcert-algo-create>
     TavalidatorcertAlgoTransfer  <types/tavalidatorcert-algo-transfer>

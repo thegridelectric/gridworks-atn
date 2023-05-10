@@ -7,18 +7,13 @@ import threading
 import time
 from typing import Any
 from typing import List
-from typing import Optional
 
-import dotenv
 import pendulum
 from gridworks.actor_base import ActorBase
 from gridworks.enums import GNodeRole
 from pydantic import BaseModel
 
 import gwatn.config as config
-from gwatn.data_classes.g_node import GNode
-from gwatn.data_classes.g_node_instance import GNodeInstance
-from gwatn.data_classes.supervisor_container import SupervisorContainer
 from gwatn.enums import UniverseType
 from gwatn.simple_atn_actor import SimpleAtnActor as Atn
 from gwatn.types import GNodeGt_Maker

@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwatn.data_classes.market_type import MarketType
+from gwatn.data_classes import MarketType
 from gwatn.enums import MarketPriceUnit
 from gwatn.enums import MarketQuantityUnit
 from gwatn.enums import MarketTypeName

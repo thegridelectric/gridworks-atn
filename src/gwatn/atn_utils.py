@@ -1,25 +1,20 @@
 from typing import List
 from typing import Optional
 
-import gridworks.conversion_factors as cf
-import numpy as np
 from pydantic import BaseModel
 
-import gwatn.utils as utils
 from gwatn import property_format
 from gwatn.data_classes import MarketType
-from gwatn.enums import EmitterPumpFeedbackModel
-from gwatn.enums import MixingValveFeedbackModel
-from gwatn.schemata import AtnBid
-from gwatn.schemata import AtnParamsHeatpumpwithbooststore as AtnParams
-from gwatn.schemata import FloParamsHeatpumpwithbooststore as FloParams
-from gwatn.schemata import FloParamsHeatpumpwithbooststore_Maker as FloParams_Maker
-from gwatn.schemata import MarketSlot
-from gwatn.schemata import MarketTypeGt_Maker
-from gwatn.schemata import PriceQuantityUnitless
 from gwatn.strategies.heatpumpwithbooststore.flo import (
     HeatPumpWithBoostStore__Flo as Flo,
 )
+from gwatn.types import AtnBid
+from gwatn.types import AtnParams
+from gwatn.types import FloParamsHeatpumpwithbooststore as FloParams
+from gwatn.types import FloParamsHeatpumpwithbooststore_Maker as FloParams_Maker
+from gwatn.types import MarketSlot
+from gwatn.types import MarketTypeGt_Maker
+from gwatn.types import PriceQuantityUnitless
 
 
 DUMMY_ALGO_TXN = "gqNzaWfEQNPXbrAiWd+cNgsIaM3N0PSu3repauvmjuHmoKjh6sd3L5U4/YpovcXN7/ATH1LgcI4cgV+SU3VQ6bsm/gfAOQyjdHhuiaNhbXTNB9CjZmVlzQPoomZ2HaNnZW6qc2FuZG5ldC12MaJnaMQgaJXPYTdWaeTNSs8FMMzPNfV7SrHXqJgFsJLxRbSPjzCibHbNBAWjcmN2xCBWkH3PValty0Rb0cyZo69Alhp4IbNKFnhXtgJ++A9EzKNzbmTEIOJPEbccL6IqmeBeaLzbLav25U9jBMjloaIyF1eY9HFxpHR5cGWjcGF5"
@@ -105,42 +100,4 @@ def dummy_flo_params() -> FloParams:
     return FloParams(
         RtElecPriceUid="00000000-0000-0000-0000-000000000000",
         WeatherUid="00000000-0000-0000-0000-000000000000",
-    )
-
-
-def get_k(atn_params: AtnParams) -> float:
-    dt = atn_params.SystemMaxHeatOutputDeltaTempF
-    gpm = atn_params.SystemMaxHeatOutputGpm
-    swt = atn_params.SystemMaxHeatOutputSwtF
-    rt = atn_params.RoomTempF
-    return float(gpm * np.log(1 - dt / (swt - rt)))
-
-
-def get_system_max_heat_output_kw_avg(atn_params: AtnParams) -> float:
-    """What is the max heat that the system put out?  ASSUMES that the hydronic
-    fluid is water.
-
-    Args:
-        tea_params: Uses the system_max_heat_output_delta_temp_f and
-        the system_max_heat_output_gpm.
-
-    Returns:
-        float: max heat ouput of the heating system, in kw
-    """
-    gpm = atn_params.SystemMaxHeatOutputGpm
-    delta_temp = atn_params.SystemMaxHeatOutputDeltaTempF
-    c = cf.POUNDS_OF_WATER_PER_GALLON * cf.MINUTES_PER_HOUR / cf.BTU_PER_KWH
-    if gpm == 0 or delta_temp == 0:
-        raise Exception(
-            f"max gpm is {gpm}, max delta_temp is {delta_temp}. Cannot calculate system heat output."
-        )
-    pwr = c * delta_temp * gpm
-    return pwr
-
-
-def get_max_store_kwh_th(params: AtnParams) -> float:
-    return (
-        cf.KWH_TH_PER_GALLON_PER_DEG_F
-        * params.StoreSizeGallons
-        * (params.MaxStoreTempF - params.ZeroPotentialEnergyWaterTempF)
     )

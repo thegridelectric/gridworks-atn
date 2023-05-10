@@ -1011,14 +1011,14 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.2.1"
+version = "0.2.2"
 description = "Gridworks"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks-0.2.1-py3-none-any.whl", hash = "sha256:a3e6c154fc64ca61c02fcf9c248113e435e2de455ea9ab75508d1a5b3ffffe52"},
-    {file = "gridworks-0.2.1.tar.gz", hash = "sha256:9f080885822340afffaf341badbe434e5a672dfaef45143899f296a5dc04d22c"},
+    {file = "gridworks-0.2.2-py3-none-any.whl", hash = "sha256:50456eb7f935db0d678c90c9dff7469b0e02059627fe18d6dd83c89f353f25da"},
+    {file = "gridworks-0.2.2.tar.gz", hash = "sha256:45e2f67b87f09df55db2398df8af03880095f6f11605b81038b3437b4cac16e5"},
 ]
 
 [package.dependencies]
@@ -1067,18 +1067,19 @@ tests = ["pytest (>=7.2.0,<8.0.0)", "pytest-asyncio (>=0.20.3,<0.21.0)"]
 
 [[package]]
 name = "gridworks-protocol"
-version = "0.4.5"
+version = "0.5.0"
 description = "Gridworks Protocol"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks_protocol-0.4.5-py3-none-any.whl", hash = "sha256:879150725ed532157ad5743c277fd230cde35be18b0e57fc5781b706bb2f4c83"},
-    {file = "gridworks_protocol-0.4.5.tar.gz", hash = "sha256:0f0e3faf64e5107a2451df477371f9ff3b84355f5f472cc6fc845b2cfac5b78a"},
+    {file = "gridworks_protocol-0.5.0-py3-none-any.whl", hash = "sha256:d2c7f3abb0da2880ece82073f36fd66e85f53ec3294b733280f5d35885102d00"},
+    {file = "gridworks_protocol-0.5.0.tar.gz", hash = "sha256:8f6c4a3f253af195c6a3d4215c059af413a32c15250a86f9e9f52a5bc2f651d9"},
 ]
 
 [package.dependencies]
 fastapi-utils = ">=0.2.1,<0.3.0"
+gridworks = "0.2.2"
 pendulum = ">=2.1.2,<3.0.0"
 pydantic = ">=1.10.2,<2.0.0"
 
@@ -3757,4 +3758,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "f37f756a147bd1a3364b8b8f7ad8ec423d904586719bf93533af95830064d3d4"
+content-hash = "ba065e9dfbb3960ac00bd792f23ccd5f0c5644bff5703a18bffc48ca017cfc66"

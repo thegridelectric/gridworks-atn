@@ -4,12 +4,6 @@ from typing import Any
 from typing import Dict
 from typing import Literal
 
-import gridworks.algo_utils as algo_utils
-import gridworks.api_utils as api_utils
-import gridworks.gw_config as config
-from algosdk import encoding
-from algosdk.future import transaction
-from algosdk.v2client.algod import AlgodClient
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
 from pydantic import Field
@@ -81,18 +75,7 @@ class TavalidatorcertAlgoTransfer(BaseModel):
             raise ValueError(
                 f"ValidatorAddr failed AlgoAddressStringFormat format validation: {e}"
             )
-
-        multi_addr = api_utils.get_validator_account_with_admin(v).addr
-        if (
-            algo_utils.algos(multi_addr)
-            < config.Public().ta_validator_funding_threshold_algos
-        ):
-            raise ValueError(
-                f"Axiom 4: 2-sig Multi [GnfAdminAddr, ValidatorAddr] insufficiently funded "
-                f" with {algo_utils.algos(v)} algos. "
-                f" Needs {config.Public().ta_validator_funding_threshold_algos} algos. "
-            )
-
+        # TODO: Axiom
         return v
 
     @validator("HalfSignedCertTransferMtx")
@@ -110,33 +93,10 @@ class TavalidatorcertAlgoTransfer(BaseModel):
         """
         Axiom 1: Is correct Multisig.
         Decoded HalfSignedCertTransferMtx must have type MultisigTransaction from the
-        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by the ValidatorAddr.
+        2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr], signed by the ValidatorAddr
         [More info](https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr)
         """
-        mtx = encoding.future_msgpack_decode(v.get("HalfSignedCertTransferMtx", None))
-        ValidatorAddr = v.get("ValidatorAddr")
-        gnf_admin_addr = config.Public().gnf_admin_addr
-        multi = algo_utils.MultisigAccount(
-            version=1,
-            threshold=2,
-            addresses=[gnf_admin_addr, ValidatorAddr],
-        )
-
-        if not isinstance(mtx, transaction.MultisigTransaction):
-            raise ValueError(
-                "Axiom 1: Decoded HalfSignedCertTransferMtx must have type MultisigTransaction,"
-                f" got {type(mtx)}."
-            )
-
-        if not multi.addr == mtx.multisig.address():
-            raise ValueError(
-                "Axiom 1: Decoded HalfSignedCertTransferMtx must come from the 2-sig MultiAccount ,"
-                f" [GnfAdminAddr, ValidatorAddr], got {type(mtx)}."
-            )
-        if mtx.multisig.subsigs[1].signature is None:
-            raise ValueError(
-                "Axiom 1: Decoded HalfSignedCertTransferMtx missing TaValidator signature.}"
-            )
+        # TODO: Implement check for axiom 1"
         return v
 
     @root_validator
@@ -144,85 +104,26 @@ class TavalidatorcertAlgoTransfer(BaseModel):
         """
         Axiom 2: Transfers correct certificate.
          - The transaction must be the transfer of an Algorand Standard Asset
-         - The sender must be the 2-sig Multi [GnfAdminAddr, TaValidatorAddr], which also created and owns the ASA
+         -The sender must be the 2-sig Multi [GnfAdminAddr, TaValidatorAddr], which also created and owns the ASA
          - It must be getting sent to the ValidatorAddr
          -The ASA must have:
            - Total = 1
            - UnitName=VLDITR
            - GnfAdminAddr as manage
-           - AssetName not blank.
+           - AssetName not blank
         - The transfer amount must be 1
         [More info](https://gridworks.readthedocs.io/en/latest/ta-validator.html#tavalidator-certificate)
+        """
+        # TODO: Implement check for axiom 2"
+        return v
 
+    @root_validator
+    def check_axiom_3(cls, v: dict) -> dict:
+        """
         Axiom 3: TaValidator has opted in.
         ValidatorAddr must be opted into the transferring ASA.
         """
-        mtx = encoding.future_msgpack_decode(v.get("HalfSignedCertTransferMtx", None))
-        txn = mtx.transaction
-        gnf_admin_addr = config.Public().gnf_admin_addr
-        ValidatorAddr = v.get("ValidatorAddr")
-        multi = algo_utils.MultisigAccount(
-            version=1,
-            threshold=2,
-            addresses=[gnf_admin_addr, ValidatorAddr],
-        )
-
-        if not isinstance(txn, transaction.AssetTransferTxn):
-            raise ValueError(
-                "Axiom 2: The transaction must have type AssetTransferTxn"
-                f" got {type(txn)}."
-            )
-        if not txn.sender == multi.addr:
-            raise ValueError(
-                "Axiom 2: The transfer must be sending from the 2-sig Multi [GNfAdminAddr, TaValidatorAddr]"
-            )
-
-        settings = config.VanillaSettings()
-        client: AlgodClient = AlgodClient(
-            settings.algo_api_secrets.algod_token.get_secret_value(),
-            settings.public.algod_address,
-        )
-        multi_balances = algo_utils.get_balances(client, multi.addr)
-        if not txn.index in multi_balances.keys():
-            raise ValueError(
-                "Axiom 2: The 2-sig Multi [GnfAdminAddr, TaValidatorAddr] must have created and own the ASA"
-            )
-        if multi_balances[txn.index] != 1:
-            raise ValueError(
-                "Axiom 2: The ASA creator must be the 2-sig Multi [GnfAdminAddr, TaValidatorAddr]"
-            )
-        if not txn.receiver == ValidatorAddr:
-            raise ValueError("Axiom 2: The ASA receiver must be the TaValiadatorAddr")
-        if not txn.amount == 1:
-            raise ValueError(f"Axiom 2: The amount sent must be 1, not {txn.amount}")
-        asa_params = client.asset_info(txn.index)["params"]
-        if asa_params["total"] != 1:
-            raise ValueError(
-                f"Axiom 2: The ASA Total must be 1, not {asa_params['total']}"
-            )
-        if asa_params["decimals"] != 0:
-            raise ValueError(
-                f"Axiom 2: The ASA Decimals must be 0, not {asa_params['decimals']}"
-            )
-        if asa_params["manager"] != gnf_admin_addr:
-            raise ValueError(
-                f"Axiom 2: The ASA manager must be GnfAdminAddr, not {asa_params['manager']}"
-            )
-        if asa_params["unit-name"] != "VLDTR":
-            raise ValueError(
-                f"Axiom 2: The ASA UnitName must be 'VLDTR, not {asa_params['unit-name']}"
-            )
-        if asa_params["name"] is None:
-            raise ValueError(f"Axiom 2: The ASA AssetName cannot be None")
-        if asa_params["name"] == "":
-            raise ValueError(f"Axiom 2: The ASA AssetName cannot be blank")
-
-        # Axiom 3 check
-        validator_balances = algo_utils.get_balances(client, ValidatorAddr)
-        if txn.index not in validator_balances.keys():
-            raise ValueError(
-                f"Axiom 3: ValidatorAddr must be opted into the transferring ASA."
-            )
+        # TODO: Implement check for axiom 3"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -231,6 +132,9 @@ class TavalidatorcertAlgoTransfer(BaseModel):
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class TavalidatorcertAlgoTransfer_Maker:

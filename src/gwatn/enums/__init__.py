@@ -1,7 +1,6 @@
 """ GwSchema Enums used in gwatn """
 
 # From gridworks
-
 from gridworks.enums.algo_cert_type import AlgoCertType
 from gridworks.enums.core_g_node_role import CoreGNodeRole
 from gridworks.enums.g_node_role import GNodeRole
@@ -17,27 +16,22 @@ from gridworks.enums.strategy_name import StrategyName
 from gridworks.enums.supervisor_container_status import SupervisorContainerStatus
 from gridworks.enums.universe_type import UniverseType
 from gwproto.enums.actor_class import ActorClass
+
+# From gwproto
 from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
 from gwproto.enums.role import Role
 from gwproto.enums.telemetry_name import TelemetryName
 from gwproto.enums.unit import Unit
 
-from gwatn.enums.atn_spaceheat_strategy_name import AtnSpaceheatStrategyName
+# From gwatn
 from gwatn.enums.distribution_tariff import DistributionTariff
 from gwatn.enums.energy_supply_type import EnergySupplyType
 from gwatn.enums.recognized_temperature_unit import RecognizedTemperatureUnit
 
 
-# From gwproto
-
-
-# From gwatn
-
-
 __all__ = [
     "AlgoCertType",
-    "AtnSpaceheatStrategyName",
     "CoreGNodeRole",
     "DistributionTariff",
     "EnergySupplyType",

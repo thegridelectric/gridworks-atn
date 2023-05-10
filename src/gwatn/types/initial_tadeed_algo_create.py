@@ -92,6 +92,7 @@ class InitialTadeedAlgoCreate(BaseModel):
         2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].
         [More info](https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr)
         """
+        # TODO: Implement check for axiom 1"
         return v
 
     @root_validator
@@ -108,6 +109,7 @@ class InitialTadeedAlgoCreate(BaseModel):
                  - final word is '.ta'
         [More info](https://gridworks.readthedocs.io/en/latest/ta-deed.html#asa-tadeed-specs)
         """
+        # TODO: Implement check for axiom 2"
         return v
 
     @root_validator
@@ -116,6 +118,7 @@ class InitialTadeedAlgoCreate(BaseModel):
         Axiom 3: Mtx signed by TaValidator.
 
         """
+        # TODO: Implement check for axiom 3"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -124,6 +127,9 @@ class InitialTadeedAlgoCreate(BaseModel):
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class InitialTadeedAlgoCreate_Maker:

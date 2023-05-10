@@ -8,16 +8,13 @@ from gwatn.types import AtnBid_Maker
 from gwatn.types import AtnParams_Maker
 from gwatn.types import AtnParamsBrickstorageheater_Maker
 from gwatn.types import AtnParamsReport_Maker
-from gwatn.types import BaseGNodeGt_Maker
 from gwatn.types import BasegnodeScadaCreate_Maker
 from gwatn.types import DiscoverycertAlgoCreate_Maker
 from gwatn.types import DispatchContractConfirmed_Maker
-from gwatn.types import GNodeGt_Maker
-from gwatn.types import GNodeInstanceGt_Maker
+from gwatn.types import FloParams_Maker
+from gwatn.types import FloParamsBrickstorageheater_Maker
+from gwatn.types import FloParamsReport_Maker
 from gwatn.types import GtDispatchBoolean_Maker
-from gwatn.types import GwCertId_Maker
-from gwatn.types import HeartbeatA_Maker
-from gwatn.types import HeartbeatAlgoAudit_Maker
 from gwatn.types import HeartbeatB_Maker
 from gwatn.types import InitialTadeedAlgoCreate_Maker
 from gwatn.types import InitialTadeedAlgoOptin_Maker
@@ -31,16 +28,12 @@ from gwatn.types import NewTadeedSend_Maker
 from gwatn.types import OldTadeedAlgoReturn_Maker
 from gwatn.types import PriceQuantity_Maker
 from gwatn.types import PriceQuantityUnitless_Maker
-from gwatn.types import Ready_Maker
 from gwatn.types import ScadaCertTransfer_Maker
 from gwatn.types import SimplesimDriverData_Maker
 from gwatn.types import SimplesimDriverDataBsh_Maker
 from gwatn.types import SimplesimDriverReport_Maker
 from gwatn.types import SimplesimSnapshotBrickstorageheater_Maker
-from gwatn.types import SimTimestep_Maker
 from gwatn.types import SlaEnter_Maker
-from gwatn.types import SuperStarter_Maker
-from gwatn.types import SupervisorContainerGt_Maker
 from gwatn.types import TadeedSpecsHack_Maker
 from gwatn.types import TavalidatorcertAlgoCreate_Maker
 from gwatn.types import TavalidatorcertAlgoTransfer_Maker
@@ -58,16 +51,13 @@ def type_makers() -> List[HeartbeatA_Maker]:
         AtnParams_Maker,
         AtnParamsBrickstorageheater_Maker,
         AtnParamsReport_Maker,
-        BaseGNodeGt_Maker,
         BasegnodeScadaCreate_Maker,
         DiscoverycertAlgoCreate_Maker,
         DispatchContractConfirmed_Maker,
-        GNodeGt_Maker,
-        GNodeInstanceGt_Maker,
+        FloParams_Maker,
+        FloParamsBrickstorageheater_Maker,
+        FloParamsReport_Maker,
         GtDispatchBoolean_Maker,
-        GwCertId_Maker,
-        HeartbeatA_Maker,
-        HeartbeatAlgoAudit_Maker,
         HeartbeatB_Maker,
         InitialTadeedAlgoCreate_Maker,
         InitialTadeedAlgoOptin_Maker,
@@ -81,16 +71,12 @@ def type_makers() -> List[HeartbeatA_Maker]:
         OldTadeedAlgoReturn_Maker,
         PriceQuantity_Maker,
         PriceQuantityUnitless_Maker,
-        Ready_Maker,
         ScadaCertTransfer_Maker,
-        SimTimestep_Maker,
         SimplesimDriverData_Maker,
         SimplesimDriverDataBsh_Maker,
         SimplesimDriverReport_Maker,
         SimplesimSnapshotBrickstorageheater_Maker,
         SlaEnter_Maker,
-        SuperStarter_Maker,
-        SupervisorContainerGt_Maker,
         TadeedSpecsHack_Maker,
         TavalidatorcertAlgoCreate_Maker,
         TavalidatorcertAlgoTransfer_Maker,
@@ -114,16 +100,13 @@ def version_by_type_name() -> Dict[str, str]:
         "atn.params": "000",
         "atn.params.brickstorageheater": "000",
         "atn.params.report": "000",
-        "base.g.node.gt": "002",
         "basegnode.scada.create": "000",
         "discoverycert.algo.create": "000",
         "dispatch.contract.confirmed": "000",
-        "g.node.gt": "002",
-        "g.node.instance.gt": "000",
+        "flo.params": "000",
+        "flo.params.brickstorageheater": "000",
+        "flo.params.report": "000",
         "gt.dispatch.boolean": "110",
-        "gw.cert.id": "000",
-        "heartbeat.a": "100",
-        "heartbeat.algo.audit": "000",
         "heartbeat.b": "001",
         "initial.tadeed.algo.create": "000",
         "initial.tadeed.algo.optin": "002",
@@ -137,16 +120,12 @@ def version_by_type_name() -> Dict[str, str]:
         "old.tadeed.algo.return": "000",
         "price.quantity": "000",
         "price.quantity.unitless": "000",
-        "ready": "001",
         "scada.cert.transfer": "000",
-        "sim.timestep": "000",
         "simplesim.driver.data": "000",
         "simplesim.driver.data.bsh": "000",
         "simplesim.driver.report": "000",
         "simplesim.snapshot.brickstorageheater": "000",
         "sla.enter": "000",
-        "super.starter": "000",
-        "supervisor.container.gt": "000",
         "tadeed.specs.hack": "000",
         "tavalidatorcert.algo.create": "000",
         "tavalidatorcert.algo.transfer": "000",
@@ -166,18 +145,15 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "accepted.bid.000": "Pending",
         "atn.bid.001": "Pending",
         "atn.params.000": "Active",
-        "atn.params.brickstorageheater.000": "Pending",
+        "atn.params.brickstorageheater.000": "Active",
         "atn.params.report.000": "Active",
-        "base.g.node.gt.002": "Pending",
-        "basegnode.scada.create.000": "Pending",
-        "discoverycert.algo.create.000": "Pending",
-        "dispatch.contract.confirmed.000": "Pending",
-        "g.node.gt.002": "Pending",
-        "g.node.instance.gt.000": "Pending",
+        "basegnode.scada.create.000": "Active",
+        "discoverycert.algo.create.000": "Active",
+        "dispatch.contract.confirmed.000": "Active",
+        "flo.params.000": "Pending",
+        "flo.params.brickstorageheater.000": "Pending",
+        "flo.params.report.000": "Pending",
         "gt.dispatch.boolean.110": "Active",
-        "gw.cert.id.000": "Active",
-        "heartbeat.a.100": "Pending",
-        "heartbeat.algo.audit.000": "Pending",
         "heartbeat.b.001": "Active",
         "initial.tadeed.algo.create.000": "Active",
         "initial.tadeed.algo.optin.002": "Active",
@@ -191,16 +167,12 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "old.tadeed.algo.return.000": "Active",
         "price.quantity.000": "Pending",
         "price.quantity.unitless.000": "Pending",
-        "ready.001": "Pending",
         "scada.cert.transfer.000": "Pending",
-        "sim.timestep.000": "Pending",
         "simplesim.driver.data.000": "Pending",
         "simplesim.driver.data.bsh.000": "Pending",
         "simplesim.driver.report.000": "Pending",
         "simplesim.snapshot.brickstorageheater.000": "Pending",
         "sla.enter.000": "Pending",
-        "super.starter.000": "Pending",
-        "supervisor.container.gt.000": "Pending",
         "tadeed.specs.hack.000": "Pending",
         "tavalidatorcert.algo.create.000": "Active",
         "tavalidatorcert.algo.transfer.000": "Active",
