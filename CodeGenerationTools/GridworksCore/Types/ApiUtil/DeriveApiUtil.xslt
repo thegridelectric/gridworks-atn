@@ -30,7 +30,7 @@ from typing import Dict
 from typing import List
 from typing import no_type_check
 </xsl:text>
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn')]">
+<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto') or (normalize-space(ProtocolName) ='gridworks')]"><xsl:sort select="TypeName" data-type="text"/>
 <xsl:sort select="TypeName" data-type="text"/>
 <xsl:variable name="schema-id" select="Type"/>
 <xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
@@ -54,7 +54,7 @@ TypeMakerByName: Dict[str, HeartbeatA_Maker] = {}
 def type_makers() -> List[HeartbeatA_Maker]:
     return [
     </xsl:text>
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn')]">
+<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto') or (normalize-space(ProtocolName) ='gridworks')]">
 <xsl:sort select="TypeName" data-type="text"/>
 <xsl:variable name="schema-id" select="Type"/>
 <xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
@@ -83,7 +83,7 @@ def version_by_type_name() -> Dict[str, str]:
 
     v: Dict[str, str] = {
         </xsl:text>
-    <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn')]">
+<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto') or (normalize-space(ProtocolName) ='gridworks')]"><xsl:sort select="TypeName" data-type="text"/>
     <xsl:sort select="TypeName" data-type="text"/>
     <xsl:variable name="schema-id" select="Type"/>
     <xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
@@ -110,7 +110,7 @@ def status_by_versioned_type_name() ->Dict[str, str]:
 
     v: Dict[str, str] = {
         </xsl:text>
-    <xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn')]">
+<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto') or (normalize-space(ProtocolName) ='gridworks')]"><xsl:sort select="TypeName" data-type="text"/>
     <xsl:sort select="TypeName" data-type="text"/>
     <xsl:variable name="schema-id" select="Type"/>
     <xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">

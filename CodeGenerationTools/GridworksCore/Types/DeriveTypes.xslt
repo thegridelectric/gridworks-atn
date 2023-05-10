@@ -74,7 +74,13 @@ from typing import Literal</xsl:text>
 from typing import Optional</xsl:text>
 </xsl:if>
 <xsl:text>
-from pydantic import BaseModel
+from pydantic import BaseModel</xsl:text>
+<xsl:if test="ExtraAllowed='true'">
+    <xsl:text>
+from pydantic import Extra
+    </xsl:text>
+</xsl:if>
+<xsl:text>
 from pydantic import Field</xsl:text>
 <xsl:if test="count($airtable//SchemaAttributes/SchemaAttribute[Schema = $schema-id and (IsOptional='true') or (IsEnum='true' or (IsList='true' and (IsType = 'true' or (IsPrimitive='true'  and normalize-space(PrimitiveFormat) != '') )))]) > 0">
 <xsl:text>
@@ -97,11 +103,7 @@ from fastapi_utils.enums import StrEnum</xsl:text>
 <xsl:if test="MakeDataClass='true'">
 <xsl:if test="not(IsComponent = 'true') and not(IsCac = 'true')">
 <xsl:text>
-from gwatn.data_classes.</xsl:text>
-<xsl:call-template name="python-case">
-    <xsl:with-param name="camel-case-text" select="translate(DataClass,'.','_')"  />
-</xsl:call-template>
-<xsl:text> import </xsl:text><xsl:value-of select="DataClass"/>
+from gwatn.data_classes import </xsl:text><xsl:value-of select="DataClass"/>
 
 </xsl:if>
 </xsl:if>
@@ -340,7 +342,7 @@ def check_is_market_slot_name_lrd_format(v: str) -> None:
     Example: rt60gate5.d1.isone.ver.keene.1673539200
 
     """
-    from gwatn.data_classes.market_type import MarketType
+    from gwatn.data_classes import MarketType
     try:
         x = v.split(".")
     except AttributeError:
@@ -706,11 +708,33 @@ class </xsl:text>
 
 </xsl:for-each>
 
-
+<xsl:if test="ExtraAllowed='true'">
+<xsl:text>TypeName: str = Field(
+        title="TypeName",
+        default="</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>",
+    )
+    </xsl:text>
+</xsl:if>
+<xsl:if test="not(ExtraAllowed='true')">
 <xsl:text>TypeName: Literal["</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"] = "</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"
     </xsl:text>
+</xsl:if>
 <xsl:text>Version: str = "</xsl:text>
 <xsl:value-of select="SemanticEnd"/><xsl:text>"</xsl:text>
+<xsl:if test="ExtraAllowed='true'"><xsl:text>
+
+    class Config:
+        extra = Extra.allow
+
+    @validator("TypeName")
+    def _check_type_name(cls, v: str) -> str:
+        if not v.startswith("</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>"):
+            raise ValueError(f"TypeName {v} must start with '</xsl:text><xsl:value-of select="AliasRoot"/><xsl:text>'")
+        return v</xsl:text>
+
+
+</xsl:if>
+
     <xsl:for-each select="$airtable//SchemaAttributes/SchemaAttribute[(Schema = $schema-id)]">
     <xsl:sort select="Idx" data-type="number"/>
     <xsl:variable name="property-id" select="SchemaAttributeId" />

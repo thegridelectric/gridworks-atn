@@ -143,6 +143,7 @@ class InitialTadeedAlgoTransfer(BaseModel):
         2-sig MultiAccount  [GnfAdminAddr, ValidatorAddr].
         [More info](https://gridworks.readthedocs.io/en/latest/g-node-factory.html#gnfadminaddr)
         """
+        # TODO: Implement check for axiom 1"
         return v
 
     @root_validator
@@ -151,6 +152,7 @@ class InitialTadeedAlgoTransfer(BaseModel):
         Axiom 2: TaDaemon funded by TaOwner.
         The TaDaemonAddr was created with funding from the TaOwnerAddr, and has sufficient funding according to the GNodeFactory.
         """
+        # TODO: Implement check for axiom 2"
         return v
 
     def as_dict(self) -> Dict[str, Any]:
@@ -159,6 +161,9 @@ class InitialTadeedAlgoTransfer(BaseModel):
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class InitialTadeedAlgoTransfer_Maker:

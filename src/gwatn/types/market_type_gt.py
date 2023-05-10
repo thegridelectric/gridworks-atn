@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from gwatn.data_classes.market_type import MarketType
+from gwatn.data_classes import MarketType
 from gwatn.enums import MarketPriceUnit
 from gwatn.enums import MarketQuantityUnit
 from gwatn.enums import MarketTypeName
@@ -349,6 +349,9 @@ class MarketTypeGt(BaseModel):
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class MarketTypeGt_Maker:
