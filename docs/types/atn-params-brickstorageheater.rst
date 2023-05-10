@@ -57,7 +57,7 @@ Python pydantic class corresponding to  json type ```atn.params.brickstorageheat
 **RoomTempF**:
     - Description:
 
-**Alpha**:
+**AnnualHvacKwhTh**:
     - Description:
 
 **BetaOt**:
@@ -70,9 +70,6 @@ Python pydantic class corresponding to  json type ```atn.params.brickstorageheat
     - Description:
 
 **HouseWorstCaseTempF**:
-    - Description:
-
-**AnnualHvacKwhTh**:
     - Description:
 
 .. autoclass:: gwatn.types.atn_params_brickstorageheater.check_is_left_right_dot

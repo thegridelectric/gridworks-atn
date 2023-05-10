@@ -190,7 +190,7 @@
       "title": "",
       "required": true
     },
-    "Alpha": {
+    "AnnualHvacKwhTh": {
       "type": "integer",
       "title": "",
       "required": true
@@ -212,11 +212,6 @@
       "required": true
     },
     "HouseWorstCaseTempF": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "AnnualHvacKwhTh": {
       "type": "integer",
       "title": "",
       "required": true

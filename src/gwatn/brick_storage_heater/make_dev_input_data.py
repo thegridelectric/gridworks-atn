@@ -39,7 +39,7 @@ for j in range(1, 19):
         ROff=params[6][j],
         ROn=params[7][j],
         RoomTempF=params[8][j],
-        Alpha=params[9][j],
+        AnnualHvacKwhTh=params[9][j],
         BetaOt=params[10][j],
     )
 

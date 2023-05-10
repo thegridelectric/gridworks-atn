@@ -377,9 +377,9 @@ class AtnParamsBrickstorageheater(BaseModel):
         title="RoomTempF",
         default=70,
     )
-    Alpha: int = Field(
-        title="Alpha",
-        default=158,
+    AnnualHvacKwhTh: int = Field(
+        title="AnnualHvacKwhTh",
+        default=28125,
     )
     BetaOt: int = Field(
         title="BetaOt",
@@ -396,10 +396,6 @@ class AtnParamsBrickstorageheater(BaseModel):
     HouseWorstCaseTempF: int = Field(
         title="HouseWorstCaseTempF",
         default=-7,
-    )
-    AnnualHvacKwhTh: int = Field(
-        title="AnnualHvacKwhTh",
-        default=28125,
     )
     TypeName: Literal["atn.params.brickstorageheater"] = "atn.params.brickstorageheater"
     Version: str = "000"
@@ -486,12 +482,11 @@ class AtnParamsBrickstorageheater_Maker:
         r_off: float,
         r_on: float,
         room_temp_f: int,
-        alpha: int,
+        annual_hvac_kwh_th: int,
         beta_ot: int,
         temp_unit: RecognizedTemperatureUnit,
         ambient_power_in_kw: float,
         house_worst_case_temp_f: int,
-        annual_hvac_kwh_th: int,
     ):
         self.tuple = AtnParamsBrickstorageheater(
             GNodeAlias=g_node_alias,
@@ -511,12 +506,11 @@ class AtnParamsBrickstorageheater_Maker:
             ROff=r_off,
             ROn=r_on,
             RoomTempF=room_temp_f,
-            Alpha=alpha,
+            AnnualHvacKwhTh=annual_hvac_kwh_th,
             BetaOt=beta_ot,
             TempUnit=temp_unit,
             AmbientPowerInKw=ambient_power_in_kw,
             HouseWorstCaseTempF=house_worst_case_temp_f,
-            AnnualHvacKwhTh=annual_hvac_kwh_th,
             #
         )
 
@@ -596,8 +590,8 @@ class AtnParamsBrickstorageheater_Maker:
             raise SchemaError(f"dict {d2} missing ROn")
         if "RoomTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RoomTempF")
-        if "Alpha" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing Alpha")
+        if "AnnualHvacKwhTh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AnnualHvacKwhTh")
         if "BetaOt" not in d2.keys():
             raise SchemaError(f"dict {d2} missing BetaOt")
         if "TempUnitGtEnumSymbol" not in d2.keys():
@@ -612,8 +606,6 @@ class AtnParamsBrickstorageheater_Maker:
             raise SchemaError(f"dict {d2} missing AmbientPowerInKw")
         if "HouseWorstCaseTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing HouseWorstCaseTempF")
-        if "AnnualHvacKwhTh" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing AnnualHvacKwhTh")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -635,12 +627,11 @@ class AtnParamsBrickstorageheater_Maker:
             ROff=d2["ROff"],
             ROn=d2["ROn"],
             RoomTempF=d2["RoomTempF"],
-            Alpha=d2["Alpha"],
+            AnnualHvacKwhTh=d2["AnnualHvacKwhTh"],
             BetaOt=d2["BetaOt"],
             TempUnit=d2["TempUnit"],
             AmbientPowerInKw=d2["AmbientPowerInKw"],
             HouseWorstCaseTempF=d2["HouseWorstCaseTempF"],
-            AnnualHvacKwhTh=d2["AnnualHvacKwhTh"],
             TypeName=d2["TypeName"],
             Version="000",
         )

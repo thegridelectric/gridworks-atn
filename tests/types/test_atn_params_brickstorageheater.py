@@ -31,12 +31,11 @@ def test_atn_params_brickstorageheater_generated() -> None:
         "ROff": 0.08,
         "ROn": 0.15,
         "RoomTempF": 70,
-        "Alpha": 158,
+        "AnnualHvacKwhTh": 28125,
         "BetaOt": 158,
         "TempUnitGtEnumSymbol": "6f16ee63",
         "AmbientPowerInKw": 1.25,
         "HouseWorstCaseTempF": -7,
-        "AnnualHvacKwhTh": 28125,
         "TypeName": "atn.params.brickstorageheater",
         "Version": "000",
     }
@@ -73,12 +72,11 @@ def test_atn_params_brickstorageheater_generated() -> None:
         r_off=gtuple.ROff,
         r_on=gtuple.ROn,
         room_temp_f=gtuple.RoomTempF,
-        alpha=gtuple.Alpha,
+        annual_hvac_kwh_th=gtuple.AnnualHvacKwhTh,
         beta_ot=gtuple.BetaOt,
         temp_unit=gtuple.TempUnit,
         ambient_power_in_kw=gtuple.AmbientPowerInKw,
         house_worst_case_temp_f=gtuple.HouseWorstCaseTempF,
-        annual_hvac_kwh_th=gtuple.AnnualHvacKwhTh,
     ).tuple
     assert t == gtuple
 
@@ -177,7 +175,7 @@ def test_atn_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["Alpha"]
+    del d2["AnnualHvacKwhTh"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -198,11 +196,6 @@ def test_atn_params_brickstorageheater_generated() -> None:
 
     d2 = dict(d)
     del d2["HouseWorstCaseTempF"]
-    with pytest.raises(SchemaError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    del d2["AnnualHvacKwhTh"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -263,7 +256,7 @@ def test_atn_params_brickstorageheater_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, Alpha="158.1")
+    d2 = dict(d, AnnualHvacKwhTh="28125.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -279,10 +272,6 @@ def test_atn_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, HouseWorstCaseTempF="-7.1")
-    with pytest.raises(ValidationError):
-        Maker.dict_to_tuple(d2)
-
-    d2 = dict(d, AnnualHvacKwhTh="28125.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
