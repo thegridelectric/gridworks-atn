@@ -173,7 +173,7 @@
     "C": {
       "type": "number",
       "title": "",
-      "required": false
+      "required": true
     },
     "ROff": {
       "type": "number",
@@ -203,6 +203,21 @@
     "TempUnit": {
       "type": "string",
       "format": "RecognizedTemperatureUnit000",
+      "title": "",
+      "required": true
+    },
+    "AmbientPowerInKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "HouseWorstCaseTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "AnnualHvacKwhTh": {
+      "type": "integer",
       "title": "",
       "required": true
     },

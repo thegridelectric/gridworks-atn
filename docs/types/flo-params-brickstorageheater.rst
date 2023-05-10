@@ -44,6 +44,9 @@ Python pydantic class corresponding to  json type ```flo.params.brickstorageheat
 **PowerRequiredByHouseFromSystemAvgKwList**:
     - Description:
 
+**C**:
+    - Description:
+
 **RealtimeElectricityPrice**:
     - Description:
 
@@ -88,6 +91,12 @@ Python pydantic class corresponding to  json type ```flo.params.brickstorageheat
     - Description:
 
 **StartingStoreIdx**:
+    - Description:
+
+**AmbientPowerInKw**:
+    - Description:
+
+**HouseWorstCaseTempF**:
     - Description:
 
 **GNodeAlias**:

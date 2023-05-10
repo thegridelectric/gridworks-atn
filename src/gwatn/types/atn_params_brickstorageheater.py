@@ -5,7 +5,6 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
-from typing import Optional
 
 from fastapi_utils.enums import StrEnum
 from gridworks.errors import SchemaError
@@ -362,7 +361,7 @@ class AtnParamsBrickstorageheater(BaseModel):
         title="RatedMaxPowerKw",
         default=13.5,
     )
-    C: Optional[float] = Field(
+    C: float = Field(
         title="C",
         default=200,
     )
@@ -389,6 +388,18 @@ class AtnParamsBrickstorageheater(BaseModel):
     TempUnit: RecognizedTemperatureUnit = Field(
         title="TempUnit",
         default=RecognizedTemperatureUnit.F,
+    )
+    AmbientPowerInKw: float = Field(
+        title="AmbientPowerInKw",
+        default=1.25,
+    )
+    HouseWorstCaseTempF: int = Field(
+        title="HouseWorstCaseTempF",
+        default=-7,
+    )
+    AnnualHvacKwhTh: int = Field(
+        title="AnnualHvacKwhTh",
+        default=28125,
     )
     TypeName: Literal["atn.params.brickstorageheater"] = "atn.params.brickstorageheater"
     Version: str = "000"
@@ -436,8 +447,6 @@ class AtnParamsBrickstorageheater(BaseModel):
             self.EnergyType, EnergySupplyType, EnergySupplyType.default()
         )
         d["EnergyTypeGtEnumSymbol"] = EnergySupplyTypeMap.local_to_type(EnergyType)
-        if d["C"] is None:
-            del d["C"]
         del d["TempUnit"]
         TempUnit = as_enum(
             self.TempUnit,
@@ -473,13 +482,16 @@ class AtnParamsBrickstorageheater_Maker:
         distribution_tariff_dollars_per_mwh: int,
         max_brick_temp_c: int,
         rated_max_power_kw: float,
-        c: Optional[float],
+        c: float,
         r_off: float,
         r_on: float,
         room_temp_f: int,
         alpha: int,
         beta_ot: int,
         temp_unit: RecognizedTemperatureUnit,
+        ambient_power_in_kw: float,
+        house_worst_case_temp_f: int,
+        annual_hvac_kwh_th: int,
     ):
         self.tuple = AtnParamsBrickstorageheater(
             GNodeAlias=g_node_alias,
@@ -502,6 +514,9 @@ class AtnParamsBrickstorageheater_Maker:
             Alpha=alpha,
             BetaOt=beta_ot,
             TempUnit=temp_unit,
+            AmbientPowerInKw=ambient_power_in_kw,
+            HouseWorstCaseTempF=house_worst_case_temp_f,
+            AnnualHvacKwhTh=annual_hvac_kwh_th,
             #
         )
 
@@ -574,7 +589,7 @@ class AtnParamsBrickstorageheater_Maker:
         if "RatedMaxPowerKw" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RatedMaxPowerKw")
         if "C" not in d2.keys():
-            d2["C"] = None
+            raise SchemaError(f"dict {d2} missing C")
         if "ROff" not in d2.keys():
             raise SchemaError(f"dict {d2} missing ROff")
         if "ROn" not in d2.keys():
@@ -593,6 +608,12 @@ class AtnParamsBrickstorageheater_Maker:
             )
         else:
             d2["TempUnit"] = RecognizedTemperatureUnit.default()
+        if "AmbientPowerInKw" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AmbientPowerInKw")
+        if "HouseWorstCaseTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing HouseWorstCaseTempF")
+        if "AnnualHvacKwhTh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AnnualHvacKwhTh")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -617,6 +638,9 @@ class AtnParamsBrickstorageheater_Maker:
             Alpha=d2["Alpha"],
             BetaOt=d2["BetaOt"],
             TempUnit=d2["TempUnit"],
+            AmbientPowerInKw=d2["AmbientPowerInKw"],
+            HouseWorstCaseTempF=d2["HouseWorstCaseTempF"],
+            AnnualHvacKwhTh=d2["AnnualHvacKwhTh"],
             TypeName=d2["TypeName"],
             Version="000",
         )

@@ -145,7 +145,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "accepted.bid.000": "Pending",
         "atn.bid.001": "Pending",
         "atn.params.000": "Active",
-        "atn.params.brickstorageheater.000": "Active",
+        "atn.params.brickstorageheater.000": "Pending",
         "atn.params.report.000": "Active",
         "basegnode.scada.create.000": "Active",
         "discoverycert.algo.create.000": "Active",

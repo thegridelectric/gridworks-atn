@@ -267,6 +267,10 @@ class FloParamsBrickstorageheater(BaseModel):
         title="PowerRequiredByHouseFromSystemAvgKwList",
         default=[3.42],
     )
+    C: Optional[float] = Field(
+        title="C",
+        default=200,
+    )
     RealtimeElectricityPrice: List[float] = Field(
         title="RealtimeElectricityPrice",
         default=[10.35],
@@ -320,6 +324,14 @@ class FloParamsBrickstorageheater(BaseModel):
     StartingStoreIdx: int = Field(
         title="StartingStoreIdx",
         default=50,
+    )
+    AmbientPowerInKw: float = Field(
+        title="AmbientPowerInKw",
+        default=1.25,
+    )
+    HouseWorstCaseTempF: int = Field(
+        title="HouseWorstCaseTempF",
+        default=-7,
     )
     GNodeAlias: str = Field(
         title="GNodeAlias",
@@ -418,6 +430,8 @@ class FloParamsBrickstorageheater(BaseModel):
             RecognizedTemperatureUnit.default(),
         )
         d["TempUnitGtEnumSymbol"] = RecognizedTemperatureUnitMap.local_to_type(TempUnit)
+        if d["C"] is None:
+            del d["C"]
         if d["DistPriceUid"] is None:
             del d["DistPriceUid"]
         if d["RegPriceUid"] is None:
@@ -450,6 +464,7 @@ class FloParamsBrickstorageheater_Maker:
         storage_steps: int,
         slice_duration_minutes: List[int],
         power_required_by_house_from_system_avg_kw_list: List[float],
+        c: Optional[float],
         realtime_electricity_price: List[float],
         outside_temp_f: List[float],
         distribution_price: List[float],
@@ -464,6 +479,8 @@ class FloParamsBrickstorageheater_Maker:
         start_hour_utc: int,
         start_minute_utc: int,
         starting_store_idx: int,
+        ambient_power_in_kw: float,
+        house_worst_case_temp_f: int,
         g_node_alias: str,
         flo_params_uid: str,
     ):
@@ -481,6 +498,7 @@ class FloParamsBrickstorageheater_Maker:
             StorageSteps=storage_steps,
             SliceDurationMinutes=slice_duration_minutes,
             PowerRequiredByHouseFromSystemAvgKwList=power_required_by_house_from_system_avg_kw_list,
+            C=c,
             RealtimeElectricityPrice=realtime_electricity_price,
             OutsideTempF=outside_temp_f,
             DistributionPrice=distribution_price,
@@ -495,6 +513,8 @@ class FloParamsBrickstorageheater_Maker:
             StartHourUtc=start_hour_utc,
             StartMinuteUtc=start_minute_utc,
             StartingStoreIdx=starting_store_idx,
+            AmbientPowerInKw=ambient_power_in_kw,
+            HouseWorstCaseTempF=house_worst_case_temp_f,
             GNodeAlias=g_node_alias,
             FloParamsUid=flo_params_uid,
             #
@@ -566,6 +586,8 @@ class FloParamsBrickstorageheater_Maker:
             raise SchemaError(
                 f"dict {d2} missing PowerRequiredByHouseFromSystemAvgKwList"
             )
+        if "C" not in d2.keys():
+            d2["C"] = None
         if "RealtimeElectricityPrice" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RealtimeElectricityPrice")
         if "OutsideTempF" not in d2.keys():
@@ -594,6 +616,10 @@ class FloParamsBrickstorageheater_Maker:
             raise SchemaError(f"dict {d2} missing StartMinuteUtc")
         if "StartingStoreIdx" not in d2.keys():
             raise SchemaError(f"dict {d2} missing StartingStoreIdx")
+        if "AmbientPowerInKw" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AmbientPowerInKw")
+        if "HouseWorstCaseTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing HouseWorstCaseTempF")
         if "GNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing GNodeAlias")
         if "FloParamsUid" not in d2.keys():
@@ -617,6 +643,7 @@ class FloParamsBrickstorageheater_Maker:
             PowerRequiredByHouseFromSystemAvgKwList=d2[
                 "PowerRequiredByHouseFromSystemAvgKwList"
             ],
+            C=d2["C"],
             RealtimeElectricityPrice=d2["RealtimeElectricityPrice"],
             OutsideTempF=d2["OutsideTempF"],
             DistributionPrice=d2["DistributionPrice"],
@@ -631,6 +658,8 @@ class FloParamsBrickstorageheater_Maker:
             StartHourUtc=d2["StartHourUtc"],
             StartMinuteUtc=d2["StartMinuteUtc"],
             StartingStoreIdx=d2["StartingStoreIdx"],
+            AmbientPowerInKw=d2["AmbientPowerInKw"],
+            HouseWorstCaseTempF=d2["HouseWorstCaseTempF"],
             GNodeAlias=d2["GNodeAlias"],
             FloParamsUid=d2["FloParamsUid"],
             TypeName=d2["TypeName"],

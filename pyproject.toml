@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-atn"
-version = "0.2.4"
+version = "0.3.0"
 description = "Gridworks Atn Spaceheat"
 authors = ["Jessica Millar <jmillar@gridworks-consulting.com>"]
 license = "None"
@@ -21,7 +21,7 @@ Changelog = "https://github.com/thegridelectric/gridworks-atn/releases"
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 gridworks = "^0.2.4"
-gridworks-protocol = "^0.5.2"
+gridworks-protocol = "^0.5.2" # Note gridworks-protocol includes gridworks; these must stay in sync
 # gridworks-proactor = "^0.1.8"
 paho-mqtt = "^1.6.1"
 

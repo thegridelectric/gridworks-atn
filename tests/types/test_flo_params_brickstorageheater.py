@@ -25,6 +25,7 @@ def test_flo_params_brickstorageheater_generated() -> None:
         "StorageSteps": 100,
         "SliceDurationMinutes": [60],
         "PowerRequiredByHouseFromSystemAvgKwList": [3.42],
+        "C": 200,
         "RealtimeElectricityPrice": [10.35],
         "OutsideTempF": [-5.1],
         "DistributionPrice": [40.0],
@@ -39,6 +40,8 @@ def test_flo_params_brickstorageheater_generated() -> None:
         "StartHourUtc": 0,
         "StartMinuteUtc": 0,
         "StartingStoreIdx": 50,
+        "AmbientPowerInKw": 1.25,
+        "HouseWorstCaseTempF": -7,
         "GNodeAlias": "d1.isone.ver.keene.holly",
         "FloParamsUid": "97eba574-bd20-45b5-bf82-9ba2f492d8f6",
         "TypeName": "flo.params.brickstorageheater",
@@ -73,6 +76,7 @@ def test_flo_params_brickstorageheater_generated() -> None:
         storage_steps=gtuple.StorageSteps,
         slice_duration_minutes=gtuple.SliceDurationMinutes,
         power_required_by_house_from_system_avg_kw_list=gtuple.PowerRequiredByHouseFromSystemAvgKwList,
+        c=gtuple.C,
         realtime_electricity_price=gtuple.RealtimeElectricityPrice,
         outside_temp_f=gtuple.OutsideTempF,
         distribution_price=gtuple.DistributionPrice,
@@ -87,6 +91,8 @@ def test_flo_params_brickstorageheater_generated() -> None:
         start_hour_utc=gtuple.StartHourUtc,
         start_minute_utc=gtuple.StartMinuteUtc,
         starting_store_idx=gtuple.StartingStoreIdx,
+        ambient_power_in_kw=gtuple.AmbientPowerInKw,
+        house_worst_case_temp_f=gtuple.HouseWorstCaseTempF,
         g_node_alias=gtuple.GNodeAlias,
         flo_params_uid=gtuple.FloParamsUid,
     ).tuple
@@ -227,6 +233,16 @@ def test_flo_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["AmbientPowerInKw"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["HouseWorstCaseTempF"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["GNodeAlias"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -239,6 +255,11 @@ def test_flo_params_brickstorageheater_generated() -> None:
     ######################################
     # Optional attributes can be removed from type
     ######################################
+
+    d2 = dict(d)
+    if "C" in d2.keys():
+        del d2["C"]
+    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "DistPriceUid" in d2.keys():
@@ -288,6 +309,10 @@ def test_flo_params_brickstorageheater_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d, C="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d, StartYearUtc="2020.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
@@ -309,6 +334,14 @@ def test_flo_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, StartingStoreIdx="50.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, AmbientPowerInKw="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, HouseWorstCaseTempF="-7.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

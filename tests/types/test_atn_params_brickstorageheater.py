@@ -34,6 +34,9 @@ def test_atn_params_brickstorageheater_generated() -> None:
         "Alpha": 158,
         "BetaOt": 158,
         "TempUnitGtEnumSymbol": "6f16ee63",
+        "AmbientPowerInKw": 1.25,
+        "HouseWorstCaseTempF": -7,
+        "AnnualHvacKwhTh": 28125,
         "TypeName": "atn.params.brickstorageheater",
         "Version": "000",
     }
@@ -73,6 +76,9 @@ def test_atn_params_brickstorageheater_generated() -> None:
         alpha=gtuple.Alpha,
         beta_ot=gtuple.BetaOt,
         temp_unit=gtuple.TempUnit,
+        ambient_power_in_kw=gtuple.AmbientPowerInKw,
+        house_worst_case_temp_f=gtuple.HouseWorstCaseTempF,
+        annual_hvac_kwh_th=gtuple.AnnualHvacKwhTh,
     ).tuple
     assert t == gtuple
 
@@ -151,6 +157,11 @@ def test_atn_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["C"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["ROff"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -180,14 +191,20 @@ def test_atn_params_brickstorageheater_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    ######################################
-    # Optional attributes can be removed from type
-    ######################################
+    d2 = dict(d)
+    del d2["AmbientPowerInKw"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    if "C" in d2.keys():
-        del d2["C"]
-    Maker.dict_to_tuple(d2)
+    del d2["HouseWorstCaseTempF"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["AnnualHvacKwhTh"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
@@ -256,6 +273,18 @@ def test_atn_params_brickstorageheater_generated() -> None:
 
     d2 = dict(d, TempUnitGtEnumSymbol="hi")
     Maker.dict_to_tuple(d2).TempUnit = RecognizedTemperatureUnit.default()
+
+    d2 = dict(d, AmbientPowerInKw="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, HouseWorstCaseTempF="-7.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, AnnualHvacKwhTh="28125.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect

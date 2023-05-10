@@ -126,6 +126,11 @@
       "title": "",
       "required": true
     },
+    "C": {
+      "type": "number",
+      "title": "",
+      "required": false
+    },
     "RealtimeElectricityPrice": {
       "type": "number",
       "title": "",
@@ -196,6 +201,16 @@
       "required": true
     },
     "StartingStoreIdx": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "AmbientPowerInKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "HouseWorstCaseTempF": {
       "type": "integer",
       "title": "",
       "required": true
