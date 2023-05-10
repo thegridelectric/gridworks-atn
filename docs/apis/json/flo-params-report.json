@@ -1,0 +1,78 @@
+{
+  "gwapi": "001",
+  "type_name": "flo.params.report",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Flo Params Report. Type used for a message provided by an AtomicTNode or SCADA actor re the flo parameters just used to run a FLO.",
+  "url": "https://gridworks-atn.readthedocs.io/en/latest/flo.html#flo-params",
+  "formats": {
+    "ReasonableUnixTimeS": {
+      "type": "string",
+      "description": "Integer reflecting unix time seconds between 1970 and 3000",
+      "example": ""
+    },
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  },
+  "properties": {
+    "GNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "GNodeInstanceId": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "FloParamsTypeName": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "FloParamsTypeVersion": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "ReportGeneratedTimeUnixS": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeS",
+      "title": "",
+      "required": true
+    },
+    "IrlTimeUnixS": {
+      "type": "integer",
+      "format": "ReasonableUnixTimeS",
+      "title": "",
+      "required": false
+    },
+    "Params": {
+      "type": "flo.params.000",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "flo.params.report.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

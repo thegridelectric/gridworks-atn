@@ -20,20 +20,15 @@ forth between type instances and Python objects.
 
     AcceptedBid  <types/accepted-bid>
     AtnBid  <types/atn-bid>
-    AtnParamsHeatpumpwithbooststore  <types/atn-params-heatpumpwithbooststore>
-    AtnParamsReportHeatpumpwithbooststore  <types/atn-params-report-heatpumpwithbooststore>
-    BaseGNodeGt  <types/base-g-node-gt>
+    AtnParams  <types/atn-params>
+    AtnParamsBrickstorageheater  <types/atn-params-brickstorageheater>
+    AtnParamsReport  <types/atn-params-report>
     BasegnodeScadaCreate  <types/basegnode-scada-create>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
-    DispatchContractConfirmedHeatpumpwithbooststore  <types/dispatch-contract-confirmed-heatpumpwithbooststore>
-    FloParamsHeatpumpwithbooststore  <types/flo-params-heatpumpwithbooststore>
-    GNodeGt  <types/g-node-gt>
-    GNodeInstanceGt  <types/g-node-instance-gt>
-    GtDispatchBoolean  <types/gt-dispatch-boolean>
-    GwCertId  <types/gw-cert-id>
-    HeartbeatA  <types/heartbeat-a>
-    HeartbeatAlgoAudit  <types/heartbeat-algo-audit>
-    HeartbeatB  <types/heartbeat-b>
+    DispatchContractConfirmed  <types/dispatch-contract-confirmed>
+    FloParams  <types/flo-params>
+    FloParamsBrickstorageheater  <types/flo-params-brickstorageheater>
+    FloParamsReport  <types/flo-params-report>
     InitialTadeedAlgoCreate  <types/initial-tadeed-algo-create>
     InitialTadeedAlgoOptin  <types/initial-tadeed-algo-optin>
     InitialTadeedAlgoTransfer  <types/initial-tadeed-algo-transfer>
@@ -46,14 +41,12 @@ forth between type instances and Python objects.
     OldTadeedAlgoReturn  <types/old-tadeed-algo-return>
     PriceQuantity  <types/price-quantity>
     PriceQuantityUnitless  <types/price-quantity-unitless>
-    Ready  <types/ready>
     ScadaCertTransfer  <types/scada-cert-transfer>
-    SimScadaDriverReport  <types/sim-scada-driver-report>
-    SimTimestep  <types/sim-timestep>
+    SimplesimDriverData  <types/simplesim-driver-data>
+    SimplesimDriverDataBsh  <types/simplesim-driver-data-bsh>
+    SimplesimDriverReport  <types/simplesim-driver-report>
+    SimplesimSnapshotBrickstorageheater  <types/simplesim-snapshot-brickstorageheater>
     SlaEnter  <types/sla-enter>
-    SnapshotHeatpumpwithbooststore  <types/snapshot-heatpumpwithbooststore>
-    SuperStarter  <types/super-starter>
-    SupervisorContainerGt  <types/supervisor-container-gt>
     TadeedSpecsHack  <types/tadeed-specs-hack>
     TavalidatorcertAlgoCreate  <types/tavalidatorcert-algo-create>
     TavalidatorcertAlgoTransfer  <types/tavalidatorcert-algo-transfer>

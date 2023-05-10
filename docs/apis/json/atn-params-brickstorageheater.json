@@ -1,0 +1,231 @@
+{
+  "gwapi": "001",
+  "type_name": "atn.params.brickstorageheater",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Params for a BrickStorageHeater Atn Strategy. Parameters for a model of a ceramic brick thermal storage room unit, using a two-dimensional Dijstra graph parameterized by 'fullness of the thermal battery' and time.",
+  "url": "https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html",
+  "formats": {
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  },
+  "enums": {
+    "DistributionTariff000": {
+      "type": "string",
+      "name": "distribution.tariff.000",
+      "description": "Name of distribution tariff of local network company/utility",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "2127aba6",
+          "title": "VersantStorageHeatTariff",
+          "description": ""
+        },
+        {
+          "const": "ea5c675a",
+          "title": "VersantATariff",
+          "description": ""
+        }
+      ]
+    },
+    "RecognizedCurrencyUnit000": {
+      "type": "string",
+      "name": "recognized.currency.unit.000",
+      "description": "Unit of currency",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "e57c5143",
+          "title": "USD",
+          "description": "US Dollar"
+        },
+        {
+          "const": "f7b38fc5",
+          "title": "GBP",
+          "description": "Pounds sterling"
+        }
+      ]
+    },
+    "RecognizedTemperatureUnit000": {
+      "type": "string",
+      "name": "recognized.temperature.unit.000",
+      "description": "Unit of temperature",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "C",
+          "description": "Celcius"
+        },
+        {
+          "const": "6f16ee63",
+          "title": "F",
+          "description": "Fahrenheit"
+        }
+      ]
+    },
+    "EnergySupplyType000": {
+      "type": "string",
+      "name": "energy.supply.type.000",
+      "description": "",
+      "oneOf": [
+        {
+          "const": "00000000",
+          "title": "Unknown",
+          "description": ""
+        },
+        {
+          "const": "cb18f937",
+          "title": "StandardOffer",
+          "description": ""
+        },
+        {
+          "const": "e9dc99a6",
+          "title": "RealtimeLocalLmp",
+          "description": ""
+        }
+      ]
+    }
+  },
+  "properties": {
+    "GNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "GNode Alias",
+      "required": true
+    },
+    "HomeCity": {
+      "type": "string",
+      "title": "Home City",
+      "required": true
+    },
+    "TimezoneString": {
+      "type": "string",
+      "title": "Timezone String",
+      "required": true
+    },
+    "StorageSteps": {
+      "type": "integer",
+      "title": "Storage Steps",
+      "description": "The number of nodes in each TimeSlice for the Dijkstra graph.",
+      "required": true
+    },
+    "FloSlices": {
+      "type": "integer",
+      "title": "",
+      "description": "The number of nodes for each storage level in the Dijstra graph.",
+      "required": true
+    },
+    "SliceDurationMinutes": {
+      "type": "integer",
+      "title": "",
+      "description": "The length of",
+      "required": true
+    },
+    "CurrencyUnit": {
+      "type": "string",
+      "format": "RecognizedCurrencyUnit000",
+      "title": "",
+      "required": true
+    },
+    "Tariff": {
+      "type": "string",
+      "format": "DistributionTariff000",
+      "title": "",
+      "required": true
+    },
+    "EnergyType": {
+      "type": "string",
+      "format": "EnergySupplyType000",
+      "title": "",
+      "required": true
+    },
+    "StandardOfferPriceDollarsPerMwh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "DistributionTariffDollarsPerMwh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "MaxBrickTempC": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "RatedMaxPowerKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "C": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "ROff": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "ROn": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "RoomTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "AnnualHvacKwhTh": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "BetaOt": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "TempUnit": {
+      "type": "string",
+      "format": "RecognizedTemperatureUnit000",
+      "title": "",
+      "required": true
+    },
+    "AmbientPowerInKw": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "HouseWorstCaseTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "atn.params.brickstorageheater.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

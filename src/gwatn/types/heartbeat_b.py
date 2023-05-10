@@ -3,7 +3,6 @@ import json
 from typing import Any
 from typing import Dict
 from typing import Literal
-from typing import Optional
 
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
@@ -113,15 +112,18 @@ class HeartbeatB(BaseModel):
         title="Hex character getting sent",
         default="0",
     )
-    YourLastHex: Optional[str] = Field(
-        title="Last hex character received from heartbeat partner. If the heartbeat initiator wants to start the sequence over, it does not include this.",
-        default=None,
+    YourLastHex: str = Field(
+        title="Last hex character received from heartbeat partner.",
     )
     LastReceivedTimeUnixMs: int = Field(
         title="Time YourLastHex was received on my clock",
     )
     SendTimeUnixMs: int = Field(
         title="Time this message is made and sent on my clock",
+    )
+    StartingOver: bool = Field(
+        title="True if the heartbeat initiator wants to start the volley over",
+        description="(typically the AtomicTNode in an AtomicTNode / SCADA pair) wants to start the heartbeating volley over. The result is that its partner will not expect the initiator to know its last Hex.",
     )
     TypeName: Literal["heartbeat.b"] = "heartbeat.b"
     Version: str = "001"
@@ -155,9 +157,7 @@ class HeartbeatB(BaseModel):
         return v
 
     @validator("YourLastHex")
-    def _check_your_last_hex(cls, v: Optional[str]) -> Optional[str]:
-        if v is None:
-            return v
+    def _check_your_last_hex(cls, v: str) -> str:
         try:
             check_is_hex_char(v)
         except ValueError as e:
@@ -186,12 +186,13 @@ class HeartbeatB(BaseModel):
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
-        if d["YourLastHex"] is None:
-            del d["YourLastHex"]
         return d
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class HeartbeatB_Maker:
@@ -203,9 +204,10 @@ class HeartbeatB_Maker:
         from_g_node_alias: str,
         from_g_node_instance_id: str,
         my_hex: str,
-        your_last_hex: Optional[str],
+        your_last_hex: str,
         last_received_time_unix_ms: int,
         send_time_unix_ms: int,
+        starting_over: bool,
     ):
         self.tuple = HeartbeatB(
             FromGNodeAlias=from_g_node_alias,
@@ -214,6 +216,7 @@ class HeartbeatB_Maker:
             YourLastHex=your_last_hex,
             LastReceivedTimeUnixMs=last_received_time_unix_ms,
             SendTimeUnixMs=send_time_unix_ms,
+            StartingOver=starting_over,
             #
         )
 
@@ -247,11 +250,13 @@ class HeartbeatB_Maker:
         if "MyHex" not in d2.keys():
             raise SchemaError(f"dict {d2} missing MyHex")
         if "YourLastHex" not in d2.keys():
-            d2["YourLastHex"] = None
+            raise SchemaError(f"dict {d2} missing YourLastHex")
         if "LastReceivedTimeUnixMs" not in d2.keys():
             raise SchemaError(f"dict {d2} missing LastReceivedTimeUnixMs")
         if "SendTimeUnixMs" not in d2.keys():
             raise SchemaError(f"dict {d2} missing SendTimeUnixMs")
+        if "StartingOver" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StartingOver")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -262,6 +267,7 @@ class HeartbeatB_Maker:
             YourLastHex=d2["YourLastHex"],
             LastReceivedTimeUnixMs=d2["LastReceivedTimeUnixMs"],
             SendTimeUnixMs=d2["SendTimeUnixMs"],
+            StartingOver=d2["StartingOver"],
             TypeName=d2["TypeName"],
             Version="001",
         )
