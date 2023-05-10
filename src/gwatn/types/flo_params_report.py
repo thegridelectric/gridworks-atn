@@ -7,7 +7,6 @@ from typing import Optional
 
 from gridworks.errors import SchemaError
 from pydantic import BaseModel
-from pydantic import Extra
 from pydantic import Field
 from pydantic import validator
 
@@ -44,20 +43,8 @@ class FloParamsReport(BaseModel):
     Params: FloParams = Field(
         title="Params",
     )
-    TypeName: str = Field(
-        title="TypeName",
-        default="flo.params.report",
-    )
+    TypeName: Literal["flo.params.report"] = "flo.params.report"
     Version: str = "000"
-
-    class Config:
-        extra = Extra.allow
-
-    @validator("TypeName")
-    def _check_type_name(cls, v: str) -> str:
-        if not v.startswith("flo.params.report"):
-            raise ValueError(f"TypeName {v} must start with 'flo.params.report'")
-        return v
 
     @validator("GNodeAlias")
     def _check_g_node_alias(cls, v: str) -> str:

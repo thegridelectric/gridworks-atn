@@ -46,14 +46,6 @@ FloParamsReport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/flo-params-report.json
 
-GtDispatchBoolean
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/gt-dispatch-boolean.json
-
-HeartbeatB
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. literalinclude:: json/heartbeat-b.json
-
 InitialTadeedAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/initial-tadeed-algo-create.json

@@ -113,10 +113,6 @@ from gwatn.types.flo_params_brickstorageheater import FloParamsBrickstorageheate
 from gwatn.types.flo_params_brickstorageheater import FloParamsBrickstorageheater_Maker
 from gwatn.types.flo_params_report import FloParamsReport
 from gwatn.types.flo_params_report import FloParamsReport_Maker
-from gwatn.types.gt_dispatch_boolean import GtDispatchBoolean
-from gwatn.types.gt_dispatch_boolean import GtDispatchBoolean_Maker
-from gwatn.types.heartbeat_b import HeartbeatB
-from gwatn.types.heartbeat_b import HeartbeatB_Maker
 from gwatn.types.initial_tadeed_algo_create import InitialTadeedAlgoCreate
 from gwatn.types.initial_tadeed_algo_create import InitialTadeedAlgoCreate_Maker
 from gwatn.types.initial_tadeed_algo_optin import InitialTadeedAlgoOptin
@@ -212,8 +208,6 @@ __all__ = [
     "GNodeInstanceGt_Maker",
     "GtDispatchBoolean",
     "GtDispatchBoolean_Maker",
-    "GtDispatchBoolean",
-    "GtDispatchBoolean_Maker",
     "GtDispatchBooleanLocal",
     "GtDispatchBooleanLocal_Maker",
     "GtDriverBooleanactuatorCmd",
@@ -236,8 +230,6 @@ __all__ = [
     "GwCertId_Maker",
     "HeartbeatA",
     "HeartbeatA_Maker",
-    "HeartbeatB",
-    "HeartbeatB_Maker",
     "HeartbeatB",
     "HeartbeatB_Maker",
     "InitialTadeedAlgoCreate",

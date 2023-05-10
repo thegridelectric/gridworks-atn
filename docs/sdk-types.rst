@@ -29,8 +29,6 @@ forth between type instances and Python objects.
     FloParams  <types/flo-params>
     FloParamsBrickstorageheater  <types/flo-params-brickstorageheater>
     FloParamsReport  <types/flo-params-report>
-    GtDispatchBoolean  <types/gt-dispatch-boolean>
-    HeartbeatB  <types/heartbeat-b>
     InitialTadeedAlgoCreate  <types/initial-tadeed-algo-create>
     InitialTadeedAlgoOptin  <types/initial-tadeed-algo-optin>
     InitialTadeedAlgoTransfer  <types/initial-tadeed-algo-transfer>
