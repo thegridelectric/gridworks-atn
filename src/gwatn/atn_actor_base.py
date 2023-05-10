@@ -32,10 +32,8 @@ from gwatn.enums import AlgoCertType
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.two_channel_actor_base import TwoChannelActorBase
-from gwatn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from gwatn.types import (
-    DispatchContractConfirmedHeatpumpwithbooststore_Maker as DispatchContractConfirmed_Maker,
-)
+from gwatn.types import AtnParams
+from gwatn.types import DispatchContractConfirmed_Maker
 from gwatn.types import GtShStatus
 from gwatn.types import GwCertId
 from gwatn.types import GwCertId_Maker

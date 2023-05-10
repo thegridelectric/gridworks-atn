@@ -292,7 +292,7 @@ def check_is_market_slot_name_lrd_format(v: str) -> None:
     Example: rt60gate5.d1.isone.ver.keene.1673539200
 
     """
-    from gwatn.data_classes.market_type import MarketType
+    from gwatn.data_classes import MarketType
 
     try:
         x = v.split(".")
@@ -486,6 +486,9 @@ class AtnBid(BaseModel):
 
     def as_type(self) -> str:
         return json.dumps(self.as_dict())
+
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
 class AtnBid_Maker:

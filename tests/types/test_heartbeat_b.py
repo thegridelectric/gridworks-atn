@@ -16,6 +16,7 @@ def test_heartbeat_b_generated() -> None:
         "YourLastHex": 2,
         "LastReceivedTimeUnixMs": 1673635764282,
         "SendTimeUnixMs": 1673635765317,
+        "StartingOver": False,
         "TypeName": "heartbeat.b",
         "Version": "001",
     }
@@ -41,6 +42,7 @@ def test_heartbeat_b_generated() -> None:
         your_last_hex=gtuple.YourLastHex,
         last_received_time_unix_ms=gtuple.LastReceivedTimeUnixMs,
         send_time_unix_ms=gtuple.SendTimeUnixMs,
+        starting_over=gtuple.StartingOver,
     ).tuple
     assert t == gtuple
 
@@ -69,6 +71,11 @@ def test_heartbeat_b_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["YourLastHex"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["LastReceivedTimeUnixMs"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -78,14 +85,10 @@ def test_heartbeat_b_generated() -> None:
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
-    ######################################
-    # Optional attributes can be removed from type
-    ######################################
-
     d2 = dict(d)
-    if "YourLastHex" in d2.keys():
-        del d2["YourLastHex"]
-    Maker.dict_to_tuple(d2)
+    del d2["StartingOver"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # Behavior on incorrect types
@@ -96,6 +99,10 @@ def test_heartbeat_b_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, SendTimeUnixMs="1673635765317.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, StartingOver="this is not a boolean")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

@@ -1,0 +1,80 @@
+{
+  "gwapi": "001",
+  "type_name": "flo.params",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": "Base class for Forward Looking Optimizer params. Derived classes are expected to have TypeNames enforced as literals that start with flo.params. E.g. flo.params.brickstorageheater. This container is used for sending messages that include flo.params (i.e, flo.params.report",
+  "url": "https://gridworks-atn.readthedocs.io/en/latest/flo.html#flo-params",
+  "formats": {
+    "UuidCanonicalTextual": {
+      "type": "string",
+      "description": "A string of hex words separated by hyphens of length 8-4-4-4-12.",
+      "example": "652ba6b0-c3bf-4f06-8a80-6b9832d60a25"
+    },
+    "LeftRightDot": {
+      "type": "string",
+      "description": "Lowercase alphanumeric words separated by periods, most significant word (on the left) starting with an alphabet character.",
+      "example": "dw1.isone.me.freedom.apple"
+    }
+  },
+  "properties": {
+    "GNodeAlias": {
+      "type": "string",
+      "format": "LeftRightDot",
+      "title": "",
+      "required": true
+    },
+    "FloParamsUid": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "HomeCity": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "TimezoneString": {
+      "type": "string",
+      "title": "",
+      "required": true
+    },
+    "StartYearUtc": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "StartMonthUtc": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "StartDayUtc": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "StartHourUtc": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "StartMinuteUtc": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "flo.params.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

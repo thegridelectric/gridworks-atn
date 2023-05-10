@@ -24,7 +24,45 @@
 
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
-<xsl:text>""" GwSchema Enums used in gwatn """</xsl:text>
+<xsl:text>""" GwSchema Enums used in gwatn """
+
+# From gridworks</xsl:text>
+
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gridworks')]">
+<xsl:sort select="EnumName" data-type="text"/>
+<xsl:variable name="enum-id" select="Enum"/>
+<xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
+<xsl:text>
+from gridworks.enums.</xsl:text>
+<xsl:value-of select="translate(LocalName,'.','_')"/>
+<xsl:text> import </xsl:text>
+<xsl:call-template name="nt-case">
+    <xsl:with-param name="mp-schema-text" select="LocalName" />
+</xsl:call-template>
+
+</xsl:for-each>
+</xsl:for-each>
+<xsl:text>
+
+# From gwproto</xsl:text>
+
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
+<xsl:sort select="EnumName" data-type="text"/>
+<xsl:variable name="enum-id" select="Enum"/>
+<xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
+<xsl:text>
+from gwproto.enums.</xsl:text>
+<xsl:value-of select="translate(LocalName,'.','_')"/>
+<xsl:text> import </xsl:text>
+<xsl:call-template name="nt-case">
+    <xsl:with-param name="mp-schema-text" select="LocalName" />
+</xsl:call-template>
+
+</xsl:for-each>
+</xsl:for-each>
+<xsl:text>
+
+# From gwatn</xsl:text>
 <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
 <xsl:sort select="EnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
@@ -43,7 +81,7 @@ from gwatn.enums.</xsl:text>
 
 
 __all__ = [</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto')  or (normalize-space(ProtocolName) ='gridworks')]">
 <xsl:sort select="EnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
