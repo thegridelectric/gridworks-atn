@@ -1011,14 +1011,14 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.2.2"
+version = "0.2.4"
 description = "Gridworks"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks-0.2.2-py3-none-any.whl", hash = "sha256:50456eb7f935db0d678c90c9dff7469b0e02059627fe18d6dd83c89f353f25da"},
-    {file = "gridworks-0.2.2.tar.gz", hash = "sha256:45e2f67b87f09df55db2398df8af03880095f6f11605b81038b3437b4cac16e5"},
+    {file = "gridworks-0.2.4-py3-none-any.whl", hash = "sha256:a838977a8f237f21cc92efd31a75f94ea8de99e45c73236e7cbd72600a6697e1"},
+    {file = "gridworks-0.2.4.tar.gz", hash = "sha256:1d67a4781d724641f240c734c3c6b2cb16ea8d5ace2082958b384265ee4c028a"},
 ]
 
 [package.dependencies]
@@ -1042,44 +1042,20 @@ types-requests = ">=2.28.11.2,<3.0.0.0"
 uvicorn = {version = ">=0.19.0,<0.20.0", extras = ["standard"]}
 
 [[package]]
-name = "gridworks-proactor"
-version = "0.1.8"
-description = "Gridworks Proactor"
-category = "main"
-optional = false
-python-versions = ">=3.10,<4.0"
-files = [
-    {file = "gridworks_proactor-0.1.8-py3-none-any.whl", hash = "sha256:5e8d3f06ad11bf47bf0ecaa140655aadcd417b7c9955cc5f39404502132dda78"},
-    {file = "gridworks_proactor-0.1.8.tar.gz", hash = "sha256:44b431b4ffeabac7418d4ac996fa1e7e8e2112941827c8281a18f3d13f115a75"},
-]
-
-[package.dependencies]
-gridworks-protocol = ">=0.3.6"
-paho-mqtt = ">=1.6.1,<2.0.0"
-pendulum = ">=2.1.2,<3.0.0"
-pydantic = ">=1.10.6,<2.0.0"
-python-dotenv = ">=1.0.0,<2.0.0"
-result = ">=0.9.0,<0.10.0"
-xdg = ">=6.0.0,<7.0.0"
-
-[package.extras]
-tests = ["pytest (>=7.2.0,<8.0.0)", "pytest-asyncio (>=0.20.3,<0.21.0)"]
-
-[[package]]
 name = "gridworks-protocol"
-version = "0.5.0"
+version = "0.5.2"
 description = "Gridworks Protocol"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks_protocol-0.5.0-py3-none-any.whl", hash = "sha256:d2c7f3abb0da2880ece82073f36fd66e85f53ec3294b733280f5d35885102d00"},
-    {file = "gridworks_protocol-0.5.0.tar.gz", hash = "sha256:8f6c4a3f253af195c6a3d4215c059af413a32c15250a86f9e9f52a5bc2f651d9"},
+    {file = "gridworks_protocol-0.5.2-py3-none-any.whl", hash = "sha256:f874d2dac65ec4f049d74840aaac44ab138acd6da0ee73ee80222a44902908bb"},
+    {file = "gridworks_protocol-0.5.2.tar.gz", hash = "sha256:dc97179abd5e5c508bad504f9288e676daddd1ae9c2f07c60fd2c36dedaa3bb0"},
 ]
 
 [package.dependencies]
 fastapi-utils = ">=0.2.1,<0.3.0"
-gridworks = "0.2.2"
+gridworks = "0.2.4"
 pendulum = ">=2.1.2,<3.0.0"
 pydantic = ">=1.10.2,<2.0.0"
 
@@ -2759,18 +2735,6 @@ files = [
 docutils = ">=0.11,<1.0"
 
 [[package]]
-name = "result"
-version = "0.9.0"
-description = "A Rust-like result type for Python"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "result-0.9.0-py3-none-any.whl", hash = "sha256:2dd342c13fbf28d207c3f466f01a7915c6ee0d1fe3235fd9ba2041d36de498c1"},
-    {file = "result-0.9.0.tar.gz", hash = "sha256:cc4147c824221e8326d143a55065ec17b6337a9c0dda7700f7f947ca33ac63fd"},
-]
-
-[[package]]
 name = "rfc3986"
 version = "1.5.0"
 description = "Validating URI References per RFC 3986"
@@ -3702,18 +3666,6 @@ files = [
 ]
 
 [[package]]
-name = "xdg"
-version = "6.0.0"
-description = "Variables defined by the XDG Base Directory Specification"
-category = "main"
-optional = false
-python-versions = ">=3.7,<4.0"
-files = [
-    {file = "xdg-6.0.0-py3-none-any.whl", hash = "sha256:df3510755b4395157fc04fc3b02467c777f3b3ca383257397f09ab0d4c16f936"},
-    {file = "xdg-6.0.0.tar.gz", hash = "sha256:24278094f2d45e846d1eb28a2ebb92d7b67fc0cab5249ee3ce88c95f649a1c92"},
-]
-
-[[package]]
 name = "xdoctest"
 version = "1.1.1"
 description = "A rewrite of the builtin doctest module"
@@ -3758,4 +3710,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "ba065e9dfbb3960ac00bd792f23ccd5f0c5644bff5703a18bffc48ca017cfc66"
+content-hash = "0101bd065af0eb8ce9f77ba30cac0f714a1cc2f717871b63ef9d40ad7b82bad9"
