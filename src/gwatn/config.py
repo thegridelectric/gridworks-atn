@@ -37,16 +37,6 @@ class AtnSettings(GNodeSettings):
         env_nested_delimiter = "__"
 
 
-class SupervisorSettings(GNodeSettings):
-    g_node_alias: str = "d1.isone.ver.keene.super1"
-    g_node_role_value: str = "Supervisor"
-    supervisor_container_id: str = "3d9ad9fa-8e0c-4569-8f34-2b0198a55085"
-
-    class Config:
-        env_prefix = "SUPER_"
-        env_nested_delimiter = "__"
-
-
 class ValidatorSettings(BaseSettings):
     algo_api_secrets: AlgoApiSecrets = AlgoApiSecrets()
     public: Public = Public()

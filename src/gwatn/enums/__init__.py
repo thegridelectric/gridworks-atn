@@ -15,9 +15,9 @@ from gridworks.enums.recognized_currency_unit import RecognizedCurrencyUnit
 from gridworks.enums.strategy_name import StrategyName
 from gridworks.enums.supervisor_container_status import SupervisorContainerStatus
 from gridworks.enums.universe_type import UniverseType
-from gwproto.enums.actor_class import ActorClass
 
 # From gwproto
+from gwproto.enums.actor_class import ActorClass
 from gwproto.enums.local_comm_interface import LocalCommInterface
 from gwproto.enums.make_model import MakeModel
 from gwproto.enums.role import Role
@@ -27,10 +27,12 @@ from gwproto.enums.unit import Unit
 # From gwatn
 from gwatn.enums.distribution_tariff import DistributionTariff
 from gwatn.enums.energy_supply_type import EnergySupplyType
+from gwatn.enums.recognized_irradiance_type import RecognizedIrradianceType
 from gwatn.enums.recognized_temperature_unit import RecognizedTemperatureUnit
 
 
 __all__ = [
+    "ActorClass",
     "AlgoCertType",
     "CoreGNodeRole",
     "DistributionTariff",
@@ -39,19 +41,19 @@ __all__ = [
     "GNodeStatus",
     "GniStatus",
     "LocalCommInterface",
+    "MakeModel",
     "MarketPriceUnit",
     "MarketQuantityUnit",
     "MarketTypeName",
     "MessageCategory",
     "MessageCategorySymbol",
     "RecognizedCurrencyUnit",
+    "RecognizedIrradianceType",
     "RecognizedTemperatureUnit",
-    "ActorClass",
     "Role",
-    "MakeModel",
-    "TelemetryName",
-    "Unit",
     "StrategyName",
     "SupervisorContainerStatus",
+    "TelemetryName",
+    "Unit",
     "UniverseType",
 ]
