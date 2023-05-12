@@ -1,4 +1,4 @@
-""" DijkstraSolarFirebricksAlpha Class Definition """
+""" DEdege (Dijkstra Edge) Class Definition """
 from abc import ABC
 from typing import Optional
 

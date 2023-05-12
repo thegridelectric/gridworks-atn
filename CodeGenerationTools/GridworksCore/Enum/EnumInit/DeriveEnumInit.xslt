@@ -29,7 +29,7 @@
 # From gridworks</xsl:text>
 
 <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gridworks')]">
-<xsl:sort select="EnumName" data-type="text"/>
+<xsl:sort select="LocalEnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
 <xsl:text>
@@ -47,7 +47,7 @@ from gridworks.enums.</xsl:text>
 # From gwproto</xsl:text>
 
 <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
-<xsl:sort select="EnumName" data-type="text"/>
+<xsl:sort select="LocalEnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
 <xsl:text>
@@ -64,7 +64,7 @@ from gwproto.enums.</xsl:text>
 
 # From gwatn</xsl:text>
 <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
-<xsl:sort select="EnumName" data-type="text"/>
+<xsl:sort select="LocalEnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
 <xsl:text>
@@ -82,7 +82,7 @@ from gwatn.enums.</xsl:text>
 
 __all__ = [</xsl:text>
 <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto')  or (normalize-space(ProtocolName) ='gridworks')]">
-<xsl:sort select="EnumName" data-type="text"/>
+<xsl:sort select="LocalEnumName" data-type="text"/>
 <xsl:variable name="enum-id" select="Enum"/>
 <xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
 

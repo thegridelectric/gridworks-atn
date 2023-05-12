@@ -1,4 +1,4 @@
-""" Definition of a node in the Dijsktra graph for solving Forward Looking Optimizations"""
+""" DNode (Dijkstra Node) Definition """
 from abc import ABC
 from typing import Optional
 
