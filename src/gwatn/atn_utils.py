@@ -42,3 +42,45 @@ def market_slot_from_name(market_slot_name: str) -> MarketSlot:
     return MarketSlot(
         Type=market_type, MarketMakerAlias=market_maker_alias, StartUnixS=slot_start
     )
+
+
+def market_name_from_market_slot_name(market_slot_name: str) -> str:
+    """
+    Returns market name from market slot name.
+
+    Raises ValueError if market_slot_name has incorrect format.
+
+    E.g takes rt60gate30b.d1.isone.ver.keene.1577836800 and returns rt60gate30b.d1.isone.ver.keene
+    """
+    try:
+        property_format.check_is_market_slot_name_lrd_format(market_slot_name)
+    except ValueError as e:
+        raise Exception(
+            f"market_slot_name {market_slot_name} does not have correct format!"
+        )
+    words = market_slot_name.split(".")
+    market_type_name = MarketTypeName(words[0])
+    market_type = MarketType.by_id[market_type_name]
+    market_maker_alias = ".".join(words[1:-1])
+    return f"{market_type.name.value}.{market_maker_alias}"
+
+
+def slot_start_s_from_market_slot_name(market_slot_name: str) -> int:
+    """
+    E.g takes rt60gate30b.d1.isone.ver.keene.1577836800 and returns 1577836800
+    Args:
+        market_slot_name (str): candidate string for market slot name
+
+    Raises: ValueError if market_slot_name has incorrect format.
+
+    Returns: slot start time in seconds
+    """
+    try:
+        property_format.check_is_market_slot_name_lrd_format(market_slot_name)
+    except ValueError as e:
+        raise Exception(
+            f"market_slot_name  {market_slot_name} does not correct format!"
+        )
+    x = market_slot_name.split(".")
+    slot_start_utc_s = x[-1]
+    return int(slot_start_utc_s)
