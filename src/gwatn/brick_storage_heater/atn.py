@@ -14,30 +14,28 @@ import math
 import random
 import time
 import uuid
+from typing import Optional
 from typing import no_type_check
 
 import dotenv
 import gridworks.algo_utils as algo_utils
 import pendulum
 import requests
-import satn.strategies.heatpumpwithbooststore.atn_utils as atn_utils
-import satn.strategies.heatpumpwithbooststore.dev_io as dev_io
 from algosdk import encoding
 from algosdk.future import transaction
 from algosdk.v2client.algod import AlgodClient
 from gridworks.algo_utils import BasicAccount
+from gridworks.data_classes.market_type import Rt60Gate30B
 from gridworks.utils import RestfulResponse
-from satn.strategies.heatpumpwithbooststore.atn_utils import SlotStuff
-from satn.strategies.heatpumpwithbooststore.edge import (
-    Edge__SpaceHeat__Water_HeatPumpAndBoost__Alpha as Edge,
-)
-from satn.strategies.heatpumpwithbooststore.flo import (
-    HeatPumpWithBoostStore__Flo as Flo,
-)
 
+import gwatn.atn_utils as atn_utils
+import gwatn.brick_storage_heater.dev_io as dev_io
+import gwatn.brick_storage_heater.strategy_utils as strategy_utils
 import gwatn.config as config
 from gwatn.atn_actor_base import AtnActorBase
-from gwatn.data_classes.market_type import Rt60Gate30B
+from gwatn.brick_storage_heater.edge import Edge__BrickStorageHeater as Edge
+from gwatn.brick_storage_heater.flo import Flo__BrickStorageHeater as Flo
+from gwatn.brick_storage_heater.strategy_utils import SlotStuff
 from gwatn.enums import GNodeRole
 from gwatn.enums import MessageCategory
 from gwatn.enums import MessageCategorySymbol
@@ -83,18 +81,19 @@ class Atn__BrickStorageHeater(AtnActorBase):
             settings.algo_api_secrets.algod_token.get_secret_value(),
             settings.public.algod_address,
         )
-        self.atn_params: AtnParams = atn_utils.dummy_atn_params()
+        if self.universe_type == UniverseType.Dev:
+            self.atn_params: AtnParams = strategy_utils.dummy_atn_params()
+        else:
+            self.get_initial_params()
         self.market_type: MarketTypeGt = MarketTypeGt_Maker.dc_to_tuple(Rt60Gate30B)
-        self.active_run: SlotStuff = atn_utils.dummy_slot_stuff(
+        self.active_run: SlotStuff = strategy_utils.dummy_slot_stuff(
             slot=self.active_slot(self.market_type)
         )
-        self.next_run: SlotStuff = atn_utils.dummy_slot_stuff(
+        self.next_run: SlotStuff = strategy_utils.dummy_slot_stuff(
             slot=self.next_slot(self.market_type)
         )
         self.store_kwh: float = 0
-        self.heatpump_kw: float = 0
-        self.boost_kw: float = 0
-        self.cop: float = 2.5
+        self._power_watts: Optional[int] = None
         self.store_update_time: float = self.time()
         self.latest_price_received_time: float = 0
         self.latest_price_dollars_per_mwh: float = 10**6
@@ -122,6 +121,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         LOGGER.warning(
             f"[{self.short_alias}] Sent first heartbeat to super: {d.minute}:{d.second}.{d.microsecond}"
         )
+        self._first_start_finished = True
 
     @no_type_check
     def on_marketprice_bindok(self, _unused_frame, binding) -> None:
@@ -148,16 +148,17 @@ class Atn__BrickStorageHeater(AtnActorBase):
         # LOGGER.info("----------------------------------------------------")
 
         # This gets called on the first timestep
-        if atn_utils.is_dummy_atn_params(self.atn_params):
+        if strategy_utils.is_dummy_atn_params(self.atn_params):
             self.get_initial_params()
             LOGGER.info("Correcting runs on initial timestep")
-            self.active_run = atn_utils.dummy_slot_stuff(
+            self.active_run = strategy_utils.dummy_slot_stuff(
                 slot=self.last_slot(self.market_type),
             )
             try:
                 self.next_run = dev_io.initialize_slot_stuff(
                     slot=self.active_slot(self.market_type),
                     atn_params=self.atn_params,
+                    atn_gni_id=self.g_node_instance_id,
                 )
             except Exception as e:
                 LOGGER.warning(
@@ -182,6 +183,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
             self.next_run = dev_io.initialize_slot_stuff(
                 slot=self.next_slot(self.market_type),
                 atn_params=self.atn_params,
+                atn_gni_id=self.g_node_instance_id,
             )
             try:
                 self.submit_bid(self.active_run)
@@ -238,11 +240,15 @@ class Atn__BrickStorageHeater(AtnActorBase):
         payload = Snapshot_Maker(
             from_g_node_alias=self.alias,
             from_g_node_instance_id=self.g_node_instance_id,
-            boost_power_kw_times1000=int(self.boost_kw * 1000),
-            heatpump_power_kw_times1000=int(self.heatpump_kw * 1000),
-            cop_times10=int(self.cop * 10),
+            power_watts=self._power_watts,
             store_kwh=int(self.store_kwh),
-            max_store_kwh=int(atn_utils.get_max_store_kwh_th(self.atn_params)),
+            max_store_kwh=int(
+                strategy_utils.get_max_store_kwh_th(
+                    max_brick_temp_c=self.atn_params.MaxBrickTempC,
+                    c=self.atn_params.C,
+                    room_temp_f=self.atn_params.RoomTempF,
+                )
+            ),
             about_terminal_asset_alias=self.alias + ".ta",
         ).tuple
         # pprint(payload)
@@ -276,15 +282,14 @@ class Atn__BrickStorageHeater(AtnActorBase):
                 self.active_run.Flo.edges[node],
             )
         )[0]
-        self.heatpump_kw = edge.hp_electricity_avg_kw
-        self.boost_kw = edge.boost_electricity_used_avg_kw
-        self.cop = self.active_run.Flo.cop[0]
+        self._power_watts = edge.avg_kw * 1000
+
         # LOGGER.info(
         #     f"[{self.time_str()}: {self.short_alias}] Updating state: heatpump {round(self.heatpump_kw,2)}"
         # )
 
     def update_store_level(self) -> None:
-        if atn_utils.is_dummy_slot_stuff(self.active_run):
+        if strategy_utils.is_dummy_slot_stuff(self.active_run):
             LOGGER.info(f"Not updating storage - active run is a dummy")
             self.store_update_time = self.time()
             return
@@ -310,7 +315,11 @@ class Atn__BrickStorageHeater(AtnActorBase):
         # self.store_kwh = ...
         self.store_kwh = (
             store_idx
-            * atn_utils.get_max_store_kwh_th(self.atn_params)
+            * strategy_utils.get_max_store_kwh_th(
+                max_brick_temp_c=self.atn_params.MaxBrickTempC,
+                c=self.atn_params.C,
+                room_temp_f=self.atn_params.RoomTempF,
+            )
             / self.atn_params.StorageSteps
         )
         # LOGGER.info(
@@ -339,7 +348,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
                 self.active_run.Flo.edges[node],
             )
         )[0]
-        q = edge.hp_electricity_avg_kw + edge.boost_electricity_used_avg_kw
+        q = edge.avg_kw
         pq = PriceQuantityUnitless(
             PriceTimes1000=int(
                 self.active_run.Flo.params.RealtimeElectricityPrice[0] * 1000
@@ -413,20 +422,21 @@ class Atn__BrickStorageHeater(AtnActorBase):
     ########################
 
     def dev_get_initial_params(self) -> None:
-        if not atn_utils.is_dummy_atn_params(self.atn_params):
+        if not strategy_utils.is_dummy_atn_params(self.atn_params):
             LOGGER.warning("Tried to get initial params but already have them")
 
         now_ms = int(self.time()) * 1000
         self.atn_params = dev_io.atn_params_from_alias(alias=self.alias, now_ms=now_ms)
         self.atn_params.GNodeInstanceId = self.g_node_instance_id
-        if atn_utils.is_dummy_atn_params(self.atn_params):
+        if strategy_utils.is_dummy_atn_params(self.atn_params):
             LOGGER.warning(f"No atn_params for {self.alias} before {self.time_str()}")
             return
         payload = AtnParamsReport_Maker(
             g_node_alias=self.alias,
             g_node_instance_id=self.g_node_instance_id,
+            atn_params_type_name=self.atn_params.TypeName,
             time_unix_s=int(self.time()),
-            atn_params=self.atn_params,
+            params=self.atn_params,
             irl_time_unix_s=int(time.time()),
         ).tuple
 
@@ -490,5 +500,9 @@ class Atn__BrickStorageHeater(AtnActorBase):
         return round(
             self.atn_params.StorageSteps
             * self.store_kwh
-            / atn_utils.get_max_store_kwh_th(self.atn_params)
+            / strategy_utils.get_max_store_kwh_th(
+                max_brick_temp_c=self.atn_params.MaxBrickTempC,
+                c=self.atn_params.C,
+                room_temp_f=self.atn_params.RoomTempF,
+            )
         )

@@ -231,6 +231,11 @@ class AtnActorBase(TwoChannelActorBase):
         gt_sh_status = payload.status
         self._process_gt_sh_status_from_scada(payload=gt_sh_status)
 
+    @abstractmethod
+    def _process_gt_sh_status_from_scada(self, payload: GtShStatus) -> None:
+        """Atn has received gt.sh.status message from its SCADA"""
+        raise NotImplementedError
+
     def _process_snapshot_spaceheat_event_from_scada(
         self, payload: SnapshotSpaceheatEvent
     ) -> None:
@@ -239,18 +244,13 @@ class AtnActorBase(TwoChannelActorBase):
         self._process_snapshot_spaceheat_from_scada(payload=snapshot_spaceheat)
 
     @abstractmethod
-    def _process_gt_sh_status_from_scada(self, payload: GtShStatus) -> None:
-        """Atn has received gt.sh.status message from its SCADA"""
+    def _process_snapshot_spaceheat_from_scada(self, payload: SnapshotSpaceheat):
+        """Atn has received a snapshot.sspaceheat message from the SCADA"""
         raise NotImplementedError
 
     @abstractmethod
     def _process_power_watts_from_scada(self, payload: PowerWatts) -> None:
         """Atn has received power.watts message from its SCADA"""
-        raise NotImplementedError
-
-    @abstractmethod
-    def _process_snapshot_spaceheat_from_scada(self, payload: SnapshotSpaceheat):
-        """Atn has received a snapshot.sspaceheat message from the SCADA"""
         raise NotImplementedError
 
     def route_message(

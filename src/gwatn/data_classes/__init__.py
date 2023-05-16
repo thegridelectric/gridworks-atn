@@ -8,6 +8,9 @@ from gridworks.data_classes.supervisor_container import SupervisorContainer
 
 from gwatn.data_classes.d_edge import DEdge
 from gwatn.data_classes.d_node import DNode
+from gwatn.data_classes.hack_price_method import PriceMethod
+from gwatn.data_classes.hack_weather_location import WeatherLocation
+from gwatn.data_classes.hack_weather_source import WeatherSource
 
 
 __all__ = [
@@ -19,5 +22,8 @@ __all__ = [
     "GNodeInstance",
     "GpsPoint",
     "MarketType",
+    "PriceMethod",
     "SupervisorContainer",
+    "WeatherLocation",
+    "WeatherSource",
 ]

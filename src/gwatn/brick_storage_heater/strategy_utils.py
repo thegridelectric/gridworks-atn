@@ -1,3 +1,4 @@
+from typing import List
 from typing import Optional
 
 from pydantic import BaseModel
@@ -65,18 +66,24 @@ def dummy_flo_params() -> FloParams:
     )
 
 
-def get_max_store_kwh_th(params: FloParams) -> float:
+def get_max_store_kwh_th(max_brick_temp_c: int, c: float, room_temp_f: int) -> float:
     """Use max store temp, room temp, and CF to get max store energy in kWh_th"""
-    room_temp_c = (params.RoomTempF - 32) * 5 / 9
-    return (params.MaxBrickTempC - room_temp_c) * params.C
+    room_temp_c = (room_temp_f - 32) * 5 / 9
+    return (max_brick_temp_c - room_temp_c) * c
 
 
-def get_house_worst_case_heat_output_avg_kw(params: FloParams) -> float:
-    design_t = params.HouseWorstCaseTempF
-    this_run_t = min(params.OutsideTempF)
-    room_t = params.RoomTempF
-    p = params.PowerRequiredByHouseFromSystemAvgKwList
+def get_house_worst_case_heat_output_avg_kw(
+    house_worst_case_temp_f: int,
+    room_temp_f: int,
+    ambient_power_in_kw: float,
+    outside_temp_f_list: List[int],
+    power_required_by_house_from_system_avg_kw_list: List[float],
+) -> float:
+    design_t = house_worst_case_temp_f
+    this_run_t = min(outside_temp_f_list)
+    room_t = room_temp_f
+    p = power_required_by_house_from_system_avg_kw_list
     this_run_max_system_kw = max(p)
-    this_run_max_kw_in = this_run_max_system_kw + params.AmbientPowerInKw
+    this_run_max_kw_in = this_run_max_system_kw + ambient_power_in_kw
     dd_max_kw_in = this_run_max_kw_in * (room_t - design_t) / (room_t - this_run_t)
-    return dd_max_kw_in - params.AmbientPowerInKw
+    return dd_max_kw_in - ambient_power_in_kw

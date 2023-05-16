@@ -3,13 +3,11 @@ import time
 import gridworks.conversion_factors as cf
 import pendulum
 import xlsxwriter
-from satn.strategies.heatpumpwithbooststore.flo import HeatPumpWithBoostStore__Flo
-from satn.strategies.heatpumpwithbooststore.node import (
-    Node_SpaceHeat__WaterStore as Node,
-)
 
 import gwatn.brick_storage_heater.strategy_utils as strategy_utils
 from gwatn.brick_storage_heater.edge import Edge__BrickStorageHeater as Edge
+from gwatn.brick_storage_heater.flo import Flo__BrickStorageHeater as Flo
+from gwatn.brick_storage_heater.node import Node_BrickStorageHeater as Node
 from gwatn.enums import RecognizedCurrencyUnit
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 
@@ -20,7 +18,7 @@ ON_PEAK_DIST_PRICE_PER_MWH_CUTOFF = 100
 SHOULDER_PEAK_DIST_PRICE_PER_MWH_CUTOFF = 50
 
 
-def export_xlsx(alias: str, flo: HeatPumpWithBoostStore__Flo, atn_params: AtnParams):
+def export_xlsx(alias: str, flo: Flo, atn_params: AtnParams):
     local_start = pendulum.timezone(flo.timezone_string).convert(flo.flo_start_utc)
     date_str = local_start.strftime("%Y%m%d")
     hour_str = local_start.strftime("%H")
@@ -55,7 +53,7 @@ def export_xlsx(alias: str, flo: HeatPumpWithBoostStore__Flo, atn_params: AtnPar
 
 def export_best_path_info(
     alias: str,
-    flo: HeatPumpWithBoostStore__Flo,
+    flo: Flo,
     workbook: xlsxwriter.workbook.Workbook,
     starting_store_idx: int,
 ):
@@ -296,7 +294,7 @@ def export_best_path_info(
 
 
 def export_flo_graph(
-    flo: HeatPumpWithBoostStore__Flo,
+    flo: Flo,
     workbook: xlsxwriter.workbook.Workbook,
     worksheet: xlsxwriter.workbook.Worksheet,
     starting_store_idx: int,
@@ -340,7 +338,7 @@ def export_flo_graph(
 
 
 def export_params_xlsx(
-    flo: HeatPumpWithBoostStore__Flo,
+    flo: Flo,
     atn_params: AtnParams,
     workbook: xlsxwriter.workbook.Workbook,
 ):
