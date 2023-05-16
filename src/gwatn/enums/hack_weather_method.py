@@ -13,3 +13,4 @@ class WeatherMethod(enum.Enum):
     NOAA_LCD_HSC_BETA = "noaa.lcd.hsc.beta"
     SINGLEYEAR_NOAA_LCD_BASICTEMPGRAB = "singleyear.noaa.lcd.basictempgrab"
     NOAA_LCD_HSC_ALPHA = "noaa.lcd.hsc.alpha"
+    PREV_YEAR_HACK = "prev.year.hack"

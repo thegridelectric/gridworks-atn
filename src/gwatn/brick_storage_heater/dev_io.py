@@ -17,9 +17,15 @@ from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 from gwatn.types import AtnParamsReport_Maker
 from gwatn.types import FloParamsBrickstorageheater as FloParams
 from gwatn.types import MarketSlot
-from gwatn.types.csv_distp_sync import CsvDistpSync_Maker
-from gwatn.types.csv_eprt_sync import CsvEprtSync_Maker
-from gwatn.types.csv_weather_forecast_sync import CsvWeatherForecastSync_Maker
+from gwatn.types.ps_distprices_gnode.csv_distp_sync.csv_distp_sync_1_0_0 import (
+    Csv_Distp_Sync_1_0_0,
+)
+from gwatn.types.ps_electricityprices_gnode.csv_eprt_sync.csv_eprt_sync_1_0_0 import (
+    Csv_Eprt_Sync_1_0_0,
+)
+from gwatn.types.ws_forecast_gnode.csv_weather_forecast_sync.csv_weather_forecast_sync_1_0_0 import (
+    Csv_Weather_Forecast_Sync_1_0_0,
+)
 
 
 LOG_FORMAT = (
@@ -138,7 +144,7 @@ def get_flo_params(
             raise Exception(f"No heat use data for {pendulum.from_timestamp(fail_t)}!")
         power_required_list.append(power_required)
 
-    ep = CsvEprtSync_Maker(elec_price_file=ELEC_PRICE_FILE).tuple
+    ep = Csv_Eprt_Sync_1_0_0(ELEC_PRICE_FILE).payload
     ep_start = pendulum.datetime(
         year=ep.StartYearUtc,
         month=ep.StartMonthUtc,
@@ -149,7 +155,7 @@ def get_flo_params(
     start_idx = int((start_s - ep_start) / 3600)
     elec_price_list: List[float] = ep.Prices[start_idx : start_idx + slices]
 
-    dp = CsvDistpSync_Maker(dist_price_file=DIST_PRICE_FILE).tuple
+    dp = Csv_Distp_Sync_1_0_0(DIST_PRICE_FILE).payload
     dp_start = pendulum.datetime(
         year=dp.StartYearUtc,
         month=dp.StartMonthUtc,
@@ -160,7 +166,7 @@ def get_flo_params(
     start_idx = int((start_s - dp_start) / 3600)
     dist_price_list: List[float] = dp.Prices[start_idx : start_idx + slices]
 
-    tp = CsvWeatherForecastSync_Maker(weather_csv=WEATHER_PRICE_FILE).tuple
+    tp = Csv_Weather_Forecast_Sync_1_0_0(WEATHER_PRICE_FILE).payload
     tp_start = pendulum.datetime(
         year=tp.StartYearUtc,
         month=tp.StartMonthUtc,

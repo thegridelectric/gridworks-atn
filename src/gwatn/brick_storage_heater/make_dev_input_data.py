@@ -7,19 +7,7 @@ import pendulum
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 from gwatn.types import AtnParamsBrickstorageheater_Maker as AtnParams_Maker
 from gwatn.types import AtnParamsReport_Maker
-from gwatn.types.csv_distp_sync import CsvDistpSync_Maker
-from gwatn.types.csv_eprt_sync import CsvEprtSync_Maker
-from gwatn.types.csv_weather_forecast_sync import CsvWeatherForecastSync_Maker
 
-
-eprt_csv = "input_data/elec_price_data.csv"
-ep = CsvEprtSync_Maker(elec_price_file=eprt_csv).tuple
-
-distp_csv = "input_data/dist_price_data.csv"
-dp = CsvDistpSync_Maker(dist_price_file=distp_csv).tuple
-
-temp_csv = "input_data/temperature_data.csv"
-temp = CsvWeatherForecastSync_Maker(weather_csv=temp_csv).tuple
 
 params_file = "src/gwatn/brick_storage_heater/dev_atn_params_data.csv"
 params = []
