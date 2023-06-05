@@ -9,8 +9,6 @@ from gwproto.messages import Ping as GridworksPing
 import gwatn.config as config
 from gwatn.atn_actor_base import AtnActorBase
 from gwatn.enums import TelemetryName
-from gwatn.types import GtDispatchBoolean_Maker
-from gwatn.types import GtShCliAtnCmd_Maker
 from gwatn.types import GtShStatus
 from gwatn.types import LatestPrice
 from gwatn.types import PowerWatts
@@ -50,43 +48,6 @@ class SimpleAtnActor(AtnActorBase):
 
     def repeat_timestep(self, payload: SimTimestep) -> None:
         pass
-
-    ##################
-    # Sent to SCADA
-    ##################
-
-    def snap(self):
-        self.send_scada_message(
-            payload=GtShCliAtnCmd_Maker(
-                from_g_node_alias=self.alias,
-                from_g_node_id=self.g_node_instance_id,
-                send_snapshot=True,
-            ).tuple
-        )
-
-    def turn_on(self, relay_node_name: str) -> None:
-        self.send_scada_message(
-            payload=GtDispatchBoolean_Maker(
-                about_node_name=relay_node_name,
-                to_g_node_alias=self.scada_alias,
-                from_g_node_alias=self.alias,
-                from_g_node_instance_id=self.g_node_instance_id,
-                relay_state=1,
-                send_time_unix_ms=int(time.time() * 1000),
-            ).tuple
-        )
-
-    def turn_off(self, relay_node_name: str) -> None:
-        self.send_scada_message(
-            payload=GtDispatchBoolean_Maker(
-                about_node_name=relay_node_name,
-                to_g_node_alias=self.scada_alias,
-                from_g_node_alias=self.alias,
-                from_g_node_instance_id=self.g_node_instance_id,
-                relay_state=0,
-                send_time_unix_ms=int(time.time() * 1000),
-            ).tuple
-        )
 
     ######################
     # Received from SCADA

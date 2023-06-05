@@ -34,6 +34,8 @@ from gwatn.enums import UniverseType
 from gwatn.two_channel_actor_base import TwoChannelActorBase
 from gwatn.types import AtnParams
 from gwatn.types import DispatchContractConfirmed_Maker
+from gwatn.types import GtDispatchBoolean_Maker
+from gwatn.types import GtShCliAtnCmd_Maker
 from gwatn.types import GtShStatus
 from gwatn.types import GwCertId
 from gwatn.types import GwCertId_Maker
@@ -340,6 +342,70 @@ class AtnActorBase(TwoChannelActorBase):
         # Does not send back. Atn waits for the DispatchContract's expected
         # one minute before sending.
         # print(f"Got heartbeat from scada: {ping}")
+
+    # Sends to SCADA
+
+    def snap(self):
+        """Ask SCADA for a snapshot of the current state of the TerminalAsset"""
+        self.send_scada_message(
+            payload=GtShCliAtnCmd_Maker(
+                from_g_node_alias=self.alias,
+                from_g_node_id=self.g_node_instance_id,
+                send_snapshot=True,
+            ).tuple
+        )
+
+    def turn_on(self, relay_node_name: str) -> None:
+        """
+        Turn ON a relay (i.e. closes the electrical circuit so that current can flow),
+        using the name of the relay as represented in the hardware layout as a Spaceheat
+        Node with role "BooleanActuator"
+
+        [SpaceheatNode](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
+        [BooleanActuator Role](https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gwproto.enums.Role)
+        Args:
+            relay_node_name: the name of the relay, as string in LeftRightDot format. This must be the
+            name of a SpaceheatNode in the hardware layout with role "BooleanActuator"
+
+        Returns:
+            None
+        """
+        self.send_scada_message(
+            payload=GtDispatchBoolean_Maker(
+                about_node_name=relay_node_name,
+                to_g_node_alias=self.scada_alias,
+                from_g_node_alias=self.alias,
+                from_g_node_instance_id=self.g_node_instance_id,
+                relay_state=1,
+                send_time_unix_ms=int(time.time() * 1000),
+            ).tuple
+        )
+
+    def turn_off(self, relay_node_name: str) -> None:
+        """
+        Turn OFF a relay (i.e. closes the electrical circuit so that current can flow),
+        using the name of the relay as represented in the hardware layout as a Spaceheat
+        Node with role "BooleanActuator"
+
+        [SpaceheatNode](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
+        [BooleanActuator Role](https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gwproto.enums.Role)
+        Args:
+            relay_node_name: the name of the relay, as string in LeftRightDot format. This must be the
+            name of a SpaceheatNode in the hardware layout with role "BooleanActuator"
+
+        Returns:
+            None
+        """
+        self.send_scada_message(
+            payload=GtDispatchBoolean_Maker(
+                about_node_name=relay_node_name,
+                to_g_node_alias=self.scada_alias,
+                from_g_node_alias=self.alias,
+                from_g_node_instance_id=self.g_node_instance_id,
+                relay_state=0,
+                send_time_unix_ms=int(time.time() * 1000),
+            ).tuple
+        )
 
     def hb_to_scada(self):
         """Checks that Atn is in Dispatch Contract, sends a HeartbeatB to Scada,
