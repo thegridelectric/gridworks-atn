@@ -1,7 +1,6 @@
 """ SCADA Actor """
-import functools
+
 import logging
-import time
 from typing import Optional
 from typing import cast
 
@@ -12,7 +11,6 @@ from pydantic import BaseModel
 
 import gwatn.api_types as api_types
 import gwatn.config as config
-from gwatn.simple_scada_sim_actor_base import SimpleScadaSimActorBase
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 from gwatn.types import AtnParamsBrickstorageheater_Maker
 from gwatn.types import GtDispatchBoolean
@@ -21,6 +19,7 @@ from gwatn.types import SimplesimDriverDataBsh_Maker
 from gwatn.types import SimplesimDriverReport
 from gwatn.types import SimplesimSnapshotBrickstorageheater as Snapshot
 from gwatn.types import SimTimestep
+from gwatn_test import SimpleScadaSimActorBase
 
 
 DISPATCH_CONTRACT_REPORTING_ALGOS = 5
@@ -72,7 +71,7 @@ class SimpleScadaSim__BrickStorageHeater(SimpleScadaSimActorBase):
         """This gets received right before the top of the hour, from our
         best simulation of the TerminalAsset (which is happening in the
         AtomicTNode)."""
-        if payload.FromGNodeInstanecId != self.atn_gni_id:
+        if payload.FromGNodeInstanceId != self.atn_gni_id:
             LOGGER.info(f"Igoring {payload} - incorrect GNodeInstanceId")
 
         if payload.DriverDataTypeName != SimplesimDriverDataBsh_Maker.type_name:

@@ -20,13 +20,11 @@ Changelog = "https://github.com/thegridelectric/gridworks-atn/releases"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-gridworks = "^0.2.4"
-gridworks-protocol = "^0.5.2" # Note gridworks-protocol includes gridworks; these must stay in sync
-# gridworks-proactor = "^0.1.8"
 paho-mqtt = "^1.6.1"
-
-
 numpy = "^1.23.4"
+#gridworks-proactor = "0.2.2"
+#gridworks = { path = "../gridworks"}
+gridworks-proactor = "^0.2.1"
 
 
 

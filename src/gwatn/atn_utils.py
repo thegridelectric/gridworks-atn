@@ -3,10 +3,13 @@ from pydantic import BaseModel
 from gwatn import property_format
 from gwatn.data_classes import MarketType
 from gwatn.enums import MarketTypeName
+from gwatn.types import AtnParams
+from gwatn.types import FloParams
 from gwatn.types import MarketSlot
 from gwatn.types import MarketTypeGt_Maker
 
 
+DUMMY_TERMINALASSET_ALIAS = "d1.isone.dummy.ta"
 DUMMY_ALGO_TXN = "gqNzaWfEQNPXbrAiWd+cNgsIaM3N0PSu3repauvmjuHmoKjh6sd3L5U4/YpovcXN7/ATH1LgcI4cgV+SU3VQ6bsm/gfAOQyjdHhuiaNhbXTNB9CjZmVlzQPoomZ2HaNnZW6qc2FuZG5ldC12MaJnaMQgaJXPYTdWaeTNSs8FMMzPNfV7SrHXqJgFsJLxRbSPjzCibHbNBAWjcmN2xCBWkH3PValty0Rb0cyZo69Alhp4IbNKFnhXtgJ++A9EzKNzbmTEIOJPEbccL6IqmeBeaLzbLav25U9jBMjloaIyF1eY9HFxpHR5cGWjcGF5"
 
 
@@ -18,6 +21,18 @@ class DijkstraChoice(BaseModel):
 class CostAndQuantityBought(BaseModel):
     QuantityBought: float
     Cost: float
+
+
+def is_dummy_atn_params(atn_params: AtnParams) -> bool:
+    if atn_params.GNodeAlias == DUMMY_TERMINALASSET_ALIAS:
+        return True
+    return False
+
+
+def is_dummy_flo_params(flo_params: FloParams) -> bool:
+    if flo_params.GNodeAlias == DUMMY_TERMINALASSET_ALIAS:
+        return True
+    return False
 
 
 def name_from_market_slot(slot: MarketSlot) -> str:

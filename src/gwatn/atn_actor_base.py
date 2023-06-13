@@ -88,7 +88,11 @@ class AtnActorBase(TwoChannelActorBase):
         self.settings: AtnSettings = settings
         self.scada_gni_id = settings.scada_gni_id
         self._time: float = self.get_initial_time_s()
-
+        self.atn_params: AtnParams = dummy_atn_params()
+        self.dc_app_id: Optional[int] = None
+        self.dc_client: Optional[ApplicationClient] = None
+        self.trading_rights_id: Optional[GwCertId] = None
+        self.hb_status = HbStatus(LastHeartbeatReceivedMs=int(time.time() * 1000))
         if use_algo is True:
             self.acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
             self.client: AlgodClient = AlgodClient(
@@ -100,20 +104,16 @@ class AtnActorBase(TwoChannelActorBase):
                     f"Insufficiently funded. Make sure atn has at least 5 algos"
                 )
             # TODO: move this into spaceheat along with join_dispatch_contract_received
-            self.atn_params: AtnParams = dummy_atn_params()
+
             self.sp = self.client.suggested_params()
             self.sp.flat_fee = True
             self.sp.fee = 2000
             # this is initialized with the AppId provided by the SCADA
-            self.dc_app_id: Optional[int] = None
-            self.dc_client: Optional[ApplicationClient] = None
             self.check_for_dispatch_contract()
             self.universe_type = as_enum(
                 self.settings.universe_type_value, UniverseType, UniverseType.default()
             )
-            self.trading_rights_id: Optional[GwCertId] = None
             self.update_trading_rights()
-            self.hb_status = HbStatus(LastHeartbeatReceivedMs=int(time.time() * 1000))
 
     def local_rabbit_startup(self) -> None:
         rjb = MessageCategorySymbol.rjb.value
@@ -390,7 +390,7 @@ class AtnActorBase(TwoChannelActorBase):
         [SpaceheatNode](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
         [BooleanActuator Role](https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gwproto.enums.Role)
         Args:
-            relay_node_name: the name of the relay, as string in LeftRightDot format. This must be the
+            relay_node_name (str): the name of the relay, as string in LeftRightDot format. This must be the
             name of a SpaceheatNode in the hardware layout with role "BooleanActuator"
 
         Returns:

@@ -41,9 +41,9 @@ from gwatn.types import JoinDispatchContract_Maker
 from gwatn.types import ScadaCertTransfer_Maker
 from gwatn.types import SimplesimDriverReport
 from gwatn.types import SimplesimDriverReport_Maker
+from gwatn.types import SimplesimSnapshotBrickstorageheater as Snapshot
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
-from gwatn.types import SnapshotBrickstorageheater as Snapshot
 
 
 DISPATCH_CONTRACT_REPORTING_ALGOS = 5

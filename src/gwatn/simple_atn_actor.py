@@ -6,9 +6,11 @@ import rich
 from gwproto.messages import PeerActiveEvent
 from gwproto.messages import Ping as GridworksPing
 
+import gwatn.atn_utils as atn_utils
 import gwatn.config as config
 from gwatn.atn_actor_base import AtnActorBase
 from gwatn.enums import TelemetryName
+from gwatn.types import AtnParams
 from gwatn.types import GtShStatus
 from gwatn.types import LatestPrice
 from gwatn.types import PowerWatts
@@ -33,6 +35,7 @@ class SimpleAtnActor(AtnActorBase):
         ),
     ):
         super().__init__(settings=settings)
+        self.atn_params = AtnParams(GNodeAlias=atn_utils.DUMMY_TERMINALASSET_ALIAS)
         self._power_watts: int = 0
         LOGGER.info("Simple Atn Initialized")
 

@@ -23,7 +23,7 @@
       "title": "",
       "required": true
     },
-    "FromGNodeInstanecId": {
+    "FromGNodeInstanceId": {
       "type": "string",
       "format": "UuidCanonicalTextual",
       "title": "",

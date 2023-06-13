@@ -1,18 +1,23 @@
 from typing import List
 from typing import Optional
+from typing import cast
 
 from pydantic import BaseModel
 
+from gwatn.atn_utils import DUMMY_TERMINALASSET_ALIAS
+from gwatn.atn_utils import is_dummy_flo_params
 from gwatn.brick_storage_heater.flo import Flo__BrickStorageHeater as Flo
 from gwatn.types import AtnBid
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
-from gwatn.types import FloParamsBrickstorageheater as FloParams
+from gwatn.types import AtnParamsBrickstorageheater_Maker as AtnParams_Maker
+from gwatn.types import FloParams
+from gwatn.types import FloParamsBrickstorageheater
 from gwatn.types import MarketSlot
 
 
 class SlotStuff(BaseModel):
     Slot: MarketSlot
-    BidParams: Optional[FloParams] = None
+    BidParams: Optional[FloParamsBrickstorageheater] = None
     Flo: Optional[Flo] = None
     Bid: Optional[AtnBid] = None
     Price: Optional[float] = None
@@ -31,36 +36,19 @@ def dummy_slot_stuff(slot: MarketSlot) -> SlotStuff:
 
 
 def is_dummy_slot_stuff(bid_stuff: SlotStuff) -> bool:
-    if is_dummy_flo_params(bid_stuff.BidParams):
-        return True
-    return False
-
-
-def is_dummy_atn_params(atn_params: AtnParams) -> bool:
-    if atn_params.GNodeAlias == "d1.isone.dummy.ta":
+    if is_dummy_flo_params(cast(FloParams, bid_stuff.BidParams)):
         return True
     return False
 
 
 def dummy_atn_params() -> AtnParams:
-    return AtnParams(
-        SliceDurationMinutes=60,
-        FloSlices=48,
-        GNodeAlias="d1.isone.dummy.ta",
-        GNodeInstanceId="00000000-0000-0000-0000-000000000000",
-        TypeName="atn.params.heatpumpwithbooststore",
-        Version="000",
-    )
+    return AtnParams(GNodeAlias=DUMMY_TERMINALASSET_ALIAS)
 
 
-def is_dummy_flo_params(flo_params: FloParams) -> bool:
-    if flo_params.RtElecPriceUid == "00000000-0000-0000-0000-000000000000":
-        return True
-    return False
-
-
-def dummy_flo_params() -> FloParams:
-    return FloParams(
+def dummy_flo_params() -> FloParamsBrickstorageheater:
+    return FloParamsBrickstorageheater(
+        GNodeAlias=DUMMY_TERMINALASSET_ALIAS,
+        FloParamsUid="00000000-0000-0000-0000-000000000000",
         RtElecPriceUid="00000000-0000-0000-0000-000000000000",
         WeatherUid="00000000-0000-0000-0000-000000000000",
     )
