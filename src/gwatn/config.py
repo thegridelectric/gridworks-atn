@@ -11,26 +11,24 @@ from pydantic import SecretStr
 
 
 class AtnSettings(GNodeSettings):
+    # Changing the default values for these GNodeSettings
     g_node_alias: str = "d1.isone.ver.keene.holly"
     g_node_role_value: str = "AtomicTNode"
     my_super_alias: str = "d1.isone.ver.keene.super1"
     g_node_id: str = "6bb37cc5-740d-40f5-a535-43987a5d07b4"
-    g_node_instance_id: str = "00000000-0000-0000-0000-000000000000"
-    scada_gni_id: Optional[str] = None
     sk: SecretStr = SecretStr(
         "K6iB3AHmzSQ8wDE91QdUfaheDMEtf2WJUMYeeRptKxHiTxG3HC+iKpngXmi82y2r9uVPYwTI5aGiMhdXmPRxcQ=="
     )
-    # Public address 4JHRDNY4F6RCVGPALZULZWZNVP3OKT3DATEOLINCGILVPGHUOFY7KCHVIQ
+    # Secret key for public Algorand address 4JHRDNY4F6RCVGPALZULZWZNVP3OKT3DATEOLINCGILVPGHUOFY7KCHVIQ
 
+    # Additional settings specific to AtomicTNodes
+    scada_gni_id: Optional[str] = None
     # Next 4 settings are consistent with dev env settings in gridworks-marketmaker repo
     market_maker_alias = "d1.isone.ver.keene"
     market_maker_algo_address = (
         "CYWMWYHJ7ON4IR5XQDJBBPDU472QU4KJQ6XQVZBIIRTCHT6SHTFNHEAVC4"
     )
     mm_api_root = "http://localhost:7997"
-    initial_time_unix_s = pendulum.datetime(
-        year=2020, month=1, day=1, hour=4, minute=20
-    ).int_timestamp
 
     class Config:
         env_prefix = "ATN_"

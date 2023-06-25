@@ -49,7 +49,6 @@ from gwatn.types import LatestPrice
 from gwatn.types import LatestPrice_Maker
 from gwatn.types import PowerWatts
 from gwatn.types import SimTimestep
-from gwatn.types import SimTimestep_Maker
 from gwatn.types import SnapshotSpaceheat
 
 
@@ -85,7 +84,6 @@ def dummy_atn_params() -> AtnParams:
 class AtnActorBase(TwoChannelActorBase):
     def __init__(self, settings: AtnSettings, use_algo: bool = False):
         super().__init__(settings=settings)
-        self.settings: AtnSettings = settings
         self.scada_gni_id = settings.scada_gni_id
         self._time: float = self.get_initial_time_s()
         self.atn_params: AtnParams = dummy_atn_params()
@@ -259,16 +257,7 @@ class AtnActorBase(TwoChannelActorBase):
         self, from_alias: str, from_role: GNodeRole, payload: HeartbeatA
     ) -> None:
         self.payload = payload
-        if payload.TypeName == HeartbeatA_Maker.type_name:
-            if from_role != GNodeRole.Supervisor:
-                LOGGER.info(
-                    f"Ignoring HeartbeatA from GNode with role {from_role}; expects Supervisor"
-                )
-            try:
-                self.heartbeat_from_super(from_alias, payload)
-            except:
-                LOGGER.exception("Error in heartbeat_received")
-        elif payload.TypeName == HeartbeatB_Maker.type_name:
+        if payload.TypeName == HeartbeatB_Maker.type_name:
             if from_role != GNodeRole.Scada:
                 LOGGER.info(
                     f"Ignoring HeartbeatB from GNode with role {from_role}; expects Scada"
@@ -292,26 +281,9 @@ class AtnActorBase(TwoChannelActorBase):
                     self.latest_price_from_market_maker(payload)
                 except:
                     LOGGER.exception("Error in latest_price_from_market_maker")
-        elif payload.TypeName == SimTimestep_Maker.type_name:
-            try:
-                self.timestep_from_timecoordinator(payload)
-            except:
-                LOGGER.exception("Error in timestep_from_timecoordinator")
-
-    def heartbeat_from_super(self, from_alias: str, ping: HeartbeatA) -> None:
-        pong = HeartbeatA_Maker(
-            my_hex=str(random.choice("0123456789abcdef")), your_last_hex=ping.MyHex
-        ).tuple
-
-        self.send_message(
-            payload=pong,
-            to_role=GNodeRole.Supervisor,
-            to_g_node_alias=self.settings.my_super_alias,
-        )
-
-        LOGGER.debug(
-            f"[{self.alias}] Sent HB: SuHex {pong.YourLastHex}, AtnHex {pong.MyHex}"
-        )
+        else:
+            # If the message is not recognized, kick up to base class
+            super().route_message(from_alias, from_role, payload)
 
     def heartbeat_from_scada(self, ping: HeartbeatB) -> None:
         """
