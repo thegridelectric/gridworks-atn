@@ -4,7 +4,7 @@ import uuid
 import pendulum
 import pika
 from gridworks_test import TimeCoordinatorStubRecorder
-from gridworks_test import await_for
+from gridworks_test import wait_for
 
 from gwatn import atn_utils
 from gwatn.config import AtnSettings
@@ -18,9 +18,9 @@ from gwatn.types import SimTimestep_Maker
 def test_atn():
     atn = Atn(AtnSettings())
     atn.start()
-    await_for(lambda: atn._consuming, 2, "actor is consuming")
-    await_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
-    await_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
+    wait_for(lambda: atn._consuming, 2, "actor is consuming")
+    wait_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
+    wait_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
 
     ##################
     # test receiving simulated timestep - add stub time coordinator
@@ -64,9 +64,9 @@ def test_atn():
 #     atn.start()
 #     tc.start()
 #
-#     await_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
+#     wait_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
 #
-#     await_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
+#     wait_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
 #
 #     midnight = pendulum.datetime(year=2020, month=1, day=1, hour=5).int_timestamp
 #     next_slot = atn.next_run.Slot
@@ -99,7 +99,7 @@ def test_atn():
 #     assert atn.time() < midnight
 #     assert atn.next_run.Price == 22.6
 #     atn.timestep_from_timecoordinator(midnight_timestep)
-#     await_for(lambda: tc.atn_ready, 2, "timecoordinator got ready from atn")
+#     wait_for(lambda: tc.atn_ready, 2, "timecoordinator got ready from atn")
 #     assert tc.atn_ready == True
 #     tc.stop()
 #     atn.stop()
@@ -111,9 +111,9 @@ def test_atn():
 #     atn.start()
 #     tc.start()
 #
-#     await_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
+#     wait_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
 #
-#     await_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
+#     wait_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
 #
 #     midnight = pendulum.datetime(year=2020, month=1, day=1, hour=5).int_timestamp
 #     next_slot = atn.next_run.Slot
@@ -149,7 +149,7 @@ def test_atn():
 #     atn.latest_price_from_market_maker(midnight_price)
 #
 #     assert atn.active_run.Price == 22.6
-#     await_for(lambda: tc.atn_ready, 2, "timecoordinator got ready from atn")
+#     wait_for(lambda: tc.atn_ready, 2, "timecoordinator got ready from atn")
 #     assert tc.atn_ready == True
 #     tc.stop()
 #     atn.stop()

@@ -1011,14 +1011,14 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "gridworks"
-version = "0.2.6"
+version = "0.2.7"
 description = "Gridworks"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks-0.2.6-py3-none-any.whl", hash = "sha256:94629678e609e0df38f416dfefdfdee936d37ddfb421c12edaff7264f65db0bf"},
-    {file = "gridworks-0.2.6.tar.gz", hash = "sha256:2e6499b00b34af1c1bc32f33f5293d93224a866e2eb17c9db804344af3f187c9"},
+    {file = "gridworks-0.2.7-py3-none-any.whl", hash = "sha256:8ce5b35597934e00fe7bcf9a0652661c4cb48b618f9d588416590ac4cca556b6"},
+    {file = "gridworks-0.2.7.tar.gz", hash = "sha256:cad8cc45199a3ad87256466b9b601956e332dee6d83e89b5169f6dcb7bbe0258"},
 ]
 
 [package.dependencies]
@@ -1042,18 +1042,18 @@ uvicorn = {version = ">=0.19.0,<0.20.0", extras = ["standard"]}
 
 [[package]]
 name = "gridworks-proactor"
-version = "0.2.1"
+version = "0.2.2"
 description = "Gridworks Proactor"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks_proactor-0.2.1-py3-none-any.whl", hash = "sha256:41c738d854642cc12e266bd376307556075172274f9b5bd6b45a6b02b2fc961e"},
-    {file = "gridworks_proactor-0.2.1.tar.gz", hash = "sha256:c3cd9e5ece98cccb74d5f81dfb74e110f4c7dcc9e37367f6b50eb236471845d6"},
+    {file = "gridworks_proactor-0.2.2-py3-none-any.whl", hash = "sha256:4ae3c9415671e44470e545e0479934c97d6721561648dc1f516ded5139630c39"},
+    {file = "gridworks_proactor-0.2.2.tar.gz", hash = "sha256:791435101e7d0a410ff1ca8eb1e5a2308c01c8bdaf3193744bef9908d6778e0d"},
 ]
 
 [package.dependencies]
-gridworks-protocol = ">=0.3.6"
+gridworks-protocol = ">=0.5.5"
 paho-mqtt = ">=1.6.1,<2.0.0"
 pendulum = ">=2.1.2,<3.0.0"
 pydantic = ">=1.10.6,<2.0.0"
@@ -1066,21 +1066,36 @@ tests = ["pytest (>=7.2.0,<8.0.0)", "pytest-asyncio (>=0.20.3,<0.21.0)"]
 
 [[package]]
 name = "gridworks-protocol"
-version = "0.5.4"
+version = "0.5.5"
 description = "Gridworks Protocol"
 category = "main"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "gridworks_protocol-0.5.4-py3-none-any.whl", hash = "sha256:6f8cb702cbaa3f64ef9b6c33f934d4224ac09c92e8db4e477053339ad53f2f26"},
-    {file = "gridworks_protocol-0.5.4.tar.gz", hash = "sha256:5fcfb6d309f3ad7d47bea09f5663ab04a701e5ee3f2d91be3ee5f2306ad7d818"},
+    {file = "gridworks_protocol-0.5.5-py3-none-any.whl", hash = "sha256:be7c2a695c9b0f77747728d106ab72f9827f3a360d41f44067ee1c5918ba33c0"},
+    {file = "gridworks_protocol-0.5.5.tar.gz", hash = "sha256:da5215c32aca2c2f4ce78d94c4fed0d60602ed560bafc8432373c658b55a862f"},
 ]
 
 [package.dependencies]
 fastapi-utils = ">=0.2.1,<0.3.0"
-gridworks = ">=0.2.6,<0.3.0"
+gridworks = ">=0.2.7,<0.3.0"
 pendulum = ">=2.1.2,<3.0.0"
 pydantic = ">=1.10.2,<2.0.0"
+
+[[package]]
+name = "gridworks-ps"
+version = "0.0.1"
+description = "GridWorks Price Service"
+category = "main"
+optional = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "gridworks_ps-0.0.1-py3-none-any.whl", hash = "sha256:4df6cbbd8495d1eb80dc9b06798fb69a200c3024d2c4bb6f4fb76004bfa91a36"},
+    {file = "gridworks_ps-0.0.1.tar.gz", hash = "sha256:d00b6afa2ebee5db6a8f81eeb72e68ea265a8a068f6ae36fd772906540d2c6d8"},
+]
+
+[package.dependencies]
+gridworks = ">=0.2.7,<0.3.0"
 
 [[package]]
 name = "h11"
@@ -3757,4 +3772,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "8514801046f114c0b34778948ed2536583825e0815f879b9d4f9ca2a6e620802"
+content-hash = "334140502553252824737c85921344d30595badf3fab0b73776558cdfc9cd6d2"

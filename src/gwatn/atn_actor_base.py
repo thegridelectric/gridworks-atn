@@ -115,7 +115,7 @@ class AtnActorBase(TwoChannelActorBase):
 
     def local_rabbit_startup(self) -> None:
         rjb = MessageCategorySymbol.rjb.value
-        tc_alias_lrh = self.settings.time_coordinator_alias.replace(".", "-")
+        tc_alias_lrh = self.settings.my_time_coordinator_alias.replace(".", "-")
         binding = f"{rjb}.{tc_alias_lrh}.timecoordinator.sim-timestep"
 
         cb = functools.partial(self.on_timecoordinator_bindok, binding=binding)
