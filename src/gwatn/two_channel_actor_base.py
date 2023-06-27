@@ -1,6 +1,7 @@
 import enum
 import functools
 import logging
+import random
 import threading
 import time
 import uuid
@@ -14,6 +15,7 @@ from typing import no_type_check
 
 import gridworks.property_format as property_format
 import gridworks.utils as utils
+import pendulum
 import pika  # type: ignore
 from fastapi_utils.enums import StrEnum
 from gridworks.enums import GNodeRole
@@ -30,6 +32,8 @@ from gwatn.enums import UniverseType
 from gwatn.scada_codec import ScadaCodec
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
+from gwatn.types import SimTimestep
+from gwatn.types import SimTimestep_Maker
 
 
 PayloadT = TypeVar("PayloadT")
@@ -107,13 +111,14 @@ class DbgMsg(BaseModel):
 
 
 class TwoChannelActorBase(ABC):
-    SHUTDOWN_INTERVAL = 0.1
+    SHUTDOWN_INTERVAL: float = 0.1
 
     def __init__(
         self,
         settings: AtnSettings,
         api_type_maker_by_name: Dict[str, HeartbeatA_Maker] = api_types.TypeMakerByName,
     ):
+        self.settings: AtnSettings = settings
         self.scada_codec = ScadaCodec()
         self.dbg_messages: List[DbgMsg] = []
         self.api_type_maker_by_name = api_type_maker_by_name
@@ -124,6 +129,10 @@ class TwoChannelActorBase(ABC):
         self.g_node_role: GNodeRole = GNodeRole(settings.g_node_role_value)
         self.rabbit_role: RabbitRole = RabbitRolebyRole[self.g_node_role]
         self.universe_type: UniverseType = UniverseType(settings.universe_type_value)
+        # Used for tracking time in simulated worlds
+        self._time: float = time.time()
+        if self.universe_type == UniverseType.Dev:
+            self._time = settings.initial_time_unix_s
         self.actor_main_stopped: bool = False
 
         adder = "-F" + str(uuid.uuid4()).split("-")[0][0:3]
@@ -190,6 +199,9 @@ class TwoChannelActorBase(ABC):
         """This should be overwritten in derived class if there is a requirement
         to stop the additional threads started in local_start"""
         pass
+
+    def __repr__(self) -> str:
+        return f"{self.alias}"
 
     @no_type_check
     def on_message(self, _unused_channel, basic_deliver, properties, body) -> None:
@@ -297,11 +309,75 @@ class TwoChannelActorBase(ABC):
             payload=payload,
         )
 
-    @abstractmethod
     def route_message(
         self, from_alias: str, from_role: GNodeRole, payload: HeartbeatA
     ) -> None:
-        raise NotImplementedError
+        if payload.TypeName == HeartbeatA_Maker.type_name:
+            if from_role != GNodeRole.Supervisor:
+                LOGGER.info(
+                    f"Ignoring HeartbeatA from GNode {from_alias} with GNodeRole {from_role}; expects"
+                    f"Supervisor as the GNodeRole"
+                )
+                return
+            elif from_alias != self.settings.my_super_alias:
+                LOGGER.info(
+                    f"Ignoring HeartbeatA from supervisor {from_alias}; "
+                    f"my supervisor is {self.settings.my_super_alias}"
+                )
+                return
+
+            try:
+                self.heartbeat_from_super(from_alias, payload)
+            except:
+                LOGGER.exception("Error in heartbeat_received")
+        elif payload.TypeName == SimTimestep_Maker.type_name:
+            try:
+                self.timestep_from_timecoordinator(payload)
+            except:
+                LOGGER.exception("Error in timestep_from_timecoordinator")
+
+    def heartbeat_from_super(self, from_alias: str, ping: HeartbeatA) -> None:
+        """
+        Subordinate GNode responds to its supervisor's heartbeat with a "pong" message.
+
+        Both the received heartbeat (ping) and the response (pong) have the type HeartbeatA
+        (see: https://gridworks.readthedocs.io/en/latest/apis/types.html#heartbeata).
+
+        The subordinate GNode generates its own unique identifier (hex) and includes it
+        in the pong message along with the heartbeat it received from the supervisor.
+
+        Please note that the subordinate GNode does not have the responsibility of verifying
+        the authenticity of the last heartbeat received from the supervisor - although typically,
+        the supervisor does send the last heartbeat from this GNode (except during the initial
+        heartbeat exchange).
+
+        Args:
+            from_alias (str): the alias of the GNode that sent the ping.
+            ping (HeartbeatA): the heartbeat sent.
+
+        Raises:
+        ValueError: If `from_alias` is not this GNode's Supervisor alias.
+
+        """
+        if from_alias != self.settings.my_super_alias:
+            raise ValueError(
+                f"from_alias {from_alias} does not match my supervisor"
+                f" {self.settings.my_super_alias}. This message should"
+                f"have been filtered out in the route_message method."
+            )
+        pong = HeartbeatA_Maker(
+            my_hex=str(random.choice("0123456789abcdef")), your_last_hex=ping.MyHex
+        ).tuple
+
+        self.send_message(
+            payload=pong,
+            to_role=GNodeRole.Supervisor,
+            to_g_node_alias=self.settings.my_super_alias,
+        )
+
+        LOGGER.debug(
+            f"[{self.alias}] Sent HB: SuHex {pong.YourLastHex}, AtnHex {pong.MyHex}"
+        )
 
     def route_scada_message(self, from_alias: str, message: ScadaMessage) -> None:
         """This router should be overwritten by derived class"""
@@ -1169,13 +1245,37 @@ class TwoChannelActorBase(ABC):
 
         return RoleByRabbitRole[rabbit_role]
 
-    #################################################
-    # On receiving messages broadcast to all listners
-    #################################################
+    ########################
+    ## Time related (simulated time)
+    ########################
 
-    #################################################
-    # Various
-    #################################################
+    def timestep_from_timecoordinator(self, payload: SimTimestep) -> None:
+        if self._time < payload.TimeUnixS:
+            self._time = payload.TimeUnixS
+            self.new_timestep(payload)
+            LOGGER.debug(f"Time is now {self.time_str()}")
+        elif self._time == payload.TimeUnixS:
+            self.repeat_timestep(payload)
 
-    def __repr__(self) -> str:
-        return f"{self.alias}"
+    def new_timestep(self, payload: SimTimestep) -> None:
+        LOGGER.info("New timestep")
+
+    def repeat_timestep(self, payload: SimTimestep) -> None:
+        LOGGER.info("Timestep received again in atn_actor_base")
+
+    def time(self) -> float:
+        if self.universe_type == UniverseType.Dev:
+            return self._time
+        else:
+            return time.time()
+
+    def time_str(self) -> str:
+        return pendulum.from_timestamp(self.time()).strftime("%m/%d/%Y, %H:%M")
+
+    ###############################
+    # Other GNode-related methods
+    ###############################
+
+    @property
+    def short_alias(self) -> str:
+        return self.alias.split(".")[-1]

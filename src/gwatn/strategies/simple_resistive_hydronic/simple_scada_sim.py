@@ -39,8 +39,8 @@ from gwatn.types import HeartbeatB
 from gwatn.types import HeartbeatB_Maker
 from gwatn.types import JoinDispatchContract_Maker
 from gwatn.types import ScadaCertTransfer_Maker
-from gwatn.types import SimplesimDriverReport
-from gwatn.types import SimplesimDriverReport_Maker
+from gwatn.types import SimScadaDriverReportBsh as SimScadaDriverReport
+from gwatn.types import SimScadaDriverReportBsh_Maker as SimScadaDriverReport_Maker
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SnapshotBrickstorageheater as Snapshot
@@ -68,7 +68,7 @@ class AtnHbStatus(BaseModel):
     ScadaLastHex: str = "0"
 
 
-class SimpleScadaSimActorBase(ActorBase):
+class ScadaActor(ActorBase):
     def __init__(
         self,
         settings: config.ScadaSettings = config.ScadaSettings(
@@ -76,7 +76,9 @@ class SimpleScadaSimActorBase(ActorBase):
         ),
     ):
         super().__init__(settings=settings)
-
+        self.api_type_maker_by_name = (
+            api_types.TypeMakerByName
+        )  # overwrites base class to include types used in this repo
         self.settings = settings
         self.atn_gni_id = settings.atn_gni_id
         self.acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
@@ -99,10 +101,13 @@ class SimpleScadaSimActorBase(ActorBase):
             self.settings.universe_type_value, UniverseType, UniverseType.default()
         )
         self._time: float = self.get_initial_time_s()
-        self.api_type_maker_by_name = (
-            api_types.TypeMakerByName
-        )  # overwrites base class to include types used in this repo
-        self.atn_params_type_name: str = "atn.params"  # overwrite in the subclass
+
+        self.boost_power_kw: float = 0
+        self.power_watts: float = 0
+        self.cop: float = 0
+        self.store_kwh: int = 0
+        self.max_store_kwh: int = 0
+        self.atn_params: Optional[AtnParams] = None
 
     @property
     def atn_alias(self):
@@ -190,11 +195,11 @@ class SimpleScadaSimActorBase(ActorBase):
                 self.heartbeat_from_atn(ping=payload)
             except:
                 LOGGER.exception("Error in heartbeat_from_atn")
-        elif payload.TypeName == SimplesimDriverReport_Maker.type_name:
+        elif payload.TypeName == SimScadaDriverReport_Maker.type_name:
             try:
-                self.simplesim_driver_report_received(payload)
+                self.sim_scada_driver_report_received(payload)
             except:
-                LOGGER.exception("Error in simplesim_driver_report_received")
+                LOGGER.exception("Error in sim_scada_driver_report_received")
         elif payload.TypeName == SimTimestep_Maker.type_name:
             if from_role != GNodeRole.TimeCoordinator:
                 LOGGER.info(
@@ -532,15 +537,16 @@ class SimpleScadaSimActorBase(ActorBase):
     # Make the below into abstractmethods if pulling out base class
     #########################################################
 
-    def simplesim_driver_report_received(self, payload: SimplesimDriverReport) -> None:
+    def sim_scada_driver_report_received(self, payload: SimScadaDriverReport) -> None:
         """This gets received right before the top of the hour, from our
         best simulation of the TerminalAsset (which is happening in the
-        AtomicTNode).
-
-        Should be overwritten by the derived class, according to the
-        DriverDataTypeName. Should then send snapshot."""
-        if payload.FromGNodeInstanecId != self.atn_gni_id:
+        AtomicTNode)."""
+        if payload.FromGNodeInstanceId != self.atn_gni_id:
             LOGGER.info(f"Igoring {payload} - incorrect GNodeInstanceId")
+        self.power_watts = payload.PowerWatts
+        self.store_kwh = payload.StoreKwh
+        self.max_store_kwh = payload.MaxStoreKwh
+        self.send_snapshot()
 
     def send_snapshot(self):
         """Send a snapshot of current core sensed values to AtomicTNode.

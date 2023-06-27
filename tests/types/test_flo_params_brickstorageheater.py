@@ -173,6 +173,11 @@ def test_flo_params_brickstorageheater_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["C"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["RealtimeElectricityPrice"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -199,6 +204,11 @@ def test_flo_params_brickstorageheater_generated() -> None:
 
     d2 = dict(d)
     del d2["WeatherUid"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["DistPriceUid"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -255,16 +265,6 @@ def test_flo_params_brickstorageheater_generated() -> None:
     ######################################
     # Optional attributes can be removed from type
     ######################################
-
-    d2 = dict(d)
-    if "C" in d2.keys():
-        del d2["C"]
-    Maker.dict_to_tuple(d2)
-
-    d2 = dict(d)
-    if "DistPriceUid" in d2.keys():
-        del d2["DistPriceUid"]
-    Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
     if "RegPriceUid" in d2.keys():

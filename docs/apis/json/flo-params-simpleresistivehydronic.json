@@ -1,10 +1,9 @@
 {
   "gwapi": "001",
-  "type_name": "flo.params.brickstorageheater",
+  "type_name": "flo.params.simpleresistivehydronic",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": ". FloParams for the BrickStorageHeater AtomicTNode strategy.",
-  "url": "https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html",
+  "description": "",
   "formats": {
     "UuidCanonicalTextual": {
       "type": "string",
@@ -39,65 +38,18 @@
           "description": "Pounds sterling"
         }
       ]
-    },
-    "RecognizedTemperatureUnit000": {
-      "type": "string",
-      "name": "recognized.temperature.unit.000",
-      "description": "Unit of temperature",
-      "oneOf": [
-        {
-          "const": "00000000",
-          "title": "C",
-          "description": "Celcius"
-        },
-        {
-          "const": "6f16ee63",
-          "title": "F",
-          "description": "Fahrenheit"
-        }
-      ]
     }
   },
   "properties": {
-    "MaxBrickTempC": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "RatedMaxPowerKw": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "ROff": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "ROn": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "RoomTempF": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "CurrencyUnit": {
+    "GNodeAlias": {
       "type": "string",
-      "format": "RecognizedCurrencyUnit000",
+      "format": "LeftRightDot",
       "title": "",
       "required": true
     },
-    "TempUnit": {
+    "FloParamsUid": {
       "type": "string",
-      "format": "RecognizedTemperatureUnit000",
-      "title": "",
-      "required": true
-    },
-    "TimezoneString": {
-      "type": "string",
+      "format": "UuidCanonicalTextual",
       "title": "",
       "required": true
     },
@@ -106,74 +58,10 @@
       "title": "",
       "required": true
     },
-    "IsRegulating": {
-      "type": "boolean",
-      "title": "",
-      "required": true
-    },
-    "StorageSteps": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "SliceDurationMinutes": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "PowerRequiredByHouseFromSystemAvgKwList": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "C": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "RealtimeElectricityPrice": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "OutsideTempF": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "DistributionPrice": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "RtElecPriceUid": {
+    "TimezoneString": {
       "type": "string",
-      "format": "UuidCanonicalTextual",
       "title": "",
       "required": true
-    },
-    "RegulationPrice": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "WeatherUid": {
-      "type": "string",
-      "format": "UuidCanonicalTextual",
-      "title": "",
-      "required": true
-    },
-    "DistPriceUid": {
-      "type": "string",
-      "format": "UuidCanonicalTextual",
-      "title": "",
-      "required": true
-    },
-    "RegPriceUid": {
-      "type": "string",
-      "format": "UuidCanonicalTextual",
-      "title": "",
-      "required": false
     },
     "StartYearUtc": {
       "type": "integer",
@@ -200,36 +88,88 @@
       "title": "",
       "required": true
     },
-    "StartingStoreIdx": {
+    "StoreSizeGallons": {
       "type": "integer",
       "title": "",
       "required": true
     },
-    "AmbientPowerInKw": {
+    "MaxStoreTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "ElementMaxPowerKw": {
       "type": "number",
       "title": "",
       "required": true
     },
-    "HouseWorstCaseTempF": {
+    "RequiredSourceWaterTempF": {
       "type": "integer",
       "title": "",
       "required": true
     },
-    "GNodeAlias": {
-      "type": "string",
-      "format": "LeftRightDot",
+    "FixedPumpGpm": {
+      "type": "number",
       "title": "",
       "required": true
     },
-    "FloParamsUid": {
+    "ReturnWaterFixedDeltaT": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "SliceDurationMinutes": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "PowerLostFromHouseKwList": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "OutsideTempF": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "DistributionPrice": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "RealtimeElectricityPrice": {
+      "type": "number",
+      "title": "",
+      "required": true
+    },
+    "RtElecPriceUid": {
       "type": "string",
       "format": "UuidCanonicalTextual",
       "title": "",
       "required": true
     },
+    "WeatherUid": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "DistPriceUid": {
+      "type": "string",
+      "format": "UuidCanonicalTextual",
+      "title": "",
+      "required": true
+    },
+    "CurrencyUnit": {
+      "type": "string",
+      "format": "RecognizedCurrencyUnit000",
+      "title": "",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
-      "value": "flo.params.brickstorageheater.000",
+      "value": "flo.params.simpleresistivehydronic.000",
       "title": "The type name"
     },
     "Version": {

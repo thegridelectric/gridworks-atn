@@ -75,8 +75,8 @@ class SimplesimDriverReport(BaseModel):
     FromGNodeAlias: str = Field(
         title="FromGNodeAlias",
     )
-    FromGNodeInstanecId: str = Field(
-        title="FromGNodeInstanecId",
+    FromGNodeInstanceId: str = Field(
+        title="FromGNodeInstanceId",
     )
     DriverDataTypeName: str = Field(
         title="DriverDataTypeName",
@@ -97,13 +97,13 @@ class SimplesimDriverReport(BaseModel):
             )
         return v
 
-    @validator("FromGNodeInstanecId")
-    def _check_from_g_node_instanec_id(cls, v: str) -> str:
+    @validator("FromGNodeInstanceId")
+    def _check_from_g_node_instance_id(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
             raise ValueError(
-                f"FromGNodeInstanecId failed UuidCanonicalTextual format validation: {e}"
+                f"FromGNodeInstanceId failed UuidCanonicalTextual format validation: {e}"
             )
         return v
 
@@ -136,13 +136,13 @@ class SimplesimDriverReport_Maker:
     def __init__(
         self,
         from_g_node_alias: str,
-        from_g_node_instanec_id: str,
+        from_g_node_instance_id: str,
         driver_data_type_name: str,
         driver_data: SimplesimDriverData,
     ):
         self.tuple = SimplesimDriverReport(
             FromGNodeAlias=from_g_node_alias,
-            FromGNodeInstanecId=from_g_node_instanec_id,
+            FromGNodeInstanceId=from_g_node_instance_id,
             DriverDataTypeName=driver_data_type_name,
             DriverData=driver_data,
             #
@@ -173,8 +173,8 @@ class SimplesimDriverReport_Maker:
         d2 = dict(d)
         if "FromGNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing FromGNodeAlias")
-        if "FromGNodeInstanecId" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FromGNodeInstanecId")
+        if "FromGNodeInstanceId" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing FromGNodeInstanceId")
         if "DriverDataTypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing DriverDataTypeName")
         if "DriverData" not in d2.keys():
@@ -190,7 +190,7 @@ class SimplesimDriverReport_Maker:
 
         return SimplesimDriverReport(
             FromGNodeAlias=d2["FromGNodeAlias"],
-            FromGNodeInstanecId=d2["FromGNodeInstanecId"],
+            FromGNodeInstanceId=d2["FromGNodeInstanceId"],
             DriverDataTypeName=d2["DriverDataTypeName"],
             DriverData=d2["DriverData"],
             TypeName=d2["TypeName"],

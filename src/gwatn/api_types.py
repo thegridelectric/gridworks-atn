@@ -8,6 +8,7 @@ from gwatn.types import AtnBid_Maker
 from gwatn.types import AtnParams_Maker
 from gwatn.types import AtnParamsBrickstorageheater_Maker
 from gwatn.types import AtnParamsReport_Maker
+from gwatn.types import AtnParamsSimpleresistivehydronic_Maker
 from gwatn.types import BaseGNodeGt_Maker
 from gwatn.types import BasegnodeScadaCreate_Maker
 from gwatn.types import ComponentAttributeClassGt_Maker
@@ -22,6 +23,7 @@ from gwatn.types import ElectricMeterComponentGt_Maker
 from gwatn.types import FloParams_Maker
 from gwatn.types import FloParamsBrickstorageheater_Maker
 from gwatn.types import FloParamsReport_Maker
+from gwatn.types import FloParamsSimpleresistivehydronic_Maker
 from gwatn.types import GNodeGt_Maker
 from gwatn.types import GNodeInstanceGt_Maker
 from gwatn.types import GtDispatchBoolean_Maker
@@ -91,6 +93,7 @@ def type_makers() -> List[HeartbeatA_Maker]:
         AtnParams_Maker,
         AtnParamsBrickstorageheater_Maker,
         AtnParamsReport_Maker,
+        AtnParamsSimpleresistivehydronic_Maker,
         BaseGNodeGt_Maker,
         BasegnodeScadaCreate_Maker,
         ComponentAttributeClassGt_Maker,
@@ -105,6 +108,7 @@ def type_makers() -> List[HeartbeatA_Maker]:
         FloParams_Maker,
         FloParamsBrickstorageheater_Maker,
         FloParamsReport_Maker,
+        FloParamsSimpleresistivehydronic_Maker,
         GNodeGt_Maker,
         GNodeInstanceGt_Maker,
         GtDispatchBoolean_Maker,
@@ -180,6 +184,7 @@ def version_by_type_name() -> Dict[str, str]:
         "atn.params": "000",
         "atn.params.brickstorageheater": "000",
         "atn.params.report": "000",
+        "atn.params.simpleresistivehydronic": "000",
         "base.g.node.gt": "002",
         "basegnode.scada.create": "000",
         "component.attribute.class.gt": "000",
@@ -194,6 +199,7 @@ def version_by_type_name() -> Dict[str, str]:
         "flo.params": "000",
         "flo.params.brickstorageheater": "000",
         "flo.params.report": "000",
+        "flo.params.simpleresistivehydronic": "000",
         "g.node.gt": "002",
         "g.node.instance.gt": "000",
         "gt.dispatch.boolean": "110",
@@ -262,11 +268,12 @@ def status_by_versioned_type_name() -> Dict[str, str]:
     """
 
     v: Dict[str, str] = {
-        "accepted.bid.000": "Pending",
-        "atn.bid.001": "Pending",
+        "accepted.bid.000": "Active",
+        "atn.bid.001": "Active",
         "atn.params.000": "Active",
-        "atn.params.brickstorageheater.000": "Pending",
+        "atn.params.brickstorageheater.000": "Active",
         "atn.params.report.000": "Active",
+        "atn.params.simpleresistivehydronic.000": "Pending",
         "base.g.node.gt.002": "Active",
         "basegnode.scada.create.000": "Active",
         "component.attribute.class.gt.000": "Active",
@@ -280,7 +287,8 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "electric.meter.component.gt.000": "Active",
         "flo.params.000": "Active",
         "flo.params.brickstorageheater.000": "Active",
-        "flo.params.report.000": "Pending",
+        "flo.params.report.000": "Active",
+        "flo.params.simpleresistivehydronic.000": "Pending",
         "g.node.gt.002": "Active",
         "g.node.instance.gt.000": "Active",
         "gt.dispatch.boolean.110": "Active",
@@ -300,9 +308,9 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "initial.tadeed.algo.optin.002": "Active",
         "initial.tadeed.algo.transfer.000": "Active",
         "join.dispatch.contract.000": "Active",
-        "latest.price.000": "Pending",
-        "market.slot.000": "Pending",
-        "market.type.gt.000": "Pending",
+        "latest.price.000": "Active",
+        "market.slot.000": "Active",
+        "market.type.gt.000": "Active",
         "multipurpose.sensor.cac.gt.000": "Active",
         "multipurpose.sensor.component.gt.000": "Active",
         "new.tadeed.algo.optin.000": "Active",
@@ -311,32 +319,32 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "pipe.flow.sensor.cac.gt.000": "Active",
         "pipe.flow.sensor.component.gt.000": "Active",
         "power.watts.000": "Active",
-        "price.quantity.000": "Pending",
-        "price.quantity.unitless.000": "Pending",
+        "price.quantity.000": "Active",
+        "price.quantity.unitless.000": "Active",
         "ready.001": "Active",
         "relay.cac.gt.000": "Active",
         "relay.component.gt.000": "Active",
         "resistive.heater.cac.gt.000": "Active",
         "resistive.heater.component.gt.000": "Active",
-        "scada.cert.transfer.000": "Pending",
+        "scada.cert.transfer.000": "Active",
         "sim.timestep.000": "Active",
         "simple.temp.sensor.cac.gt.000": "Active",
         "simple.temp.sensor.component.gt.000": "Active",
-        "simplesim.driver.data.000": "Pending",
-        "simplesim.driver.data.bsh.000": "Pending",
-        "simplesim.driver.report.000": "Pending",
-        "simplesim.snapshot.brickstorageheater.000": "Pending",
-        "sla.enter.000": "Pending",
+        "simplesim.driver.data.000": "Active",
+        "simplesim.driver.data.bsh.000": "Active",
+        "simplesim.driver.report.000": "Active",
+        "simplesim.snapshot.brickstorageheater.000": "Active",
+        "sla.enter.000": "Active",
         "snapshot.spaceheat.000": "Active",
         "spaceheat.node.gt.100": "Active",
         "super.starter.000": "Active",
         "supervisor.container.gt.000": "Active",
-        "tadeed.specs.hack.000": "Pending",
+        "tadeed.specs.hack.000": "Active",
         "tavalidatorcert.algo.create.000": "Active",
         "tavalidatorcert.algo.transfer.000": "Active",
         "telemetry.reporting.config.000": "Active",
         "telemetry.snapshot.spaceheat.000": "Active",
-        "terminalasset.certify.hack.000": "Pending",
+        "terminalasset.certify.hack.000": "Active",
     }
 
     return v

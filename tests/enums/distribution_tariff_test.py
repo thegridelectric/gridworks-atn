@@ -5,8 +5,9 @@ from gwatn.enums import DistributionTariff
 def test_distribution_tariff() -> None:
     assert set(DistributionTariff.values()) == {
         "Unknown",
-        "VersantStorageHeatTariff",
+        "VersantA1StorageHeatTariff",
         "VersantATariff",
+        "VersantA20HeatTariff",
     }
 
     assert DistributionTariff.default() == DistributionTariff.Unknown

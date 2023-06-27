@@ -1,4 +1,4 @@
-"""Type atn.params.brickstorageheater, version 000"""
+"""Type atn.params.simpleresistivehydronic, version 000"""
 import json
 from enum import auto
 from typing import Any
@@ -16,7 +16,6 @@ from pydantic import validator
 from gwatn.enums import DistributionTariff
 from gwatn.enums import EnergySupplyType
 from gwatn.enums import RecognizedCurrencyUnit
-from gwatn.enums import RecognizedTemperatureUnit
 
 
 class DistributionTariff000SchemaEnum:
@@ -151,73 +150,6 @@ class RecognizedCurrencyUnitMap:
     }
 
 
-class RecognizedTemperatureUnit000SchemaEnum:
-    enum_name: str = "recognized.temperature.unit.000"
-    symbols: List[str] = [
-        "00000000",
-        "6f16ee63",
-    ]
-
-    @classmethod
-    def is_symbol(cls, candidate: str) -> bool:
-        if candidate in cls.symbols:
-            return True
-        return False
-
-
-class RecognizedTemperatureUnit000(StrEnum):
-    C = auto()
-    F = auto()
-
-    @classmethod
-    def default(cls) -> "RecognizedTemperatureUnit000":
-        return cls.C
-
-    @classmethod
-    def values(cls) -> List[str]:
-        return [elt.value for elt in cls]
-
-
-class RecognizedTemperatureUnitMap:
-    @classmethod
-    def type_to_local(cls, symbol: str) -> RecognizedTemperatureUnit:
-        if not RecognizedTemperatureUnit000SchemaEnum.is_symbol(symbol):
-            raise SchemaError(
-                f"{symbol} must belong to RecognizedTemperatureUnit000 symbols"
-            )
-        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
-        return as_enum(
-            versioned_enum,
-            RecognizedTemperatureUnit,
-            RecognizedTemperatureUnit.default(),
-        )
-
-    @classmethod
-    def local_to_type(
-        cls, recognized_temperature_unit: RecognizedTemperatureUnit
-    ) -> str:
-        if not isinstance(recognized_temperature_unit, RecognizedTemperatureUnit):
-            raise SchemaError(
-                f"{recognized_temperature_unit} must be of type {RecognizedTemperatureUnit}"
-            )
-        versioned_enum = as_enum(
-            recognized_temperature_unit,
-            RecognizedTemperatureUnit000,
-            RecognizedTemperatureUnit000.default(),
-        )
-        return cls.versioned_enum_to_type_dict[versioned_enum]
-
-    type_to_versioned_enum_dict: Dict[str, RecognizedTemperatureUnit000] = {
-        "00000000": RecognizedTemperatureUnit000.C,
-        "6f16ee63": RecognizedTemperatureUnit000.F,
-    }
-
-    versioned_enum_to_type_dict: Dict[RecognizedTemperatureUnit000, str] = {
-        RecognizedTemperatureUnit000.C: "00000000",
-        RecognizedTemperatureUnit000.F: "6f16ee63",
-    }
-
-
 class EnergySupplyType000SchemaEnum:
     enum_name: str = "energy.supply.type.000"
     symbols: List[str] = [
@@ -304,37 +236,28 @@ def check_is_left_right_dot(v: str) -> None:
         raise ValueError(f"All characters of {v} must be lowercase.")
 
 
-class AtnParamsBrickstorageheater(BaseModel):
-    """Params for a BrickStorageHeater Atn Strategy.
-
-    Parameters for a model of a ceramic brick thermal storage room unit, using a two-dimensional Dijstra graph parameterized by 'fullness of the thermal battery' and time.
-    [More info](https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html).
-    """
+class AtnParamsSimpleresistivehydronic(BaseModel):
+    """ """
 
     GNodeAlias: str = Field(
-        title="GNode Alias",
+        title="GNodeAlias",
     )
     HomeCity: str = Field(
-        title="Home City",
-        default="MILLINOCKET_ME",
+        title="HomeCity",
     )
     TimezoneString: str = Field(
-        title="Timezone String",
-        default="US/Eastern",
+        title="TimezoneString",
     )
     StorageSteps: int = Field(
-        title="Storage Steps",
-        description="The number of nodes in each TimeSlice for the Dijkstra graph.",
+        title="StorageSteps",
         default=100,
     )
     FloSlices: int = Field(
         title="FloSlices",
-        description="The number of nodes for each storage level in the Dijstra graph.",
         default=48,
     )
     SliceDurationMinutes: int = Field(
         title="SliceDurationMinutes",
-        description="The length of",
         default=60,
     )
     CurrencyUnit: RecognizedCurrencyUnit = Field(
@@ -357,51 +280,49 @@ class AtnParamsBrickstorageheater(BaseModel):
         title="DistributionTariffDollarsPerMwh",
         default=113,
     )
-    MaxBrickTempC: int = Field(
-        title="MaxBrickTempC",
-        default=190,
+    StoreSizeGallons: int = Field(
+        title="StoreSizeGallons",
+        default=240,
     )
-    RatedMaxPowerKw: float = Field(
-        title="RatedMaxPowerKw",
-        default=13.5,
+    MaxStoreTempF: int = Field(
+        title="MaxStoreTempF",
+        default=210,
     )
-    C: float = Field(
-        title="C",
-        default=200,
+    ElementMaxPowerKw: float = Field(
+        title="ElementMaxPowerKw",
+        default=9.5,
     )
-    ROff: float = Field(
-        title="ROff",
-        default=0.08,
+    RequiredSourceWaterTempF: int = Field(
+        title="RequiredSourceWaterTempF",
+        default=120,
     )
-    ROn: float = Field(
-        title="ROn",
-        default=0.15,
+    FixedPumpGpm: float = Field(
+        title="FixedPumpGpm",
+        default=5.5,
     )
-    RoomTempF: int = Field(
-        title="RoomTempF",
-        default=70,
+    ReturnWaterFixedDeltaT: int = Field(
+        title="ReturnWaterFixedDeltaT",
+        default=20,
     )
     AnnualHvacKwhTh: int = Field(
         title="AnnualHvacKwhTh",
-        default=28125,
-    )
-    BetaOt: int = Field(
-        title="BetaOt",
-        default=158,
-    )
-    TempUnit: RecognizedTemperatureUnit = Field(
-        title="TempUnit",
-        default=RecognizedTemperatureUnit.F,
+        default=25000,
     )
     AmbientPowerInKw: float = Field(
         title="AmbientPowerInKw",
-        default=1.25,
+        default=1.2,
     )
     HouseWorstCaseTempF: int = Field(
         title="HouseWorstCaseTempF",
         default=-7,
     )
-    TypeName: Literal["atn.params.brickstorageheater"] = "atn.params.brickstorageheater"
+    RoomTempF: int = Field(
+        title="RoomTempF",
+        default=68,
+    )
+    TypeName: Literal[
+        "atn.params.simpleresistivehydronic"
+    ] = "atn.params.simpleresistivehydronic"
     Version: str = "000"
 
     @validator("GNodeAlias")
@@ -424,12 +345,6 @@ class AtnParamsBrickstorageheater(BaseModel):
     def _check_energy_type(cls, v: EnergySupplyType) -> EnergySupplyType:
         return as_enum(v, EnergySupplyType, EnergySupplyType.Unknown)
 
-    @validator("TempUnit")
-    def _check_temp_unit(
-        cls, v: RecognizedTemperatureUnit
-    ) -> RecognizedTemperatureUnit:
-        return as_enum(v, RecognizedTemperatureUnit, RecognizedTemperatureUnit.C)
-
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
         del d["CurrencyUnit"]
@@ -447,13 +362,6 @@ class AtnParamsBrickstorageheater(BaseModel):
             self.EnergyType, EnergySupplyType, EnergySupplyType.default()
         )
         d["EnergyTypeGtEnumSymbol"] = EnergySupplyTypeMap.local_to_type(EnergyType)
-        del d["TempUnit"]
-        TempUnit = as_enum(
-            self.TempUnit,
-            RecognizedTemperatureUnit,
-            RecognizedTemperatureUnit.default(),
-        )
-        d["TempUnitGtEnumSymbol"] = RecognizedTemperatureUnitMap.local_to_type(TempUnit)
         return d
 
     def as_type(self) -> str:
@@ -463,8 +371,8 @@ class AtnParamsBrickstorageheater(BaseModel):
         return hash((type(self),) + tuple(self.__dict__.values()))  # noqa
 
 
-class AtnParamsBrickstorageheater_Maker:
-    type_name = "atn.params.brickstorageheater"
+class AtnParamsSimpleresistivehydronic_Maker:
+    type_name = "atn.params.simpleresistivehydronic"
     version = "000"
 
     def __init__(
@@ -480,19 +388,18 @@ class AtnParamsBrickstorageheater_Maker:
         energy_type: EnergySupplyType,
         standard_offer_price_dollars_per_mwh: int,
         distribution_tariff_dollars_per_mwh: int,
-        max_brick_temp_c: int,
-        rated_max_power_kw: float,
-        c: float,
-        r_off: float,
-        r_on: float,
-        room_temp_f: int,
+        store_size_gallons: int,
+        max_store_temp_f: int,
+        element_max_power_kw: float,
+        required_source_water_temp_f: int,
+        fixed_pump_gpm: float,
+        return_water_fixed_delta_t: int,
         annual_hvac_kwh_th: int,
-        beta_ot: int,
-        temp_unit: RecognizedTemperatureUnit,
         ambient_power_in_kw: float,
         house_worst_case_temp_f: int,
+        room_temp_f: int,
     ):
-        self.tuple = AtnParamsBrickstorageheater(
+        self.tuple = AtnParamsSimpleresistivehydronic(
             GNodeAlias=g_node_alias,
             HomeCity=home_city,
             TimezoneString=timezone_string,
@@ -504,29 +411,28 @@ class AtnParamsBrickstorageheater_Maker:
             EnergyType=energy_type,
             StandardOfferPriceDollarsPerMwh=standard_offer_price_dollars_per_mwh,
             DistributionTariffDollarsPerMwh=distribution_tariff_dollars_per_mwh,
-            MaxBrickTempC=max_brick_temp_c,
-            RatedMaxPowerKw=rated_max_power_kw,
-            C=c,
-            ROff=r_off,
-            ROn=r_on,
-            RoomTempF=room_temp_f,
+            StoreSizeGallons=store_size_gallons,
+            MaxStoreTempF=max_store_temp_f,
+            ElementMaxPowerKw=element_max_power_kw,
+            RequiredSourceWaterTempF=required_source_water_temp_f,
+            FixedPumpGpm=fixed_pump_gpm,
+            ReturnWaterFixedDeltaT=return_water_fixed_delta_t,
             AnnualHvacKwhTh=annual_hvac_kwh_th,
-            BetaOt=beta_ot,
-            TempUnit=temp_unit,
             AmbientPowerInKw=ambient_power_in_kw,
             HouseWorstCaseTempF=house_worst_case_temp_f,
+            RoomTempF=room_temp_f,
             #
         )
 
     @classmethod
-    def tuple_to_type(cls, tuple: AtnParamsBrickstorageheater) -> str:
+    def tuple_to_type(cls, tuple: AtnParamsSimpleresistivehydronic) -> str:
         """
         Given a Python class object, returns the serialized JSON type object
         """
         return tuple.as_type()
 
     @classmethod
-    def type_to_tuple(cls, t: str) -> AtnParamsBrickstorageheater:
+    def type_to_tuple(cls, t: str) -> AtnParamsSimpleresistivehydronic:
         """
         Given a serialized JSON type object, returns the Python class object
         """
@@ -539,7 +445,7 @@ class AtnParamsBrickstorageheater_Maker:
         return cls.dict_to_tuple(d)
 
     @classmethod
-    def dict_to_tuple(cls, d: dict[str, Any]) -> AtnParamsBrickstorageheater:
+    def dict_to_tuple(cls, d: dict[str, Any]) -> AtnParamsSimpleresistivehydronic:
         d2 = dict(d)
         if "GNodeAlias" not in d2.keys():
             raise SchemaError(f"dict {d2} missing GNodeAlias")
@@ -582,38 +488,30 @@ class AtnParamsBrickstorageheater_Maker:
             raise SchemaError(f"dict {d2} missing StandardOfferPriceDollarsPerMwh")
         if "DistributionTariffDollarsPerMwh" not in d2.keys():
             raise SchemaError(f"dict {d2} missing DistributionTariffDollarsPerMwh")
-        if "MaxBrickTempC" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing MaxBrickTempC")
-        if "RatedMaxPowerKw" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing RatedMaxPowerKw")
-        if "C" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing C")
-        if "ROff" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ROff")
-        if "ROn" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ROn")
-        if "RoomTempF" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing RoomTempF")
+        if "StoreSizeGallons" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StoreSizeGallons")
+        if "MaxStoreTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing MaxStoreTempF")
+        if "ElementMaxPowerKw" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing ElementMaxPowerKw")
+        if "RequiredSourceWaterTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing RequiredSourceWaterTempF")
+        if "FixedPumpGpm" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing FixedPumpGpm")
+        if "ReturnWaterFixedDeltaT" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing ReturnWaterFixedDeltaT")
         if "AnnualHvacKwhTh" not in d2.keys():
             raise SchemaError(f"dict {d2} missing AnnualHvacKwhTh")
-        if "BetaOt" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing BetaOt")
-        if "TempUnitGtEnumSymbol" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing TempUnitGtEnumSymbol")
-        if d2["TempUnitGtEnumSymbol"] in RecognizedTemperatureUnit000SchemaEnum.symbols:
-            d2["TempUnit"] = RecognizedTemperatureUnitMap.type_to_local(
-                d2["TempUnitGtEnumSymbol"]
-            )
-        else:
-            d2["TempUnit"] = RecognizedTemperatureUnit.default()
         if "AmbientPowerInKw" not in d2.keys():
             raise SchemaError(f"dict {d2} missing AmbientPowerInKw")
         if "HouseWorstCaseTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing HouseWorstCaseTempF")
+        if "RoomTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing RoomTempF")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
-        return AtnParamsBrickstorageheater(
+        return AtnParamsSimpleresistivehydronic(
             GNodeAlias=d2["GNodeAlias"],
             HomeCity=d2["HomeCity"],
             TimezoneString=d2["TimezoneString"],
@@ -625,17 +523,16 @@ class AtnParamsBrickstorageheater_Maker:
             EnergyType=d2["EnergyType"],
             StandardOfferPriceDollarsPerMwh=d2["StandardOfferPriceDollarsPerMwh"],
             DistributionTariffDollarsPerMwh=d2["DistributionTariffDollarsPerMwh"],
-            MaxBrickTempC=d2["MaxBrickTempC"],
-            RatedMaxPowerKw=d2["RatedMaxPowerKw"],
-            C=d2["C"],
-            ROff=d2["ROff"],
-            ROn=d2["ROn"],
-            RoomTempF=d2["RoomTempF"],
+            StoreSizeGallons=d2["StoreSizeGallons"],
+            MaxStoreTempF=d2["MaxStoreTempF"],
+            ElementMaxPowerKw=d2["ElementMaxPowerKw"],
+            RequiredSourceWaterTempF=d2["RequiredSourceWaterTempF"],
+            FixedPumpGpm=d2["FixedPumpGpm"],
+            ReturnWaterFixedDeltaT=d2["ReturnWaterFixedDeltaT"],
             AnnualHvacKwhTh=d2["AnnualHvacKwhTh"],
-            BetaOt=d2["BetaOt"],
-            TempUnit=d2["TempUnit"],
             AmbientPowerInKw=d2["AmbientPowerInKw"],
             HouseWorstCaseTempF=d2["HouseWorstCaseTempF"],
+            RoomTempF=d2["RoomTempF"],
             TypeName=d2["TypeName"],
             Version="000",
         )

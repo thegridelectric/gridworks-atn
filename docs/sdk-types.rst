@@ -23,12 +23,14 @@ forth between type instances and Python objects.
     AtnParams  <types/atn-params>
     AtnParamsBrickstorageheater  <types/atn-params-brickstorageheater>
     AtnParamsReport  <types/atn-params-report>
+    AtnParamsSimpleresistivehydronic  <types/atn-params-simpleresistivehydronic>
     BasegnodeScadaCreate  <types/basegnode-scada-create>
     DiscoverycertAlgoCreate  <types/discoverycert-algo-create>
     DispatchContractConfirmed  <types/dispatch-contract-confirmed>
     FloParams  <types/flo-params>
     FloParamsBrickstorageheater  <types/flo-params-brickstorageheater>
     FloParamsReport  <types/flo-params-report>
+    FloParamsSimpleresistivehydronic  <types/flo-params-simpleresistivehydronic>
     InitialTadeedAlgoCreate  <types/initial-tadeed-algo-create>
     InitialTadeedAlgoOptin  <types/initial-tadeed-algo-optin>
     InitialTadeedAlgoTransfer  <types/initial-tadeed-algo-transfer>

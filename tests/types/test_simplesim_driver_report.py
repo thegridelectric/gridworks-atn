@@ -11,7 +11,7 @@ from gwatn.types import SimplesimDriverReport_Maker as Maker
 def test_simplesim_driver_report_generated() -> None:
     d = {
         "FromGNodeAlias": "d1.isone.ver.keene.holly",
-        "FromGNodeInstanecId": "c0cd37c4-d4ae-46d7-baff-af705ea6871a",
+        "FromGNodeInstanceId": "c0cd37c4-d4ae-46d7-baff-af705ea6871a",
         "DriverDataTypeName": "simplesim.driver.data.bsh",
         "DriverData": {
             "FromGNodeAlias": "d1.isone.ver.keene.holly",
@@ -41,7 +41,7 @@ def test_simplesim_driver_report_generated() -> None:
     # test Maker init
     t = Maker(
         from_g_node_alias=gtuple.FromGNodeAlias,
-        from_g_node_instanec_id=gtuple.FromGNodeInstanecId,
+        from_g_node_instance_id=gtuple.FromGNodeInstanceId,
         driver_data_type_name=gtuple.DriverDataTypeName,
         driver_data=gtuple.DriverData,
     ).tuple
@@ -62,7 +62,7 @@ def test_simplesim_driver_report_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FromGNodeInstanecId"]
+    del d2["FromGNodeInstanceId"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -96,7 +96,7 @@ def test_simplesim_driver_report_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FromGNodeInstanecId="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, FromGNodeInstanceId="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
