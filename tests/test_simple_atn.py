@@ -4,6 +4,7 @@ import uuid
 import pendulum
 import pika
 from gridworks_test import TimeCoordinatorStubRecorder
+from gridworks_test import load_rabbit_exchange_bindings
 from gridworks_test import wait_for
 
 from gwatn import atn_utils
@@ -22,6 +23,7 @@ def test_atn():
     wait_for(lambda: atn._publish_channel, 2, "actor publish channel exists")
     wait_for(lambda: atn._publish_channel.is_open, 2, "actor publish channel exists")
 
+    load_rabbit_exchange_bindings(atn._consume_channel)
     ##################
     # test receiving simulated timestep - add stub time coordinator
     ###################
