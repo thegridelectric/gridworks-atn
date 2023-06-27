@@ -280,7 +280,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
         "electric.meter.component.gt.000": "Active",
         "flo.params.000": "Active",
         "flo.params.brickstorageheater.000": "Active",
-        "flo.params.report.000": "Pending",
+        "flo.params.report.000": "Active",
         "g.node.gt.002": "Active",
         "g.node.instance.gt.000": "Active",
         "gt.dispatch.boolean.110": "Active",

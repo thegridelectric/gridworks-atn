@@ -49,7 +49,6 @@ from gwatn.types import LatestPrice
 from gwatn.types import LatestPrice_Maker
 from gwatn.types import PowerWatts
 from gwatn.types import SimTimestep
-from gwatn.types import SimTimestep_Maker
 from gwatn.types import SnapshotSpaceheat
 
 
@@ -85,10 +84,13 @@ def dummy_atn_params() -> AtnParams:
 class AtnActorBase(TwoChannelActorBase):
     def __init__(self, settings: AtnSettings, use_algo: bool = False):
         super().__init__(settings=settings)
-        self.settings: AtnSettings = settings
         self.scada_gni_id = settings.scada_gni_id
         self._time: float = self.get_initial_time_s()
-
+        self.atn_params: AtnParams = dummy_atn_params()
+        self.dc_app_id: Optional[int] = None
+        self.dc_client: Optional[ApplicationClient] = None
+        self.trading_rights_id: Optional[GwCertId] = None
+        self.hb_status = HbStatus(LastHeartbeatReceivedMs=int(time.time() * 1000))
         if use_algo is True:
             self.acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
             self.client: AlgodClient = AlgodClient(
@@ -100,24 +102,20 @@ class AtnActorBase(TwoChannelActorBase):
                     f"Insufficiently funded. Make sure atn has at least 5 algos"
                 )
             # TODO: move this into spaceheat along with join_dispatch_contract_received
-            self.atn_params: AtnParams = dummy_atn_params()
+
             self.sp = self.client.suggested_params()
             self.sp.flat_fee = True
             self.sp.fee = 2000
             # this is initialized with the AppId provided by the SCADA
-            self.dc_app_id: Optional[int] = None
-            self.dc_client: Optional[ApplicationClient] = None
             self.check_for_dispatch_contract()
             self.universe_type = as_enum(
                 self.settings.universe_type_value, UniverseType, UniverseType.default()
             )
-            self.trading_rights_id: Optional[GwCertId] = None
             self.update_trading_rights()
-            self.hb_status = HbStatus(LastHeartbeatReceivedMs=int(time.time() * 1000))
 
     def local_rabbit_startup(self) -> None:
         rjb = MessageCategorySymbol.rjb.value
-        tc_alias_lrh = self.settings.time_coordinator_alias.replace(".", "-")
+        tc_alias_lrh = self.settings.my_time_coordinator_alias.replace(".", "-")
         binding = f"{rjb}.{tc_alias_lrh}.timecoordinator.sim-timestep"
 
         cb = functools.partial(self.on_timecoordinator_bindok, binding=binding)
@@ -259,16 +257,7 @@ class AtnActorBase(TwoChannelActorBase):
         self, from_alias: str, from_role: GNodeRole, payload: HeartbeatA
     ) -> None:
         self.payload = payload
-        if payload.TypeName == HeartbeatA_Maker.type_name:
-            if from_role != GNodeRole.Supervisor:
-                LOGGER.info(
-                    f"Ignoring HeartbeatA from GNode with role {from_role}; expects Supervisor"
-                )
-            try:
-                self.heartbeat_from_super(from_alias, payload)
-            except:
-                LOGGER.exception("Error in heartbeat_received")
-        elif payload.TypeName == HeartbeatB_Maker.type_name:
+        if payload.TypeName == HeartbeatB_Maker.type_name:
             if from_role != GNodeRole.Scada:
                 LOGGER.info(
                     f"Ignoring HeartbeatB from GNode with role {from_role}; expects Scada"
@@ -292,26 +281,9 @@ class AtnActorBase(TwoChannelActorBase):
                     self.latest_price_from_market_maker(payload)
                 except:
                     LOGGER.exception("Error in latest_price_from_market_maker")
-        elif payload.TypeName == SimTimestep_Maker.type_name:
-            try:
-                self.timestep_from_timecoordinator(payload)
-            except:
-                LOGGER.exception("Error in timestep_from_timecoordinator")
-
-    def heartbeat_from_super(self, from_alias: str, ping: HeartbeatA) -> None:
-        pong = HeartbeatA_Maker(
-            my_hex=str(random.choice("0123456789abcdef")), your_last_hex=ping.MyHex
-        ).tuple
-
-        self.send_message(
-            payload=pong,
-            to_role=GNodeRole.Supervisor,
-            to_g_node_alias=self.settings.my_super_alias,
-        )
-
-        LOGGER.debug(
-            f"[{self.alias}] Sent HB: SuHex {pong.YourLastHex}, AtnHex {pong.MyHex}"
-        )
+        else:
+            # If the message is not recognized, kick up to base class
+            super().route_message(from_alias, from_role, payload)
 
     def heartbeat_from_scada(self, ping: HeartbeatB) -> None:
         """
@@ -390,7 +362,7 @@ class AtnActorBase(TwoChannelActorBase):
         [SpaceheatNode](https://gridworks-protocol.readthedocs.io/en/latest/spaceheat-node.html)
         [BooleanActuator Role](https://gridworks-protocol.readthedocs.io/en/latest/enums.html#gwproto.enums.Role)
         Args:
-            relay_node_name: the name of the relay, as string in LeftRightDot format. This must be the
+            relay_node_name (str): the name of the relay, as string in LeftRightDot format. This must be the
             name of a SpaceheatNode in the hardware layout with role "BooleanActuator"
 
         Returns:

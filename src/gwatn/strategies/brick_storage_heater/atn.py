@@ -15,6 +15,7 @@ import random
 import time
 import uuid
 from typing import Optional
+from typing import cast
 from typing import no_type_check
 
 import dotenv
@@ -41,7 +42,8 @@ from gwatn.enums import MessageCategory
 from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.types import AcceptedBid_Maker
-from gwatn.types import AtnParamsBrickstorageheater as AtnParams
+from gwatn.types import AtnParams
+from gwatn.types import AtnParamsBrickstorageheater
 from gwatn.types import AtnParamsReport_Maker
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
@@ -82,7 +84,9 @@ class Atn__BrickStorageHeater(AtnActorBase):
             settings.public.algod_address,
         )
         if self.universe_type == UniverseType.Dev:
-            self.atn_params: AtnParams = strategy_utils.dummy_atn_params()
+            self.atn_params: AtnParamsBrickstorageheater = (
+                strategy_utils.dummy_atn_params()
+            )
         else:
             self.get_initial_params()
         self.market_type: MarketTypeGt = MarketTypeGt_Maker.dc_to_tuple(Rt60Gate30B)
@@ -148,7 +152,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         # LOGGER.info("----------------------------------------------------")
 
         # This gets called on the first timestep
-        if strategy_utils.is_dummy_atn_params(self.atn_params):
+        if atn_utils.is_dummy_atn_params(self.atn_params):
             self.get_initial_params()
             LOGGER.info("Correcting runs on initial timestep")
             self.active_run = strategy_utils.dummy_slot_stuff(
@@ -422,13 +426,13 @@ class Atn__BrickStorageHeater(AtnActorBase):
     ########################
 
     def dev_get_initial_params(self) -> None:
-        if not strategy_utils.is_dummy_atn_params(self.atn_params):
+        if not atn_utils.is_dummy_atn_params(cast(AtnParams, self.atn_params)):
             LOGGER.warning("Tried to get initial params but already have them")
 
         now_ms = int(self.time()) * 1000
         self.atn_params = dev_io.atn_params_from_alias(alias=self.alias, now_ms=now_ms)
         self.atn_params.GNodeInstanceId = self.g_node_instance_id
-        if strategy_utils.is_dummy_atn_params(self.atn_params):
+        if atn_utils.is_dummy_atn_params(cast(AtnParams, self.atn_params)):
             LOGGER.warning(f"No atn_params for {self.alias} before {self.time_str()}")
             return
         payload = AtnParamsReport_Maker(
@@ -436,7 +440,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
             g_node_instance_id=self.g_node_instance_id,
             atn_params_type_name=self.atn_params.TypeName,
             time_unix_s=int(self.time()),
-            params=self.atn_params,
+            params=cast(AtnParams, self.atn_params),
             irl_time_unix_s=int(time.time()),
         ).tuple
 

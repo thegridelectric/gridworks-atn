@@ -9,7 +9,7 @@ Python pydantic class corresponding to  json type ```simplesim.driver.report```.
     - Description:
     - Format: LeftRightDot
 
-**FromGNodeInstanecId**:
+**FromGNodeInstanceId**:
     - Description:
     - Format: UuidCanonicalTextual
 
