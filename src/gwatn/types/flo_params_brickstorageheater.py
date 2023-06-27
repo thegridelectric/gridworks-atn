@@ -267,7 +267,7 @@ class FloParamsBrickstorageheater(BaseModel):
         title="PowerRequiredByHouseFromSystemAvgKwList",
         default=[3.42],
     )
-    C: Optional[float] = Field(
+    C: float = Field(
         title="C",
         default=200,
     )
@@ -293,9 +293,8 @@ class FloParamsBrickstorageheater(BaseModel):
     WeatherUid: str = Field(
         title="WeatherUid",
     )
-    DistPriceUid: Optional[str] = Field(
+    DistPriceUid: str = Field(
         title="DistPriceUid",
-        default=None,
     )
     RegPriceUid: Optional[str] = Field(
         title="RegPriceUid",
@@ -373,9 +372,7 @@ class FloParamsBrickstorageheater(BaseModel):
         return v
 
     @validator("DistPriceUid")
-    def _check_dist_price_uid(cls, v: Optional[str]) -> Optional[str]:
-        if v is None:
-            return v
+    def _check_dist_price_uid(cls, v: str) -> str:
         try:
             check_is_uuid_canonical_textual(v)
         except ValueError as e:
@@ -430,10 +427,6 @@ class FloParamsBrickstorageheater(BaseModel):
             RecognizedTemperatureUnit.default(),
         )
         d["TempUnitGtEnumSymbol"] = RecognizedTemperatureUnitMap.local_to_type(TempUnit)
-        if d["C"] is None:
-            del d["C"]
-        if d["DistPriceUid"] is None:
-            del d["DistPriceUid"]
         if d["RegPriceUid"] is None:
             del d["RegPriceUid"]
         return d
@@ -464,14 +457,14 @@ class FloParamsBrickstorageheater_Maker:
         storage_steps: int,
         slice_duration_minutes: List[int],
         power_required_by_house_from_system_avg_kw_list: List[float],
-        c: Optional[float],
+        c: float,
         realtime_electricity_price: List[float],
         outside_temp_f: List[float],
         distribution_price: List[float],
         rt_elec_price_uid: str,
         regulation_price: List[float],
         weather_uid: str,
-        dist_price_uid: Optional[str],
+        dist_price_uid: str,
         reg_price_uid: Optional[str],
         start_year_utc: int,
         start_month_utc: int,
@@ -587,7 +580,7 @@ class FloParamsBrickstorageheater_Maker:
                 f"dict {d2} missing PowerRequiredByHouseFromSystemAvgKwList"
             )
         if "C" not in d2.keys():
-            d2["C"] = None
+            raise SchemaError(f"dict {d2} missing C")
         if "RealtimeElectricityPrice" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RealtimeElectricityPrice")
         if "OutsideTempF" not in d2.keys():
@@ -601,7 +594,7 @@ class FloParamsBrickstorageheater_Maker:
         if "WeatherUid" not in d2.keys():
             raise SchemaError(f"dict {d2} missing WeatherUid")
         if "DistPriceUid" not in d2.keys():
-            d2["DistPriceUid"] = None
+            raise SchemaError(f"dict {d2} missing DistPriceUid")
         if "RegPriceUid" not in d2.keys():
             d2["RegPriceUid"] = None
         if "StartYearUtc" not in d2.keys():

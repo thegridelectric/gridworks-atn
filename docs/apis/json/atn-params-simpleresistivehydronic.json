@@ -1,10 +1,9 @@
 {
   "gwapi": "001",
-  "type_name": "atn.params.brickstorageheater",
+  "type_name": "atn.params.simpleresistivehydronic",
   "version": "000",
   "owner": "gridworks@gridworks-consulting.com",
-  "description": "Params for a BrickStorageHeater Atn Strategy. Parameters for a model of a ceramic brick thermal storage room unit, using a two-dimensional Dijstra graph parameterized by 'fullness of the thermal battery' and time.",
-  "url": "https://gridworks-atn.readthedocs.io/en/latest/brick-storage-heater.html",
+  "description": "",
   "formats": {
     "LeftRightDot": {
       "type": "string",
@@ -63,23 +62,6 @@
         }
       ]
     },
-    "RecognizedTemperatureUnit000": {
-      "type": "string",
-      "name": "recognized.temperature.unit.000",
-      "description": "Unit of temperature",
-      "oneOf": [
-        {
-          "const": "00000000",
-          "title": "C",
-          "description": "Celcius"
-        },
-        {
-          "const": "6f16ee63",
-          "title": "F",
-          "description": "Fahrenheit"
-        }
-      ]
-    },
     "EnergySupplyType000": {
       "type": "string",
       "name": "energy.supply.type.000",
@@ -107,35 +89,32 @@
     "GNodeAlias": {
       "type": "string",
       "format": "LeftRightDot",
-      "title": "GNode Alias",
+      "title": "",
       "required": true
     },
     "HomeCity": {
       "type": "string",
-      "title": "Home City",
+      "title": "",
       "required": true
     },
     "TimezoneString": {
       "type": "string",
-      "title": "Timezone String",
+      "title": "",
       "required": true
     },
     "StorageSteps": {
       "type": "integer",
-      "title": "Storage Steps",
-      "description": "The number of nodes in each TimeSlice for the Dijkstra graph.",
+      "title": "",
       "required": true
     },
     "FloSlices": {
       "type": "integer",
       "title": "",
-      "description": "The number of nodes for each storage level in the Dijstra graph.",
       "required": true
     },
     "SliceDurationMinutes": {
       "type": "integer",
       "title": "",
-      "description": "The length of",
       "required": true
     },
     "CurrencyUnit": {
@@ -166,49 +145,38 @@
       "title": "",
       "required": true
     },
-    "MaxBrickTempC": {
+    "StoreSizeGallons": {
       "type": "integer",
       "title": "",
       "required": true
     },
-    "RatedMaxPowerKw": {
+    "MaxStoreTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "ElementMaxPowerKw": {
       "type": "number",
       "title": "",
       "required": true
     },
-    "C": {
+    "RequiredSourceWaterTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
+    "FixedPumpGpm": {
       "type": "number",
       "title": "",
       "required": true
     },
-    "ROff": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "ROn": {
-      "type": "number",
-      "title": "",
-      "required": true
-    },
-    "RoomTempF": {
+    "ReturnWaterFixedDeltaT": {
       "type": "integer",
       "title": "",
       "required": true
     },
     "AnnualHvacKwhTh": {
       "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "BetaOt": {
-      "type": "integer",
-      "title": "",
-      "required": true
-    },
-    "TempUnit": {
-      "type": "string",
-      "format": "RecognizedTemperatureUnit000",
       "title": "",
       "required": true
     },
@@ -222,9 +190,14 @@
       "title": "",
       "required": true
     },
+    "RoomTempF": {
+      "type": "integer",
+      "title": "",
+      "required": true
+    },
     "TypeName": {
       "type": "string",
-      "value": "atn.params.brickstorageheater.000",
+      "value": "atn.params.simpleresistivehydronic.000",
       "title": "The type name"
     },
     "Version": {
