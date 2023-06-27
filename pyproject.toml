@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-atn"
-version = "0.3.7"
+version = "0.3.8"
 description = "Gridworks Atn Spaceheat"
 authors = ["GridWorks <gridworks@gridworks-consulting.com>"]
 license = "None"

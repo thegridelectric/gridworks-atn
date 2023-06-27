@@ -101,6 +101,12 @@ from gwatn.types.atn_params_brickstorageheater import AtnParamsBrickstorageheate
 from gwatn.types.atn_params_brickstorageheater import AtnParamsBrickstorageheater_Maker
 from gwatn.types.atn_params_report import AtnParamsReport
 from gwatn.types.atn_params_report import AtnParamsReport_Maker
+from gwatn.types.atn_params_simpleresistivehydronic import (
+    AtnParamsSimpleresistivehydronic,
+)
+from gwatn.types.atn_params_simpleresistivehydronic import (
+    AtnParamsSimpleresistivehydronic_Maker,
+)
 from gwatn.types.basegnode_scada_create import BasegnodeScadaCreate
 from gwatn.types.basegnode_scada_create import BasegnodeScadaCreate_Maker
 from gwatn.types.discoverycert_algo_create import DiscoverycertAlgoCreate
@@ -113,6 +119,12 @@ from gwatn.types.flo_params_brickstorageheater import FloParamsBrickstorageheate
 from gwatn.types.flo_params_brickstorageheater import FloParamsBrickstorageheater_Maker
 from gwatn.types.flo_params_report import FloParamsReport
 from gwatn.types.flo_params_report import FloParamsReport_Maker
+from gwatn.types.flo_params_simpleresistivehydronic import (
+    FloParamsSimpleresistivehydronic,
+)
+from gwatn.types.flo_params_simpleresistivehydronic import (
+    FloParamsSimpleresistivehydronic_Maker,
+)
 from gwatn.types.initial_tadeed_algo_create import InitialTadeedAlgoCreate
 from gwatn.types.initial_tadeed_algo_create import InitialTadeedAlgoCreate_Maker
 from gwatn.types.initial_tadeed_algo_optin import InitialTadeedAlgoOptin
@@ -174,6 +186,8 @@ __all__ = [
     "AtnParamsBrickstorageheater_Maker",
     "AtnParamsReport",
     "AtnParamsReport_Maker",
+    "AtnParamsSimpleresistivehydronic",
+    "AtnParamsSimpleresistivehydronic_Maker",
     "BaseGNodeGt",
     "BaseGNodeGt_Maker",
     "BasegnodeScadaCreate",
@@ -202,6 +216,8 @@ __all__ = [
     "FloParamsBrickstorageheater_Maker",
     "FloParamsReport",
     "FloParamsReport_Maker",
+    "FloParamsSimpleresistivehydronic",
+    "FloParamsSimpleresistivehydronic_Maker",
     "GNodeGt",
     "GNodeGt_Maker",
     "GNodeInstanceGt",

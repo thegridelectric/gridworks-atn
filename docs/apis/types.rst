@@ -22,6 +22,10 @@ AtnParamsReport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-params-report.json
 
+AtnParamsSimpleresistivehydronic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/atn-params-simpleresistivehydronic.json
+
 BasegnodeScadaCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/basegnode-scada-create.json
@@ -45,6 +49,10 @@ FloParamsBrickstorageheater
 FloParamsReport
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/flo-params-report.json
+
+FloParamsSimpleresistivehydronic
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/flo-params-simpleresistivehydronic.json
 
 InitialTadeedAlgoCreate
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
