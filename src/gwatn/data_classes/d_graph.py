@@ -43,21 +43,64 @@ class DGraph(ABC):
         max_power_in: float,
         wh_exponent: int = 3,
     ):
+        """
+
+        Args:
+            d_graph_id:
+            graph_strategy_alias:
+            flo_start_unix_time_s:
+            slice_duration_hrs:
+            timezone_string:
+            default_storage_steps:
+            starting_store_idx:
+            home_city:
+            currency_unit:
+            max_storage:
+            max_power_in:
+            wh_exponent:
+
+        """
         self.graph_strategy_alias = graph_strategy_alias
         self.starting_store_idx = starting_store_idx
-        self.edges: Dict[
-            DNode, List[DEdge]
-        ] = (
-            {}
-        )  # a dictionary that takes nodes to lists of edges connecting that node to nodes in the next time slice
-        self.best_edge: Dict[
-            DNode, DEdge
-        ] = {}  # a dictionary that takes node to its best edge in the dijsktra path
-        self.node: Dict[
-            int, Dict[int, DNode]
-        ] = (
-            {}
-        )  # self.node[jj][kk] is the node with time slice index jj and energy index kk
+
+        self.node: Dict[int, Dict[int, DNode]] = {}
+        """
+        self.node is a dictionary representing the nodes in the graph.
+
+        The dictionary structure is as follows:
+        - The outer dictionary's keys represent the time slice index (jj).
+        - The inner dictionary's keys represent the energy index (kk).
+        - The corresponding value is the node with the given time slice index (jj) and energy index (kk).
+
+        Example usage: self.node[jj][kk] returns the node with time slice index jj and energy index kk.
+        """
+
+        self.edge: Dict[int, Dict[int, Dict[int, DEdge]]] = {}
+        """
+        self.edge is a dictionary representing the edges in the graph. Each edge is an object
+        determined by its starting timeslice index (start_ts_idx), its starting store index
+        (start_idx) and its ending store index (end_idx)
+
+        The dictionary structure as follows:
+        - The first key represents the starting timeslice index
+        - The second key represents the starting store index
+        - The third key represents the final store index
+
+        Example usage: self.edge[ts_idx][start_idx][end_idx] returns the edge starting at the node
+        with time slice index start_ts_idx and store index start_idx, and ending with the node
+        with time slice index start_ts_idx + 1 and store end_idx.
+        """
+
+        self.best_edge: Dict[DNode, DEdge] = {}
+        """
+        self.best_edge[node] is the optimal edge choice going forward from node.
+
+        That is, its a dictionary mapping each node to the best next edge on the least-cost path
+        going forward to the end of the graph from that node. This dictionary is filled out in the
+        `solve_dijkstra` method, as the key step in using Dijkstra's algorithm, which solves
+        for the least-cost path not only for the starting node but for all nodes in the graph.
+        """
+
         self.slice_duration_hrs = slice_duration_hrs
         self.time_slices: int = len(self.slice_duration_hrs)
         self.default_storage_steps = default_storage_steps
@@ -122,7 +165,7 @@ class DGraph(ABC):
             ts_idx = self.time_slices - mm
             bad_slice = True
             for node in self.node[ts_idx].values():
-                edges = self.edges[node]
+                edges = list(self.edge[ts_idx][node.store_idx].values())
                 # options gives a list of edge choices along with the cost of the path
                 # from the node assuming that this edge is chosen, and that from that point
                 # on the optimal path is chosen.

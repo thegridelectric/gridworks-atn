@@ -79,6 +79,11 @@ from gwatn.enums.</xsl:text>
 </xsl:for-each>
 <xsl:text>
 
+# hacks
+from gwatn.enums.hack_price_method import PriceMethod
+from gwatn.enums.hack_recognized_p_node_alias import RecognizedPNodeAlias
+from gwatn.enums.hack_weather_method import WeatherMethod
+from gwatn.enums.hack_weather_source import WeatherSource
 
 __all__ = [</xsl:text>
 <xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto')  or (normalize-space(ProtocolName) ='gridworks')]">
@@ -95,6 +100,10 @@ __all__ = [</xsl:text>
 </xsl:for-each>
 </xsl:for-each>
 <xsl:text>
+    "PriceMethod",
+    "RecognizedPNodeAlias",
+    "WeatherMethod",
+    "WeatherSource",
 ]
 
 </xsl:text>

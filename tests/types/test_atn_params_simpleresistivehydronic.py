@@ -23,17 +23,19 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
         "TariffGtEnumSymbol": "2127aba6",
         "EnergyTypeGtEnumSymbol": "e9dc99a6",
         "StandardOfferPriceDollarsPerMwh": 110,
-        "DistributionTariffDollarsPerMwh": 113,
+        "FlatDistributionTariffDollarsPerMwh": 113,
         "StoreSizeGallons": 240,
         "MaxStoreTempF": 210,
         "ElementMaxPowerKw": 9.5,
         "RequiredSourceWaterTempF": 120,
-        "FixedPumpGpm": 5.5,
-        "ReturnWaterFixedDeltaT": 20,
+        "CirculatorPumpGpm": 5.5,
+        "ReturnWaterDeltaTempF": 20,
         "AnnualHvacKwhTh": 25000,
         "AmbientPowerInKw": 1.2,
         "HouseWorstCaseTempF": -7,
         "RoomTempF": 68,
+        "StorePassiveLossRatio": 0.005,
+        "AmbientTempStoreF": 65,
         "TypeName": "atn.params.simpleresistivehydronic",
         "Version": "000",
     }
@@ -63,17 +65,19 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
         tariff=gtuple.Tariff,
         energy_type=gtuple.EnergyType,
         standard_offer_price_dollars_per_mwh=gtuple.StandardOfferPriceDollarsPerMwh,
-        distribution_tariff_dollars_per_mwh=gtuple.DistributionTariffDollarsPerMwh,
+        flat_distribution_tariff_dollars_per_mwh=gtuple.FlatDistributionTariffDollarsPerMwh,
         store_size_gallons=gtuple.StoreSizeGallons,
         max_store_temp_f=gtuple.MaxStoreTempF,
         element_max_power_kw=gtuple.ElementMaxPowerKw,
         required_source_water_temp_f=gtuple.RequiredSourceWaterTempF,
-        fixed_pump_gpm=gtuple.FixedPumpGpm,
-        return_water_fixed_delta_t=gtuple.ReturnWaterFixedDeltaT,
+        circulator_pump_gpm=gtuple.CirculatorPumpGpm,
+        return_water_delta_temp_f=gtuple.ReturnWaterDeltaTempF,
         annual_hvac_kwh_th=gtuple.AnnualHvacKwhTh,
         ambient_power_in_kw=gtuple.AmbientPowerInKw,
         house_worst_case_temp_f=gtuple.HouseWorstCaseTempF,
         room_temp_f=gtuple.RoomTempF,
+        store_passive_loss_ratio=gtuple.StorePassiveLossRatio,
+        ambient_temp_store_f=gtuple.AmbientTempStoreF,
     ).tuple
     assert t == gtuple
 
@@ -137,7 +141,7 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["DistributionTariffDollarsPerMwh"]
+    del d2["FlatDistributionTariffDollarsPerMwh"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -162,12 +166,12 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FixedPumpGpm"]
+    del d2["CirculatorPumpGpm"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ReturnWaterFixedDeltaT"]
+    del d2["ReturnWaterDeltaTempF"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -188,6 +192,16 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
 
     d2 = dict(d)
     del d2["RoomTempF"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["StorePassiveLossRatio"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["AmbientTempStoreF"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -220,7 +234,7 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, DistributionTariffDollarsPerMwh="113.1")
+    d2 = dict(d, FlatDistributionTariffDollarsPerMwh="113.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -240,11 +254,11 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FixedPumpGpm="this is not a float")
+    d2 = dict(d, CirculatorPumpGpm="this is not a float")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, ReturnWaterFixedDeltaT="20.1")
+    d2 = dict(d, ReturnWaterDeltaTempF="20.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -261,6 +275,14 @@ def test_atn_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, RoomTempF="68.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, StorePassiveLossRatio="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, AmbientTempStoreF="65.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 

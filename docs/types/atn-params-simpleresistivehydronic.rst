@@ -36,7 +36,7 @@ Python pydantic class corresponding to  json type ```atn.params.simpleresistiveh
 **StandardOfferPriceDollarsPerMwh**:
     - Description:
 
-**DistributionTariffDollarsPerMwh**:
+**FlatDistributionTariffDollarsPerMwh**:
     - Description:
 
 **StoreSizeGallons**:
@@ -51,10 +51,10 @@ Python pydantic class corresponding to  json type ```atn.params.simpleresistiveh
 **RequiredSourceWaterTempF**:
     - Description:
 
-**FixedPumpGpm**:
+**CirculatorPumpGpm**:
     - Description:
 
-**ReturnWaterFixedDeltaT**:
+**ReturnWaterDeltaTempF**:
     - Description:
 
 **AnnualHvacKwhTh**:
@@ -67,6 +67,12 @@ Python pydantic class corresponding to  json type ```atn.params.simpleresistiveh
     - Description:
 
 **RoomTempF**:
+    - Description:
+
+**StorePassiveLossRatio**:
+    - Description:
+
+**AmbientTempStoreF**:
     - Description:
 
 .. autoclass:: gwatn.types.atn_params_simpleresistivehydronic.check_is_left_right_dot

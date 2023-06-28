@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gridworks-atn"
-version = "0.3.8"
+version = "0.4.0"
 description = "Gridworks Atn Spaceheat"
 authors = ["GridWorks <gridworks@gridworks-consulting.com>"]
 license = "None"
@@ -26,7 +26,6 @@ numpy = "^1.23.4"
 #gridworks = { path = "../gridworks"}
 gridworks-proactor = "^0.2.2"
 gridworks-ps = "^0.0.1"
-
 
 
 [tool.poetry.dev-dependencies]

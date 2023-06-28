@@ -436,10 +436,10 @@ def export_params_xlsx(
     w.write("E8", flo.params.ZeroPotentialEnergyWaterTempF)
 
     w.write("D9", "TotalStorageKwh", derived_format_bold)
-    w.write("E9", round(flo.max_energy_kwh_th, 1), derived_format)
+    w.write("E9", round(flo.max_energy_kwh, 1), derived_format)
 
     w.write("D10", "TotalStorage BTU", derived_format_bold)
-    w.write("E10", round(cf.BTU_PER_KWH * flo.max_energy_kwh_th), derived_format)
+    w.write("E10", round(cf.BTU_PER_KWH * flo.max_energy_kwh), derived_format)
 
     w.write("D12", "EmitterPumpFeedbackModel", bold)
     w.write("E12", flo.params.EmitterPumpFeedbackModel.value)

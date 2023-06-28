@@ -1,0 +1,31 @@
+{
+  "gwapi": "001",
+  "type_name": "atn.outside.temp.regr.coeffs",
+  "version": "000",
+  "owner": "gridworks@gridworks-consulting.com",
+  "description": ". Coefficients for a linear regression of avg power leaving a building as a function of weather: PowerOut = Alpha + Beta * OutsideTempF These are an example of Slowly Varying State variables maintained for a thermal storage heating Terminal Asset by its AtomicTNode and Scada.",
+  "url": "https://gridworks-atn.readthedocs.io/en/latest/data-categories.html#slowly-varying-state-variables",
+  "properties": {
+    "Alpha": {
+      "type": "integer",
+      "title": "Alpha (units: W)",
+      "required": true
+    },
+    "Beta": {
+      "type": "number",
+      "title": "Beta (units: W / deg F)  ",
+      "required": true
+    },
+    "TypeName": {
+      "type": "string",
+      "value": "atn.outside.temp.regr.coeffs.000",
+      "title": "The type name"
+    },
+    "Version": {
+      "type": "string",
+      "title": "The type version",
+      "default": "000",
+      "required": true
+    }
+  }
+}

@@ -34,44 +34,58 @@ Python pydantic class corresponding to  json type ```flo.params.simpleresistiveh
 **StartMinuteUtc**:
     - Description:
 
+**StorageSteps**:
+    - Description:
+
 **StoreSizeGallons**:
     - Description:
 
 **MaxStoreTempF**:
     - Description:
 
-**ElementMaxPowerKw**:
+**RatedPowerKw**:
     - Description:
 
 **RequiredSourceWaterTempF**:
     - Description:
 
-**FixedPumpGpm**:
+**CirculatorPumpGpm**:
     - Description:
 
-**ReturnWaterFixedDeltaT**:
+**ReturnWaterDeltaTempF**:
     - Description:
 
-**SliceDurationMinutes**:
+**RoomTempF**:
+    - Description:
+
+**AmbientPowerInKw**:
+    - Description:
+
+**HouseWorstCaseTempF**:
+    - Description:
+
+**StorePassiveLossRatio**:
     - Description:
 
 **PowerLostFromHouseKwList**:
     - Description:
 
-**OutsideTempF**:
+**AmbientTempStoreF**:
     - Description:
 
-**DistributionPrice**:
+**SliceDurationMinutes**:
     - Description:
 
 **RealtimeElectricityPrice**:
     - Description:
 
-**RtElecPriceUid**:
+**DistributionPrice**:
     - Description:
-    - Format: UuidCanonicalTextual
 
-**WeatherUid**:
+**OutsideTempF**:
+    - Description:
+
+**RtElecPriceUid**:
     - Description:
     - Format: UuidCanonicalTextual
 
@@ -79,7 +93,26 @@ Python pydantic class corresponding to  json type ```flo.params.simpleresistiveh
     - Description:
     - Format: UuidCanonicalTextual
 
+**WeatherUid**:
+    - Description:
+    - Format: UuidCanonicalTextual
+
 **CurrencyUnit**:
+    - Description:
+
+**Tariff**:
+    - Description:
+
+**EnergyType**:
+    - Description:
+
+**StandardOfferPriceDollarsPerMwh**:
+    - Description:
+
+**FlatDistributionTariffDollarsPerMwh**:
+    - Description:
+
+**StartingStoreIdx**:
     - Description:
 
 .. autoclass:: gwatn.types.flo_params_simpleresistivehydronic.check_is_uuid_canonical_textual

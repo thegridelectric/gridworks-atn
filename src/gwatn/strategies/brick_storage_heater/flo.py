@@ -37,7 +37,7 @@ class Flo__BrickStorageHeater(DGraph):
                 [0] * len(self.params.RealtimeElectricityPrice)
             )
 
-        self.max_energy_kwh_th = strategy_utils.get_max_store_kwh_th(self.params)
+        self.max_energy_kwh_th = strategy_utils.get_max_energy_kwh(self.params)
 
         self.currency_unit = self.params.CurrencyUnit
         self.temp_unit = self.params.TempUnit

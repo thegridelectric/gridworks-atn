@@ -1,4 +1,4 @@
-""" Heatpumpwithbooststore Flo Edge Class Definition """
+""" SimpleResistiveHydronic Flo Edge Class Definition """
 from typing import Optional
 from typing import no_type_check
 
@@ -8,7 +8,7 @@ from gwatn.data_classes.d_edge import DEdge
 SIG_FIGS_FOR_OUTPUT = 6
 
 
-class Edge__BrickStorageHeater(DEdge):
+class Edge_SimpleResistiveHydronic(DEdge):
     def __init__(
         self,
         start_ts_idx: int,
@@ -29,5 +29,7 @@ class Edge__BrickStorageHeater(DEdge):
     def __repr__(self) -> str:
         rep = f"DEdge => Time Slice Idx: {self.start_ts_idx}, StartIdx: {self.start_idx}, EndIdx: {self.end_idx}"
         if self.cost is not None:
-            rep += f" Cost => {self.cost}"
+            rep += f", Cost => ${round(self.cost, 3)}"
+        if self.avg_kw is not None:
+            rep += f", Avg Power => {round(self.avg_kw, 2)} kW"
         return rep

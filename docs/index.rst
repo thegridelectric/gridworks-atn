@@ -64,11 +64,7 @@ Installation
     :caption: Code Support
 
     Hello AtomicTNode <hello-atn>
-    Brick Storage Heater model <brick-storage-heater>
-    Forward Looking Optimization <flo>
-    Simple Resistive Hydrnoic model <simple-resistive-hydronic>
-    Simple Scada Simulation <simple-sim-scada>
-    Lexicon <https://gridworks.readthedocs.io/en/latest/lexicon.html>
+    Lexicon <lexicon>
 
 
 .. toctree::

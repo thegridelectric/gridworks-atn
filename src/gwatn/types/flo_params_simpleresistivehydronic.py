@@ -13,7 +13,74 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
+from gwatn.enums import DistributionTariff
+from gwatn.enums import EnergySupplyType
 from gwatn.enums import RecognizedCurrencyUnit
+
+
+class DistributionTariff000SchemaEnum:
+    enum_name: str = "distribution.tariff.000"
+    symbols: List[str] = [
+        "00000000",
+        "2127aba6",
+        "ea5c675a",
+        "54aec3a7",
+    ]
+
+    @classmethod
+    def is_symbol(cls, candidate: str) -> bool:
+        if candidate in cls.symbols:
+            return True
+        return False
+
+
+class DistributionTariff000(StrEnum):
+    Unknown = auto()
+    VersantA1StorageHeatTariff = auto()
+    VersantATariff = auto()
+    VersantA20HeatTariff = auto()
+
+    @classmethod
+    def default(cls) -> "DistributionTariff000":
+        return cls.Unknown
+
+    @classmethod
+    def values(cls) -> List[str]:
+        return [elt.value for elt in cls]
+
+
+class DistributionTariffMap:
+    @classmethod
+    def type_to_local(cls, symbol: str) -> DistributionTariff:
+        if not DistributionTariff000SchemaEnum.is_symbol(symbol):
+            raise SchemaError(f"{symbol} must belong to DistributionTariff000 symbols")
+        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
+        return as_enum(versioned_enum, DistributionTariff, DistributionTariff.default())
+
+    @classmethod
+    def local_to_type(cls, distribution_tariff: DistributionTariff) -> str:
+        if not isinstance(distribution_tariff, DistributionTariff):
+            raise SchemaError(
+                f"{distribution_tariff} must be of type {DistributionTariff}"
+            )
+        versioned_enum = as_enum(
+            distribution_tariff, DistributionTariff000, DistributionTariff000.default()
+        )
+        return cls.versioned_enum_to_type_dict[versioned_enum]
+
+    type_to_versioned_enum_dict: Dict[str, DistributionTariff000] = {
+        "00000000": DistributionTariff000.Unknown,
+        "2127aba6": DistributionTariff000.VersantA1StorageHeatTariff,
+        "ea5c675a": DistributionTariff000.VersantATariff,
+        "54aec3a7": DistributionTariff000.VersantA20HeatTariff,
+    }
+
+    versioned_enum_to_type_dict: Dict[DistributionTariff000, str] = {
+        DistributionTariff000.Unknown: "00000000",
+        DistributionTariff000.VersantA1StorageHeatTariff: "2127aba6",
+        DistributionTariff000.VersantATariff: "ea5c675a",
+        DistributionTariff000.VersantA20HeatTariff: "54aec3a7",
+    }
 
 
 class RecognizedCurrencyUnit000SchemaEnum:
@@ -80,6 +147,67 @@ class RecognizedCurrencyUnitMap:
         RecognizedCurrencyUnit000.UNKNOWN: "00000000",
         RecognizedCurrencyUnit000.USD: "e57c5143",
         RecognizedCurrencyUnit000.GBP: "f7b38fc5",
+    }
+
+
+class EnergySupplyType000SchemaEnum:
+    enum_name: str = "energy.supply.type.000"
+    symbols: List[str] = [
+        "00000000",
+        "cb18f937",
+        "e9dc99a6",
+    ]
+
+    @classmethod
+    def is_symbol(cls, candidate: str) -> bool:
+        if candidate in cls.symbols:
+            return True
+        return False
+
+
+class EnergySupplyType000(StrEnum):
+    Unknown = auto()
+    StandardOffer = auto()
+    RealtimeLocalLmp = auto()
+
+    @classmethod
+    def default(cls) -> "EnergySupplyType000":
+        return cls.Unknown
+
+    @classmethod
+    def values(cls) -> List[str]:
+        return [elt.value for elt in cls]
+
+
+class EnergySupplyTypeMap:
+    @classmethod
+    def type_to_local(cls, symbol: str) -> EnergySupplyType:
+        if not EnergySupplyType000SchemaEnum.is_symbol(symbol):
+            raise SchemaError(f"{symbol} must belong to EnergySupplyType000 symbols")
+        versioned_enum = cls.type_to_versioned_enum_dict[symbol]
+        return as_enum(versioned_enum, EnergySupplyType, EnergySupplyType.default())
+
+    @classmethod
+    def local_to_type(cls, energy_supply_type: EnergySupplyType) -> str:
+        if not isinstance(energy_supply_type, EnergySupplyType):
+            raise SchemaError(
+                f"{energy_supply_type} must be of type {EnergySupplyType}"
+            )
+        versioned_enum = as_enum(
+            energy_supply_type, EnergySupplyType000, EnergySupplyType000.default()
+        )
+        return cls.versioned_enum_to_type_dict[versioned_enum]
+
+    type_to_versioned_enum_dict: Dict[str, EnergySupplyType000] = {
+        "00000000": EnergySupplyType000.Unknown,
+        "cb18f937": EnergySupplyType000.StandardOffer,
+        "e9dc99a6": EnergySupplyType000.RealtimeLocalLmp,
+    }
+
+    versioned_enum_to_type_dict: Dict[EnergySupplyType000, str] = {
+        EnergySupplyType000.Unknown: "00000000",
+        EnergySupplyType000.StandardOffer: "cb18f937",
+        EnergySupplyType000.RealtimeLocalLmp: "e9dc99a6",
     }
 
 
@@ -176,62 +304,106 @@ class FloParamsSimpleresistivehydronic(BaseModel):
         title="StartMinuteUtc",
         default=0,
     )
+    StorageSteps: int = Field(
+        title="StorageSteps",
+        default=100,
+    )
     StoreSizeGallons: int = Field(
         title="StoreSizeGallons",
         default=240,
     )
     MaxStoreTempF: int = Field(
         title="MaxStoreTempF",
-        default=190,
+        default=210,
     )
-    ElementMaxPowerKw: float = Field(
-        title="ElementMaxPowerKw",
+    RatedPowerKw: float = Field(
+        title="RatedPowerKw",
         default=9.5,
     )
     RequiredSourceWaterTempF: int = Field(
         title="RequiredSourceWaterTempF",
         default=120,
     )
-    FixedPumpGpm: float = Field(
-        title="FixedPumpGpm",
+    CirculatorPumpGpm: float = Field(
+        title="CirculatorPumpGpm",
         default=4.5,
     )
-    ReturnWaterFixedDeltaT: int = Field(
-        title="ReturnWaterFixedDeltaT",
+    ReturnWaterDeltaTempF: int = Field(
+        title="ReturnWaterDeltaTempF",
         default=20,
     )
-    SliceDurationMinutes: List[int] = Field(
-        title="SliceDurationMinutes",
-        default=[60],
+    RoomTempF: int = Field(
+        title="RoomTempF",
+        default=70,
+    )
+    AmbientPowerInKw: float = Field(
+        title="AmbientPowerInKw",
+        default=1.2,
+    )
+    HouseWorstCaseTempF: float = Field(
+        title="HouseWorstCaseTempF",
+        default=-7,
+    )
+    StorePassiveLossRatio: float = Field(
+        title="StorePassiveLossRatio",
+        default=0.005,
     )
     PowerLostFromHouseKwList: List[float] = Field(
         title="PowerLostFromHouseKwList",
         default=[3.42],
     )
-    OutsideTempF: List[float] = Field(
-        title="OutsideTempF",
-        default=[-5.1],
+    AmbientTempStoreF: int = Field(
+        title="AmbientTempStoreF",
+        default=65,
     )
-    DistributionPrice: List[float] = Field(
-        title="DistributionPrice",
-        default=[40.0],
+    SliceDurationMinutes: List[int] = Field(
+        title="SliceDurationMinutes",
+        default=[60],
     )
     RealtimeElectricityPrice: List[float] = Field(
         title="RealtimeElectricityPrice",
         default=[10.35],
     )
+    DistributionPrice: List[float] = Field(
+        title="DistributionPrice",
+        default=[40.0],
+    )
+    OutsideTempF: List[float] = Field(
+        title="OutsideTempF",
+        default=[-5.1],
+    )
     RtElecPriceUid: str = Field(
         title="RtElecPriceUid",
-    )
-    WeatherUid: str = Field(
-        title="WeatherUid",
     )
     DistPriceUid: str = Field(
         title="DistPriceUid",
     )
+    WeatherUid: str = Field(
+        title="WeatherUid",
+    )
     CurrencyUnit: RecognizedCurrencyUnit = Field(
         title="CurrencyUnit",
         default=RecognizedCurrencyUnit.USD,
+    )
+    Tariff: DistributionTariff = Field(
+        title="Tariff",
+        default=DistributionTariff.VersantA1StorageHeatTariff,
+    )
+    EnergyType: EnergySupplyType = Field(
+        title="EnergyType",
+        default=EnergySupplyType.RealtimeLocalLmp,
+    )
+    StandardOfferPriceDollarsPerMwh: int = Field(
+        title="StandardOfferPriceDollarsPerMwh",
+        default=110,
+    )
+    FlatDistributionTariffDollarsPerMwh: int = Field(
+        title="FlatDistributionTariffDollarsPerMwh",
+        default=113,
+    )
+    StartingStoreIdx: int = Field(
+        title="StartingStoreIdx",
+        default=50,
     )
     TypeName: Literal[
         "flo.params.simpleresistivehydronic"
@@ -266,16 +438,6 @@ class FloParamsSimpleresistivehydronic(BaseModel):
             )
         return v
 
-    @validator("WeatherUid")
-    def _check_weather_uid(cls, v: str) -> str:
-        try:
-            check_is_uuid_canonical_textual(v)
-        except ValueError as e:
-            raise ValueError(
-                f"WeatherUid failed UuidCanonicalTextual format validation: {e}"
-            )
-        return v
-
     @validator("DistPriceUid")
     def _check_dist_price_uid(cls, v: str) -> str:
         try:
@@ -286,9 +448,27 @@ class FloParamsSimpleresistivehydronic(BaseModel):
             )
         return v
 
+    @validator("WeatherUid")
+    def _check_weather_uid(cls, v: str) -> str:
+        try:
+            check_is_uuid_canonical_textual(v)
+        except ValueError as e:
+            raise ValueError(
+                f"WeatherUid failed UuidCanonicalTextual format validation: {e}"
+            )
+        return v
+
     @validator("CurrencyUnit")
     def _check_currency_unit(cls, v: RecognizedCurrencyUnit) -> RecognizedCurrencyUnit:
         return as_enum(v, RecognizedCurrencyUnit, RecognizedCurrencyUnit.UNKNOWN)
+
+    @validator("Tariff")
+    def _check_tariff(cls, v: DistributionTariff) -> DistributionTariff:
+        return as_enum(v, DistributionTariff, DistributionTariff.Unknown)
+
+    @validator("EnergyType")
+    def _check_energy_type(cls, v: EnergySupplyType) -> EnergySupplyType:
+        return as_enum(v, EnergySupplyType, EnergySupplyType.Unknown)
 
     def as_dict(self) -> Dict[str, Any]:
         d = self.dict()
@@ -299,6 +479,14 @@ class FloParamsSimpleresistivehydronic(BaseModel):
         d["CurrencyUnitGtEnumSymbol"] = RecognizedCurrencyUnitMap.local_to_type(
             CurrencyUnit
         )
+        del d["Tariff"]
+        Tariff = as_enum(self.Tariff, DistributionTariff, DistributionTariff.default())
+        d["TariffGtEnumSymbol"] = DistributionTariffMap.local_to_type(Tariff)
+        del d["EnergyType"]
+        EnergyType = as_enum(
+            self.EnergyType, EnergySupplyType, EnergySupplyType.default()
+        )
+        d["EnergyTypeGtEnumSymbol"] = EnergySupplyTypeMap.local_to_type(EnergyType)
         return d
 
     def as_type(self) -> str:
@@ -323,21 +511,32 @@ class FloParamsSimpleresistivehydronic_Maker:
         start_day_utc: int,
         start_hour_utc: int,
         start_minute_utc: int,
+        storage_steps: int,
         store_size_gallons: int,
         max_store_temp_f: int,
-        element_max_power_kw: float,
+        rated_power_kw: float,
         required_source_water_temp_f: int,
-        fixed_pump_gpm: float,
-        return_water_fixed_delta_t: int,
-        slice_duration_minutes: List[int],
+        circulator_pump_gpm: float,
+        return_water_delta_temp_f: int,
+        room_temp_f: int,
+        ambient_power_in_kw: float,
+        house_worst_case_temp_f: float,
+        store_passive_loss_ratio: float,
         power_lost_from_house_kw_list: List[float],
-        outside_temp_f: List[float],
-        distribution_price: List[float],
+        ambient_temp_store_f: int,
+        slice_duration_minutes: List[int],
         realtime_electricity_price: List[float],
+        distribution_price: List[float],
+        outside_temp_f: List[float],
         rt_elec_price_uid: str,
-        weather_uid: str,
         dist_price_uid: str,
+        weather_uid: str,
         currency_unit: RecognizedCurrencyUnit,
+        tariff: DistributionTariff,
+        energy_type: EnergySupplyType,
+        standard_offer_price_dollars_per_mwh: int,
+        flat_distribution_tariff_dollars_per_mwh: int,
+        starting_store_idx: int,
     ):
         self.tuple = FloParamsSimpleresistivehydronic(
             GNodeAlias=g_node_alias,
@@ -349,21 +548,32 @@ class FloParamsSimpleresistivehydronic_Maker:
             StartDayUtc=start_day_utc,
             StartHourUtc=start_hour_utc,
             StartMinuteUtc=start_minute_utc,
+            StorageSteps=storage_steps,
             StoreSizeGallons=store_size_gallons,
             MaxStoreTempF=max_store_temp_f,
-            ElementMaxPowerKw=element_max_power_kw,
+            RatedPowerKw=rated_power_kw,
             RequiredSourceWaterTempF=required_source_water_temp_f,
-            FixedPumpGpm=fixed_pump_gpm,
-            ReturnWaterFixedDeltaT=return_water_fixed_delta_t,
-            SliceDurationMinutes=slice_duration_minutes,
+            CirculatorPumpGpm=circulator_pump_gpm,
+            ReturnWaterDeltaTempF=return_water_delta_temp_f,
+            RoomTempF=room_temp_f,
+            AmbientPowerInKw=ambient_power_in_kw,
+            HouseWorstCaseTempF=house_worst_case_temp_f,
+            StorePassiveLossRatio=store_passive_loss_ratio,
             PowerLostFromHouseKwList=power_lost_from_house_kw_list,
-            OutsideTempF=outside_temp_f,
-            DistributionPrice=distribution_price,
+            AmbientTempStoreF=ambient_temp_store_f,
+            SliceDurationMinutes=slice_duration_minutes,
             RealtimeElectricityPrice=realtime_electricity_price,
+            DistributionPrice=distribution_price,
+            OutsideTempF=outside_temp_f,
             RtElecPriceUid=rt_elec_price_uid,
-            WeatherUid=weather_uid,
             DistPriceUid=dist_price_uid,
+            WeatherUid=weather_uid,
             CurrencyUnit=currency_unit,
+            Tariff=tariff,
+            EnergyType=energy_type,
+            StandardOfferPriceDollarsPerMwh=standard_offer_price_dollars_per_mwh,
+            FlatDistributionTariffDollarsPerMwh=flat_distribution_tariff_dollars_per_mwh,
+            StartingStoreIdx=starting_store_idx,
             #
         )
 
@@ -408,34 +618,46 @@ class FloParamsSimpleresistivehydronic_Maker:
             raise SchemaError(f"dict {d2} missing StartHourUtc")
         if "StartMinuteUtc" not in d2.keys():
             raise SchemaError(f"dict {d2} missing StartMinuteUtc")
+        if "StorageSteps" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StorageSteps")
         if "StoreSizeGallons" not in d2.keys():
             raise SchemaError(f"dict {d2} missing StoreSizeGallons")
         if "MaxStoreTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing MaxStoreTempF")
-        if "ElementMaxPowerKw" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ElementMaxPowerKw")
+        if "RatedPowerKw" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing RatedPowerKw")
         if "RequiredSourceWaterTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RequiredSourceWaterTempF")
-        if "FixedPumpGpm" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FixedPumpGpm")
-        if "ReturnWaterFixedDeltaT" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ReturnWaterFixedDeltaT")
-        if "SliceDurationMinutes" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing SliceDurationMinutes")
+        if "CirculatorPumpGpm" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing CirculatorPumpGpm")
+        if "ReturnWaterDeltaTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing ReturnWaterDeltaTempF")
+        if "RoomTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing RoomTempF")
+        if "AmbientPowerInKw" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AmbientPowerInKw")
+        if "HouseWorstCaseTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing HouseWorstCaseTempF")
+        if "StorePassiveLossRatio" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StorePassiveLossRatio")
         if "PowerLostFromHouseKwList" not in d2.keys():
             raise SchemaError(f"dict {d2} missing PowerLostFromHouseKwList")
-        if "OutsideTempF" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing OutsideTempF")
-        if "DistributionPrice" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing DistributionPrice")
+        if "AmbientTempStoreF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AmbientTempStoreF")
+        if "SliceDurationMinutes" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing SliceDurationMinutes")
         if "RealtimeElectricityPrice" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RealtimeElectricityPrice")
+        if "DistributionPrice" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing DistributionPrice")
+        if "OutsideTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing OutsideTempF")
         if "RtElecPriceUid" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RtElecPriceUid")
-        if "WeatherUid" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing WeatherUid")
         if "DistPriceUid" not in d2.keys():
             raise SchemaError(f"dict {d2} missing DistPriceUid")
+        if "WeatherUid" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing WeatherUid")
         if "CurrencyUnitGtEnumSymbol" not in d2.keys():
             raise SchemaError(f"dict {d2} missing CurrencyUnitGtEnumSymbol")
         if (
@@ -447,6 +669,26 @@ class FloParamsSimpleresistivehydronic_Maker:
             )
         else:
             d2["CurrencyUnit"] = RecognizedCurrencyUnit.default()
+        if "TariffGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing TariffGtEnumSymbol")
+        if d2["TariffGtEnumSymbol"] in DistributionTariff000SchemaEnum.symbols:
+            d2["Tariff"] = DistributionTariffMap.type_to_local(d2["TariffGtEnumSymbol"])
+        else:
+            d2["Tariff"] = DistributionTariff.default()
+        if "EnergyTypeGtEnumSymbol" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing EnergyTypeGtEnumSymbol")
+        if d2["EnergyTypeGtEnumSymbol"] in EnergySupplyType000SchemaEnum.symbols:
+            d2["EnergyType"] = EnergySupplyTypeMap.type_to_local(
+                d2["EnergyTypeGtEnumSymbol"]
+            )
+        else:
+            d2["EnergyType"] = EnergySupplyType.default()
+        if "StandardOfferPriceDollarsPerMwh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StandardOfferPriceDollarsPerMwh")
+        if "FlatDistributionTariffDollarsPerMwh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing FlatDistributionTariffDollarsPerMwh")
+        if "StartingStoreIdx" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StartingStoreIdx")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -460,21 +702,34 @@ class FloParamsSimpleresistivehydronic_Maker:
             StartDayUtc=d2["StartDayUtc"],
             StartHourUtc=d2["StartHourUtc"],
             StartMinuteUtc=d2["StartMinuteUtc"],
+            StorageSteps=d2["StorageSteps"],
             StoreSizeGallons=d2["StoreSizeGallons"],
             MaxStoreTempF=d2["MaxStoreTempF"],
-            ElementMaxPowerKw=d2["ElementMaxPowerKw"],
+            RatedPowerKw=d2["RatedPowerKw"],
             RequiredSourceWaterTempF=d2["RequiredSourceWaterTempF"],
-            FixedPumpGpm=d2["FixedPumpGpm"],
-            ReturnWaterFixedDeltaT=d2["ReturnWaterFixedDeltaT"],
-            SliceDurationMinutes=d2["SliceDurationMinutes"],
+            CirculatorPumpGpm=d2["CirculatorPumpGpm"],
+            ReturnWaterDeltaTempF=d2["ReturnWaterDeltaTempF"],
+            RoomTempF=d2["RoomTempF"],
+            AmbientPowerInKw=d2["AmbientPowerInKw"],
+            HouseWorstCaseTempF=d2["HouseWorstCaseTempF"],
+            StorePassiveLossRatio=d2["StorePassiveLossRatio"],
             PowerLostFromHouseKwList=d2["PowerLostFromHouseKwList"],
-            OutsideTempF=d2["OutsideTempF"],
-            DistributionPrice=d2["DistributionPrice"],
+            AmbientTempStoreF=d2["AmbientTempStoreF"],
+            SliceDurationMinutes=d2["SliceDurationMinutes"],
             RealtimeElectricityPrice=d2["RealtimeElectricityPrice"],
+            DistributionPrice=d2["DistributionPrice"],
+            OutsideTempF=d2["OutsideTempF"],
             RtElecPriceUid=d2["RtElecPriceUid"],
-            WeatherUid=d2["WeatherUid"],
             DistPriceUid=d2["DistPriceUid"],
+            WeatherUid=d2["WeatherUid"],
             CurrencyUnit=d2["CurrencyUnit"],
+            Tariff=d2["Tariff"],
+            EnergyType=d2["EnergyType"],
+            StandardOfferPriceDollarsPerMwh=d2["StandardOfferPriceDollarsPerMwh"],
+            FlatDistributionTariffDollarsPerMwh=d2[
+                "FlatDistributionTariffDollarsPerMwh"
+            ],
+            StartingStoreIdx=d2["StartingStoreIdx"],
             TypeName=d2["TypeName"],
             Version="000",
         )

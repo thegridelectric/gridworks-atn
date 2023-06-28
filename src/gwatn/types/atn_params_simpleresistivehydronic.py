@@ -276,8 +276,8 @@ class AtnParamsSimpleresistivehydronic(BaseModel):
         title="StandardOfferPriceDollarsPerMwh",
         default=110,
     )
-    DistributionTariffDollarsPerMwh: int = Field(
-        title="DistributionTariffDollarsPerMwh",
+    FlatDistributionTariffDollarsPerMwh: int = Field(
+        title="FlatDistributionTariffDollarsPerMwh",
         default=113,
     )
     StoreSizeGallons: int = Field(
@@ -296,12 +296,12 @@ class AtnParamsSimpleresistivehydronic(BaseModel):
         title="RequiredSourceWaterTempF",
         default=120,
     )
-    FixedPumpGpm: float = Field(
-        title="FixedPumpGpm",
+    CirculatorPumpGpm: float = Field(
+        title="CirculatorPumpGpm",
         default=5.5,
     )
-    ReturnWaterFixedDeltaT: int = Field(
-        title="ReturnWaterFixedDeltaT",
+    ReturnWaterDeltaTempF: int = Field(
+        title="ReturnWaterDeltaTempF",
         default=20,
     )
     AnnualHvacKwhTh: int = Field(
@@ -319,6 +319,14 @@ class AtnParamsSimpleresistivehydronic(BaseModel):
     RoomTempF: int = Field(
         title="RoomTempF",
         default=68,
+    )
+    StorePassiveLossRatio: float = Field(
+        title="StorePassiveLossRatio",
+        default=0.005,
+    )
+    AmbientTempStoreF: int = Field(
+        title="AmbientTempStoreF",
+        default=65,
     )
     TypeName: Literal[
         "atn.params.simpleresistivehydronic"
@@ -387,17 +395,19 @@ class AtnParamsSimpleresistivehydronic_Maker:
         tariff: DistributionTariff,
         energy_type: EnergySupplyType,
         standard_offer_price_dollars_per_mwh: int,
-        distribution_tariff_dollars_per_mwh: int,
+        flat_distribution_tariff_dollars_per_mwh: int,
         store_size_gallons: int,
         max_store_temp_f: int,
         element_max_power_kw: float,
         required_source_water_temp_f: int,
-        fixed_pump_gpm: float,
-        return_water_fixed_delta_t: int,
+        circulator_pump_gpm: float,
+        return_water_delta_temp_f: int,
         annual_hvac_kwh_th: int,
         ambient_power_in_kw: float,
         house_worst_case_temp_f: int,
         room_temp_f: int,
+        store_passive_loss_ratio: float,
+        ambient_temp_store_f: int,
     ):
         self.tuple = AtnParamsSimpleresistivehydronic(
             GNodeAlias=g_node_alias,
@@ -410,17 +420,19 @@ class AtnParamsSimpleresistivehydronic_Maker:
             Tariff=tariff,
             EnergyType=energy_type,
             StandardOfferPriceDollarsPerMwh=standard_offer_price_dollars_per_mwh,
-            DistributionTariffDollarsPerMwh=distribution_tariff_dollars_per_mwh,
+            FlatDistributionTariffDollarsPerMwh=flat_distribution_tariff_dollars_per_mwh,
             StoreSizeGallons=store_size_gallons,
             MaxStoreTempF=max_store_temp_f,
             ElementMaxPowerKw=element_max_power_kw,
             RequiredSourceWaterTempF=required_source_water_temp_f,
-            FixedPumpGpm=fixed_pump_gpm,
-            ReturnWaterFixedDeltaT=return_water_fixed_delta_t,
+            CirculatorPumpGpm=circulator_pump_gpm,
+            ReturnWaterDeltaTempF=return_water_delta_temp_f,
             AnnualHvacKwhTh=annual_hvac_kwh_th,
             AmbientPowerInKw=ambient_power_in_kw,
             HouseWorstCaseTempF=house_worst_case_temp_f,
             RoomTempF=room_temp_f,
+            StorePassiveLossRatio=store_passive_loss_ratio,
+            AmbientTempStoreF=ambient_temp_store_f,
             #
         )
 
@@ -486,8 +498,8 @@ class AtnParamsSimpleresistivehydronic_Maker:
             d2["EnergyType"] = EnergySupplyType.default()
         if "StandardOfferPriceDollarsPerMwh" not in d2.keys():
             raise SchemaError(f"dict {d2} missing StandardOfferPriceDollarsPerMwh")
-        if "DistributionTariffDollarsPerMwh" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing DistributionTariffDollarsPerMwh")
+        if "FlatDistributionTariffDollarsPerMwh" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing FlatDistributionTariffDollarsPerMwh")
         if "StoreSizeGallons" not in d2.keys():
             raise SchemaError(f"dict {d2} missing StoreSizeGallons")
         if "MaxStoreTempF" not in d2.keys():
@@ -496,10 +508,10 @@ class AtnParamsSimpleresistivehydronic_Maker:
             raise SchemaError(f"dict {d2} missing ElementMaxPowerKw")
         if "RequiredSourceWaterTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RequiredSourceWaterTempF")
-        if "FixedPumpGpm" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing FixedPumpGpm")
-        if "ReturnWaterFixedDeltaT" not in d2.keys():
-            raise SchemaError(f"dict {d2} missing ReturnWaterFixedDeltaT")
+        if "CirculatorPumpGpm" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing CirculatorPumpGpm")
+        if "ReturnWaterDeltaTempF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing ReturnWaterDeltaTempF")
         if "AnnualHvacKwhTh" not in d2.keys():
             raise SchemaError(f"dict {d2} missing AnnualHvacKwhTh")
         if "AmbientPowerInKw" not in d2.keys():
@@ -508,6 +520,10 @@ class AtnParamsSimpleresistivehydronic_Maker:
             raise SchemaError(f"dict {d2} missing HouseWorstCaseTempF")
         if "RoomTempF" not in d2.keys():
             raise SchemaError(f"dict {d2} missing RoomTempF")
+        if "StorePassiveLossRatio" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing StorePassiveLossRatio")
+        if "AmbientTempStoreF" not in d2.keys():
+            raise SchemaError(f"dict {d2} missing AmbientTempStoreF")
         if "TypeName" not in d2.keys():
             raise SchemaError(f"dict {d2} missing TypeName")
 
@@ -522,17 +538,21 @@ class AtnParamsSimpleresistivehydronic_Maker:
             Tariff=d2["Tariff"],
             EnergyType=d2["EnergyType"],
             StandardOfferPriceDollarsPerMwh=d2["StandardOfferPriceDollarsPerMwh"],
-            DistributionTariffDollarsPerMwh=d2["DistributionTariffDollarsPerMwh"],
+            FlatDistributionTariffDollarsPerMwh=d2[
+                "FlatDistributionTariffDollarsPerMwh"
+            ],
             StoreSizeGallons=d2["StoreSizeGallons"],
             MaxStoreTempF=d2["MaxStoreTempF"],
             ElementMaxPowerKw=d2["ElementMaxPowerKw"],
             RequiredSourceWaterTempF=d2["RequiredSourceWaterTempF"],
-            FixedPumpGpm=d2["FixedPumpGpm"],
-            ReturnWaterFixedDeltaT=d2["ReturnWaterFixedDeltaT"],
+            CirculatorPumpGpm=d2["CirculatorPumpGpm"],
+            ReturnWaterDeltaTempF=d2["ReturnWaterDeltaTempF"],
             AnnualHvacKwhTh=d2["AnnualHvacKwhTh"],
             AmbientPowerInKw=d2["AmbientPowerInKw"],
             HouseWorstCaseTempF=d2["HouseWorstCaseTempF"],
             RoomTempF=d2["RoomTempF"],
+            StorePassiveLossRatio=d2["StorePassiveLossRatio"],
+            AmbientTempStoreF=d2["AmbientTempStoreF"],
             TypeName=d2["TypeName"],
             Version="000",
         )

@@ -1,16 +1,16 @@
 from typing import Optional
 
-import gridworks.conversion_factors as cf  # TODO change to from gwatn import conversion_factors as cf
 import numpy as np
 from pydantic import BaseModel
-from satn.strategies.heatpumpwithbooststore.flo import (
-    Flo__HeatpumpWithBoostStore as Flo,
-)
-from satn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from satn.types import FloParamsHeatpumpwithbooststore as FloParams
 
 from gwatn import atn_utils
+from gwatn import conversion_factors as cf
+from gwatn.strategies.simple_resistive_hydronic.flo import (
+    Flo_SimpleResistiveHydronic as Flo,
+)
 from gwatn.types import AtnBid
+from gwatn.types import AtnParamsSimpleresistivehydronic as AtnParams
+from gwatn.types import FloParamsSimpleresistivehydronic as FloParams
 from gwatn.types import MarketSlot
 
 
@@ -89,19 +89,6 @@ def is_dummy_flo_params(flo_params: FloParams) -> bool:
 ##########################################
 # Flo prep (uses AtnParams as variable)
 ##########################################
-
-
-def get_k(
-    system_max_heat_output_delta_temp_f: int,
-    system_max_heat_output_gpm: float,
-    system_max_heat_output_swt_f: int,
-    room_temp_f: int,
-) -> float:
-    dt = system_max_heat_output_delta_temp_f
-    gpm = system_max_heat_output_gpm
-    swt = system_max_heat_output_swt_f
-    rt = room_temp_f
-    return float(gpm * np.log(1 - dt / (swt - rt)))
 
 
 def get_system_max_heat_output_kw_avg(

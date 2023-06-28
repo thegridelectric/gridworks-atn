@@ -27,6 +27,12 @@ from gwproto.enums.unit import Unit
 # From gwatn
 from gwatn.enums.distribution_tariff import DistributionTariff
 from gwatn.enums.energy_supply_type import EnergySupplyType
+
+# hacks
+from gwatn.enums.hack_price_method import PriceMethod
+from gwatn.enums.hack_recognized_p_node_alias import RecognizedPNodeAlias
+from gwatn.enums.hack_weather_method import WeatherMethod
+from gwatn.enums.hack_weather_source import WeatherSource
 from gwatn.enums.recognized_irradiance_type import RecognizedIrradianceType
 from gwatn.enums.recognized_temperature_unit import RecognizedTemperatureUnit
 
@@ -56,4 +62,8 @@ __all__ = [
     "TelemetryName",
     "Unit",
     "UniverseType",
+    "PriceMethod",
+    "RecognizedPNodeAlias",
+    "WeatherMethod",
+    "WeatherSource",
 ]

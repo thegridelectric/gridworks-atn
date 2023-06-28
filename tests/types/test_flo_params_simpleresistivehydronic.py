@@ -5,6 +5,8 @@ import pytest
 from gridworks.errors import SchemaError
 from pydantic import ValidationError
 
+from gwatn.enums import DistributionTariff
+from gwatn.enums import EnergySupplyType
 from gwatn.enums import RecognizedCurrencyUnit
 from gwatn.types import FloParamsSimpleresistivehydronic_Maker as Maker
 
@@ -20,21 +22,32 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         "StartDayUtc": 1,
         "StartHourUtc": 0,
         "StartMinuteUtc": 0,
+        "StorageSteps": 100,
         "StoreSizeGallons": 240,
-        "MaxStoreTempF": 190,
-        "ElementMaxPowerKw": 9.5,
+        "MaxStoreTempF": 210,
+        "RatedPowerKw": 9.5,
         "RequiredSourceWaterTempF": 120,
-        "FixedPumpGpm": 4.5,
-        "ReturnWaterFixedDeltaT": 20,
-        "SliceDurationMinutes": [60],
+        "CirculatorPumpGpm": 4.5,
+        "ReturnWaterDeltaTempF": 20,
+        "RoomTempF": 70,
+        "AmbientPowerInKw": 1.2,
+        "HouseWorstCaseTempF": -7,
+        "StorePassiveLossRatio": 0.005,
         "PowerLostFromHouseKwList": [3.42],
-        "OutsideTempF": [-5.1],
-        "DistributionPrice": [40.0],
+        "AmbientTempStoreF": 65,
+        "SliceDurationMinutes": [60],
         "RealtimeElectricityPrice": [10.35],
+        "DistributionPrice": [40.0],
+        "OutsideTempF": [-5.1],
         "RtElecPriceUid": "bd2ec5c5-40b9-4b61-ad1b-4613370246d6",
-        "WeatherUid": "3bbcb552-52e3-4b86-84e0-084959f9fc0f",
         "DistPriceUid": "b91ef8e7-50d7-4587-bf13-a3af7ecdb83a",
+        "WeatherUid": "3bbcb552-52e3-4b86-84e0-084959f9fc0f",
         "CurrencyUnitGtEnumSymbol": "e57c5143",
+        "TariffGtEnumSymbol": "2127aba6",
+        "EnergyTypeGtEnumSymbol": "e9dc99a6",
+        "StandardOfferPriceDollarsPerMwh": 110,
+        "FlatDistributionTariffDollarsPerMwh": 113,
+        "StartingStoreIdx": 50,
         "TypeName": "flo.params.simpleresistivehydronic",
         "Version": "000",
     }
@@ -63,21 +76,32 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         start_day_utc=gtuple.StartDayUtc,
         start_hour_utc=gtuple.StartHourUtc,
         start_minute_utc=gtuple.StartMinuteUtc,
+        storage_steps=gtuple.StorageSteps,
         store_size_gallons=gtuple.StoreSizeGallons,
         max_store_temp_f=gtuple.MaxStoreTempF,
-        element_max_power_kw=gtuple.ElementMaxPowerKw,
+        rated_power_kw=gtuple.RatedPowerKw,
         required_source_water_temp_f=gtuple.RequiredSourceWaterTempF,
-        fixed_pump_gpm=gtuple.FixedPumpGpm,
-        return_water_fixed_delta_t=gtuple.ReturnWaterFixedDeltaT,
-        slice_duration_minutes=gtuple.SliceDurationMinutes,
+        circulator_pump_gpm=gtuple.CirculatorPumpGpm,
+        return_water_delta_temp_f=gtuple.ReturnWaterDeltaTempF,
+        room_temp_f=gtuple.RoomTempF,
+        ambient_power_in_kw=gtuple.AmbientPowerInKw,
+        house_worst_case_temp_f=gtuple.HouseWorstCaseTempF,
+        store_passive_loss_ratio=gtuple.StorePassiveLossRatio,
         power_lost_from_house_kw_list=gtuple.PowerLostFromHouseKwList,
-        outside_temp_f=gtuple.OutsideTempF,
-        distribution_price=gtuple.DistributionPrice,
+        ambient_temp_store_f=gtuple.AmbientTempStoreF,
+        slice_duration_minutes=gtuple.SliceDurationMinutes,
         realtime_electricity_price=gtuple.RealtimeElectricityPrice,
+        distribution_price=gtuple.DistributionPrice,
+        outside_temp_f=gtuple.OutsideTempF,
         rt_elec_price_uid=gtuple.RtElecPriceUid,
-        weather_uid=gtuple.WeatherUid,
         dist_price_uid=gtuple.DistPriceUid,
+        weather_uid=gtuple.WeatherUid,
         currency_unit=gtuple.CurrencyUnit,
+        tariff=gtuple.Tariff,
+        energy_type=gtuple.EnergyType,
+        standard_offer_price_dollars_per_mwh=gtuple.StandardOfferPriceDollarsPerMwh,
+        flat_distribution_tariff_dollars_per_mwh=gtuple.FlatDistributionTariffDollarsPerMwh,
+        starting_store_idx=gtuple.StartingStoreIdx,
     ).tuple
     assert t == gtuple
 
@@ -136,6 +160,11 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["StorageSteps"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["StoreSizeGallons"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
@@ -146,7 +175,7 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ElementMaxPowerKw"]
+    del d2["RatedPowerKw"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -156,17 +185,32 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["FixedPumpGpm"]
+    del d2["CirculatorPumpGpm"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["ReturnWaterFixedDeltaT"]
+    del d2["ReturnWaterDeltaTempF"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["SliceDurationMinutes"]
+    del d2["RoomTempF"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["AmbientPowerInKw"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["HouseWorstCaseTempF"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["StorePassiveLossRatio"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -176,12 +220,12 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["OutsideTempF"]
+    del d2["AmbientTempStoreF"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["DistributionPrice"]
+    del d2["SliceDurationMinutes"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -191,12 +235,17 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["RtElecPriceUid"]
+    del d2["DistributionPrice"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
-    del d2["WeatherUid"]
+    del d2["OutsideTempF"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["RtElecPriceUid"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -206,7 +255,37 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d)
+    del d2["WeatherUid"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
     del d2["CurrencyUnitGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["TariffGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["EnergyTypeGtEnumSymbol"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["StandardOfferPriceDollarsPerMwh"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["FlatDistributionTariffDollarsPerMwh"]
+    with pytest.raises(SchemaError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d)
+    del d2["StartingStoreIdx"]
     with pytest.raises(SchemaError):
         Maker.dict_to_tuple(d2)
 
@@ -234,15 +313,19 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
+    d2 = dict(d, StorageSteps="100.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
     d2 = dict(d, StoreSizeGallons="240.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, MaxStoreTempF="190.1")
+    d2 = dict(d, MaxStoreTempF="210.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, ElementMaxPowerKw="this is not a float")
+    d2 = dict(d, RatedPowerKw="this is not a float")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
@@ -250,16 +333,54 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, FixedPumpGpm="this is not a float")
+    d2 = dict(d, CirculatorPumpGpm="this is not a float")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, ReturnWaterFixedDeltaT="20.1")
+    d2 = dict(d, ReturnWaterDeltaTempF="20.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, RoomTempF="70.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, AmbientPowerInKw="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, HouseWorstCaseTempF="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, StorePassiveLossRatio="this is not a float")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, AmbientTempStoreF="65.1")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
     d2 = dict(d, CurrencyUnitGtEnumSymbol="hi")
     Maker.dict_to_tuple(d2).CurrencyUnit = RecognizedCurrencyUnit.default()
+
+    d2 = dict(d, TariffGtEnumSymbol="hi")
+    Maker.dict_to_tuple(d2).Tariff = DistributionTariff.default()
+
+    d2 = dict(d, EnergyTypeGtEnumSymbol="hi")
+    Maker.dict_to_tuple(d2).EnergyType = EnergySupplyType.default()
+
+    d2 = dict(d, StandardOfferPriceDollarsPerMwh="110.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, FlatDistributionTariffDollarsPerMwh="113.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
+
+    d2 = dict(d, StartingStoreIdx="50.1")
+    with pytest.raises(ValidationError):
+        Maker.dict_to_tuple(d2)
 
     ######################################
     # SchemaError raised if TypeName is incorrect
@@ -285,11 +406,11 @@ def test_flo_params_simpleresistivehydronic_generated() -> None:
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, WeatherUid="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, DistPriceUid="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
-    d2 = dict(d, DistPriceUid="d4be12d5-33ba-4f1f-b9e5")
+    d2 = dict(d, WeatherUid="d4be12d5-33ba-4f1f-b9e5")
     with pytest.raises(ValidationError):
         Maker.dict_to_tuple(d2)
 
