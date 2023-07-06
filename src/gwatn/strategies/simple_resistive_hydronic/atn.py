@@ -1,12 +1,10 @@
-""" BrickStorageHeater AtomicTNode Strategy.
+""" SimpleResistiveHydronic AtomicTNode Strategy.
 
- This is a heating and bidding strategy for a thermal storage heater that is
- designed to heat part or all of a single room. The storage medium is ceramic
- bricks and the heating source is resistive elements embedded in those bricks.
+ This is a heating and bidding strategy for a simple resistive hydronic heating
+ system: one or more 120 gallon domestic hot water tanks heated with resistive
+ elements and providing hot water to a hydronic heating system.
 
- This kind of heater is often called a Night Storage Heater in the UK, and
- is often also referred to (ambigiously, since there are other kinds) as
- an Electric Thermal Storage (ETS) heater.
+ [schematic](https://gridworks-atn.readthedocs.io/en/latest/simple-resistive-hydronic.html)
  """
 import functools
 import logging
@@ -28,13 +26,13 @@ from algosdk.v2client.algod import AlgodClient
 from gridworks.algo_utils import BasicAccount
 from gridworks.data_classes.market_type import Rt60Gate30B
 from gridworks.utils import RestfulResponse
+from satn.strategies.simple_resistive_hydronic import Edge__BrickStorageHeater as Edge
 
 import gwatn.atn_utils as atn_utils
 import gwatn.brick_storage_heater.dev_io as dev_io
 import gwatn.brick_storage_heater.strategy_utils as strategy_utils
 import gwatn.config as config
 from gwatn.atn_actor_base import AtnActorBase
-from gwatn.brick_storage_heater.edge import Edge__BrickStorageHeater as Edge
 from gwatn.brick_storage_heater.flo import Flo__BrickStorageHeater as Flo
 from gwatn.brick_storage_heater.strategy_utils import SlotStuff
 from gwatn.enums import GNodeRole
@@ -43,8 +41,8 @@ from gwatn.enums import MessageCategorySymbol
 from gwatn.enums import UniverseType
 from gwatn.types import AcceptedBid_Maker
 from gwatn.types import AtnParams
-from gwatn.types import AtnParamsBrickstorageheater
 from gwatn.types import AtnParamsReport_Maker
+from gwatn.types import AtnParamsSimpleresistivehydronic
 from gwatn.types import HeartbeatA
 from gwatn.types import HeartbeatA_Maker
 from gwatn.types import LatestPrice
@@ -66,9 +64,8 @@ LOGGER = logging.getLogger(__name__)
 LOGGER.setLevel(logging.WARNING)
 
 
-class Atn__BrickStorageHeater(AtnActorBase):
-    """AtomicTNode HeatPumpWithBoostStore strategy for thermal storage heat pump
-    space heating system"""
+class Atn__SimpleResistiveHydronic(AtnActorBase):
+    """AtomicTNode SimpleResistiveHydronic strategy"""
 
     def __init__(
         self,
@@ -77,7 +74,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         ),
     ):
         super().__init__(settings)
-        LOGGER.info("Initializing HeatPumpWithBoostStore Atn")
+        LOGGER.info("Initializing SimpleResistiveHydronic Atn")
         self.algo_acct: BasicAccount = BasicAccount(settings.sk.get_secret_value())
         self.algo_client: AlgodClient = AlgodClient(
             settings.algo_api_secrets.algod_token.get_secret_value(),
@@ -247,7 +244,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
             power_watts=self._power_watts,
             store_kwh=int(self.store_kwh),
             max_store_kwh=int(
-                strategy_utils.get_max_store_kwh_th(
+                strategy_utils.get_max_energy_kwh(
                     max_brick_temp_c=self.atn_params.MaxBrickTempC,
                     c=self.atn_params.C,
                     room_temp_f=self.atn_params.RoomTempF,
@@ -319,7 +316,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         # self.store_kwh = ...
         self.store_kwh = (
             store_idx
-            * strategy_utils.get_max_store_kwh_th(
+            * strategy_utils.get_max_energy_kwh(
                 max_brick_temp_c=self.atn_params.MaxBrickTempC,
                 c=self.atn_params.C,
                 room_temp_f=self.atn_params.RoomTempF,
@@ -504,7 +501,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         return round(
             self.atn_params.StorageSteps
             * self.store_kwh
-            / strategy_utils.get_max_store_kwh_th(
+            / strategy_utils.get_max_energy_kwh(
                 max_brick_temp_c=self.atn_params.MaxBrickTempC,
                 c=self.atn_params.C,
                 room_temp_f=self.atn_params.RoomTempF,

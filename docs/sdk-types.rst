@@ -20,6 +20,7 @@ forth between type instances and Python objects.
 
     AcceptedBid  <types/accepted-bid>
     AtnBid  <types/atn-bid>
+    AtnOutsideTempRegrCoeffs  <types/atn-outside-temp-regr-coeffs>
     AtnParams  <types/atn-params>
     AtnParamsBrickstorageheater  <types/atn-params-brickstorageheater>
     AtnParamsReport  <types/atn-params-report>

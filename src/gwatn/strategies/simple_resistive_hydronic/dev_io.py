@@ -8,16 +8,16 @@ from typing import List
 from typing import Optional
 
 import pendulum
-import satn.strategies.heatpumpwithbooststore.strategy_utils as strategy_utils
 from pydantic import BaseModel
-from satn.strategies.heatpumpwithbooststore.strategy_utils import SlotStuff
-from satn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from satn.types import AtnParamsHeatpumpwithbooststore_Maker as AtnParams_Maker
-from satn.types import FloParamsHeatpumpwithbooststore as FloParams
 
 import gwatn.atn_utils as atn_utils
+import gwatn.strategies.simple_resistive_hydronic.strategy_utils as strategy_utils
+from gwatn.strategies.simple_resistive_hydronic.strategy_utils import SlotStuff
 from gwatn.types import AtnBid
 from gwatn.types import AtnParamsReport_Maker
+from gwatn.types import AtnParamsSimpleresistivehydronic as AtnParams
+from gwatn.types import AtnParamsSimpleresistivehydronic_Maker as AtnParams_Maker
+from gwatn.types import FloParamsSimpleresistivehydronic as FloParams
 from gwatn.types import MarketSlot
 from gwatn.types.ps_distprices_gnode.csv_distp_sync.csv_distp_sync_1_0_0 import (
     Csv_Distp_Sync_1_0_0,
@@ -40,8 +40,8 @@ LOGGER.setLevel(logging.WARNING)
 DATA_DIR = "input_data"
 EVENTSTORE_DIR = f"{DATA_DIR}/eventstore"
 
-ELEC_PRICE_FILE = "input_data/electricity_prices/isone/eprt__w.isone.stetson__2020.csv"
-DIST_PRICE_FILE = "input_data/electricity_prices/isone/distp__w.isone.stetson__2020__gw.me.versant.a1.res.ets.csv"
+ELEC_PRICE_FILE = "../gridworks-ps/input_data/electricity_prices/isone/eprt__w.isone.stetson__2020.csv"
+DIST_PRICE_FILE = "../gridworks-ps/input_data/electricity_prices/isone/distp__w.isone.stetson__2020__gw.me.versant.a1.res.ets.csv"
 WEATHER_PRICE_FILE = (
     "input_data/weather/us/me/temp__ws.us.me.millinocketairport__2020.csv"
 )

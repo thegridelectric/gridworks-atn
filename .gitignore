@@ -19,9 +19,10 @@ __pycache__/
 .env
 venv
 
-# scratch files and folders
+# scratch files, folders and dev sqlite3 databases
 scratch*
 cook*
+*.sqlite3
 
 
 # Code generation airtable

@@ -39,8 +39,8 @@ from gwatn.types import HeartbeatB
 from gwatn.types import HeartbeatB_Maker
 from gwatn.types import JoinDispatchContract_Maker
 from gwatn.types import ScadaCertTransfer_Maker
-from gwatn.types import SimScadaDriverReportBsh as SimScadaDriverReport
-from gwatn.types import SimScadaDriverReportBsh_Maker as SimScadaDriverReport_Maker
+from gwatn.types import SimplesimDriverReport
+from gwatn.types import SimplesimDriverReport_Maker
 from gwatn.types import SimTimestep
 from gwatn.types import SimTimestep_Maker
 from gwatn.types import SnapshotBrickstorageheater as Snapshot
@@ -195,7 +195,7 @@ class ScadaActor(ActorBase):
                 self.heartbeat_from_atn(ping=payload)
             except:
                 LOGGER.exception("Error in heartbeat_from_atn")
-        elif payload.TypeName == SimScadaDriverReport_Maker.type_name:
+        elif payload.TypeName == SimplesimDriverReport_Maker.type_name:
             try:
                 self.sim_scada_driver_report_received(payload)
             except:
@@ -537,7 +537,7 @@ class ScadaActor(ActorBase):
     # Make the below into abstractmethods if pulling out base class
     #########################################################
 
-    def sim_scada_driver_report_received(self, payload: SimScadaDriverReport) -> None:
+    def simplesim_driver_report_received(self, payload: SimplesimDriverReport) -> None:
         """This gets received right before the top of the hour, from our
         best simulation of the TerminalAsset (which is happening in the
         AtomicTNode)."""

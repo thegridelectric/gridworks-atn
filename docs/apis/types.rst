@@ -10,6 +10,10 @@ AtnBid
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-bid.json
 
+AtnOutsideTempRegrCoeffs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. literalinclude:: json/atn-outside-temp-regr-coeffs.json
+
 AtnParams
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. literalinclude:: json/atn-params.json

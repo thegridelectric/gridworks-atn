@@ -4,11 +4,16 @@ import gridworks.conversion_factors as cf
 import pendulum
 import xlsxwriter
 
-import gwatn.brick_storage_heater.strategy_utils as strategy_utils
-from gwatn.brick_storage_heater.edge import Edge__BrickStorageHeater as Edge
-from gwatn.brick_storage_heater.flo import Flo__BrickStorageHeater as Flo
-from gwatn.brick_storage_heater.node import Node_BrickStorageHeater as Node
 from gwatn.enums import RecognizedCurrencyUnit
+from gwatn.strategies.simple_resistive_hydronic.edge import (
+    Edge_SimpleResistiveHydronic as Edge,
+)
+from gwatn.strategies.simple_resistive_hydronic.flo import (
+    Flo_SimpleResistiveHydronic as Flo,
+)
+from gwatn.strategies.simple_resistive_hydronic.node import (
+    Node_SimpleResistiveHydronic as Node,
+)
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 
 
@@ -122,24 +127,17 @@ def export_best_path_info(
         round(sum(flo.params.OutsideTempF) / len(flo.params.OutsideTempF), 2),
         bold_format,
     )
-    w.write(8, 0, "COP", header_format)
-    avg_cop = sum(flo.cop.values()) / len(flo.cop)
-    w.write(8, 1, round(avg_cop, 2), bold_format)
-    w.write(9, 0, "House Power Required AvgKw", header_format)
+
+    w.write(9, 0, "Power Lost From House AvgKw", header_format)
     w.write(
         9,
         1,
-        round(sum(flo.params.PowerRequiredByHouseFromSystemAvgKwList), 2),
+        round(sum(flo.params.PowerLostFromHouseKwList), 2),
         bold_format,
     )
     w.write(10, 0, "Required Source Water Temp F", header_format)
-    avg_swt = round((sum(swt_list) / len(swt_list)), 0)
-    w.write(10, 1, avg_swt, bold_format)
-    w.write(11, 0, "Max HeatPump kWh thermal", header_format)
-    avg_max_thermal_hp_kwh = round(
-        (sum(flo.max_thermal_hp_kwh.values()) / len(flo.max_thermal_hp_kwh)), 2
-    )
-    w.write(11, 1, avg_max_thermal_hp_kwh, bold_format)
+    swt = flo.params.RequiredSourceWaterTempF
+    w.write(10, 1, swt, bold_format)
 
     w.write(12, 0, "Outputs", header_format)
 
@@ -149,10 +147,7 @@ def export_best_path_info(
         w.write(2, jj + 2, local_time.strftime("%m/%d"))
         w.write(3, jj + 2, local_time.strftime("%H:%M"))
         w.write(4, jj + 2, flo.RealtimeElectricityPrice[jj], currency_format)
-        if flo.params.IsRegulating:
-            w.write(5, jj + 2, flo.reg_price_per_mwh[jj], currency_format)
-        else:
-            w.write(5, jj + 2, "", gray_filler_format)
+        w.write(5, jj + 2, "", gray_filler_format)
         dp = flo.DistributionPrice[jj]
         LIGHT_GREEN_HEX = "#bbe3a6"
         LIGHT_RED_HEX = "#ff6363"
@@ -195,7 +190,7 @@ def export_best_path_info(
         w.write(
             9, jj + 2, round(flo.params.PowerRequiredByHouseFromSystemAvgKwList[jj], 2)
         )
-        w.write(10, jj + 2, round(swt_list[jj], 0))
+        w.write(10, jj + 2, round(swt, 0))
         w.write(11, jj + 2, round(flo.max_thermal_hp_kwh[jj], 2))
 
         w.write(12, jj + 2, "", gray_filler_format)
@@ -216,13 +211,12 @@ def export_best_path_info(
     best_idx = starting_store_idx
     dist_cost = []
     min_dist_price_per_mwh = min(flo.DistributionPrice)
-
+    slice_duration = flo.params.Slice
     for jj in range(flo.time_slices):
         edge: Edge = flo.best_edge[node]
         store_temp_f.append(node.store_avg_water_temp_f)
-        hp_kwh = edge.hp_electricity_avg_kw
+        kwh = edge.avg_kw
         boost_kwh = edge.boost_electricity_used_avg_kw
-        opt_heatpump_electricity_used_kwh.append(hp_kwh)
         opt_boost_electricity_used_kwh.append(boost_kwh)
         opt_energy_cost_dollars.append(edge.cost)
         hours_since_start = sum(flo.slice_duration_hrs[0:jj])
@@ -346,7 +340,7 @@ def export_params_xlsx(
     w = workbook.add_worksheet("Params")
     derived_format_bold = workbook.add_format({"bold": True, "font_color": "green"})
     derived_format = workbook.add_format({"font_color": "green"})
-    swt_list = flo_utils.get_source_water_temp_f_list(flo.params)
+
     w.set_column("A:A", 31)
     w.set_column("D:D", 31)
     w.set_column("G:G", 31)
@@ -436,10 +430,10 @@ def export_params_xlsx(
     w.write("E8", flo.params.ZeroPotentialEnergyWaterTempF)
 
     w.write("D9", "TotalStorageKwh", derived_format_bold)
-    w.write("E9", round(flo.max_energy_kwh_th, 1), derived_format)
+    w.write("E9", round(flo.max_energy_kwh, 1), derived_format)
 
     w.write("D10", "TotalStorage BTU", derived_format_bold)
-    w.write("E10", round(cf.BTU_PER_KWH * flo.max_energy_kwh_th), derived_format)
+    w.write("E10", round(cf.BTU_PER_KWH * flo.max_energy_kwh), derived_format)
 
     w.write("D12", "EmitterPumpFeedbackModel", bold)
     w.write("E12", flo.params.EmitterPumpFeedbackModel.value)
@@ -483,9 +477,3 @@ def export_params_xlsx(
 
     w.write("A33", "DistPriceUid", bold)
     w.write("B33", flo.params.DistPriceUid)
-
-    if flo.params.IsRegulating:
-        w.write("A34", "LocalRegulationFile", bold)
-        w.write("B34", regp_sync_100_handler.csv_file_by_uid(flo.params.RegPriceUid))
-        w.write("A35", "RegPriceUid", bold)
-        w.write("B35", flo.params.RegPriceUid)

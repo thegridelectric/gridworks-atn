@@ -95,6 +95,8 @@ from gwatn.types.accepted_bid import AcceptedBid
 from gwatn.types.accepted_bid import AcceptedBid_Maker
 from gwatn.types.atn_bid import AtnBid
 from gwatn.types.atn_bid import AtnBid_Maker
+from gwatn.types.atn_outside_temp_regr_coeffs import AtnOutsideTempRegrCoeffs
+from gwatn.types.atn_outside_temp_regr_coeffs import AtnOutsideTempRegrCoeffs_Maker
 from gwatn.types.atn_params import AtnParams
 from gwatn.types.atn_params import AtnParams_Maker
 from gwatn.types.atn_params_brickstorageheater import AtnParamsBrickstorageheater
@@ -180,6 +182,8 @@ __all__ = [
     "AcceptedBid_Maker",
     "AtnBid",
     "AtnBid_Maker",
+    "AtnOutsideTempRegrCoeffs",
+    "AtnOutsideTempRegrCoeffs_Maker",
     "AtnParams",
     "AtnParams_Maker",
     "AtnParamsBrickstorageheater",

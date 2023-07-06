@@ -2,10 +2,10 @@ import csv
 import json
 
 import pendulum
-from satn.types import AtnParamsHeatpumpwithbooststore as AtnParams
-from satn.types import AtnParamsHeatpumpwithbooststore_Maker as AtnParams_Maker
 
 from gwatn.types import AtnParamsReport_Maker
+from gwatn.types import AtnParamsSimpleresistivehydronic as AtnParams
+from gwatn.types import AtnParamsSimpleresistivehydronic_Maker as AtnParams_Maker
 
 
 params_file = "input_data/atn_params_data.csv"

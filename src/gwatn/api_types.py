@@ -5,6 +5,7 @@ from typing import no_type_check
 
 from gwatn.types import AcceptedBid_Maker
 from gwatn.types import AtnBid_Maker
+from gwatn.types import AtnOutsideTempRegrCoeffs_Maker
 from gwatn.types import AtnParams_Maker
 from gwatn.types import AtnParamsBrickstorageheater_Maker
 from gwatn.types import AtnParamsReport_Maker
@@ -90,6 +91,7 @@ def type_makers() -> List[HeartbeatA_Maker]:
     return [
         AcceptedBid_Maker,
         AtnBid_Maker,
+        AtnOutsideTempRegrCoeffs_Maker,
         AtnParams_Maker,
         AtnParamsBrickstorageheater_Maker,
         AtnParamsReport_Maker,
@@ -181,6 +183,7 @@ def version_by_type_name() -> Dict[str, str]:
     v: Dict[str, str] = {
         "accepted.bid": "000",
         "atn.bid": "001",
+        "atn.outside.temp.regr.coeffs": "000",
         "atn.params": "000",
         "atn.params.brickstorageheater": "000",
         "atn.params.report": "000",
@@ -270,6 +273,7 @@ def status_by_versioned_type_name() -> Dict[str, str]:
     v: Dict[str, str] = {
         "accepted.bid.000": "Active",
         "atn.bid.001": "Active",
+        "atn.outside.temp.regr.coeffs.000": "Pending",
         "atn.params.000": "Active",
         "atn.params.brickstorageheater.000": "Active",
         "atn.params.report.000": "Active",

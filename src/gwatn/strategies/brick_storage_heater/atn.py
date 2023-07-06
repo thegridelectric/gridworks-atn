@@ -247,7 +247,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
             power_watts=self._power_watts,
             store_kwh=int(self.store_kwh),
             max_store_kwh=int(
-                strategy_utils.get_max_store_kwh_th(
+                strategy_utils.get_max_energy_kwh(
                     max_brick_temp_c=self.atn_params.MaxBrickTempC,
                     c=self.atn_params.C,
                     room_temp_f=self.atn_params.RoomTempF,
@@ -319,7 +319,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         # self.store_kwh = ...
         self.store_kwh = (
             store_idx
-            * strategy_utils.get_max_store_kwh_th(
+            * strategy_utils.get_max_energy_kwh(
                 max_brick_temp_c=self.atn_params.MaxBrickTempC,
                 c=self.atn_params.C,
                 room_temp_f=self.atn_params.RoomTempF,
@@ -504,7 +504,7 @@ class Atn__BrickStorageHeater(AtnActorBase):
         return round(
             self.atn_params.StorageSteps
             * self.store_kwh
-            / strategy_utils.get_max_store_kwh_th(
+            / strategy_utils.get_max_energy_kwh(
                 max_brick_temp_c=self.atn_params.MaxBrickTempC,
                 c=self.atn_params.C,
                 room_temp_f=self.atn_params.RoomTempF,
