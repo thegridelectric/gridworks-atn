@@ -16,14 +16,46 @@ class DNode(ABC):
         local_benefit: float = 0,
     ):
         self.ts_idx = ts_idx
+        """
+        The time slice index of the node, starting with ts_idx = 0 for the earliest time slice.
+        """
+
         self.store_idx = store_idx
+        """
+        The fullness of the store.
+        """
+
         self.local_benefit = local_benefit
+        """
+        A "benefit function" that can be associated to nodes. This can be used, for example, to
+        create penalty functions if set to negative numbers. Alternatively, it can always be
+        set as a positive number in order to capture the 'good' provided by the device being
+        in that state.
+        """
+
         self.path_benefit: Optional[float] = None
+        """
+        The benefit associated to the optimal path from this point to the final time slice,
+        where optimization means maximum benefit.
+        """
+
         self.best_next_idx: Optional[int] = None
+        """
+        The store index of the next best step along the optimal path, from this node.
+        """
+
         self.path_edge_cost_only: Optional[float] = None
+        """
+        The sum of the edge costs of the optimal path - that is, removing the local benefit from
+        nodes.
+        """
 
     @property
     def path_cost(self) -> Optional[float]:
+        """
+        The cost of the optimal path from this point to the final time slice,
+        where optimization means minimum cost.
+        """
         if self.path_benefit is None:
             return None
         return -self.path_benefit

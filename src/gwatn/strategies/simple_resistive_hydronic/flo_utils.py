@@ -48,6 +48,73 @@ def get_max_energy_kwh(params: FloParamsSimpleresistivehydronic) -> float:
     return max_energy_kwh
 
 
+def get_passive_loss_wh(
+    params: FloParamsSimpleresistivehydronic, ts_idx: int, store_idx: int
+) -> float:
+    """
+    Returns the loss of energy from the tank for a time slice due to radiating through the tank insulation.
+
+    as a function of the starting node. This energy is assumed to not contribute to warming the relevant
+    thermal envelope of the house (assuming the water tanks are in the basement, it may indeed be
+    overly optimistic to assume heat radiated into the basement will make it into the living space).
+
+    A more accurate variant would provide passive loss as a function of an edge. However, given how small
+    this loss typically is, this simplification is pretty insignificant compared to other inaccuracies
+    of the model and we didn't think it was worth the additional complexity.
+
+    Note that while this passive loss will heat up the basement,
+    Args:
+        params(FloParamsSimpleresistivehydronic): The parameters of the heating system. Specifically,
+        it uses these attributes of a FloParamsSimpleresistivehydronic object:
+           - StorePassiveLossRatio (unitless/hr), which the thermal energy
+           transferred through the insulation into the ambient space per hour, as a fraction
+           of the thermal energy in the store (relative to the AmbientTempStoreF, which
+           is set as a default to a typical low basement temperature)
+           - StoreSizeGallons
+           - MaxStoreTempF
+           - AmbientTempStoreF
+           - RequiredSourceWaterTempF
+           - ReturnWaterDeltaTempF
+           - StorageSteps
+           - SliceDurationMinutes
+
+        ts_idx: The Time Slice Index. This is used to get the duration of the time slice,
+        which may vary (for example, one might choose 5 minute intervals for the first
+        several time slices)
+
+        store_idx: Used to calculate how much of the tank is at MaxStoreTempF, and
+        how much is at ReturnWaterTempF.
+
+    Returns:
+        Energy lost passively from the tank through its insulation in the time slice,
+        in Watt Hours.
+
+    """
+    slice_hrs = params.SliceDurationMinutes[ts_idx] / 60
+    hot_ratio = store_idx / params.StorageSteps
+    hot_pounds = hot_ratio * params.StoreSizeGallons * cf.POUNDS_OF_WATER_PER_GALLON
+    hot_energy_wh = (
+        (params.MaxStoreTempF - params.AmbientTempStoreF)
+        * hot_pounds
+        * 1000
+        / cf.BTU_PER_KWH
+    )
+    hot_loss_wh = params.StorePassiveLossRatio * slice_hrs * hot_energy_wh
+
+    rwt_pounds = (
+        (1 - hot_ratio) * params.StoreSizeGallons * cf.POUNDS_OF_WATER_PER_GALLON
+    )
+    rwt_f = params.RequiredSourceWaterTempF - params.ReturnWaterDeltaTempF
+    rwt_energy_wh = (
+        (rwt_f - params.AmbientTempStoreF) * rwt_pounds * 1000 / cf.BTU_PER_KWH
+    )
+    rwt_loss_wh = params.StorePassiveLossRatio * slice_hrs * rwt_energy_wh
+
+    passive_loss_wh = hot_loss_wh + rwt_loss_wh
+
+    return passive_loss_wh
+
+
 def get_max_system_heat_output_avg_kw(
     params: FloParamsSimpleresistivehydronic,
 ) -> float:
@@ -151,49 +218,3 @@ def check_params_consistency(params: FloParamsSimpleresistivehydronic) -> None:
             f"Store temp cannot keep house warm! MaxStoreTempF is {params.MaxStoreTempF} F"
             f" and Required Source Water Temp is {params.RequiredSourceWaterTempF} F."
         )
-
-
-def get_passive_loss_wh(
-    params: FloParamsSimpleresistivehydronic, ts_idx: int, store_idx: int
-) -> float:
-    """
-    Returns the loss of energy from the tank for a time slice due to radiating through the tank insulation,
-    as a function of the starting node.
-
-    A more accurate variant would provide passive loss as a function of an edge. However, given how small
-    this loss typically is, this simplification is pretty insignificant compared to other inaccuracies
-    of the model and we didn't think it was worth the additional complexity.
-
-    Args:
-        params:
-        ts_idx
-        store_idx:
-
-    Returns:
-        Energy lost passively from the tank through its insulation in the time slice,
-        in Watt Hours.
-
-    """
-    slice_hrs = params.SliceDurationMinutes[ts_idx] / 60
-    hot_ratio = store_idx / params.StorageSteps
-    hot_pounds = hot_ratio * params.StoreSizeGallons * cf.POUNDS_OF_WATER_PER_GALLON
-    hot_energy_wh = (
-        (params.MaxStoreTempF - params.AmbientTempStoreF)
-        * hot_pounds
-        * 1000
-        / cf.BTU_PER_KWH
-    )
-    hot_loss_wh = params.StorePassiveLossRatio * slice_hrs * hot_energy_wh
-
-    rwt_pounds = (
-        (1 - hot_ratio) * params.StoreSizeGallons * cf.POUNDS_OF_WATER_PER_GALLON
-    )
-    rwt_f = params.RequiredSourceWaterTempF - params.ReturnWaterDeltaTempF
-    rwt_energy_wh = (
-        (rwt_f - params.AmbientTempStoreF) * rwt_pounds * 1000 / cf.BTU_PER_KWH
-    )
-    rwt_loss_wh = params.StorePassiveLossRatio * slice_hrs * rwt_energy_wh
-
-    passive_loss_wh = hot_loss_wh + rwt_loss_wh
-
-    return passive_loss_wh
