@@ -134,6 +134,8 @@ class ScadaReportA_Maker:
         self, payload: GtShStatusEvent, atn_alias: str
     ) -> List[ChannelReading]:
         status = payload.status
+        if isinstance(status, dict):
+            status = GtShStatus(**status)
         readings: List[ChannelReading] = []
         for single in status.SimpleTelemetryList:
             for i in range(len(single.ValueList)):
