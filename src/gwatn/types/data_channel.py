@@ -1,10 +1,7 @@
-import json
 from typing import Literal
 from typing import Optional
 
 from gwproto.enums import TelemetryName as EnumTelemetryName
-from gwproto.errors import MpSchemaError
-from gwproto.message import as_enum
 from pydantic import BaseModel
 from pydantic import Field
 
