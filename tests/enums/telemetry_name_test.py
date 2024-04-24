@@ -17,6 +17,7 @@ def test_telemetry_name() -> None:
         "CurrentRmsMicroAmps",
         "GallonsTimes100",
         "VoltageRmsMilliVolts",
+        "ThermostatState",
     }
 
     assert TelemetryName.default() == TelemetryName.Unknown
