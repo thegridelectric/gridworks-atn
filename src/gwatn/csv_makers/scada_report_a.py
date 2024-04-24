@@ -27,7 +27,8 @@ from gwatn.types.data_channel import DataChannel
 
 
 REPORT_TYPE_NAME = "scada.report.a.001"
-OUT_STUB = "output_data/scada_report_a"
+OUT_STUB = "/home/ubuntu/gdrive/MillinocketData/ScadaReportA"
+#OUT_STUB = "output_data/scada_report_a"
 
 MIN_FLOW_CALC_SECONDS = 30
 
