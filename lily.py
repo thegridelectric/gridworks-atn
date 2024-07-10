@@ -16,7 +16,6 @@ while True:
     last_local_midnight_unix_s = last_utc_midnight_unix_s + 3600 * (
         time_utc.hour - time_utc.in_timezone(timezone_string).hour
     )
-    start = last_utc_midnight_unix_s + 18 * 3600
     try:
         maker.make_csv(last_local_midnight_unix_s, duration_hrs=24, atn_alias=ATN_ALIAS)
     except Exception as e:
