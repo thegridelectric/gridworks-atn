@@ -2,10 +2,9 @@ import time
 import pendulum
 from gwatn.csv_makers.scada_report_a import ScadaReportA_Maker
 
-ATNS = ["hw1.isone.ma.ng.lily",
-]
+ATN_ALIAS = "hw1.isone.ma.ng.lily"
 
-OUT_STUB = "/home/ubuntu/gdrive/MillinocketData/LilyData"
+OUT_STUB = "/home/ubuntu/gdrive/MillinocketData/Lily"
 timezone_string = "US/Eastern"
 
 maker = ScadaReportA_Maker(out_stub=OUT_STUB)
@@ -18,10 +17,9 @@ while True:
         time_utc.hour - time_utc.in_timezone(timezone_string).hour
     )
     start = last_utc_midnight_unix_s + 18 * 3600
-    for atn_alias in ATNS:
-        try:
-            maker.make_csv(last_local_midnight_unix_s, duration_hrs=24, atn_alias=atn_alias)
-        except Exception as e:
-            print(f"Had trouble making csv for {atn_alias}: {e}.")
+    try:
+        maker.make_csv(last_local_midnight_unix_s, duration_hrs=24, atn_alias=ATN_ALIAS)
+    except Exception as e:
+        print(f"Had trouble making csv for {ATN_ALIAS}: {e}.")
 
     time.sleep(1)
