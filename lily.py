@@ -5,7 +5,7 @@ from gwatn.csv_makers.scada_report_a import ScadaReportA_Maker
 ATN_ALIAS = "hw1.isone.ma.ng.lily"
 
 OUT_STUB = "/home/ubuntu/gdrive/MillinocketData/Lily"
-timezone_string = "US/Eastern"
+timezone_string = "America/New_York"
 
 start = pendulum.datetime(2024,1,1,0,0,0,tz="America/New_York").int_timestamp
 
@@ -13,6 +13,7 @@ maker = ScadaReportA_Maker(out_stub=OUT_STUB)
 
 for day in range(120):
     local_midnight_s = start + day*24*3600
+    print(f"{pendulum.from_timestamp(local_midnight_s, tz = timezone_string).strftime('%Y/%m/%d %H:%M')}")
     try:
         maker.make_csv(local_midnight_s, 24, ATN_ALIAS)
     except Exception as e:         
