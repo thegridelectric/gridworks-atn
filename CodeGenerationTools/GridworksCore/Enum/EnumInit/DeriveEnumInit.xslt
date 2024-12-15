@@ -24,90 +24,63 @@
 
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
-<xsl:text>""" GwSchema Enums used in gwatn """
+<xsl:text>"""
+GridWorks Enums used in gwatn, the Application Shared Language (ASL) used by SCADA
+devices and AtomicTNodes to communicate with each other. These enums play a specific structural
+role as semantic "glue" within ASLs.
 
-# From gridworks</xsl:text>
-
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gridworks')]">
+Application Shared Languages are an evolution of the concept of Application Programming Interfaces.
+In a nutshell, an API can be viewed as a rather restricted version of an SAL, where only one application
+has anything complex/interesting to say and, in general, the developers/owners of that application
+have sole responsibility for managing the versioning and changing of that API. Note also that SALs
+do not make any a priori assumption about the relationship (i.e. the default client/server for an API)
+or the message delivery mechanism (i.e. via default GET/POST to RESTful URLs). For more information
+on these ideas:
+  - [GridWorks Enums](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
+  - [GridWorks Types](https://gridwork-type-registry.readthedocs.io/en/latest/types.html)
+  - [ASLs](https://gridwork-type-registry.readthedocs.io/en/latest/asls.html)
+ """
+</xsl:text>
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn') and not(normalize-space(EnumName)='')]">
 <xsl:sort select="LocalEnumName" data-type="text"/>
-<xsl:variable name="enum-id" select="Enum"/>
-<xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
 <xsl:text>
-from gridworks.enums.</xsl:text>
-<xsl:value-of select="translate(LocalName,'.','_')"/>
+from enums.</xsl:text>
+<xsl:value-of select="translate(LocalEnumName,'.','_')"/>
 <xsl:text> import </xsl:text>
 <xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="LocalName" />
+    <xsl:with-param name="type-name-text" select="LocalEnumName" />
 </xsl:call-template>
 
-</xsl:for-each>
+
 </xsl:for-each>
 <xsl:text>
 
-# From gwproto</xsl:text>
-
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwproto')]">
-<xsl:sort select="LocalEnumName" data-type="text"/>
-<xsl:variable name="enum-id" select="Enum"/>
-<xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
-<xsl:text>
-from gwproto.enums.</xsl:text>
-<xsl:value-of select="translate(LocalName,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="LocalName" />
-</xsl:call-template>
-
-</xsl:for-each>
-</xsl:for-each>
-<xsl:text>
-
-# From gwatn</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
-<xsl:sort select="LocalEnumName" data-type="text"/>
-<xsl:variable name="enum-id" select="Enum"/>
-<xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
-<xsl:text>
-from gwatn.enums.</xsl:text>
-<xsl:value-of select="translate(LocalName,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="LocalName" />
-</xsl:call-template>
-
-</xsl:for-each>
-</xsl:for-each>
-<xsl:text>
-
-# hacks
-from gwatn.enums.hack_price_method import PriceMethod
-from gwatn.enums.hack_recognized_p_node_alias import RecognizedPNodeAlias
-from gwatn.enums.hack_weather_method import WeatherMethod
-from gwatn.enums.hack_weather_source import WeatherSource
 
 __all__ = [</xsl:text>
-<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto')  or (normalize-space(ProtocolName) ='gridworks')]">
+<xsl:for-each select="$airtable//ProtocolEnums/ProtocolEnum[(normalize-space(ProtocolName) ='gwatn')]">
 <xsl:sort select="LocalEnumName" data-type="text"/>
-<xsl:variable name="enum-id" select="Enum"/>
-<xsl:for-each select="$airtable//GtEnums/GtEnum[GtEnumId=$enum-id]">
+<xsl:variable name="gt-enum-id" select="GtEnumId"/>
+
+
 
 <xsl:text>
     "</xsl:text>
     <xsl:call-template name="nt-case">
-        <xsl:with-param name="mp-schema-text" select="LocalName" />
+        <xsl:with-param name="type-name-text" select="LocalEnumName" />
     </xsl:call-template>
-    <xsl:text>",</xsl:text>
+    <xsl:text>",  # [</xsl:text>
+    <xsl:value-of select="EnumName"/><xsl:text>.</xsl:text>
+    <xsl:value-of select="EnumVersion"/>
+    <xsl:text>](https://gridworks-type-registry.readthedocs.io/en/latest/enums.html#</xsl:text>
+    <xsl:value-of select="translate(EnumName,'.','')"/>
+    <xsl:text>)</xsl:text>
 </xsl:for-each>
-</xsl:for-each>
+
 <xsl:text>
-    "PriceMethod",
-    "RecognizedPNodeAlias",
-    "WeatherMethod",
-    "WeatherSource",
-]
+]</xsl:text>
 
-</xsl:text>
-
+<!-- Add newline at EOF for git and pre-commit-->
+<xsl:text>&#10;</xsl:text>
 
 
                 </xsl:element>

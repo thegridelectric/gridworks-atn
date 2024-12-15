@@ -20,150 +20,76 @@
         <FileSet>
 
             <FileSetFile>
-                    <xsl:element name="RelativePath"><xsl:text>../../../../src/gwatn/types/__init__.py</xsl:text></xsl:element>
+                    <xsl:element name="RelativePath"><xsl:text>../../../../src/gwatn/named_types/__init__.py</xsl:text></xsl:element>
 
                 <OverwriteMode>Always</OverwriteMode>
                 <xsl:element name="FileContents">
-<xsl:text>
-""" List of all the types """
+<xsl:text>""" List of all the types """
+</xsl:text>
+<xsl:for-each select="$airtable//VersionedTypes/VersionedType[
+  count(Protocols[text()='gwatn']) > 0 and
+  (Status = 'Active' or Status = 'Pending') and
+  (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial') 
+]">
+<xsl:sort select="VersionedTypeName" data-type="text"/>
 
-# From gridworks</xsl:text>
-
-
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gridworks')]">
-<xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-
-<xsl:variable name="local-alias" select="AliasRoot" />
-
-<xsl:if test="(NotInInit='true')">
-<xsl:text>
-from gridworks.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
-<xsl:text> import </xsl:text>
+<xsl:variable name="python-class-name">
+<xsl:if test="(normalize-space(PythonClassName) ='')">
 <xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
+    <xsl:with-param name="type-name-text" select="TypeName" />
 </xsl:call-template>
-
-    <xsl:text>
-from gridworks.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-<xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template><xsl:text>_Maker</xsl:text>
 </xsl:if>
-<xsl:if test="not(NotInInit='true')">
-<xsl:text>
-from gridworks.types import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template><xsl:text>
-from gridworks.types import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
-<xsl:text>_Maker</xsl:text>
+<xsl:if test="(normalize-space(PythonClassName) != '')">
+<xsl:value-of select="normalize-space(PythonClassName)" />
 </xsl:if>
-</xsl:for-each>
-</xsl:for-each>
+</xsl:variable>
+
 <xsl:text>
-
-# From gwproto</xsl:text>
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwproto')]">
-<xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-
-<xsl:variable name="local-alias" select="AliasRoot" />
-
-<xsl:if test="(NotInInit='true')">
-<xsl:text>
-from gwproto.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
+from named_types.</xsl:text>
+<xsl:value-of select="translate(TypeName,'.','_')"/>
 <xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
-
-    <xsl:text>
-from gwproto.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-<xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template><xsl:text>_Maker</xsl:text>
-</xsl:if>
-<xsl:if test="not(NotInInit='true')">
-<xsl:text>
-from gwproto.types import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template><xsl:text>
-from gwproto.types import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
-<xsl:text>_Maker</xsl:text>
-</xsl:if>
+<xsl:value-of select="$python-class-name"/>
 </xsl:for-each>
-</xsl:for-each>
-<xsl:text>
 
-# From gwatn</xsl:text>
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn')]">
-<xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-
-<xsl:variable name="local-alias" select="AliasRoot" />
-
-<xsl:text>
-from gwatn.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
-<xsl:text>
-from gwatn.types.</xsl:text>
-<xsl:value-of select="translate(AliasRoot,'.','_')"/>
-<xsl:text> import </xsl:text>
-<xsl:call-template name="nt-case">
-    <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-</xsl:call-template>
-<xsl:text>_Maker</xsl:text>
-</xsl:for-each>
-</xsl:for-each>
 <xsl:text>
 
 
 __all__ = [</xsl:text>
-<xsl:for-each select="$airtable//ProtocolTypes/ProtocolType[(normalize-space(ProtocolName) ='gwatn') or (normalize-space(ProtocolName) ='gwproto') or (normalize-space(ProtocolName) ='gridworks')]"><xsl:sort select="TypeName" data-type="text"/>
-<xsl:variable name="schema-id" select="Type"/>
-<xsl:for-each select="$airtable//Schemas/Schema[(SchemaId = $schema-id)  and (Status = 'Active' or Status = 'Pending') and (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')]">
-<xsl:variable name="local-alias" select="AliasRoot" />
+
+
+<xsl:for-each select="$airtable//VersionedTypes/VersionedType[
+  count(Protocols[text()='gwatn']) > 0 and
+  (Status = 'Active' or Status = 'Pending') and
+  (ProtocolCategory = 'Json' or ProtocolCategory = 'GwAlgoSerial')
+]">
+<xsl:sort select="VersionedTypeName" data-type="text"/>
+
+<xsl:variable name="python-class-name">
+<xsl:choose>
+<xsl:when test="(normalize-space(PythonClassName) ='')">
+<xsl:call-template name="nt-case">
+    <xsl:with-param name="type-name-text" select="TypeName" />
+</xsl:call-template>
+</xsl:when>
+<xsl:otherwise>
+<xsl:value-of select="normalize-space(PythonClassName)" />
+</xsl:otherwise>
+</xsl:choose>
+</xsl:variable>
+
+
 <xsl:text>
     "</xsl:text>
-    <xsl:call-template name="nt-case">
-        <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-    </xsl:call-template>
+    <xsl:value-of select="$python-class-name"/>
     <xsl:text>",</xsl:text>
-<xsl:text>
-    "</xsl:text>
-    <xsl:call-template name="nt-case">
-        <xsl:with-param name="mp-schema-text" select="AliasRoot" />
-    </xsl:call-template>
-    <xsl:text>_Maker",</xsl:text>
-</xsl:for-each>
+
+
 </xsl:for-each>
 <xsl:text>
-]
+]</xsl:text>
 
-</xsl:text>
-
-
+<!-- Add newline at EOF for git and pre-commit-->
+<xsl:text>&#10;</xsl:text>
 
                 </xsl:element>
             </FileSetFile>
