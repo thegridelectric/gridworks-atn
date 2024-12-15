@@ -34,7 +34,6 @@ from gwatn.enums import UniverseType
 from gwatn.two_channel_actor_base import TwoChannelActorBase
 from gwatn.types import AtnParams
 from gwatn.types import DispatchContractConfirmed_Maker
-from gwatn.types import GtDispatchBoolean_Maker
 from gwatn.types import GtShCliAtnCmd_Maker
 from gwatn.types import GtShStatus
 from gwatn.types import GwCertId
@@ -342,16 +341,17 @@ class AtnActorBase(TwoChannelActorBase):
         Returns:
             None
         """
-        self.send_scada_message(
-            payload=GtDispatchBoolean_Maker(
-                about_node_name=relay_node_name,
-                to_g_node_alias=self.scada_alias,
-                from_g_node_alias=self.alias,
-                from_g_node_instance_id=self.g_node_instance_id,
-                relay_state=1,
-                send_time_unix_ms=int(time.time() * 1000),
-            ).tuple
-        )
+        ...
+        # self.send_scada_message(
+        #     payload=GtDispatchBoolean_Maker(
+        #         about_node_name=relay_node_name,
+        #         to_g_node_alias=self.scada_alias,
+        #         from_g_node_alias=self.alias,
+        #         from_g_node_instance_id=self.g_node_instance_id,
+        #         relay_state=1,
+        #         send_time_unix_ms=int(time.time() * 1000),
+        #     ).tuple
+        # )
 
     def turn_off(self, relay_node_name: str) -> None:
         """
@@ -368,16 +368,17 @@ class AtnActorBase(TwoChannelActorBase):
         Returns:
             None
         """
-        self.send_scada_message(
-            payload=GtDispatchBoolean_Maker(
-                about_node_name=relay_node_name,
-                to_g_node_alias=self.scada_alias,
-                from_g_node_alias=self.alias,
-                from_g_node_instance_id=self.g_node_instance_id,
-                relay_state=0,
-                send_time_unix_ms=int(time.time() * 1000),
-            ).tuple
-        )
+        ...
+        # self.send_scada_message(
+        #     payload=GtDispatchBoolean_Maker(
+        #         about_node_name=relay_node_name,
+        #         to_g_node_alias=self.scada_alias,
+        #         from_g_node_alias=self.alias,
+        #         from_g_node_instance_id=self.g_node_instance_id,
+        #         relay_state=0,
+        #         send_time_unix_ms=int(time.time() * 1000),
+        #     ).tuple
+        # )
 
     def hb_to_scada(self):
         """Checks that Atn is in Dispatch Contract, sends a HeartbeatB to Scada,

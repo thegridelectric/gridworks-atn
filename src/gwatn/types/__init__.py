@@ -33,10 +33,6 @@ from gwproto.types import EgaugeRegisterConfig
 from gwproto.types import EgaugeRegisterConfig_Maker
 from gwproto.types import ElectricMeterCacGt
 from gwproto.types import ElectricMeterCacGt_Maker
-from gwproto.types import GtDispatchBoolean
-from gwproto.types import GtDispatchBoolean_Maker
-from gwproto.types import GtDispatchBooleanLocal
-from gwproto.types import GtDispatchBooleanLocal_Maker
 from gwproto.types import GtDriverBooleanactuatorCmd
 from gwproto.types import GtDriverBooleanactuatorCmd_Maker
 from gwproto.types import GtShBooleanactuatorCmdStatus
@@ -95,8 +91,6 @@ from gwatn.types.accepted_bid import AcceptedBid
 from gwatn.types.accepted_bid import AcceptedBid_Maker
 from gwatn.types.atn_bid import AtnBid
 from gwatn.types.atn_bid import AtnBid_Maker
-from gwatn.types.atn_outside_temp_regr_coeffs import AtnOutsideTempRegrCoeffs
-from gwatn.types.atn_outside_temp_regr_coeffs import AtnOutsideTempRegrCoeffs_Maker
 from gwatn.types.atn_params import AtnParams
 from gwatn.types.atn_params import AtnParams_Maker
 from gwatn.types.atn_params_brickstorageheater import AtnParamsBrickstorageheater
@@ -182,8 +176,6 @@ __all__ = [
     "AcceptedBid_Maker",
     "AtnBid",
     "AtnBid_Maker",
-    "AtnOutsideTempRegrCoeffs",
-    "AtnOutsideTempRegrCoeffs_Maker",
     "AtnParams",
     "AtnParams_Maker",
     "AtnParamsBrickstorageheater",
@@ -226,10 +218,6 @@ __all__ = [
     "GNodeGt_Maker",
     "GNodeInstanceGt",
     "GNodeInstanceGt_Maker",
-    "GtDispatchBoolean",
-    "GtDispatchBoolean_Maker",
-    "GtDispatchBooleanLocal",
-    "GtDispatchBooleanLocal_Maker",
     "GtDriverBooleanactuatorCmd",
     "GtDriverBooleanactuatorCmd_Maker",
     "GtShBooleanactuatorCmdStatus",

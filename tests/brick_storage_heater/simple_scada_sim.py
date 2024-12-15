@@ -1,7 +1,7 @@
 """ SCADA Actor """
 
 import logging
-from typing import Optional
+from typing import Any, Optional
 from typing import cast
 
 import dotenv
@@ -13,7 +13,6 @@ import gwatn.api_types as api_types
 import gwatn.config as config
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 from gwatn.types import AtnParamsBrickstorageheater_Maker
-from gwatn.types import GtDispatchBoolean
 from gwatn.types import SimplesimDriverDataBsh
 from gwatn.types import SimplesimDriverDataBsh_Maker
 from gwatn.types import SimplesimDriverReport
@@ -104,7 +103,7 @@ class SimpleScadaSim__BrickStorageHeater(SimpleScadaSimActorBase):
             to_g_node_alias=self.atn_alias,
         )
 
-    def dispatch_received(self, payload: GtDispatchBoolean) -> None:
+    def dispatch_received(self, payload: Any) -> None:
         """
         Dispatch received from AtomicTNode
 
@@ -118,20 +117,21 @@ class SimpleScadaSim__BrickStorageHeater(SimpleScadaSimActorBase):
           - Updatespower
           - Send status to AtomicTNode
         """
-        if self.atn_params is None or self.in_dispatch_contract() is False:
-            LOGGER.info("Igoring dispatch command, DispatchContract is not started")
-        if payload.FromGNodeInstanceId != self.atn_gni_id:
-            LOGGER.info(f"Igoring {payload}, not my Atn's GNodeInstanceId")
-        self.talking_with = True
-        if payload.AboutNodeName == "a.elements":
-            # Making the grossly simplifying assumption that the heat pump turns on immediately
-            if payload.RelayState == 1:
-                new_power_watts = self.atn_params.RatedMaxPowerKw * 1000
-            else:
-                new_power_watts = 0
-            if self.power_watts != new_power_watts:
-                self.power_watts = new_power_watts
-                self.send_snapshot()
+        ...
+        # if self.atn_params is None or self.in_dispatch_contract() is False:
+        #     LOGGER.info("Igoring dispatch command, DispatchContract is not started")
+        # if payload.FromGNodeInstanceId != self.atn_gni_id:
+        #     LOGGER.info(f"Igoring {payload}, not my Atn's GNodeInstanceId")
+        # self.talking_with = True
+        # if payload.AboutNodeName == "a.elements":
+        #     # Making the grossly simplifying assumption that the heat pump turns on immediately
+        #     if payload.RelayState == 1:
+        #         new_power_watts = self.atn_params.RatedMaxPowerKw * 1000
+        #     else:
+        #         new_power_watts = 0
+        #     if self.power_watts != new_power_watts:
+        #         self.power_watts = new_power_watts
+        #         self.send_snapshot()
 
     def new_timestep(self, payload: SimTimestep) -> None:
         # LOGGER.info("New timestep")

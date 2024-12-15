@@ -5,7 +5,6 @@ from typing import no_type_check
 
 from gwatn.types import AcceptedBid_Maker
 from gwatn.types import AtnBid_Maker
-from gwatn.types import AtnOutsideTempRegrCoeffs_Maker
 from gwatn.types import AtnParams_Maker
 from gwatn.types import AtnParamsBrickstorageheater_Maker
 from gwatn.types import AtnParamsReport_Maker
@@ -27,8 +26,6 @@ from gwatn.types import FloParamsReport_Maker
 from gwatn.types import FloParamsSimpleresistivehydronic_Maker
 from gwatn.types import GNodeGt_Maker
 from gwatn.types import GNodeInstanceGt_Maker
-from gwatn.types import GtDispatchBoolean_Maker
-from gwatn.types import GtDispatchBooleanLocal_Maker
 from gwatn.types import GtDriverBooleanactuatorCmd_Maker
 from gwatn.types import GtShBooleanactuatorCmdStatus_Maker
 from gwatn.types import GtShCliAtnCmd_Maker
@@ -91,7 +88,6 @@ def type_makers() -> List[HeartbeatA_Maker]:
     return [
         AcceptedBid_Maker,
         AtnBid_Maker,
-        AtnOutsideTempRegrCoeffs_Maker,
         AtnParams_Maker,
         AtnParamsBrickstorageheater_Maker,
         AtnParamsReport_Maker,
@@ -113,8 +109,6 @@ def type_makers() -> List[HeartbeatA_Maker]:
         FloParamsSimpleresistivehydronic_Maker,
         GNodeGt_Maker,
         GNodeInstanceGt_Maker,
-        GtDispatchBoolean_Maker,
-        GtDispatchBooleanLocal_Maker,
         GtDriverBooleanactuatorCmd_Maker,
         GtShBooleanactuatorCmdStatus_Maker,
         GtShCliAtnCmd_Maker,

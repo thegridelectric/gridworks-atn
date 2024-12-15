@@ -4,7 +4,7 @@ import logging
 import random
 import time
 from typing import Optional
-from typing import no_type_check
+from typing import no_type_check, Any
 
 import dotenv
 import gridworks.algo_utils as algo_utils
@@ -29,8 +29,6 @@ from gwatn.enums import UniverseType
 from gwatn.types import AtnParamsBrickstorageheater as AtnParams
 from gwatn.types import DispatchContractConfirmed
 from gwatn.types import DispatchContractConfirmed_Maker
-from gwatn.types import GtDispatchBoolean
-from gwatn.types import GtDispatchBoolean_Maker
 from gwatn.types import GwCertId
 from gwatn.types import GwCertId_Maker
 from gwatn.types import HeartbeatA
@@ -167,15 +165,15 @@ class ScadaActor(ActorBase):
                 self.dispatch_contract_confirmed_received(payload)
             except:
                 LOGGER.exception("Error in dispatch_contract_confirmed_received")
-        elif payload.TypeName == GtDispatchBoolean_Maker.type_name:
-            if from_role != GNodeRole.AtomicTNode:
-                LOGGER.info(
-                    f"Ignoring GtDispatchBooleanfrom GNode with role {from_role}; expects AtomicTNode"
-                )
-            try:
-                self.dispatch_received(payload)
-            except:
-                LOGGER.exception("Error in dispatch_received")
+        # elif payload.TypeName == GtDispatchBoolean_Maker.type_name:
+        #     if from_role != GNodeRole.AtomicTNode:
+        #         LOGGER.info(
+        #             f"Ignoring GtDispatchBooleanfrom GNode with role {from_role}; expects AtomicTNode"
+        #         )
+        #     try:
+        #         self.dispatch_received(payload)
+        #     except:
+        #         LOGGER.exception("Error in dispatch_received")
 
         elif payload.TypeName == HeartbeatA_Maker.type_name:
             if from_role != GNodeRole.Supervisor:
@@ -567,7 +565,7 @@ class ScadaActor(ActorBase):
             to_g_node_alias=self.atn_alias,
         )
 
-    def dispatch_received(self, payload: GtDispatchBoolean) -> None:
+    def dispatch_received(self, payload: Any) -> None:
         """
         Dispatch received from AtomicTNode
 
@@ -581,20 +579,21 @@ class ScadaActor(ActorBase):
           - Updatespower
           - Send status to AtomicTNode
         """
-        if self.atn_params is None or self.in_dispatch_contract() is False:
-            LOGGER.info("Igoring dispatch command, DispatchContract is not started")
-        if payload.FromGNodeInstanceId != self.atn_gni_id:
-            LOGGER.info(f"Igoring {payload}, not my Atn's GNodeInstanceId")
-        self.talking_with = True
-        if payload.AboutNodeName == "a.elements":
-            # Making the grossly simplifying assumption that the heat pump turns on immediately
-            if payload.RelayState == 1:
-                new_power_watts = self.atn_params.RatedMaxPowerKw * 1000
-            else:
-                new_power_watts = 0
-            if self.power_watts != new_power_watts:
-                self.power_watts = new_power_watts
-                self.send_snapshot()
+        ...
+        # if self.atn_params is None or self.in_dispatch_contract() is False:
+        #     LOGGER.info("Igoring dispatch command, DispatchContract is not started")
+        # if payload.FromGNodeInstanceId != self.atn_gni_id:
+        #     LOGGER.info(f"Igoring {payload}, not my Atn's GNodeInstanceId")
+        # self.talking_with = True
+        # if payload.AboutNodeName == "a.elements":
+        #     # Making the grossly simplifying assumption that the heat pump turns on immediately
+        #     if payload.RelayState == 1:
+        #         new_power_watts = self.atn_params.RatedMaxPowerKw * 1000
+        #     else:
+        #         new_power_watts = 0
+        #     if self.power_watts != new_power_watts:
+        #         self.power_watts = new_power_watts
+        #         self.send_snapshot()
 
     def new_timestep(self, payload: SimTimestep) -> None:
         # LOGGER.info("New timestep")
